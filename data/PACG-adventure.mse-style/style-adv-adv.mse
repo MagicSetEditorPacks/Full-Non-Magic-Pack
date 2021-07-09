@@ -1,0 +1,149 @@
+# ADVENTURE Card Styling
+
+card_style:
+
+	scenario_1:
+		visible:		{ isAdvFront() }
+		top:			{ scenarioCellT(0) }
+		left:			{ scenarioCellL(0) }
+		width:			{ scenarioW() }
+		height:			{ if isAdvFront() then scenarioCellH() }
+		angle:			{ scenarioA() }
+		alignment:		left middle shrink-overflow
+		z_index:		52
+		padding_left:	6
+		padding_right:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(12) }
+			scale_down_to:	8
+	scenario_2:
+		visible:		{ isAdvFront() and card.scenario_1 != "" }
+		top:			{ scenarioCellT(1) }
+		left:			{ scenarioCellL(1) }
+		width:			{ scenarioW() }
+		height:			{ if isAdvFront() and card.scenario_1 != "" then scenarioCellH() }
+		angle:			{ scenarioA() }
+		alignment:		left middle shrink-overflow
+		z_index:		52
+		padding_left:	6
+		padding_right:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(12) }
+			scale_down_to:	8
+	scenario_3:
+		visible:		{ isAdvFront() and card.scenario_2 != "" }
+		top:			{ scenarioCellT(2) }
+		left:			{ scenarioCellL(2) }
+		width:			{ scenarioW() }
+		height:			{ if isAdvFront() and card.scenario_2 != "" then scenarioCellH() }
+		angle:			{ scenarioA() }
+		alignment:		left middle shrink-overflow
+		z_index:		52
+		padding_left:	6
+		padding_right:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(12) }
+			scale_down_to:	8
+	scenario_4:
+		visible:		{ isAdvFront() and card.scenario_3 != ""  }
+		top:			{ scenarioCellT(3) }
+		left:			{ scenarioCellL(3) }
+		width:			{ scenarioW() }
+		height:			{ if isAdvFront() and card.scenario_3 != "" then scenarioCellH() }
+		angle:			{ scenarioA() }
+		alignment:		left middle shrink-overflow
+		z_index:		52
+		padding_left:	6
+		padding_right:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(12) }
+			scale_down_to:	8
+	scenario_5:
+		visible:		{ isAdvFront() and card.scenario_4 != "" }
+		top:			{ scenarioCellT(4) }
+		left:			{ scenarioCellL(4) }
+		width:			{ scenarioW() }
+		height:			{ if isAdvFront() and card.scenario_4 != "" then scenarioCellH() }
+		angle:			{ scenarioA() }
+		alignment:		left middle shrink-overflow
+		z_index:		52
+		padding_left:	6
+		padding_right:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(12) }
+			scale_down_to:	8
+
+
+extra_card_style:
+
+	scenario_table:
+		visible:		{ isAdvFront() }
+		top:			{ scenarioT() }
+		left:			{ scenarioL() }
+		width:			{ scenarioW() + 2 }
+		height:			{ scenarioH() }
+		angle:			{ scenarioA() }
+		z_index:		50
+		
+	scenario_header:
+		visible:		{ isAdvFront() }
+		top:			{ scenarioT() }
+		left:			{ scenarioL() }
+		width:			{ scenarioW() }
+		height:			{ if isLandscape() then 1.5 * headerH() else headerH() }
+		alignment:		center middle shrink-overflow
+		angle:			{ scenarioA() }
+		z_index:		51
+		font:
+			name:			{ getFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+			color:			{ "white" }
+			shadow_color:	{ getDarkColour() }
+			shadow_blur:	4
+			
+	scenario_cell_1:
+		visible:		{ isAdvFront() }
+		top:			{ scenarioCellT(0) }
+		left:			{ scenarioCellL(0) }
+		width:			{ scenarioW() }
+		height:			{ scenarioCellH() }
+		angle:			{ scenarioA() }
+		z_index:		51
+	scenario_cell_2:
+		visible:		{ isAdvFront() and card.scenario_2 != "" }
+		top:			{ scenarioCellT(1) }
+		left:			{ scenarioCellL(1) }
+		width:			{ scenarioW() }
+		height:			{ scenarioCellH() }
+		angle:			{ scenarioA() }
+		z_index:		51
+	scenario_cell_3:
+		visible:		{ isAdvFront() and card.scenario_3 != "" }
+		top:			{ scenarioCellT(2) }
+		left:			{ scenarioCellL(2) }
+		width:			{ scenarioW() }
+		height:			{ scenarioCellH() }
+		angle:			{ scenarioA() }
+		z_index:		51
+	scenario_cell_4:
+		visible:		{ isAdvFront() and card.scenario_4 != "" }
+		top:			{ scenarioCellT(3) }
+		left:			{ scenarioCellL(3) }
+		width:			{ scenarioW() }
+		height:			{ scenarioCellH() }
+		angle:			{ scenarioA() }
+		z_index:		51
+	scenario_cell_5:
+		visible:		{ isAdvFront() and card.scenario_5 != "" }
+		top:			{ scenarioCellT(4) }
+		left:			{ scenarioCellL(4) }
+		width:			{ scenarioW() }
+		height:			{ scenarioCellH() }
+		angle:			{ scenarioA() }
+		z_index:		51

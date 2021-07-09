@@ -1,0 +1,434 @@
+card_style:
+
+# Card front
+	duringscen:
+		visible:		{ isScenFront() }
+		top:			{ duringScenT() + if not isLandscape() then headerH() }
+		height:			{ if isScenFront() then duringScenH() - headerH() }
+		left:			{ duringScenL() + if isLandscape() then headerH() }
+		width:			{ duringScenW() }
+		angle:			{ duringScenA() }
+		z_index:		52
+		alignment:		left middle
+		padding_left:	2
+		padding_right:	2
+		padding_top:	2
+		padding_bottom:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+	villain:
+		visible:		{ isScenFront() }
+		top:			{ henchmanT(0) }
+		height:			{ if isScenFront() then henchmanH() }
+		left:			{ henchmanL(0) }
+		width:			{ villainW() }
+		angle:			{ villainA() }
+		z_index:		52
+		alignment:		left middle shrink-overflow
+		padding_left:	4
+		padding_right:	4
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+
+	henchmen_1:
+		visible:		{ isScenFront() }
+		top:			{ henchmanT(1) }
+		height:			{ if isScenFront() then henchmanH() }
+		left:			{ henchmanL(1) }
+		width:			{ villainW() }
+		angle:			{ villainA() }
+		z_index:		52
+		alignment:		left middle shrink-overflow
+		padding_left:	4
+		padding_right:	4
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+	henchmen_2:
+		visible:		{ isScenFront() and card.henchmen_1 != "" }
+		top:			{ henchmanT(2) }
+		height:			{ if isScenFront() and card.henchmen_1 != "" then henchmanH() }
+		left:			{ henchmanL(2) }
+		width:			{ villainW() }
+		angle:			{ villainA() }
+		z_index:		52
+		alignment:		left middle shrink-overflow
+		padding_left:	4
+		padding_right:	4
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+	henchmen_3:
+		visible:		{ isScenFront() and card.henchmen_2 != ""}
+		top:			{ henchmanT(3) }
+		height:			{ if isScenFront() and card.henchmen_2 != "" then henchmanH() }
+		left:			{ henchmanL(3) }
+		width:			{ villainW() }
+		angle:			{ villainA() }
+		z_index:		52
+		alignment:		left middle shrink-overflow
+		padding_left:	4
+		padding_right:	4
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+	henchmen_4:
+		visible:		{ isScenFront() and card.henchmen_3 != "" }
+		top:			{ henchmanT(4) }
+		height:			{ if isScenFront() and card.henchmen_3 != "" then henchmanH() }
+		left:			{ henchmanL(4) }
+		width:			{ villainW() }
+		angle:			{ villainA() }
+		z_index:		52
+		alignment:		left middle shrink-overflow
+		padding_left:	4
+		padding_right:	4
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+
+	anchored:
+		visible:		{ true }
+		render_style:	image
+		top:			{ anchoredT() + 1}
+		height:			{ if isScenBack() then anchoredH() }
+		left:			{ anchoredL() }
+		width:			{ anchoredW() }
+		angle:			{ anchoredA() }
+		image:			{ if input != "" then "/PACG-common.mse-include/res/anchor.png" }
+		z_index:		99
+
+# card back
+
+extra_card_style:
+
+# Card front
+	villain_table:
+		visible:		{ isScenFront() }
+		top:			{ villainT() }
+		height:			{ villainH() }
+		left:			{ villainL() }
+		width:			{ villainW() + 2 }
+		angle:			{ villainA() }
+		z_index:		50
+	
+	villain_header:
+		visible:		{ isScenFront() }
+		top:			{ villainT() }
+		height:			{ headerH() }
+		left:			{ villainL() }
+		width:			{ villainW() }
+		angle:			{ villainA() }
+		z_index:		50
+		alignment:		center middle
+		font:
+			name:			{ getFont() }
+			size:			{ getFontSize(11) }
+			color:			{ "white" }
+			shadow_color:	{ getShadowColour() }
+			shadow_blur:	4
+
+	villain_cell:
+		visible:		{ isScenFront() }
+		top:			{ henchmanT(0) }
+		height:			{ henchmanH() }
+		left:			{ henchmanL(0) }
+		width:			{ villainW() }
+		angle:			{ villainA() }
+		z_index:		51
+	henchman_cell_1:
+		visible:		{ isScenFront() }
+		top:			{ henchmanT(1) }
+		height:			{ henchmanH() }
+		left:			{ henchmanL(1) }
+		width:			{ villainW() }
+		angle:			{ villainA() }
+		z_index:		51
+	henchman_cell_2:
+		visible:		{ isScenFront() and card.henchmen_2 != ""}
+		top:			{ henchmanT(2) }
+		height:			{ henchmanH() }
+		left:			{ henchmanL(2) }
+		width:			{ villainW() }
+		angle:			{ villainA() }
+		z_index:		51
+	henchman_cell_3:
+		visible:		{ isScenFront() and card.henchmen_3 != "" }
+		top:			{ henchmanT(3) }
+		height:			{ henchmanH() }
+		left:			{ henchmanL(3) }
+		width:			{ villainW() }
+		angle:			{ villainA() }
+		z_index:		51
+	henchman_cell_4:
+		visible:		{ isScenFront() and card.henchmen_4 != "" }
+		top:			{ henchmanT(4) }
+		height:			{ henchmanH() }
+		left:			{ henchmanL(4) }
+		width:			{ villainW() }
+		angle:			{ villainA() }
+		z_index:		51
+	
+	duringscen_table:
+		visible:		{ isScenFront() }
+		top:			{ duringScenT() }
+		height:			{ duringScenH() }
+		left:			{ duringScenL() }
+		width:			{ duringScenW() + 2 }
+		angle:			{ duringScenA() }
+		z_index:		50
+	duringscen_header:
+		visible:		{ isScenFront() }
+		top:			{ duringScenT() }
+		height:			{ headerH() }
+		left:			{ duringScenL() }
+		width:			{ duringScenW() }
+		angle:			{ duringScenA() }
+		z_index:		51
+		alignment:		center middle
+		font:
+			name:			{ getFont() }
+			color:			{ "white" }
+			weight:			bold
+			size:			{ getFontSize(11) }
+			shadow_color:	{ getShadowColour() }
+			shadow_blur:	4
+	duringscen_cell:
+		visible:		{ isScenFront() }
+		top:			{ duringScenT() + if not isLandscape() then headerH() }
+		height:			{ duringScenH() - headerH() }
+		left:			{ duringScenL() + if isLandscape() then headerH() }
+		width:			{ duringScenW() }
+		angle:			{ duringScenA() }
+		z_index:		51
+
+# Card Back
+	location_table:
+		visible:		{ isScenBack() }
+		top:			{ locationT() }
+		height:			{ locationH() }
+		left:			{ locationL() }
+		width:			{ locationW() + 2 }
+		angle:			{ locationA() }
+		z_index:		50
+	location_header:
+		visible:		{ isScenBack() }
+		top:			{ locationT() }
+		height:			{ headerH() }
+		left:			{ locationL() }
+		width:			{ locationW() }
+		angle:			{ locationA() }
+		z_index:		51
+		alignment:		center middle
+		font:
+			name:			{ getFont() }
+			color:			{ "white" }
+			weight:			bold
+			size:			{ getFontSize(11) }
+			shadow_color:	{ getShadowColour() }
+			shadow_blur:	4
+	location_cell_1a:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(0) }
+		height:			{ locationCellH() }
+		left:			{ locationCellL(0) }
+		width:			{ locationCellW(0) }
+		angle:			{ locationA() }
+		z_index:		51
+	location_cell_1b:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(1) }
+		height:			{ locationCellH() }
+		left:			{ locationCellL(1) }
+		width:			{ locationCellW(1) }
+		angle:			{ locationA() }
+		z_index:		51
+	location_cell_1c:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(2) }
+		height:			{ locationCellH() }
+		left:			{ locationCellL(2) }
+		width:			{ locationCellW(2) }
+		angle:			{ locationA() }
+		z_index:		51
+	location_cell_2:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(3) }
+		height:			{ locationCellH() }
+		left:			{ locationCellL(3) }
+		width:			{ locationCellW(3) }
+		angle:			{ locationA() }
+		z_index:		51
+	location_cell_3:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(4) }
+		height:			{ locationCellH() }
+		left:			{ locationCellL(4) }
+		width:			{ locationCellW(4) }
+		angle:			{ locationA() }
+		z_index:		51
+	location_cell_4:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(5) }
+		height:			{ locationCellH() }
+		left:			{ locationCellL(5) }
+		width:			{ locationCellW(5) }
+		angle:			{ locationA() }
+		z_index:		51
+	location_cell_5:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(6) }
+		height:			{ locationCellH() }
+		left:			{ locationCellL(6) }
+		width:			{ locationCellW(6) }
+		angle:			{ locationA() }
+		z_index:		51
+	location_cell_6:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(7) }
+		height:			{ locationCellH() }
+		left:			{ locationCellL(7) }
+		width:			{ locationCellW(7) }
+		angle:			{ locationA() }
+		z_index:		51
+
+
+	location_fwd_1a:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(0) }
+		height:			{ if isScenBack() then locationCellH() }
+		left:			{ locationCellL(0) }
+		width:			{ locationCellW(0) }
+		angle:			{ locationA() }
+		z_index:		52
+		alignment:		left middle shrink-overflow
+		padding_left:	2
+		padding_right:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+	location_fwd_1b:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(1) }
+		height:			{ if isScenBack() then locationCellH() }
+		left:			{ locationCellL(1) }
+		width:			{ locationCellW(1) }
+		angle:			{ locationA() }
+		z_index:		52
+		alignment:		left middle shrink-overflow
+		padding_left:	2
+		padding_right:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+	location_fwd_1c:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(2) }
+		height:			{ if isScenBack() then locationCellH() }
+		left:			{ locationCellL(2) }
+		width:			{ locationCellW(2) }
+		angle:			{ locationA() }
+		z_index:		52
+		alignment:		left middle shrink-overflow
+		padding_left:	2
+		padding_right:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+	location_fwd_2:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(3) }
+		height:			{ if isScenBack() then locationCellH() }
+		left:			{ locationCellL(3) }
+		width:			{ locationCellW(3) }
+		angle:			{ locationA() }
+		z_index:		52
+		alignment:		left middle shrink-overflow
+		padding_left:	2
+		padding_right:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+	location_fwd_3:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(4) }
+		height:			{ if isScenBack() then locationCellH() }
+		left:			{ locationCellL(4) }
+		width:			{ locationCellW(4) }
+		angle:			{ locationA() }
+		z_index:		52
+		alignment:		left middle shrink-overflow
+		padding_left:	2
+		padding_right:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+	location_fwd_4:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(5) }
+		height:			{ if isScenBack() then locationCellH() }
+		left:			{ locationCellL(5) }
+		width:			{ locationCellW(5) }
+		angle:			{ locationA() }
+		z_index:		52
+		alignment:		left middle shrink-overflow
+		padding_left:	2
+		padding_right:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+	location_fwd_5:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(6) }
+		height:			{ if isScenBack() then locationCellH() }
+		left:			{ locationCellL(6) }
+		width:			{ locationCellW(6) }
+		angle:			{ locationA() }
+		z_index:		52
+		alignment:		left middle shrink-overflow
+		padding_left:	2
+		padding_right:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+	location_fwd_6:
+		visible:		{ isScenBack() }
+		top:			{ locationCellT(7) }
+		height:			{ if isScenBack() then locationCellH() }
+		left:			{ locationCellL(7) }
+		width:			{ locationCellW(7) }
+		angle:			{ locationA() }
+		z_index:		52
+		alignment:		left middle shrink-overflow
+		padding_left:	2
+		padding_right:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+
+	anchored_icon:
+		visible:		{ isScenBack() and card.anchored != "" }
+		top:			{ if isLandscape() then locationCellT(0) - locationCellW(0) + locationCellH() + 1 else locationCellT(0) + 1 }
+		height:			{ locationCellH() - 2 }
+		left:			{ if isLandscape() then locationCellL(0) + 1 else locationCellL(0) + locationCellW(0) - locationCellH() - 1 }
+		width:			{ locationCellH() - 2 }
+		angle:			{ locationA() }
+		render_style:	image
+		image:			/PACG-common.mse-include/res/anchor.png
+		z_index:		52

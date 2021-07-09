@@ -1,0 +1,8 @@
+init script:
+	#Scripts to set fonts
+	bar_font := { styling.name_font }
+	name_font := { bar_font() }
+	name_weight := 
+		{ if bar_font()=="Helvetica" then "bold"
+		  else                            "normal" }
+	text_font := { "Times New Roman" }

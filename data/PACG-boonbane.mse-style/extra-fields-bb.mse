@@ -1,0 +1,240 @@
+# Styling Fields for Boons and Banes
+
+# choice to amend the TRAITS for dark background images
+styling_field:
+	type:				choice
+	name:				traits style
+	choice:				Black
+	choice:				White
+	choice:				White with Border
+	initial:	 		Black
+	description:		Traits Style
+
+styling_field:
+	type:				choice
+	name:				card_side
+	default:			"Front"
+	default_name:		Front
+	choice:				Back
+	initial:			Front
+	description:		Card Side
+
+styling_field:
+	type:				boolean
+	name:				use_recharge
+	default:			true
+	description:		Show Recharge Box for Spells, Items and Loot
+
+#styling_field:
+#	type:				image
+#	name:				bb_card_back
+#	description:		Card Back Art
+#	show_statistics:	false
+#	card_list_allow:	false
+#
+#styling_style:
+#	bb_card_back:
+#		width:			{ Width }
+#		height:			{ Height }
+#		default:		{ "/PACG-common.mse-include/res/cardback.png" }
+	
+extra_card_field:
+	type:				text
+	name:				check_header_1
+	script:				getCheckInfo()
+	multi_line:			true
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+
+extra_card_field:
+	type:				choice
+	name:				bb_cardback
+	script:				1
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	
+# Villain Henchman Loot Type
+extra_card_field:
+	type:				color
+	name:				vhl_type_table
+	script: 			getDarkColour()
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				text
+	name:				vhl_type_header
+	script:				"TYPE"
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				vhl_type_cell
+	script:				getLightColour()
+	editable: 			false
+	save_value:			false
+
+# Check Table 1 fields
+extra_card_field:
+	type:				color
+	name:				check_table_1
+	script:				getDarkColour()
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_cell_1
+	script:				getLightColour()
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_disc_white_1
+	script:				"white"
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_disc_col_1
+	script:				getDarkColour()
+	editable: 			false
+	save_value:			false
+	
+# Check Table 2 fields
+extra_card_field:
+	type:				color
+	name:				check_table_2
+	script:				getDarkColour()
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_cell_2
+	script:				getLightColour()
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_disc_white_2
+	script:				"white"
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_disc_col_2
+	script:				getDarkColour()
+	editable: 			false
+	save_value:			false
+
+# Check Table 3 fields
+extra_card_field:
+	type:				color
+	name:				check_table_3
+	script:				getDarkColour()
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_cell_3
+	script:				getLightColour()
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_disc_white_3
+	script:				"white"
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_disc_col_3
+	script:				getDarkColour()
+	editable: 			false
+	save_value:			false
+	
+# POWERS and RECHARGE
+extra_card_field:
+	type:				color
+	name:				bb_powers_table
+	script:				getDarkColour()
+	editable: 			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				bb_powers_cell
+	script:				"white"
+	editable: 			false
+	save_value:			false
+extra_card_field:
+	type:				text
+	name:				bb_powers_header
+	script:				"POWERS"
+	editable: 			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				recharge_table
+	script:				getDarkColour()
+	editable: 			false
+	save_value:			false
+extra_card_field:
+	type:				text
+	name:				recharge_header
+	script:				"RECHARGE"
+	editable: 			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				recharge_cell
+	script:				"white"
+	editable: 			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				encountering_table
+	script:				getDarkColour()
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				text
+	name:				encountering_header
+	script:				"WHEN ENCOUNTERING THIS SHIP"
+	editable: 			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				encountering_cell
+	script:				"white"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				commanding_table
+	script:				getDarkColour()
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				text
+	name:				commanding_header
+	script:				"WHEN COMMANDING THIS SHIP"
+	editable: 			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				commanding_cell
+	script:				"white"
+	editable:			false
+	save_value:			false
+	

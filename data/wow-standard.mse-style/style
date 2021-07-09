@@ -1,0 +1,595 @@
+mse version: 0.3.8
+game: wow
+short name: WoW Standard
+full name: World of Warcraft Standard
+installer group: wow/standard
+icon: card-sample.png
+position hint: 001
+
+version: 2010-01-04
+depends on:
+	package: wow.mse-game
+	version: 2010-01-04
+depends on:
+	package: wow-symbols-standard.mse-symbol-font
+	version: 2010-01-04
+
+card width: 375
+card height: 525
+card dpi: 150
+#By: Pichoro
+############################################################## Extra scripts
+init script:
+	is_ability := { contains(card.frame, match: "ability") }
+	is_equipment := { contains(card.frame, match: "equipment") }
+	is_alliance_ally := { contains(card.frame, match:"ally alliance") }
+	is_horde_ally := { contains(card.frame, match:"ally horde") }
+	is_neutral_ally := { contains(card.frame, match:"ally neutral") }
+	is_alliance_hero := { contains(card.frame, match:"hero alliance") }
+	is_horde_hero := { contains(card.frame, match:"hero horde") }
+	is_quest := { contains(card.frame, match:"quest") }
+	
+	is_hero := { contains(card.frame, match:"hero") }
+	is_ally := { contains(card.frame, match:"ally") }
+	is_armor := { is_equipment() and contains(card.value_type, match:"defense") }
+	is_weapon := { is_equipment() and contains(card.value_type, match:"strike") }
+
+############################################################## Set info fields
+############################################################## Extra style
+styling field:
+	type: text
+	name: left
+styling field:
+	type: text
+	name: top
+styling field:
+	type: text
+	name: width
+styling field:
+	type: text
+	name: height
+styling field:
+	type: boolean
+	name: centered rules
+	description: Should rules text be centered?
+	initial: no
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	frame:
+		left:	0
+		top:	0
+		width:	375
+		height:	525
+		z index: 0
+		render style: image
+		popup style: in place
+		choice images:
+			ability: ability.jpg
+			ally alliance: ally-alliance.jpg
+			ally horde: ally-horde.jpg
+			ally neutral: ally-neutral.jpg
+			equipment: equipment.jpg
+			hero alliance: hero-alliance.jpg
+			hero horde: hero-horde.jpg
+			quest: quest.jpg
+	############################# Name line
+	cost:
+		left:
+			script:
+				if is_alliance_ally() then 36
+				else if is_horde_ally() then 23
+				else if is_neutral_ally() then 25
+				else if is_ability() or is_equipment() then 23
+				else 500
+		top:
+			script:
+				if is_alliance_ally() then 9
+				else if is_horde_ally() then 12
+				else if is_neutral_ally() then 13
+				else 15
+		width: 50
+		height: 50
+		z index: 1
+		alignment: middle center
+		font:
+			name: BelweStd-Bold
+			size: 24
+			color: white
+			shadow color: black
+			shadow blur: 4
+			shadow displacement x: 0
+			shadow displacement y: 0
+	name:
+		left:
+			script:
+				if is_hero() then 82
+				else if is_ally() then 112
+				else if is_ability() then 100
+				else if is_equipment() then 100
+				else 82
+		top : 13
+		width:
+			script:
+				if is_neutral_ally() and card.class_icon_2 != "none" then 163
+				else if is_neutral_ally() then 200
+				else if is_quest() then 255
+				else if is_equipment() then 237
+				else if ( is_ally() or is_ability() ) and card.class_icon_2 != "none" then 169
+				else if is_hero() and card.class_icon_2 != "none" then 150
+				else 206
+		height: 30
+		alignment: middle shrink-overflow
+		z index: 1
+		padding top: 2
+		font:
+			name: BelweStd-Bold
+			size: 14
+			color: white
+			separator color: rgb(128,128,128)
+			shadow color: black
+			shadow blur: 3
+			shadow displacement x: 0
+			shadow displacement y: 0
+	class icon:
+		left:
+			script:
+				if is_hero() then 297
+				else if is_ability() or is_ally() then 320
+				else 500
+		top:
+			script:
+				if is_hero() then 16
+				else if is_ability() or is_ally() then 14
+				else 0
+		width:
+			script:
+				if is_hero() then 56
+				else if is_ability() or is_ally() then 37
+				else 0
+		height:
+			script:
+				if is_hero() then 56
+				else if is_ability() or is_ally() then 37
+				else 0
+		z index: 2
+		render style: image
+		popup style: in place
+		alignment: top right
+		choice images:
+			alliance: alliance.png
+			horde: horde.png
+			illidan: illidan.png
+			death knight: deathknight.png
+			druid: druid.png
+			hunter: hunter.png
+			mage: mage.png
+			paladin: paladin.png
+			priest: priest.png
+			rogue: rogue.png
+			shaman: shaman.png
+			warlock: warlock.png
+			warrior: warrior.png
+	class icon 2:
+		left:
+			script:
+				if is_hero() then 239
+				else if is_ability() or is_ally() then 281
+				else 500
+		top:
+			script:
+				if card.class_icon == "none" then 9000
+				else if is_hero() then 16
+				else if is_ability() or is_ally() then 14
+				else 0
+		width:
+			script:
+				if is_hero() then 56
+				else if is_ability() or is_ally() then 37
+				else 0
+		height:
+			script:
+				if is_hero() then 56
+				else if is_ability() or is_ally() then 37
+				else 0
+		z index: 2
+		render style: image
+		popup style: in place
+		alignment: top right
+		choice images:
+			alliance: alliance.png
+			horde: horde.png
+			illidan: illidan.png
+			death knight: deathknight.png
+			druid: druid.png
+			hunter: hunter.png
+			mage: mage.png
+			paladin: paladin.png
+			priest: priest.png
+			rogue: rogue.png
+			shaman: shaman.png
+			warlock: warlock.png
+			warrior: warrior.png
+	############################# Image
+	image:
+		left: 13
+		top: 51
+		width: 347
+		height: 277
+		z index: 1
+		mask:
+			script:
+				if card.frame == "ability" then "ability_mask.png"
+				else if card.frame == "ally alliance" then "ally_alliance_mask.png"
+				else if card.frame == "ally horde" then "ally_horde_mask.png"
+				else if card.frame == "ally neutral" then "ally_neutral_mask.png"
+				else if card.frame == "equipment" then "equipment_mask.png"
+				else if contains(card.frame, match:"hero") then "hero_mask.png"
+				else if card.frame == "quest" then "quest_mask.png"
+				else nil
+		default: black.png
+	############################# Type line
+	type:
+		left: 45
+		top : 333
+		width: { 288 - card_style.tag_1.content_width }
+		height: 15
+		alignment: middle shrink-overflow
+		z index: 1
+		padding top: 2
+		font:
+			name: BelweStd-Bold
+			size: 9
+			color: white
+			separator color: rgb(128,128,128)
+			shadow color: black
+			shadow blur: 3
+			shadow displacement x: 0
+			shadow displacement y: 0
+	tag 1:
+		right: 333
+		top: 333
+		width: 100
+		height: 15
+		alignment: middle right
+		z index: 1
+		padding top: 2
+		font:
+			name: BelweStd-Bold
+			size: 9
+			color: white
+			separator color: rgb(128,128,128)
+			shadow color: black
+			shadow blur: 3
+			shadow displacement x: 0
+			shadow displacement y: 0
+	tag 2:
+		left: 45
+		top : { if is_hero() then 348 else 9000 }
+		width: 144
+		height: 15
+		alignment: middle shrink-overflow
+		z index: 1
+		padding top: 2
+		font:
+			name: BelweStd-Bold
+			size: 9
+			color: white
+			separator color: rgb(128,128,128)
+			shadow color: black
+			shadow blur: 3
+			shadow displacement x: 0
+			shadow displacement y: 0
+	tag 3:
+		right: 333
+		top: { if is_hero() then 348 else 9000 }
+		width: 144
+		height: 15
+		alignment: middle right
+		z index: 1
+		padding top: 2
+		font:
+			name: BelweStd-Bold
+			size: 9
+			color: white
+			separator color: rgb(128,128,128)
+			shadow color: black
+			shadow blur: 3
+			shadow displacement x: 0
+			shadow displacement y: 0
+	############################# Text box
+	rules text:
+		left: 20
+		top: { if is_hero() then 378 else 364 }
+		width: 333
+		height: { if is_hero() then 66 else 80 }
+		z index: 1
+		alignment: { if styling.centered_rules then "center middle" else "top left" }
+		font:
+			name: TradeGothic LT CondEighteen
+			size: 15
+			scale down to: 6
+			color: black
+		symbol font:
+			name: wow-symbols-standard
+			size: 20
+			scale down to: 8
+	flavor text:
+		left: 76
+		top: 444
+		width: 230
+		height: 40
+		z index: 1
+		alignment: middle center
+		font:
+			name: TradeGothic LT CondEighteen
+			size: 15
+			scale down to: 6
+			color: black
+	health:
+		left: { if is_hero() or is_ally() then 310 else 500 }
+		top: 460
+		width: 50
+		height: 50
+		z index: 1
+		alignment: middle center
+		font:
+			name: BelweStd-Bold
+			size: 24
+			color: white
+			shadow color: black
+			shadow blur: 4
+			shadow displacement x: 0
+			shadow displacement y: 0
+	strike cost:
+		left: { if is_weapon() then 310 else 500 }
+		top: 455
+		width: 50
+		height: 50
+		z index: 2
+		alignment: middle center
+		font:
+			name: BelweStd-Bold
+			size: 24
+			color: white
+			shadow color: black
+			shadow blur: 4
+			shadow displacement x: 0
+			shadow displacement y: 0
+	defense:
+		left: { if is_armor() then 310 else 500 }
+		top: 455
+		width: 50
+		height: 50
+		z index: 2
+		alignment: middle center
+		font:
+			name: BelweStd-Bold
+			size: 24
+			color: white
+			shadow color: black
+			shadow blur: 4
+			shadow displacement x: 0
+			shadow displacement y: 0
+	damage:
+		left: 13
+		top: 455
+		width: 50
+		height: 50
+		z index: 2
+		alignment: middle center
+		font:
+			name: BelweStd-Bold
+			size: 24
+			color: white
+			shadow color: black
+			shadow blur: 4
+			shadow displacement x: 0
+			shadow displacement y: 0
+	############################# Other Stuff
+	damage type:
+		left: 0
+		bottom:
+			script:
+				if card.frame == "ability" then 524
+				else if contains(card.frame, match:"hero") then 527
+				else 525
+		width: 75
+		height:
+			script:
+				if card.frame == "ability" then 93
+				else if contains(card.frame, match:"hero") then 97
+				else 94
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+			arcane: arcane.png
+			fire: fire.png
+			frost: frost.png
+			holy: holy.png
+			melee: melee.png
+			nature: nature.png
+			ranged: ranged.png
+			shadow: shadow.png
+	value type:
+		right: { if is_equipment() then 375 else 500 }
+		bottom: 525
+		width: 75
+		height: 94
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+			defense: defense.png
+			strike: strike.png
+	deathknight equipment:
+		left: { if is_equipment() then 321 else 500 }
+		top: 33
+		width: 39
+		height: 29
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+			yes: equipment-deathknight.png
+	druid equipment:
+		left: { if is_equipment() then 321 else 500 }
+		top: 62
+		width: 39
+		height: 29
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+			yes: equipment-druid.jpg
+	hunter equipment:
+		left: { if is_equipment() then 321 else 500 }
+		top: 91
+		width: 39
+		height: 29
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			yes: equipment-hunter.jpg
+	mage equipment:
+		left: { if is_equipment() then 321 else 500 }
+		top: 119
+		width: 39
+		height: 29
+		z index: 4
+		render style: image
+		popup style: in place
+		choice images:
+			yes: equipment-mage.jpg
+	paladin equipment:
+		left: { if is_equipment() then 321 else 500 }
+		top: 147
+		width: 39
+		height: 29
+		z index: 3
+		render style: image
+		popup style: in place
+		choice images:
+			yes: equipment-paladin.jpg
+	priest equipment:
+		left: { if is_equipment() then 321 else 500 }
+		top: 174
+		width: 39
+		height: 31
+		z index: 5
+		render style: image
+		popup style: in place
+		choice images:
+			yes: equipment-priest.jpg
+	rogue equipment:
+		left: { if is_equipment() then 321 else 500 }
+		top: 205
+		width: 39
+		height: 28
+		z index: 6
+		render style: image
+		popup style: in place
+		choice images:
+			yes: equipment-rogue.jpg
+	shaman equipment:
+		left: { if is_equipment() then 321 else 500 }
+		top: 232
+		width: 39
+		height: 28
+		z index: 7
+		render style: image
+		popup style: in place
+		choice images:
+			yes: equipment-shaman.jpg
+	warlock equipment:
+		left: { if is_equipment() then 321 else 500 }
+		top: 260
+		width: 39
+		height: 29
+		z index: 7
+		render style: image
+		popup style: in place
+		choice images:
+			yes: equipment-warlock.jpg
+	warrior equipment:
+		left: { if is_equipment() then 321 else 500 }
+		top: 289
+		width: 39
+		height: 28
+		z index: 7
+		render style: image
+		popup style: in place
+		choice images:
+			yes: equipment-warrior.jpg
+	############################# Copyright stuff
+	copyright:
+		left: 206
+		top: 500
+		width: 100
+		height: 10
+		z index: 2
+		alignment: top left shrink-overflow
+		font:
+			name: TradeGothic LT CondEighteen
+			size: 6
+			color: black
+	number:
+		right: 190
+		top: 491
+		width: 50
+		height: 10
+		z index: 2
+		alignment: top right
+		font:
+			name: TradeGothic LT CondEighteen
+			size: 9
+			weight: bold
+			color:
+				script:
+					if card.rarity == "common" then "white"
+					else if card.rarity == "uncommon" then rgb(48,103,61)
+					else if card.rarity == "rare" then rgb(28,61,115)
+					else if card.rarity == "epic rare" then rgb(67,98,145)
+					else if card.rarity == "legendary rare" then rgb(180,109,65)
+					else "black"
+			shadow color:
+				script:
+					if card.rarity == "common" then "black"
+					else "white"
+			shadow blur: 4
+			shadow displacement x: 0
+			shadow displacement y: 0
+	rarity:
+		right: { 187 - card_style.number.content_width }
+		top: 488
+		width: 20
+		height: 20
+		z index: 2
+		render style: image
+		choice images:
+			common: script: if set.use_image then set.image else symbol_variation(symbol: set.symbol, variation: "common")
+			uncommon: script: if set.use_image then set.image else symbol_variation(symbol: set.symbol, variation: "uncommon")
+			rare: script: if set.use_image then set.image else symbol_variation(symbol: set.symbol, variation: "rare")
+			epic rare: script: if set.use_image then set.image else symbol_variation(symbol: set.symbol, variation: "epic")
+			legendary rare: script: if set.use_image then set.image else symbol_variation(symbol: set.symbol, variation: "legendary")
+##########################################################################Extra Card Fields
+extra card field:
+	type: text
+	name: artist line
+	save value: false
+	script: forward_editor(prefix: "Art by: ", field: card.illustrator)
+extra card style:
+	artist line:
+		left: 206
+		top: 488
+		width: 100
+		height: 10
+		z index: 2
+		alignment: top left shrink-overflow
+		font:
+			name: TradeGothic LT CondEighteen
+			size: 7
+			weight: bold
+			color: black

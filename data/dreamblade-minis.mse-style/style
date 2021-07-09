@@ -1,0 +1,372 @@
+mse version: 0.3.8
+game: dreamblade
+short name: Minis
+full name: Minis
+icon: card-sample.png
+installer group: dreamblade/minis
+position hint: 001
+
+version: 2009-02-02
+depends on:
+	package: dreamblade.mse-game
+	version: 2009-02-02
+depends on:
+	package: dreamblade-symbol.mse-symbol-font
+	version: 2009-02-02
+
+card width: 450
+card height: 2700
+card dpi: 300
+############################################################## Extra scripts
+init script:
+	card_background := {
+		colors :=
+			if chosen(choice:"valor") then "valor"
+			else if chosen(choice:"fear") then "fear"
+			else if chosen(choice:"madness") then "madness"
+			else if chosen(choice:"passion") then "passion"
+			else if chosen(choice:"multi") then "multi"
+			else if chosen(choice:"none") then "none"
+			else "none"
+		line :=
+			if card.lineage != "" then "lin"
+			else ""
+		colors + line + ".png"
+	}
+
+set info style:
+	symbol:
+		variation:
+			name: invertedcommon
+			border radius: 0.10
+			fill type: solid
+			fill color:   rgb(255,255,255)
+			border color: rgb(0,0,0)
+	symbol:
+		variation:
+			name: common
+			border radius: 0.10
+			fill type: solid
+			fill color:   rgb(0,0,0)
+			border color: rgb(255,255,255)
+############################################################## Extra style options
+styling field:
+	type: choice
+	name: border font color
+	initial: White
+	choice: Black
+	choice: White
+styling field:
+	type: choice
+	name: text size
+	initial: normal
+	choice: normal
+	choice: small
+	choice: smaller
+	choice: tiny
+	choice: diminutive
+	description: Set the size of the rules text font.
+styling field:
+	type: choice
+	name: flavor size
+	initial: small
+	choice: normal
+	choice: small
+	choice: smaller
+	choice: tiny
+	choice: diminutive
+	description: Set the size of the flavor text font.
+styling field:
+	type: choice
+	name: name size
+	initial: normal
+	choice: normal
+	choice: small
+	choice: smaller
+	choice: tiny
+	choice: diminutive
+	description: Set the size of the name font.
+styling field:
+	type: choice
+	name: lineage size
+	initial: normal
+	choice: normal
+	choice: small
+	choice: smaller
+	choice: tiny
+	choice: diminutive
+	description: Set the size of the lineage font.
+styling field:
+	type: choice
+	name: summary size
+	initial: normal
+	choice: normal
+	choice: small
+	choice: smaller
+	choice: tiny
+	choice: diminutive
+	description: Set the size of the summary font.
+styling field:
+	type: boolean
+	name: inverted common symbol
+	description: Should the common rarity symbol be inverted, like in Coldsnap?
+	initial: no
+styling style:
+	inverted common symbol:
+		choice images:
+			no:  { symbol_variation(symbol: set.symbol, variation: "common") }
+			yes: { symbol_variation(symbol: set.symbol, variation: "invertedcommon") }
+############################################################## Card fields
+card style:
+	background:
+		left:	0
+		top:	0
+		width:	450
+		height:	2700
+		z index: 0
+		render style: image
+		popup style: in place
+		image: { card_background() }
+	name:
+		left: 20
+		top : 2260
+		width: 410
+		height: 60
+		alignment: middle center shrink-overflow
+		z index: 1
+		font:
+			name: MatrixBoldSmallCaps
+			size:
+				script:
+					if styling.name_size == "small" then 24
+					else if styling.name_size == "smaller" then 22
+					else if styling.name_size == "tiny" then 20
+					else if styling.name_size == "diminutive" then 18
+					else 26
+			color: rgb(0,0,0)
+	topname:
+		left: 85
+		top : 2205
+		width: 300
+		height: 22
+		alignment: middle left shrink-overflow
+		z index: 1
+		font:
+			name: MatrixBoldSmallCaps
+			size: 22
+			color:
+				script:
+					if styling.border_font_color == "Black" then rgb(0,0,0)
+					else rgb(255,255,255)
+	lineage:
+		left: 20
+		top : 2315
+		width: 410
+		height: 25
+		alignment: top center shrink-overflow
+		z index: 1
+		font:
+			name: Times New Roman
+			style: italic
+			size:
+				script:
+					if styling.lineage_size == "small" then 20
+					else if styling.lineage_size == "smaller" then 18
+					else if styling.lineage_size == "tiny" then 16
+					else if styling.lineage_size == "diminutive" then 14
+					else 22
+			color: rgb(0,0,0)
+	rule:
+		left: 20
+		top :
+			script:
+				if card.lineage !="" then 2355
+				else 2330
+		width: 410
+		height: 245
+		font:
+			name: Arial
+			#size: 18
+			size:
+				script:
+					if styling.text_size == "small" then 22
+					else if styling.text_size == "smaller" then 20
+					else if styling.text_size == "tiny" then 18
+					else if styling.text_size == "diminutive" then 16
+					else 24
+			color: rgb(0,0,0)
+		symbol font:
+			name: dreamblade-symbol
+			size: 32
+		alignment: top left
+		z index: 1
+	summary:
+		left: 65
+		top : 2157
+		width: 345
+		height: 40
+		alignment: middle left shrink-overflow
+		z index: 1
+		font:
+			name: Arial
+			weight: bold
+			size:
+				script:
+					if styling.text_size == "small" then 16
+					else if styling.text_size == "smaller" then 14
+					else if styling.text_size == "tiny" then 12
+					else if styling.text_size == "diminutive" then 10
+					else 18
+			color:
+				script:
+					if styling.border_font_color == "Black" then rgb(0,0,0)
+					else rgb(255,255,255)
+		symbol font:
+			name: dreamblade-symbol
+			size: 25
+	flavor:
+		left: 20
+		top : 2520
+		width: 410
+		height: 75
+		font:
+			name: Times New Roman
+			style: italic
+			size:
+				script:
+					if styling.flavor_size == "small" then 22
+					else if styling.flavor_size == "smaller" then 20
+					else if styling.flavor_size == "tiny" then 18
+					else if styling.flavor_size == "diminutive" then 16
+					else 24
+			color: rgb(0,0,0)
+		alignment: bottom left
+		z index: 2
+	cost:
+		left: 25
+		top: 2605
+		height: 40
+		width: 175
+		alignment: middle left
+		symbol font:
+			name: dreamblade-symbol
+			size: 40
+		always symbol: true
+		z index: 1
+	topcost:
+		left: 45
+		top: 460
+		height: 40
+		width: 210
+		angle: 270
+		alignment: middle left
+		symbol font:
+			name: dreamblade-symbol
+			size: 40
+		always symbol: true
+		z index: 1
+	power:
+		left: 250
+		top : 2602
+		width: 40
+		height: 35
+		alignment: top center shrink-overflow
+		z index: 1
+		font:
+			name: Arial
+			weight: bold
+			size: 30
+			color: rgb(255,255,255)
+	toppower:
+		left: 10
+		top : 2152
+		width: 35
+		height: 35
+		alignment: top left shrink-overflow
+		z index: 1
+		font:
+			name: Arial
+			weight: bold
+			size: 35
+			color:
+				script:
+					if styling.border_font_color == "Black" then rgb(0,0,0)
+					else rgb(255,255,255)
+	defenselife:
+		left: 255
+		top : 2602
+		width: 170
+		height: 35
+		alignment: top right shrink-overflow
+		z index: 1
+		font:
+			name: Arial
+			size: 30
+			color: rgb(255,255,255)
+	topdefenselife:
+		left: 10
+		top : 2192
+		width: 70
+		height: 35
+		alignment: top left shrink-overflow
+		z index: 1
+		font:
+			name: Arial
+			size: 30
+			color:
+				script:
+					if styling.border_font_color == "Black" then rgb(0,0,0)
+					else rgb(255,255,255)
+	imageone:
+		left:	20
+		top:	1475
+		width:	410
+		height:	535
+		mask: mask.png
+		z index: 1
+	imagetwo:
+		left:	430
+		top:	1220
+		width:	410
+		height:	535
+		angle: 180
+		z index: 1
+		render style: image
+		mask: mask.png
+		choice images:
+			default: {card.imageone}
+	set:
+		left: 285
+		top : 2655
+		width: 35
+		height: 35
+		render style: image
+		alignment: middle right
+		z index: 1
+		choice images:
+			# Images based on the set symbol
+			common:
+				script:
+					if styling.inverted_common_symbol then symbol_variation(symbol: set.symbol, variation: "invertedcommon")
+					else symbol_variation(symbol: set.symbol, variation: "common")
+	rarity:
+		left: 390
+		top : 2655
+		width: 35
+		height: 35
+		z index: 1
+		render style: image
+		choice images:
+			common: common.png
+			uncommon: uncommon.png
+			rare: rare.png
+	card number:
+		left: 325
+		top : 2655
+		width: 60
+		height: 35
+		alignment: middle center shrink-overflow
+		z index: 1
+		font:
+			name: Arial
+			size: 20

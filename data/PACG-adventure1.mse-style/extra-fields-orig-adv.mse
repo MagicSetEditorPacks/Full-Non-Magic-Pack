@@ -1,0 +1,725 @@
+# styling field for FRONT or BACK of card
+styling field:
+	type:			choice
+	name:			card side
+	choice:			Front
+	choice: 		Back
+	initial: 		Front
+	description: 	Card Side
+	
+# extra card fields
+
+# ADVENTURE and SCENARIO
+extra_card_field:
+	type:				color
+	name:				reward_table
+	default: 			"black"
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+
+extra_card_field:
+	type:				text
+	name:				reward_header
+	script:				"REWARD"
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+
+# ADVENTURE PATH
+extra_card_field:
+	type:				color
+	name:				adventure_table
+	editable:			false
+	save_value:			false
+	script:				getMidColour()
+extra_card_field:
+	type:				text
+	name:				adventure_header
+	script:				"Complete these adventures, in this order:"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				adventure_cell_a1
+	script:				"1"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				adventure_cell_a2
+	script:				"2"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				adventure_cell_a3
+	script:				"3"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				adventure_cell_a4
+	script:				"4"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				adventure_cell_a5
+	script:				"5"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				adventure_cell_a6
+	script:				"6"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				adventure_cell_b1
+	script:				"white"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				adventure_cell_b2
+	script:				"white"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				adventure_cell_b3
+	script:				"white"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				adventure_cell_b4
+	script:				"white"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				adventure_cell_b5
+	script:				"white"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				adventure_cell_b6
+	script:				"white"
+	editable:			false
+	save_value:			false
+	
+extra_card_field:
+	type:				info
+	name:				during_table
+	script:				"DURING THIS ADVENTURE PATH"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				during_cell
+	script:				"white"
+	editable:			false
+	save_value:			false
+
+
+# ADVENTURE
+extra_card_field:	
+	type:				color
+	name:				scenario_table
+	script: 			getLightColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+
+extra_card_field:
+	type:				text
+	name:				scenario_header
+	script:				"Complete these scenarios, in this order:"
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+
+extra_card_field:
+	type:				color
+	name:				scenario_cell_1
+	script: 			"white"
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				scenario_cell_2
+	script: 			"white"
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				scenario_cell_3
+	script: 			"white"
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				scenario_cell_4
+	script: 			"white"
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				scenario_cell_5
+	script: 			"white"
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+
+# SCENARIO
+
+# SCENARIO Front
+extra_card_field:
+	type:				color
+	name:				villain_table
+	script:				getLightColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				villain_header
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				text
+	name:				villain_forward
+	script:
+			forward_editor(
+				field: card.villain,
+				prefix:	"VILLAIN: "
+			)
+	description:		Villain Name
+	show_statistics: 	false
+	card_list_allow: 	false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				henchmen_cell
+	script:				getMidColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				text
+	name:				henchmen_header
+	script:				"HENCHMEN:"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				henchmen_cell_1
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				henchmen_cell_2
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				henchmen_cell_3
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				henchmen_cell_4
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+	
+#During this scenario
+extra_card_field:
+	type:				info
+	name:				during table
+	script:				"DURING THIS SCENARIO"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				during_cell
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+	
+# SCENARIO Back
+# Locations for 1 - 2 players
+extra_card_field:
+	type:				color
+	name:				location_table_1
+	script:				getLightColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+# players column
+extra_card_field:
+	type:				color
+	name:				players_hcell_1
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+	save_value:			false
+extra_card_field:
+	type:				text
+	name:				players_header_1
+	script:				"PLAYERS"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+extra_card_field:
+	type:				info
+	name:				players_cell_1a
+	script:				"1"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				players_cell_1b
+	script:				"1"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				players_cell_1c
+	script:				"1"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				players_cell_2
+	script:				"2"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+# location column
+extra_card_field:
+	type:				color
+	name:				locations_cell_1
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				text
+	name:				locations_header_1
+	script:				"LOCATIONS"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				location_cell_1a
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				location_cell_1b
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				location_cell_1c
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				location_cell_2
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+
+# Locations for 3 - 6 players
+extra_card_field:
+	type:				color
+	name:				location_table_2
+	script:				getLightColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+# players column
+extra_card_field:
+	type:				color
+	name:				players_hcell_2
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				text
+	name:				players_header_2
+	script:				"PLAYERS"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				players_cell_3
+	script:				"3"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				players_cell_4
+	script:				"4"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				players_cell_5
+	script:				"5"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				players_cell_6
+	script:				"6"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+
+# locations column 2
+extra_card_field:
+	type:				color
+	name:				locations_cell_2
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				text
+	name:				locations_header_2
+	script:				"LOCATIONS"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				location_cell_3
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				location_cell_4
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				location_cell_5
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				location_cell_6
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+
+# Anchored ship table
+extra_card_field:
+	type:				color
+	name:				anchored_table
+	script:				getLightColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				anchored_cell
+	script:				getMidColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+# LOCATION
+
+#Deck Table
+extra_card_field:
+	type:				color
+	name:				deck_table
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				text
+	name:				deck_header
+	script:				"DECK LIST"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+#Card name_cells
+extra_card_field:
+	type:				info
+	name:				deck_cell_a1
+	script:				"MONSTER"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				deck_cell_a2
+	script:				"BARRIER"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				deck_cell_a3
+	script:				"WEAPON"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				deck_cell_a4
+	script:				"SPELL"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				deck_cell_a5
+	script:				"ARMOR"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				deck_cell_a6
+	script:				"ITEM"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				deck_cell_a7
+	script:				"ALLY"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				deck_cell_a8
+	script:				"BLESSING"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				deck_cell_b1
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				deck_cell_b2
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				deck_cell_b3
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				deck_cell_b4
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				deck_cell_b5
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				deck_cell_b6
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				deck_cell_b7
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				deck_cell_b8
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+
+#Location rules
+extra_card_field:
+	type:				info
+	name:				atl_table
+	script:				"AT THIS LOCATION"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				wc_table
+	script:				"WHEN CLOSING"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				info
+	name:				wpc_table
+	script:				"WHEN PERMANENTLY CLOSED"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				atl_cell
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				wc_cell
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				wpc_cell
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable:			false
+	save_value:			false
+	

@@ -1,0 +1,12 @@
+﻿# The Bar icon choices
+# Included by a game file
+
+choice:
+	name: none
+	line below: true
+choice:
+	name: official
+	choice: anti-doom
+	choice: doom(creepers)
+	choice: doom(keepers)
+	choice: investigator

@@ -1,0 +1,274 @@
+﻿mse version: 0.3.8
+version: 2009-032-08
+short name: dreamblade symbols
+installer group: dreamblade/symbols
+position hint: 001
+icon: b.png
+
+image font size: 100
+horizontal space: 0
+
+symbol:
+	code: 10
+	image: 10.png
+symbol:
+	code: 11
+	image: 11.png
+symbol:
+	code: 12
+	image: 12.png
+symbol:
+	code: 13
+	image: 13.png
+symbol:
+	code: 0
+	image: 0.png
+symbol:
+	code: 1
+	image: 1.png
+symbol:
+	code: 2
+	image: 2.png
+symbol:
+	code: 3
+	image: 3.png
+symbol:
+	code: 4
+	image: 4.png
+symbol:
+	code: 5
+	image: 5.png
+symbol:
+	code: 6
+	image: 6.png
+symbol:
+	code: 7
+	image: 7.png
+symbol:
+	code: 8
+	image: 8.png
+symbol:
+	code: 9
+	image: 9.png
+symbol:
+	code: v
+	image: v.png
+symbol:
+	code: ov
+	image: ov.png
+symbol:
+	code: p
+	image: p.png
+symbol:
+	code: op
+	image: op.png
+symbol:
+	code: m
+	image: m.png
+symbol:
+	code: om
+	image: om.png
+symbol:
+	code: f
+	image: f.png
+symbol:
+	code: of
+	image: of.png
+symbol:
+	code: b
+	image: b.png
+symbol:
+	code: ob
+	image: bw.png
+symbol:
+	code: d
+	image: db.png
+symbol:
+	code: od
+	image: dbw.png
+symbol:
+	code: t
+	image: tb.png
+symbol:
+	code: ot
+	image: tbw.png
+symbol:
+	code: q
+	image: qb.png
+symbol:
+	code: oq
+	image: qbw.png
+symbol:
+	code: u
+	image: mb.png
+symbol:
+	code: ou
+	image: mbw.png
+symbol:
+	code: r
+	image: tmb.png
+symbol:
+	code: or
+	image: tmbw.png
+symbol:
+	code: a
+	image: qmb.png
+symbol:
+	code: oa
+	image: qmbw.png
+symbol:
+	code: s
+	image: sc.png
+symbol:
+	code: os
+	image: osc.png
+symbol:
+	code: c
+	image: cip.png
+symbol:
+	code: oc
+	image: ocip.png
+symbol:
+	code: h
+	image: s.png
+symbol:
+	code: oh
+	image: os.png
+symbol:
+	code: x
+	image: x.png
+symbol:
+	code: ox
+	image: ox.png
+symbol:
+	code: e
+	image: miss.png
+symbol:
+	code: oe
+	image: omiss.png
+symbol:
+	code: i
+	image: hit.png
+symbol:
+	code: oi
+	image: ohit.png
+symbol:
+	code: o0
+	image: o0.png
+symbol:
+	code: o10
+	image: o10.png
+symbol:
+	code: o11
+	image: o11.png
+symbol:
+	code: o12
+	image: o12.png
+symbol:
+	code: o13
+	image: o13.png
+symbol:
+	code: o1
+	image: o1.png
+symbol:
+	code: o2
+	image: o2.png
+symbol:
+	code: o3
+	image: o3.png
+symbol:
+	code: o4
+	image: o4.png
+symbol:
+	code: o5
+	image: o5.png
+symbol:
+	code: o6
+	image: o6.png
+symbol:
+	code: o7
+	image: o7.png
+symbol:
+	code: o8
+	image: o8.png
+symbol:
+	code: o9
+	image: o9.png
+symbol:
+	code: oo
+	image: dmbw.png
+symbol:
+	code: o
+	image: dmb.png
+
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: 0
+	item: 1
+	item: 2
+	item: 3
+	item: 4
+	item: 5
+	item: 6
+	item: 7
+	item: 8
+	item: 9
+	item: 10
+	item: 11
+	item: 12
+	item: 13
+	item:
+		type: line
+	item: o0
+	item: o1
+	item: o2
+	item: o3
+	item: o4
+	item: o5
+	item: o6
+	item: o7
+	item: o8
+	item: o9
+	item: o10
+	item: o11
+	item: o12
+	item: o13
+	item:
+		type: line
+	item: v
+	item: p
+	item: m
+	item: f
+	item: b
+	item: t
+	item: q
+	item: u
+	item: r
+	item: a
+	item: s
+	item: c
+	item: h
+	item: x
+	item: e
+	item: i
+	item: o
+	item:
+		type: line
+	item: ov
+	item: op
+	item: om
+	item: of
+	item: ob
+	item: ot
+	item: oq
+	item: ou
+	item: or
+	item: oa
+	item: os
+	item: oc
+	item: oh
+	item: ox
+	item: oe
+	item: oi
+	item: oo

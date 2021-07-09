@@ -1,0 +1,442 @@
+# Card Back
+
+card_style:
+
+# Favoured Card
+	favoured_card_choice:
+		visible: 			{ isCharBack() }
+		left:				61
+		top:				105
+		width:				80
+		height:				{ if isCharBack() then 16 }
+		render_style:		hidden
+		font:
+			name:				Dax
+			size:				12
+			color:				rgb(255,255,255)
+		alignment: 			right middle
+		angle:				90
+		z_index: 			51
+
+# Cohort Choice
+	cohort_choice:
+		visible:			{ isCharBack() }
+		left:				101
+		top:				302
+		width:				277
+		height:				{ boxHeight }
+		render_style:		hidden
+		font:
+			name:				Dax
+			size:				11
+			color:				rgb(255,255,255)
+		alignment: 			left middle
+		angle:				90
+		z_index: 			51
+
+# Cards in starting hand
+	weapon_cards:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight }
+		top:				235
+		width:				20
+		height:				{ if  isCharBack()  then boxHeight }
+		alignment: 			center middle
+		always_symbol:		true
+		font:
+			name:				Dax
+			size:				11
+		symbol font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			51
+	spell_cards:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight * 2 }
+		top:				235
+		width:				20
+		height:				{ if  isCharBack()  then boxHeight }
+		alignment: 			center middle
+		always_symbol:		true
+		font:
+			name:				Dax
+			size:				11
+		symbol font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			51
+	armor_cards:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight * 3 }
+		top:				235
+		width:				20
+		height:				{ if  isCharBack()  then boxHeight }
+		alignment: 			center middle
+		always_symbol:		true
+		font:
+			name:				Dax
+			size:				11
+		symbol font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			51
+	item_cards:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight * 4 }
+		top:				235
+		width:				20
+		height:				{ if  isCharBack()  then boxHeight }
+		alignment: 			center middle
+		always_symbol:		true
+		font:
+			name:				Dax
+			size:				11
+		symbol font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			51
+	ally_cards:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight * 5 }
+		top:				235
+		width:				20
+		height:				{ if  isCharBack()  then boxHeight }
+		alignment: 			center middle
+		always_symbol:		true
+		font:
+			name:				Dax
+			size:				11
+		symbol font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			51
+	blessing_cards:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight * 6 }
+		top:				235
+		width:				20
+		height:				{ if  isCharBack()  then boxHeight }
+		alignment: 			center middle
+		always_symbol:		true
+		font:
+			name:				Dax
+			size:				11
+		symbol font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			51
+
+# Card Advencement Boxes
+	weapon_advance:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight }
+		top:				205
+		width:				180
+		height: 			{ if isCharBack() then boxHeight }
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax
+			size:				11
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			51
+	spell_advance:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight * 2 }
+		top:				205
+		width:				180
+		height: 			{ if isCharBack() then boxHeight }
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax
+			size:				11
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			51
+	armor_advance:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight * 3 }
+		top:				205
+		width:				180
+		height: 			{ if isCharBack() then boxHeight }
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax
+			size:				11
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			51
+	item_advance:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight * 4 }
+		top:				205
+		width:				180
+		height: 			{ if isCharBack() then boxHeight }
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax
+			size:				11
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			51
+	ally_advance:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight * 5 }
+		top:				205
+		width:				180
+		height: 			{ if isCharBack() then boxHeight }
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax
+			size:				11
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			51
+	blessing_advance:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight * 6 }
+		top:				205
+		width:				180
+		height: 			{ if isCharBack() then boxHeight }
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax
+			size:				11
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			51
+
+extra_card_style:
+
+# Card Table and Headings
+	favoured_header:
+		visible: 			{ isCharBack() }
+		left:				44
+		top:				105
+		width:				80
+		height:				16
+		font:
+			name:				Dax
+			size:				12
+			color:				rgb(255,255,255)
+		alignment: 			right middle
+		angle:				90
+		z_index: 			50
+	cards_list_header:
+		visible: 			{ isCharBack() }
+		left:				103
+		top:				302
+		width:				277
+		height:				{ boxHeight - 4 }
+		font:
+			name:				Dax
+			size:				11
+			color:				rgb(255,255,255)
+		alignment: 			left middle
+		angle:				90
+		background_color: 	"black"
+		z_index: 			50
+
+	weapon_header:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight }
+		top:				300
+		width:				50
+		height:				{ boxHeight }
+		font:
+			name:				Dax
+			size:				11
+			color:				rgb(0,0,0)
+			shadow_color:		rgb(255,2255,255)
+			shadow_blur:		5
+		alignment: 			left middle
+		angle:				90
+		z_index: 			50
+	spell_header:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight * 2 }
+		top:				300
+		width:				50
+		height:				{ boxHeight }
+		font:
+			name:				Dax
+			size:				11
+			color:				rgb(0,0,0)
+			shadow_color:		rgb(255,2255,255)
+			shadow_blur:		5
+		alignment: 			left middle
+		angle:				90
+		z_index: 			50
+	armor_header:
+		visible:			{ isCharBack() }
+		left:				{ 105 + boxHeight * 3 }
+		top:				300
+		width:				50
+		height:				{ boxHeight }
+		font:
+			name:				Dax
+			size:				11
+			color:				rgb(0,0,0)
+			shadow_color:		rgb(255,2255,255)
+			shadow_blur:		5
+		alignment: 			left middle
+		angle:				90
+		z_index: 			50
+	item_header:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight * 4 }
+		top:				300
+		width:				50
+		height:				{ boxHeight }
+		font:
+			name:				Dax
+			size:				11
+			color:				rgb(0,0,0)
+			shadow_color:		rgb(255,2255,255)
+			shadow_blur:		5
+		alignment: 			left middle
+		angle:				90
+		z_index: 			50
+	ally_header:
+		visible:			{ isCharBack() }
+		left:				{ 105 + boxHeight * 5 }
+		top:				300
+		width:				50
+		height:				{ boxHeight }
+		font:
+			name:				Dax
+			size:				11
+			color:				rgb(0,0,0)
+			shadow_color:		rgb(255,2255,255)
+			shadow_blur:		5
+		alignment: 			left middle
+		angle:				90
+		z_index: 			50
+	blessing_header:
+		visible: 			{ isCharBack() }
+		left:				{ 105 + boxHeight * 6 }
+		top:				300
+		width:				50
+		height:				{ boxHeight }
+		font:
+			name:				Dax
+			size:				11
+			color:				rgb(0,0,0)
+			shadow_color:		rgb(255,2255,255)
+			shadow_blur:		5
+		alignment: 			left middle
+		angle:				90
+		z_index: 			50
+		z_index: 50
+	cohort_forward:
+		visible:			{ isCharBack() and has_cohort() }
+		left:				{ 105 + boxHeight * 7 }
+		top:				300
+		width:				275
+		height: 			{ if isCharBack() then boxHeight }
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax
+			size:				11
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			51
+
+# border lines
+	box1:
+		visible: 			{ isCharBack() }
+		top:				300
+		left:				{ 105 + boxHeight * 2 }
+		width:				275
+		height:				{ if isCharBack() then 1 else 0 }
+		angle:				90
+		z_index:			50
+	box2:
+		visible: 			{ isCharBack() }
+		top:				300
+		left:				{ 105 + boxHeight * 3 }
+		width:				275
+		height:				{ if isCharBack() then 1 else 0 }
+		angle:				90
+		z_index: 			50
+	box3:
+		visible: 			{ isCharBack() }
+		top:				300
+		left:				{ 105 + boxHeight * 4 }
+		width:				275
+		height:				{ if isCharBack() then 1 else 0 }
+		angle:				90
+		z_index: 			50
+	box4:
+		visible: 			{ isCharBack() }
+		top:				300
+		left:				{ 105 + boxHeight * 5 }
+		width:				275
+		height:				{ if isCharBack() then 1 else 0 }
+		angle:				90
+		z_index: 			50
+	box5:
+		visible: 			{ isCharBack() }
+		top:				300
+		left:				{ 105 + boxHeight * 6 }
+		width:				275
+		height:				{ if isCharBack() then 1 else 0 }
+		angle:				90
+		z_index: 			50
+	box6:
+		visible: 			{ isCharBack() }
+		top:				300
+		left:				{ 105 + boxHeight * 7 }
+		width:				275
+		height:				{ if isCharBack() then 1 else 0 }
+		angle:				90
+		z_index: 			50
+	box7:
+		visible: 			{ isCharBack() and has_cohort() }
+		top:				300
+		left:				{ 105 + boxHeight * 8 }
+		width:				275
+		height:				{ if isCharBack() then 1 else 0 }
+		angle:				90
+		z_index: 			50
+
+	favoured_card_value:
+		visible: 			{ isCharBack() }
+		left:				61
+		top:				105
+		width:				80
+		height:				{ if isCharBack() then 16 }
+		font:
+			name:				Dax
+			size:				12
+			color:				rgb(255,255,255)
+		alignment: 			right middle
+		angle:				90
+		z_index: 			52

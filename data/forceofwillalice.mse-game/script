@@ -1,0 +1,248 @@
+﻿ceil :=
+{
+	if input > to_int(input) then to_int(input) +1
+	else input
+}
+card_rules_height :=
+{
+	ceil(set.stylesheet.card_style.rules.content_height)
+}
+card_flavor_height :=
+{
+	ceil(set.stylesheet.card_style.flavor.content_height)
+}
+card_color :=
+{
+	if type == "jruler" then input := "color/resonator_" + color + ".png"
+	else if type == "spell" then input := "color/spell_" + color + ".png"
+	else if type == "regalia" then input := "color/spell_" + color + ".png"
+	else if type == "resonator" then input := "color/resonator_" + color + ".png"
+	else if type == "stone" then input := "color/blank.png"
+	else input := "color/ruler_" + color + ".png"
+}
+rescard_color :=
+{
+	input := "color/" + color + "bottom.png"
+}
+spellcard_color :=
+{
+	input := "color/" + color + "s.png"
+}
+topcard_color :=
+{
+	if type == "ruler" or type == "jruler" then input := "bars/lapis_" + color + ".png"
+	else input := "color/" + color + "top.png"
+}
+jrulerbutton :=
+{
+	if type == "jruler" then input := "jruler_btn.png"
+	else if type == "ruler" then input := "ruler_btn.png"
+}
+card_background :=
+{
+	if type == "ruler" then input := "ruler_empty.png"
+	else if type == "jruler" then input := "jruler_empty.png"
+	else if type == "resonator" and rarity == "AR" then input := "SRresonator_empty.png"
+	else if type == "spell" and rarity == "AR" then input := "SRspell_empty.png"
+	else if type == "resonator" then input := rarity + "resonator_empty.png"
+	else if type == "spell" then input := rarity + "spell_empty.png"
+	else if type == "regalia" then input := "reg_empty.png"
+	else if (type == "stone") and
+	(rarity == "SR") then input := "SRstone_empty.png"
+	else if type == "stone" then input := "stone_empty.png"
+}
+card_outline :=
+{
+	if style != "Lapis Cluster" then input := ""
+}
+card_assets :=
+{
+	if type == "ruler" then input := ""
+	else if type == "jruler" then input := ""
+	else if type == "resonator" and rarity == "AR" then input := "SRresonator_ass.png"
+	else if type == "spell" and rarity == "AR" then input := "SRspell_ass.png"
+	else if type == "resonator" then input := rarity + "resonator_ass.png"
+	else if type == "spell" then input := rarity + "spell_ass.png"
+	else if type == "regalia" then input := ""
+	else if (type == "stone") and
+	(rarity == "SR") then input := "SRstone_ass.png"
+	else if type == "stone" then input := ""
+}
+card_cost :=
+{
+	if type == "resonator" and rarity == "AR" and style == "Alice Cluster" then input := "SRresonator_ass2.png"
+	else if type == "spell" and rarity == "AR" and style == "Alice Cluster" then input := "SRspell_ass2.png"
+	else if rarity != "SR" then input := ""
+	else if type == "ruler" then input := ""
+	else if type == "jruler" then input := ""
+	else if type == "resonator" then input := rarity + "resonator_ass2.png"
+	else if type == "spell" then input := rarity + "spell_ass2.png"
+	else if type == "regalia" then input := ""
+	else if type == "stone" then input := ""
+}
+AR :=
+{
+	if rarity != "AR" then input := ""
+}
+card_mask :=
+{
+	if type == "ruler" then input := "ruler_mask.png"
+	else if type == "jruler" then input := "jruler_mask.png"
+}
+wheel_visible_check :=
+{
+	if type == "ruler" then input := false
+	else if type == "jruler" then input := false
+	else if type == "resonator" then input := true
+	else if type == "spell" then input := true
+	else if type == "regalia" then input := true
+	else if type == "stone" then input := false
+}
+top_bar_use :=
+{
+	if type == "resonator" then input := "bars/restopbar.png"
+	else if type != "resonator" then input := "bars/topbar.png"
+}
+
+top_bar_masking :=
+{
+	if checker != "None" then input := masked_blend(light: "bars/mask.png", dark: "bars/lapis_" + color + ".png", mask: "bars/mask.png")
+	else input := "bars/lapis_transparent.png"
+}
+
+font_size_changer :=
+{
+	if type == "ruler" then input := 16
+	else if type == "jruler" then input := 16
+	else if type == "resonator" then input := 15
+	else if type == "spell" then input := 16
+	else if type == "regalia" then input := 16
+	else if type == "stone" then input := 16
+}
+
+race_font_color :=
+{
+	if type == "resonator" and style = "Alice Cluster" then input := "black"
+	else if style == "Alice Cluster" then input := "white"
+}
+
+font_color_changer :=
+{
+	if type == "ruler" then input := "rgb(255,255,255)"
+	else if type == "jruler" then input := "rgb(255,255,255)"
+	else if type == "stone" then input := "rgb(255,255,255)"
+	else if type == "regalia" then input := "rgb(222,178,0)"
+	else if rarity == "SR" then input := "rgb(255,255,255)"
+	else if type == "resonator" then input := "rgb(0,0,0)"
+	else if type == "spell" then input := "rgb(0,0,0)"
+}
+atk_def_font_size :=
+{
+	if style == "Alice Cluster" then input := "49"
+}
+rules_font :=
+{
+	if query == "font" and style == "Alice Cluster" then input := "Arial"
+	else if query == "weight" and style == "Alice Cluster" then input := ""
+	else if query == "size" and style == "Alice Cluster" then input := 14.5
+	else if query == "soft" and style == "Alice Cluster" then input := 1.12
+	else if query == "hard" and style == "Alice Cluster" then input := 1.5
+}
+flavor_font :=
+{
+	if query == "size" and style == "Alice Cluster" then input := 13
+}
+card_rules_flavor_gap :=
+{
+	if ceil(set.stylesheet.card_style.flavor.content_height) == 0 then 0
+	else if ceil(set.stylesheet.card_style.flavor.content_height) != 0 then 12
+}
+symbol_font :=
+{
+	if query == "size" and style == "Alice Cluster" then input := 4.8
+	else if query == "sizefa" and style == "Alice Cluster" then input := 4.8
+}
+sr_skittles :=
+{
+	input := 1
+}
+
+card_serial :=
+{
+	input := set.set_id + "-" + to_string(card_number(), format: ".3d") + " " + card.rarity
+}
+card_number :=
+{
+	position (
+		of: card
+		in: set
+		order_by: { color_sort() + type_sort() + sort_name(card.card_name) }
+	) + 1
+}
+color_sort :=
+{
+	if styling.card_format == "Alice Cluster" then color := card.color
+	
+	if color == "white" then "A"
+	else if color == "red" then "B"
+	else if color == "blue" then "C"
+	else if color == "green" then "D"
+	else if color == "black" then "E"
+	else if color != "" and color != "void" then "F"
+	else if color == "void" then "G"
+	else if color == "" then "H"
+}
+type_sort :=
+{
+	if card.cardtype == "ruler" then "A"
+	else if card.cardtype == "jruler" then "B"
+	else if card.cardtype == "stone" then "E"
+	else if card.cardtype == "regalia" then "D"
+	else "C"
+}
+
+sort_name :=
+	# Remove "The", "A", and "And" at the beginning
+	replace@(match: "^(The|An?) ", replace: "") +
+	# Remove commas and apostrophes
+	replace@(match: "(,|'|’)", replace: "") +
+	# Remove bold and italic tags
+	replace@(match: "(<b>|<i>|</b>|</i>)", replace: "") +
+	# Make lowercase
+	to_lower
+
+ci_visible :=
+{
+	if num <= count_chosen(card.color2) then true
+	else false
+}
+
+ci_value :=
+{
+	split := split_text(match: ", ", card.color2)
+	if num <= count_chosen(card.color2) then split[num - 1]
+	else "none"
+}
+
+type_bar :=
+{
+	if card.cardtype == "stone" then ""
+	
+	else if chosen(choice: "void", card.color2) and color != "void" then set_mask(image: "bars/lapis_" + color + ".png", mask: "bars/lapis_bar_gradient_clear.png")
+	else if chosen(choice: "void", card.color2) and color == "void" then set_mask(image: "bars/lapis_" + color + ".png", mask: "bars/lapis_bar_gradient_full.png")
+	else if count_chosen(card.color2) == 1 and chosen(choice: color, card.color2) then set_mask(image: "bars/lapis_" + color + ".png", mask: "bars/lapis_bar_gradient_full.png")
+	else if chosen(choice: color, card.color2) then (
+		pos := 0
+		for each k:v in split_text(match: ", ", card.color2) do (
+			if v == color then pos := k + 1
+		)
+		set_mask(image: "bars/lapis_" + color + ".png", mask: "bars/lapis_bar_gradient_" + count_chosen(card.color2) + "_" + pos + ".png")
+	)
+	else set_mask(image: "bars/lapis_" + color + ".png", mask: "bars/lapis_bar_gradient_clear.png")
+}
+
+lapis_enable :=
+{
+	if styling.card_format == "Lapis Cluster" then "yes"
+	else "no"
+}

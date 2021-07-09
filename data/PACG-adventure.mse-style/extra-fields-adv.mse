@@ -1,0 +1,619 @@
+# 1. STYLING Fields
+
+styling_field:
+	type:			choice
+	name:			card side
+	choice:			Front
+	choice:			Back
+	initial:		Front
+
+styling_field:
+	type:			multiple choice
+	name:			landscape cards
+	choice:			Adventure Path
+	choice:			Adventure
+	choice:			Scenario
+	choice:			Location
+	description:	Select cards to render in landscape
+
+# EXTRA CARD FIELDS
+# Layout tables
+
+# 2. COMMON
+extra_card_field:
+	type:			color
+	name:			flavour_table
+	script:			getDarkColour()
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			reward_table
+	script:			getDarkColour()
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			reward_header
+	script:			"REWARD"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			reward_cell
+	script:			"white"
+	editable:		false
+	save_value:		false
+
+# 3. ADVENTURE PATH
+extra_card_field:
+	type:			color
+	name:			adventure_table
+	script:			getDarkColour()
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			adventure_header
+	script:			"Complete these adventures, in this order:"
+	multi_line:		true
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			adventure_cell
+	script:			"white"
+	editable:		false
+	save_value:		false
+
+extra_card_field:
+	type:			text
+	name:			adventure_fwd_1
+	script:			forward_editor(field: card.adventure_1, prefix:	"1. ")
+	save_value:		false
+	description:	Adventure 1
+extra_card_field:
+	type:			text
+	name:			adventure_fwd_2
+	script:			forward_editor(field: card.adventure_2, prefix:	"2. ")
+	save_value:		false
+	description:	Adventure 2
+extra_card_field:
+	type:			text
+	name:			adventure_fwd_3
+	script:			forward_editor(field: card.adventure_3, prefix:	"3. ")
+	save_value:		false
+	description:	Adventure 3
+extra_card_field:
+	type:			text
+	name:			adventure_fwd_4
+	script:			forward_editor(field: card.adventure_4, prefix:	"4. ")
+	save_value:		false
+	description:	Adventure 4
+extra_card_field:
+	type:			text
+	name:			adventure_fwd_5
+	script:			forward_editor(field: card.adventure_5, prefix:	"5. ")
+	save_value:		false
+	description:	Adventure 5
+extra_card_field:
+	type:			text
+	name:			adventure_fwd_6
+	script:			forward_editor(field: card.adventure_6, prefix:	"6. ")
+	save_value:		false
+	description:	Adventure 6
+extra_card_field:
+	type:			color
+	name:			adventure_cell_1
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			adventure_cell_2
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			adventure_cell_3
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			adventure_cell_4
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			adventure_cell_5
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			adventure_cell_6
+	script:			"white"
+	editable:		false
+	save_value:		false
+
+extra_card_field:
+	type:			color
+	name:			duringap_table
+	script:			getDarkColour()
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			duringap_header
+	script:			"DURING THIS ADVENTURE PATH:"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			duringap_cell
+	script:			"white"
+	editable:		false
+	save_value:		false
+
+
+# 4. ADVENTURE
+extra_card_field:
+	type:			color
+	name:			scenario_table
+	script:			getDarkColour()
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			scenario_header
+	multi_line:		true
+	script:			"Complete these scenarios, in this order:"
+	editable:		false
+	save_value:		false
+	
+extra_card_field:
+	type:			color
+	name:			scenario_cell_1
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			scenario_cell_2
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			scenario_cell_3
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			scenario_cell_4
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			scenario_cell_5
+	script:			"white"
+	editable:		false
+	save_value:		false
+
+# 5. SCENARIO
+
+# Card Front
+extra_card_field:
+	type:			color
+	name:			villain_table
+	script:			getDarkColour()
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			villain_header
+	script:			"VILLAIN & HENCHMEN:"
+	editable:		false
+	save_value:		false
+		
+extra_card_field:
+	type:			color
+	name:			villain_cell
+	script:			getLightColour()
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			henchman_cell_1
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			henchman_cell_2
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			henchman_cell_3
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			henchman_cell_4
+	script:			"white"
+	editable:		false
+	save_value:		false
+	
+extra_card_field:
+	type:			color
+	name:			duringscen_table
+	script:			getDarkColour()
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			duringscen_header
+	script:			"DURING THIS SCENARIO:"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			duringscen_cell
+	script:			"white"
+	editable:		false
+	save_value:		false
+
+# Card Back
+extra_card_field:
+	type:			color
+	name:			location_table
+	script:			getDarkColour()
+	editable:		false
+	save_value:		false
+
+extra_card_field:
+	type:			text
+	name:			location_header
+	script:			"PLAYERS: LOCATIONS"
+	editable:		false
+	save_value:		false
+
+extra_card_field:
+	type:			text
+	name:			location_fwd_1a
+	script:			forward_editor(field: card.location_1a, prefix:	"1: ")
+	save_value:		false
+	description:	Location for 1 or more characters
+extra_card_field:
+	type:			text
+	name:			location_fwd_1b
+	script:			forward_editor(field: card.location_1b, prefix:	"1: ")
+	save_value:		false
+	description:	Location for 1 or more characters
+extra_card_field:
+	type:			text
+	name:			location_fwd_1c
+	script:			forward_editor(field: card.location_1c, prefix:	"1: ")
+	save_value:		false
+	description:	Location for 1 or more characters
+extra_card_field:
+	type:			text
+	name:			location_fwd_2
+	script:			forward_editor(field: card.location_2, prefix:	"2: ")
+	save_value:		false
+	description:	Location for 2 or more characters
+extra_card_field:
+	type:			text
+	name:			location_fwd_3
+	script:			forward_editor(field: card.location_3, prefix:	"3: ")
+	save_value:		false
+	description:	Location for 3 or more characters
+extra_card_field:
+	type:			text
+	name:			location_fwd_4
+	script:			forward_editor(field: card.location_4, prefix:	"4: ")
+	save_value:		false
+	description:	Location for 4 or more characters
+extra_card_field:
+	type:			text
+	name:			location_fwd_5
+	script:			forward_editor(field: card.location_5, prefix:	"5: ")
+	save_value:		false
+	description:	Location for 5 or more characters
+extra_card_field:
+	type:			text
+	name:			location_fwd_6
+	script:			forward_editor(field: card.location_6, prefix:	"6: ")
+	save_value:		false
+	description:	Location for 6 or more characters
+
+extra_card_field:
+	type:			color
+	name:			location_cell_1a
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			location_cell_1b
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			location_cell_1c
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			location_cell_2
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			location_cell_3
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			location_cell_4
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			location_cell_5
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			location_cell_6
+	script:			"white"
+	editable:		false
+	save_value:		false
+
+extra_card_field:
+	type:			choice
+	name:			anchored_icon
+	script:			1
+	editable:		false
+	save_value:		false
+	
+# 6. LOCATION
+extra_card_field:
+	type:			color
+	name:			atl_table
+	script:			getDarkColour()
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			atl_header
+	script:			"AT THIS LOCATION:"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			atl_cell
+	script:			"white"
+	editable:		false
+	save_value:		false
+
+extra_card_field:
+	type:			color
+	name:			wc_table
+	script:			getDarkColour()
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			wc_header
+	script:			"WHEN CLOSING:"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			wc_cell
+	script:			"white"
+	editable:		false
+	save_value:		false
+
+extra_card_field:
+	type:			color
+	name:			wpc_table
+	script:			getDarkColour()
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			wpc_header
+	script:			"WHEN PERMANENTLY CLOSED:"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			wpc_cell
+	script:			"white"
+	editable:		false
+	save_value:		false
+
+
+extra_card_field:
+	type:			color
+	name:			deck_table
+	script:			getDarkColour()
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			deck_header
+	script:			"DECK LIST"
+	editable:		false
+	save_value:		false
+
+extra_card_field:
+	type:			color
+	name:			deck_monster_cell_0
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_barrier_cell_0
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_weapon_cell_0
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_spell_cell_0
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_armour_cell_0
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_item_cell_0
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_ally_cell_0
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_blessing_cell_0
+	script:			"white"
+	editable:		false
+	save_value:		false
+
+extra_card_field:
+	type:			text
+	name:			deck_monster_header
+	script:			"MONSTER"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			deck_barrier_header
+	script:			"BARRIER"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			deck_weapon_header
+	script:			"WEAPON"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			deck_spell_header
+	script:			"SPELL"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			deck_armour_header
+	script:			"ARMOR"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			deck_item_header
+	script:			"ITEM"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			deck_ally_header
+	script:			"ALLY"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			text
+	name:			deck_blessing_header
+	script:			"BLESSING"
+	editable:		false
+	save_value:		false
+
+
+extra_card_field:
+	type:			color
+	name:			deck_monster_cell_1
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_barrier_cell_1
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_weapon_cell_1
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_spell_cell_1
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_armour_cell_1
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_item_cell_1
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_ally_cell_1
+	script:			"white"
+	editable:		false
+	save_value:		false
+extra_card_field:
+	type:			color
+	name:			deck_blessing_cell_1
+	script:			"white"
+	editable:		false
+	save_value:		false
+#
+#extra_card_field:
+#	type:			
+#	name:			
+#	script:			
+#	editable:		false
+#	save_value:		false

@@ -1,0 +1,573 @@
+mse version: 0.3.8
+game: ufs
+full name: UFS Standard
+short name: Standard
+installer group: UFS System/Standard cards
+icon: card-sample.png
+position hint: 001
+
+version: 2013-07-22
+depends on:
+	package: ufs.mse-game
+	version: 2008-05-25
+depends on:
+	package: ufs-common.mse-include
+	version: 2008-05-25
+depends on:
+	package: ufs-resource.mse-symbol-font
+	version: 2009-12-23
+
+card width: 375
+card height: 523
+card dpi: 150
+############################################################## Extra scripts
+############################################################## Set info fields
+############################################################## Extra style
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	type:
+		left:	0
+		top:	0
+		width:	375
+		height:	523
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			action: action.png
+			asset: asset.png
+			attack: attack.png
+			foundation: foundation.png
+			character: character.png
+	############################# Name line
+	name:
+		left: 25
+		top : 285
+		width: 205
+		height: 40
+		angle: 90
+		alignment: middle center
+		padding bottom: 0
+		z index: 4
+		font:
+			name: Times New Roman
+			size: 16
+			color:rgb(0,0,0)
+			weight: bold
+	difficulty:
+		left: 33
+		top : 24
+		width: 25
+		height: 30
+		alignment: bottom center
+		font:
+			name: Copperplate Gothic Light
+			size: 20
+			color: rgb(0,0,0)
+		z index: 5
+		padding top: 0
+	difficulty outline:
+		left: 32
+		top : 23
+		width: 25
+		height: 30
+		alignment: bottom center
+		font:
+			name: Copperplate Gothic Light
+			size: 20
+			color: rgb(255,255,255)
+		z index: 4
+		padding top: 0
+	difficulty outline 2:
+		left: 34
+		top : 25
+		width: 25
+		height: 30
+		alignment: bottom center
+		font:
+			name: Copperplate Gothic Light
+			size: 20
+			color: rgb(0255,255,255)
+		z index: 4
+		padding top: 0
+	difficulty outline 3:
+		left: 34
+		top : 23
+		width: 25
+		height: 30
+		alignment: bottom center
+		font:
+			name: Copperplate Gothic Light
+			size: 20
+			color: rgb(255,255,255)
+		z index: 4
+		padding top: 0
+	difficulty outline 4:
+		left: 32
+		top : 25
+		width: 25
+		height: 30
+		alignment: bottom center
+		font:
+			name: Copperplate Gothic Light
+			size: 20
+			color: rgb(255,255,255)
+		z index: 4
+		padding top: 0
+	control:
+		left: 328
+		top : 459
+		width: 25
+		height: 30
+		alignment: bottom center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(0,0,0)
+		z index: 5
+		padding top: 0
+	control outline:
+		left: 329
+		top : 460
+		width: 25
+		height: 30
+		alignment: bottom center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(255,255,255)
+		z index: 4
+		padding top: 0
+	control outline 2:
+		left: 327
+		top : 458
+		width: 25
+		height: 30
+		alignment: bottom center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(255,255,255)
+		z index: 4
+		padding top: 0
+	control outline 3:
+		left: 329
+		top : 458
+		width: 25
+		height: 30
+		alignment: bottom center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(255,255,255)
+		z index: 4
+		padding top: 0
+	control outline 4:
+		left: 327
+		top : 460
+		width: 25
+		height: 30
+		alignment: bottom center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(255,255,255)
+		z index: 4
+		padding top: 0
+	############################# Image
+	image:
+		left:	65
+		top:	14
+		width:	294
+		height: 295
+		mask: { if card.type=="attack" then "image-mask-attack.png" else "image-mask.png" }
+		z index: 1
+	card symbol:
+		left: 11
+		top : 461
+		height: 40
+		width: 90
+		render style: image
+		choice images:
+			StreetFighter: /ufs-common.mse-include/StreetFighter.png
+			SoulCalibur: /ufs-common.mse-include/SoulCalibur.png
+			SamuraiShowdown: /ufs-common.mse-include/SamuraiShowdown.png
+			KingOfFighters: /ufs-common.mse-include/KingOfFighters.png
+			Darkstalkers: /ufs-common.mse-include/Darkstalkers.png
+			PennyArcade: /ufs-common.mse-include/PennyArcade.png
+		z index: 3
+	custom symbol:
+		left: 11
+		top: 461
+		height: 40
+		width: 90
+		visible: { card.card_symbol=="Other..." }
+		z index: 4
+	############################# Type Bar
+	symbols:
+		left:	110
+		top:	312
+		width:	237
+		height: 40
+		render style: image list
+		alignment: left
+		spacing: -1
+		choice images:
+			air: air.png
+			all: all.png
+			chaos: chaos.png
+			death: death.png
+			earth: earth.png
+			evil: evil.png
+			fire: fire.png
+			good: good.png
+			life: life.png
+			order: order.png
+			void: void.png
+			water: water.png
+			infinity: infinity.png
+			end: end.png
+		z index: 2
+	############################# Card ID
+	############################# Text box
+	keyword text:
+		left: 37
+		top : 359
+		width: 300
+		height: 23
+		font:
+			name: Times New Roman
+			size: 12
+			scale down to: 6
+			color: rgb(0,0,0)
+		symbol font:
+			name: ufs-resource
+			size: 60
+			alignment: middle center
+		alignment: top center shrink-overflow
+		z index: 4
+		padding left: 5
+		padding top: 5
+		padding right: 5
+		padding bottom: 2
+		line height hard: 1.4
+	rule text:
+		left: 52
+		top : { if card.keyword_text ="" then 360 else 378 }
+		width: 270
+		height: { if card.keyword_text ="" then 135 else 117 }
+		font:
+			name: Times New Roman
+			size: 12
+			scale down to: 6
+			color: rgb(0,0,0)
+		symbol font:
+			name: ufs-resource
+			size: 60
+			alignment: middle center
+		mask: textmask.png
+		alignment: middle center shrink-overflow
+		z index: 4
+		padding left:   0
+		padding top:    0
+		padding right: 	0
+		padding bottom: 0
+		line height hard: 1.4
+	############################# Attack Speed / Zone / Damage
+	speed:
+		z index: 4
+		left:	328
+		top:	193
+		width:	20
+		height:	30
+		visible: {card.type=="attack"}
+		z index: 5
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(0,0,0)
+	speed outliner:
+		z index: 4
+		left:	329
+		top:	194
+		width:	20
+		height:	30
+		visible: {card.type=="attack"}
+		z index: 4
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(255,255,255)
+	speed outliner 2:
+		z index: 4
+		left:	327
+		top:	192
+		width:	20
+		height:	30
+		visible: {card.type=="attack"}
+		z index: 4
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(255,255,255)
+	speed outliner 3:
+		z index: 4
+		left:	329
+		top:	192
+		width:	20
+		height:	30
+		visible: {card.type=="attack"}
+		z index: 4
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(255,255,255)
+	speed outliner 4:
+		z index: 4
+		left:	327
+		top:	194
+		width:	20
+		height:	30
+		visible: {card.type=="attack"}
+		z index: 4
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(255,255,255)
+	damage:
+		z index: 4
+		left:	332
+		top:	252
+		width:	20
+		height:	30
+		visible: {card.type=="attack"}
+		z index: 5
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(0,0,0)
+	damage outliner:
+		z index: 4
+		left:	333
+		top:	253
+		width:	20
+		height:	30
+		visible: {card.type=="attack"}
+		z index: 4
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(255,255,255)
+	damage outliner 2:
+		z index: 4
+		left:	331
+		top:	251
+		width:	20
+		height:	30
+		visible: {card.type=="attack"}
+		z index: 4
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(255,255,255)
+	damage outliner 3:
+		z index: 4
+		left:	331
+		top:	253
+		width:	20
+		height:	30
+		visible: {card.type=="attack"}
+		z index: 4
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(255,255,255)
+	damage outliner 4:
+		z index: 4
+		left:	333
+		top:	251
+		width:	20
+		height:	30
+		visible: {card.type=="attack"}
+		z index: 4
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 19
+			color: rgb(255,255,255)
+	zone:
+		left:	312
+		top:	185
+		width:	55
+		height:	43
+		visible: {card.type=="attack"}
+		z index: 3
+		render style: image
+		popup style: in place
+		choice images:
+			high:		high.png
+			mid:		mid.png
+			low:		low.png
+	############################# Block
+	blockzone:
+		left:	289
+		top:	0
+		width:	86
+		height:	70
+		z index: 3
+		render style: image
+		popup style: in place
+		choice images:
+			high:		highblock.png
+			mid:		midblock.png
+			low:		lowblock.png
+	blockmodifier:
+		z index: 4
+		left:	337
+		top:	16
+		width:	30
+		height:	30
+		visible: { card.blockzone != "none" }
+		z index: 5
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 21
+			color: rgb(0,0,0)
+	blockmodifier outliner:
+		z index: 4
+		left:	338
+		top:	17
+		width:	30
+		height:	30
+		visible: { card.blockzone != "none" }
+		z index: 4
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 21
+			color: rgb(255,255,255)
+	blockmodifier outliner 2:
+		z index: 4
+		left:	336
+		top:	15
+		width:	30
+		height:	30
+		visible: { card.blockzone != "none" }
+		z index: 4
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 21
+			color: rgb(255,255,255)
+	blockmodifier outliner 3:
+		z index: 4
+		left:	336
+		top:	17
+		width:	30
+		height:	30
+		visible: { card.blockzone != "none" }
+		z index: 4
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 21
+			color: rgb(255,2555,255)
+	blockmodifier outliner 4:
+		z index: 4
+		left:	338
+		top:	15
+		width:	30
+		height:	30
+		visible: { card.blockzone != "none" }
+		z index: 4
+		alignment: middle center
+		font:
+			name: Copperplate Gothic Light
+			size: 21
+			color: rgb(255,255,255)
+############################# Card sorting / numbering
+	set:
+		left: 18
+		top : 493
+		width: 342
+		height: 10
+		alignment: bottom center
+		padding bottom: 0
+		z index: 5
+		font:
+			name: Impact
+			size: 7
+			color:rgb(0,0,0)
+	set outliner:
+		left: 17
+		top : 492
+		width: 342
+		height: 10
+		alignment: bottom center
+		padding bottom: 0
+		z index: 4
+		font:
+			name: Impact
+			size: 7
+			color:rgb(255,255,255)
+	set outliner 2:
+		left: 19
+		top : 494
+		width: 342
+		height: 10
+		alignment: bottom center
+		padding bottom: 0
+		z index: 4
+		font:
+			name: Impact
+			size: 7
+			color:rgb(255,255,255)
+	set outliner 3:
+		left: 19
+		top : 492
+		width: 342
+		height: 10
+		alignment: bottom center
+		padding bottom: 0
+		z index: 4
+		font:
+			name: Impact
+			size: 7
+			color:rgb(255,255,255)
+	set outliner 4:
+		left: 17
+		top : 494
+		width: 342
+		height: 10
+		alignment: bottom center
+		padding bottom: 0
+		z index: 4
+		font:
+			name: Impact
+			size: 7
+			color:rgb(255,255,255)
+############################# Copyright stuff
+	copyright:
+		left: 18
+		top : 504
+		width: 342
+		height: 10
+		alignment: middle center
+		padding bottom: 0
+		z index: 4
+		font:
+			name: Impact
+			size: 5
+			color:rgb(255,255,255)
+############################################################## Extra card fields

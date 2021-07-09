@@ -1,0 +1,407 @@
+# Character Card Fields
+
+# CHARACTER
+# Front
+card_field:
+	type:				multiple choice
+	name:				skills_choice
+	choice:				STRENGTH Skills
+	choice:				DEXTERITY Skills
+	choice:				CONSTITUTION Skills
+	choice:				INTELLIGENCE Skills
+	choice:				WISDOM Skills
+	choice:				CHARISMA Skills
+	description:		Show Extra Skills Boxes
+	tab_index: 			101
+
+card_field
+	type:				choice
+	name:				portrait_size
+	default:			"Tall"
+	default_name:		Tall
+	choice:				Wide
+	description:		Choose Wide for short or wide Character art
+# Skills Data Fields
+# dice, advancements, skills
+card_field:
+	type:				text
+	name:				str_dice
+	description:		Strength Dice
+	tab_index: 			111
+card_field:
+	type:				text
+	name:				str_advance
+	description: 		Strength Advancements
+	tab_index: 			112
+card_field:
+	type:				text
+	name:				str_skills
+	multi_line: 		true
+	description:		Strength Based Skills
+	tab_index: 			113
+
+card_field:
+	type:				text
+	name:				dex_dice
+	description:		Dexterity Dice
+	tab_index: 			121
+card_field:
+	type:				text
+	name:				dex_advance
+	description: 		Dexterity Advancements
+	tab_index: 			122
+card_field:
+	type:				text
+	name:				dex_skills
+	multi_line: 		true
+	description:		Dexterity Based Skills
+	tab_index: 			123
+
+card_field
+	type:				text
+	name:				con_dice
+	description:		Constitution Dice
+	tab_index: 			131
+card_field:
+	type:				text
+	name:				con_advance
+	description: 		Constitution Advancements
+	tab_index: 			132
+card_field:
+	type:				text
+	name:				con_skills
+	multi_line: 		true
+	description:		Constitution Based Skills
+	tab_index: 			133
+	
+card_field
+	type:				text
+	name:				int_dice
+	description: 		Intelligence Dice
+	tab_index: 			141
+card_field:
+	type:				text
+	name:				int_advance
+	description: 		Intelligence Advancements
+	tab_index: 			142
+card_field:
+	type:				text
+	name:				int_skills
+	multi_line: 		true
+	description:		Intelligence Based Skills
+	tab_index: 			143
+
+card_field:
+	type:				text
+	name:				wis_dice
+	description: 		Wisdom Dice
+	tab_index: 			151
+card_field:
+	type:				text
+	name:				wis_advance
+	description: 		Wisdom Advancements
+	tab_index: 			152
+card_field:
+	type:				text
+	name:				wis_skills
+	multi_line: 		true
+	description:		Wisdom Based Skills
+	tab_index: 			153
+
+card_field:
+	type:				text
+	name:				cha_dice
+	description: 		Charisma Dice
+	tab_index: 			161
+card_field:
+	type:				text
+	name:				cha_advance
+	description: 		Charisma Advancements
+	tab_index: 			162
+card_field:
+	type:				text
+	name:				cha_skills
+	multi_line: 		true
+	description:		Charisma Based Skills
+	tab_index: 			163
+
+# POWERS
+card_field:
+	type:				choice
+	name:				role_0_proficient_choice
+	choice:				Proficiency
+	choice:				Skill
+	description:		Does this Character have access to Proficiency or Skill
+
+card_field:
+	type:				text
+	name:				hand
+	show_statistics: 	false
+	description: 		Hand Size
+	tab_index: 			171
+card_field:
+	type:				text
+	name:				power1
+	multi_line: 		true
+	show_statistics: 	false
+	description: 		Power -or- Proficiency with Light Armour, Heavy Armour and Weapons (Select above)
+	tab_index: 			172
+card_field:
+	type:				text
+	name:				power2
+	multi_line: 		true
+	show_statistics: 	false
+	description: 		Power 2
+	tab_index:			173
+card_field:
+	type:				text
+	name:				power3
+	multi_line: 		true
+	show_statistics: 	false
+	description: 		Power 3
+	tab_index:			173
+card_field:
+	type:				text
+	name:				power4
+	multi_line: 		true
+	show_statistics: 	false
+	description: 		Power 4
+	tab_index:			173
+
+# Character Back - Hand Details
+card_field:
+	type:				multiple choice
+	name:				favoured_card_choice
+	choice:				WEAPON
+	choice:				SPELL
+	choice:				ARMOR
+	choice:				ITEM
+	choice:				ALLY
+	choice:				BLESSING
+	choice:				ANY
+	choice:				NONE
+	initial:			WEAPON
+#	script:				favoured_card_requirements()
+	tab_index: 			201
+	
+card_field:
+	type:				text
+	name:				weapon_cards
+	description: 		Weapon Cards per deck
+card_field:
+	type:				text
+	name:				weapon_advance
+	description: 		Weapon Card Advancement
+card_field:
+	type:				text
+	name:				spell_cards
+	description: 		Spell Cards per deck
+card_field:
+	type:				text
+	name:				spell_advance
+	description: 		Spell Card Advancement
+card_field:
+	type:				text
+	name:				armor_cards
+	description: 		Armor Cards per deck
+card_field:
+	type:				text
+	name:				armor_advance
+	description: 		Armour Card Advancement
+card_field:
+	type:				text
+	name:				item_cards
+	description: 		Item Cards per deck
+card_field:
+	type:				text
+	name:				item_advance
+	description: 		Item Card Advancement
+card_field:
+	type:				text
+	name:				ally_cards
+	description: 		Ally Cards per deck
+card_field:
+	type:				text
+	name:				ally_advance
+	description: 		Ally Card Advancement
+card_field:
+	type:				text
+	name:				blessing_cards
+	description: 		Blessing Cards per deck
+card_field:
+	type:				text
+	name:				blessing_advance
+	description: 		Blessing Card Advancement
+card_field:
+	type:				text
+	name:				cohort
+	description:		Cohort
+card_field:
+	type:				multiple choice
+	name:				cohort_choice
+	choice:				None
+	choice:				Use Cohort
+	script:				card_list_requirements()
+	description:		Card List Options
+
+# ROLES
+
+# Role 1
+card_field:
+	type:				text
+	name:				role_1_hand
+	default:			card.hand
+	description:		Hand Size
+	
+card_field:
+	type:				choice
+	name:				role_1_proficient_choice
+	default:			if card.role_0_proficient_choice == "Proficiency" then "Proficiency" else "Skill"
+	choice:				Proficiency
+	choice:				Skill
+	description:		Does this Role have access to Proficiency or Skill
+
+card_field:
+	type:				text
+	name:				role_1
+	description:		Role Name
+	show_statistics:	false
+
+card_field:
+	type:				text
+	name:				role_1_flavour
+	multi_line:			true
+	description:		Flavour text for this Role
+	
+card_field:
+	type:				text
+	name:				role_1_power_1
+	default:			card.power1
+	multi_line:			true
+	description:		Role power 1 -or- Proficiency
+	card_list_allow:	false
+	show_statistics:	false
+card_field:
+	type:				text
+	name:				role_1_power_2
+	default:			card.power2
+	multi_line:			true
+	description:		Role power 2
+	card_list_allow:	false
+	show_statistics:	false
+card_field:
+	type:				text
+	name:				role_1_power_3
+	default:			card.power3
+	multi_line:			true
+	description:		Role power 3
+	card_list_allow:	false
+	show_statistics:	false
+card_field:
+	type:				text
+	name:				role_1_power_4
+	multi_line:			true
+	description:		Role power 4
+	card_list_allow:	false
+	show_statistics:	false
+card_field:
+	type:				text
+	name:				role_1_power_5
+	multi_line:			true
+	description:		Role power 5
+	card_list_allow:	false
+	show_statistics:	false
+card_field:
+	type:				text
+	name:				role_1_power_6
+	multi_line:			true
+	description:		Role power 6
+	card_list_allow:	false
+	show_statistics:	false
+card_field:
+	type:				text
+	name:				role_1_power_7
+	multi_line:			true
+	description:		Role power 7
+	card_list_allow:	false
+	show_statistics:	false
+
+# Role 2
+card_field:
+	type:				text
+	name:				role_2_hand
+	default:			card.hand
+	description:		Hand Size
+	
+card_field:
+	type:				choice
+	name:				role_2_proficient_choice
+	default:			if card.role_0_proficient_choice == "Proficiency" then "Proficiency" else "Skill"
+	choice:				Proficiency
+	choice:				Skill
+	description:		Does this Role have access to Proficiency or Skill
+
+card_field:
+	type:				text
+	name:				role_2
+	description:		Role Name
+	show_statistics:	false
+
+card_field:
+	type:				text
+	name:				role_2_flavour
+	multi_line:			true
+	description:		Flavour text for this Role
+
+card_field:
+	type:				text
+	name:				role_2_power_1
+	default:			card.power1
+	multi_line:			true
+	description:		Role power 1 -or- Proficiency
+	card_list_allow:	false
+	show_statistics:	false
+card_field:
+	type:				text
+	name:				role_2_power_2
+	default:			card.power2
+	multi_line:			true
+	description:		Role power 2
+	card_list_allow:	false
+	show_statistics:	false
+card_field:
+	type:				text
+	name:				role_2_power_3
+	default:			card.power3
+	multi_line:			true
+	description:		Role power 3
+	card_list_allow:	false
+	show_statistics:	false
+card_field:
+	type:				text
+	name:				role_2_power_4
+	multi_line:			true
+	description:		Role power 4
+	card_list_allow:	false
+	show_statistics:	false
+card_field:
+	type:				text
+	name:				role_2_power_5
+	multi_line:			true
+	description:		Role power 5
+	card_list_allow:	false
+	show_statistics:	false
+card_field:
+	type:				text
+	name:				role_2_power_6
+	multi_line:			true
+	description:		Role power 6
+	card_list_allow:	false
+	show_statistics:	false
+card_field:
+	type:				text
+	name:				role_2_power_7
+	multi_line:			true
+	description:		Role power 7
+	card_list_allow:	false
+	show_statistics:	false

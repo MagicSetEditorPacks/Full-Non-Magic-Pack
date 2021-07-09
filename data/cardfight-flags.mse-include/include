@@ -1,0 +1,6 @@
+mse version: 0.3.9
+full name: Cardfight!! Vanguard, Nation Flags
+version: 2017-09-10
+installer group: cardfight/includes/flags
+
+# This file doesn't do anything, other files in this directory can be included

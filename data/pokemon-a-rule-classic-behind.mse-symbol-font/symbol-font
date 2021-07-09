@@ -1,0 +1,300 @@
+mse version: 2.0.0
+version: 2018-06-28
+short name: normal
+position hint: 001
+icon: colorless.png
+# Symbol font for energy
+
+image font size: 53
+horizontal space: 1
+vertical space: 2
+#Colorless Energy
+symbol:
+	code: C
+	image: {if is_outline_rule() then "colorless-outline.png" else "colorless.png" }
+	image font size: 53
+#Dark Energy
+symbol:
+	code: D
+	image: {if is_outline_rule() then "dark-outline.png" else "dark.png" }
+	image font size: 53
+#Lightning Energy
+symbol:
+	code: L
+	image: {if is_outline_rule() then "lightning-outline.png" else "lightning.png" }
+	image font size: 53
+#Fighting Energy
+symbol:
+	code: F
+	image: {if is_outline_rule() then "fighting-outline.png" else "fighting.png" }
+	image font size: 53
+#Fire Energy
+symbol:
+	code: R
+	image: {if is_outline_rule() then "fire-outline.png" else "fire.png" }
+	image font size: 53
+#Grass Energy
+symbol:
+	code: G
+	image: {if is_outline_rule() then "grass-outline.png" else "grass.png" }
+	image font size: 53
+#Metal Energy
+symbol:
+	code: M
+	image: {if is_outline_energy() then "metal-outline.png" else "metal.png" }
+	image font size: 53
+#Psychic Energy
+symbol:
+	code: P
+	image: {if is_outline_rule() then "psychic-outline.png" else "psychic.png" }
+	image font size: 53
+#Water Energy
+symbol:
+	code: W
+	image: {if is_outline_rule() then "water-outline.png" else "water.png" }
+	image font size: 53
+#Dragon Energy
+symbol:
+	code: O
+	image: {if is_outline_energy() then "dragon-outline.png" else "dragon.png" }
+	image font size: 53
+#Fairy Energy
+symbol:
+	code: Y
+	image: {if is_outline_rule() then "fairy-outline.png" else "fairy.png" }
+	image font size: 53
+#Diamond
+symbol:
+	code: $
+	image: {if is_outline_rule() then "$-Outline.png" else "$-Bk.png"}
+	image font size: 53
+#Down Arrow
+symbol:
+	code: AR
+	image: {if is_outline_rule() then "AR-Outline.png" else "AR-Bk.png"}
+	image font size: 65
+#EX (BW/XY) Pokemon
+symbol:
+	code: XE
+	image: {if is_outline_rule() then "XE-Outline.png" else "XE-Bk.png"}
+	image font size: 53
+#Mega Pokemon
+symbol:
+	code: XM
+	image: {if is_outline_rule() then "XM-Outline.png" else "XM-Bk.png"}
+	image font size: 53
+#GX Pokemon
+symbol:
+	code: XG
+	image: {if is_outline_rule() then "XG-Outline.png" else "XG-Bk.png"}
+	image font size: 53
+#ex (EX Series) Pokemon
+symbol:
+	code: XS
+	image: {if is_outline_rule() then "XS-Outline.png" else "XS-Bk.png"}
+	image font size: 53
+#Galactic (Team Galactic) Pokemon
+symbol:
+	code: TG
+	image: {if is_outline_rule() then "TG-Outline.png" else "TG-Bk.png"}
+	image font size: 53
+#Gym Leader Pokemon
+symbol:
+	code: TL
+	image: {if is_outline_rule() then "TL-Outline.png" else "TL-Bk.png"}
+	image font size: 53
+#Ultra Prism Pokemon
+symbol:
+	code: UP
+	image: {if is_outline_rule() then "UP-Outline.png" else "UP-Bk.png"}
+	image font size: 53
+#Star Pokemon
+symbol:
+	code: #
+	image: {if is_outline_rule() then "#-Outline.png" else "#-Bk.png"}
+	image font size: 53
+#Elite 4 Pokemon
+symbol:
+	code: %
+	image: {if is_outline_rule() then "%-Outline.png" else "%-Bk.png"}
+	image font size: 53
+#Unown A
+symbol:
+	code: &A
+	image: {if is_outline_rule() then "&A-Outline.png" else "&A-Bk.png"}
+	image font size: 53
+#Unown B
+symbol:
+	code: &B
+	image: {if is_outline_rule() then "&B-Outline.png" else "&B-Bk.png"}
+	image font size: 53
+#Unown C
+symbol:
+	code: &C
+	image: {if is_outline_rule() then "&C-Outline.png" else "&C-Bk.png"}
+	image font size: 53
+#Unown D
+symbol:
+	code: &D
+	image: {if is_outline_rule() then "&D-Outline.png" else "&D-Bk.png"}
+	image font size: 53
+#Unown E
+symbol:
+	code: &E
+	image: {if is_outline_rule() then "&E-Outline.png" else "&E-Bk.png"}
+	image font size: 53
+#Unown F
+symbol:
+	code: &F
+	image: {if is_outline_rule() then "&F-Outline.png" else "&F-Bk.png"}
+	image font size: 53
+#Unown G
+symbol:
+	code: &G
+	image: {if is_outline_rule() then "&G-Outline.png" else "&G-Bk.png"}
+	image font size: 53
+#Unown H
+symbol:
+	code: &H
+	image: {if is_outline_rule() then "&H-Outline.png" else "&H-Bk.png"}
+	image font size: 53
+#Unown I
+symbol:
+	code: &I
+	image: {if is_outline_rule() then "&I-Outline.png" else "&I-Bk.png"}
+	image font size: 53
+#Unown J
+symbol:
+	code: &J
+	image: {if is_outline_rule() then "&J-Outline.png" else "&J-Bk.png"}
+	image font size: 53
+#Unown K
+symbol:
+	code: &K
+	image: {if is_outline_rule() then "&K-Outline.png" else "&K-Bk.png"}
+	image font size: 53
+#Unown L
+symbol:
+	code: &L
+	image: {if is_outline_rule() then "&L-Outline.png" else "&L-Bk.png"}
+	image font size: 53
+#Unown M
+symbol:
+	code: &M
+	image: {if is_outline_rule() then "&M-Outline.png" else "&M-Bk.png"}
+	image font size: 53
+#Unown N
+symbol:
+	code: &N
+	image: {if is_outline_rule() then "&N-Outline.png" else "&N-Bk.png"}
+	image font size: 53
+#Unown O
+symbol:
+	code: &O
+	image: {if is_outline_rule() then "&O-Outline.png" else "&O-Bk.png"}
+	image font size: 53
+#Unown P
+symbol:
+	code: &P
+	image: {if is_outline_rule() then "&P-Outline.png" else "&P-Bk.png"}
+	image font size: 53
+#Unown Q
+symbol:
+	code: &Q
+	image: {if is_outline_rule() then "&Q-Outline.png" else "&Q-Bk.png"}
+	image font size: 53
+#Unown R
+symbol:
+	code: &R
+	image: {if is_outline_rule() then "&R-Outline.png" else "&R-Bk.png"}
+	image font size: 53
+#Unown S
+symbol:
+	code: &S
+	image: {if is_outline_rule() then "&S-Outline.png" else "&S-Bk.png"}
+	image font size: 53
+#Unown T
+symbol:
+	code: &T
+	image: {if is_outline_rule() then "&T-Outline.png" else "&T-Bk.png"}
+	image font size: 53
+#Unown U
+symbol:
+	code: &U
+	image: {if is_outline_rule() then "&U-Outline.png" else "&U-Bk.png"}
+	image font size: 53
+#Unown V
+symbol:
+	code: &V
+	image: {if is_outline_rule() then "&V-Outline.png" else "&V-Bk.png"}
+	image font size: 53
+#Unown W
+symbol:
+	code: &W
+	image: {if is_outline_rule() then "&W-Outline.png" else "&W-Bk.png"}
+	image font size: 53
+#Unown X
+symbol:
+	code: &X
+	image: {if is_outline_rule() then "&X-Outline.png" else "&X-Bk.png"}
+	image font size: 53
+#Unown Y
+symbol:
+	code: &Y
+	image: {if is_outline_rule() then "&Y-Outline.png" else "&Y-Bk.png"}
+	image font size: 53
+#Unown Z
+symbol:
+	code: &Z
+	image: {if is_outline_rule() then "&Z-Outline.png" else "&Z-Bk.png"}
+	image font size: 53
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: $
+	item: #
+	item: %
+	item: &A
+	item: &B
+	item: &C
+	item: &D
+	item: &E
+	item: &F
+	item: &G
+	item: &H
+	item: &I
+	item: &J
+	item: &K
+	item: &L
+	item: &M
+	item: &N
+	item: &O
+	item: &P
+	item: &Q
+	item: &R
+	item: &S
+	item: &T
+	item: &U
+	item: &V
+	item: &W
+	item: &X
+	item: &Y
+	item: &Z
+	item: AR
+	item: C
+	item: D
+	item: F
+	item: G
+	item: L
+	item: M
+	item: O
+	item: P
+	item: R
+	item: W
+	item: Y
+	item: TG
+	item: UP
+	item: XE
+	item: XG
+	item: XM
+	item: XS

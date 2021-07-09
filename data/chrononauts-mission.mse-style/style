@@ -1,0 +1,101 @@
+﻿mse version: 0.3.8
+game: chrononauts
+short name: Mission
+full name: Chrononauts Mission
+icon: card-sample.png
+position hint: 002
+installer group: chrononauts/styles/mission
+
+version: 2.0.0
+depends on:
+	package: chrononauts.mse-game
+	version: 2.0.0
+
+card width: 331
+card height: 514
+card dpi: 150
+
+############################################################## Extra scripts
+init script:
+	type_script := { "mission" }
+
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	type:
+		left: 0
+		top: 0
+		width: 331
+		height: 514
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			linchpin: /chrononauts.mse-game/none.png
+			ripplepoint: /chrononauts.mse-game/none.png
+			mission: mission.png
+			id: /chrononauts.mse-game/none.png
+			patch: /chrononauts.mse-game/none.png
+			artifact: /chrononauts.mse-game/none.png
+			gadget: /chrononauts.mse-game/none.png
+			inverter: /chrononauts.mse-game/none.png
+			action: /chrononauts.mse-game/none.png
+			timewarp: /chrononauts.mse-game/none.png
+	
+	############################# Set Symbol
+	icon:
+		left: 17
+		top: 17
+		width: 24
+		height: 24
+		z index: 0
+		render style: image
+		choice images:
+			set icon: { set.icon }
+	
+	############################# Name
+	name:
+		left: 106
+		top: 24
+		width: 202
+		height: 50
+		z index: 1
+		alignment: top right
+		font:
+			name: Olympia-Bold
+			size: 18
+			scale down to: 14
+			color: white
+	
+	############################# Text
+	text1:
+		left: 19
+		top: 84
+		width: 293
+		height: { min(389, 389 - card_style.list.content_height) }
+		z index: 1
+		alignment: top left
+		font:
+			name: Times New Roman
+			size: 13.5
+			color: black
+		padding left: 12
+		padding top: 6
+		line height soft: 1.1
+		line height hard: 1.5
+		line height line: 1.1
+	
+	############################# List
+	list:
+		left: 54
+		top: { min(443, max(473 - card_style.list.content_height, 84 + card_style.text1.content_height)) }
+		width: 237
+		height: { max(30, min(card_style.list.content_height, 389 - card_style.text1.content_height)) }
+		z index: 2
+		alignment: top left
+		font:
+			name: Times New Roman
+			weight: bold
+			size: 15
+			color: black
+		padding top: 10

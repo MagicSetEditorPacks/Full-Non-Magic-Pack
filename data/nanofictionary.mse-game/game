@@ -1,0 +1,162 @@
+﻿mse version: 0.3.5
+full name: Nanofictionary
+icon: card-back.png
+version: 1.0.0
+position hint: 15
+installer group: nanofictionary/game files/
+
+############################################################## Functions & filters
+
+# General functions
+init script:
+	# Index for sorting, New Rules are first
+	sort_index := {
+		if card.type == "resolution"     then "A"
+		else if card.type == "character" then "B"
+		else if card.type == "problem"   then "C"
+		else if card.type == "setting"   then "D"
+		else if card.type == "action"    then "E"
+		else                                  "F"
+	};
+	
+	# Character filter for name lines
+	name_filter :=
+		replace_rule(
+			match: "AE",
+			replace: "Æ")
+	
+	# Character filter for copyright line
+	copyright_filter :=
+		# step 1 : trademark symbol
+		replace_rule(
+			match: "TM",
+			replace: "™") +
+		# step 2 : copyright symbol
+		replace_rule(
+			match: "CR|\\(C\\)",
+			replace: "©")
+
+############################################################## Set fields
+
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: text
+	name: artist
+set field:
+	type: text
+	name: copyright
+	script: copyright_filter(value)
+
+############################# Default style
+
+default set style:
+	title:
+		padding left: 2
+		font:
+			size: 16
+
+############################################################## Card fields
+
+############################# Type line
+card field:
+	type: choice
+	name: symbol
+	choice: resolution
+	choice: character
+	choice: problem
+	choice: setting
+	choice: action
+	show statistics: false
+	card list visible: true
+	card list column: 2
+	card list name: card type
+	position hint: 1
+	choice colors cardlist:
+		resolution	: rgb(255,255,122)
+		character	: rgb(154,213,148)
+		problem		: rgb(251,154,145)
+		setting		: rgb(156,218,233)
+		action		: rgb(189,132,189)
+	description: Symbol for the card's type
+card field:
+	type: text
+	name: type
+	default: to_upper(card.symbol)
+	editable: false
+	show statistics: false
+	save value: false
+
+############################# Image
+card field:
+	type: image
+	name: image
+	show statistics: false
+
+############################# Text box
+card field:
+	type: text
+	name: name
+	card list visible: true
+	card list column: 1
+	show statistics: false
+	multi line: true
+card field:
+	type: text
+	name: text
+	show statistics: false
+	multi line: true
+
+############################# Card sorting / numbering
+card field:
+	type: text
+	name: card number
+	save value: false
+	script:
+		position(
+			of: card
+			in: set
+			order_by: { sort_index() + card.name }
+			) + 1
+		+ "/" +
+		number_of_items(in: set)
+	card list visible: true
+	card list column: 3
+	card list width: 50
+	card list name: #
+	card list alignment: right
+	editable: false
+	show statistics: false
+
+############################################################## Statistics categories
+
+statistics dimension:
+	name: type
+	position hint: 1
+	script: card.symbol
+	icon: stats/type.png
+	colors:
+		resolution	: rgb(255,255,122)
+		character	: rgb(154,213,148)
+		problem		: rgb(251,154,145)
+		setting		: rgb(156,218,233)
+		action		: rgb(189,132,189)
+	group: resolution
+	group: character
+	group: problem
+	group: setting
+	group: action
+
+############################################################## Keywords
+
+############################# Keyword rules
+
+has keywords: false

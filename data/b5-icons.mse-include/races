@@ -1,0 +1,11 @@
+# Watermark images
+
+choice images:
+	race Centauri:				/B5-icons.mse-include/centauri.png
+	race Drakh:				/B5-icons.mse-include/drakh.png
+	race Human:				/B5-icons.mse-include/earth.png
+	race League:				/B5-icons.mse-include/league.png
+	race Minbari:				/B5-icons.mse-include/minbari.png
+	race Narn:				/B5-icons.mse-include/narn.png
+	race Psi Corps:				/B5-icons.mse-include/psi_corps.png
+	race Rangers:				/B5-icons.mse-include/rangers.png

@@ -1,0 +1,163 @@
+﻿mse version: 0.3.8
+version: 2010-03-25
+short name: WoW Standard
+position hint: 1
+installer group: wow/Symbol Fonts/standard
+icon: activate.png
+
+image font size: 135
+horizontal space: 0
+symbol:
+	code: ->
+	image: arrow.png
+symbol:
+	code: >>>
+	image: arrow.png
+symbol:
+	code: Activate
+	image: activate.png
+	image font size: 176
+symbol:
+	code: Alliance
+	image: alliance.png
+	image font size: 94.62
+symbol:
+	code: Horde
+	image: horde.png
+	image font size: 94.62
+symbol:
+	code: Illidan
+	image: illidan.png
+	image font size: 185.74
+symbol:
+	code: Death Knight
+	image: deathknight.png
+	image font size: 171.92
+symbol:
+	code: Druid
+	image: druid.png
+	image font size: 153.46
+symbol:
+	code: Hunter
+	image: hunter.png
+	image font size: 151.15
+symbol:
+	code: Mage
+	image: mage.png
+	image font size: 151.15
+symbol:
+	code: Paladin
+	image: paladin.png
+	image font size: 151.15
+symbol:
+	code: Priest
+	image: priest.png
+	image font size: 148.85
+symbol:
+	code: Rogue
+	image: rogue.png
+	image font size: 150
+symbol:
+	code: Shaman
+	image: shaman.png
+	image font size: 151.15
+symbol:
+	code: Warlock
+	image: warlock.png
+	image font size: 151.15
+symbol:
+	code: Warrior
+	image: warrior.png
+	image font size: 151.15
+symbol:
+	code: 0
+	image: 0.png
+symbol:
+	code: 1
+	image: 1.png
+symbol:
+	code: 2
+	image: 2.png
+symbol:
+	code: 3
+	image: 3.png
+symbol:
+	code: 4
+	image: 4.png
+symbol:
+	code: 5
+	image: 5.png
+symbol:
+	code: 6
+	image: 6.png
+symbol:
+	code: 7
+	image: 7.png
+symbol:
+	code: 8
+	image: 8.png
+symbol:
+	code: 9
+	image: 9.png
+symbol:
+	code: 10
+	image: 10.png
+symbol:
+	code: 11
+	image: 11.png
+symbol:
+	code: 12
+	image: 12.png
+symbol:
+	code: 13
+	image: 13.png
+symbol:
+	code: 14
+	image: 14.png
+symbol:
+	code: 15
+	image: 15.png
+symbol:
+	code: X
+	image: X.png
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: ->
+	item: Activate
+	item:
+		name: numbers
+		item: 0
+		item: 1
+		item: 2
+		item: 3
+		item: 4
+		item: 5
+		item: 6
+		item: 7
+		item: 8
+		item: 9
+		item: 10
+		item: 11
+		item: 12
+		item: 13
+		item: 14
+		item: 15
+		item: X
+	item:
+		name: factions
+		item: Alliance
+		item: Horde
+		item: Illidan
+	item:
+		name: classes
+		item: Death Knight
+		item: Druid
+		item: Hunter
+		item: Mage
+		item: Paladin
+		item: Priest
+		item: Rogue
+		item: shaman
+		item: Warlock
+		item: Warrior

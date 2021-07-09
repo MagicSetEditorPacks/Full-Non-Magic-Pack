@@ -1,0 +1,517 @@
+card_style:
+	deck_monster:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 0) }
+		height:			{ if isLocFront() then deckCellH() }
+		left:			{ deckCellL(col: 1, row: 0) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_barrier:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 1) }
+		height:			{ if isLocFront() then deckCellH() }
+		left:			{ deckCellL(col: 1, row: 1) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_weapon:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 2) }
+		height:			{ if isLocFront() then deckCellH() }
+		left:			{ deckCellL(col: 1, row: 2) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_spell:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 3) }
+		height:			{ if isLocFront() then deckCellH() }
+		left:			{ deckCellL(col: 1, row: 3) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_armor:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 4) }
+		height:			{ if isLocFront() then deckCellH() }
+		left:			{ deckCellL(col: 1, row: 4) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_item:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 5) }
+		height:			{ if isLocFront() then deckCellH() }
+		left:			{ deckCellL(col: 1, row: 5) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_ally:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 6) }
+		height:			{ if isLocFront() then deckCellH() }
+		left:			{ deckCellL(col: 1, row: 6) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_blessing:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 7) }
+		height:			{ if isLocFront() then deckCellH() }
+		left:			{ deckCellL(col: 1, row: 7) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+			
+	closed_rules:
+		visible:		{ isLocBack() }
+		top:			{ if isLandscape() then Height - 44 else Height - 30 }
+		height:			{ 25 }
+		left:			{ if isLandscape() then Width - 30 else 40 }
+		width:			{ 195 }
+		angle:			{ if isLandscape() then 90 }
+		render_style:	hidden
+		z_index:		100
+		
+	atl:
+		visible:		{ isLocFront()  or (isLocBack() and card.closed_rules = "AT THIS LOCATION") }
+		top:			{ atlT() + if not isLandscape() then headerH() }
+		height:			{ if isLocFront() then atlH() - headerH() else if (isLocBack() and card.closed_rules = "AT THIS LOCATION") then atlH() - headerH() - 14 }
+		left:			{ atlL() + if isLandscape() then headerH() }
+		width:			{ atlW() }
+		angle:			{ atlA() }
+		z_index:		52
+		alignment:		left middle
+		padding_left:	2
+		padding_right:	2
+		padding_top:	2
+		padding_bottom:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+
+	wc:
+		visible:		{ isLocFront() }
+		top:			{ wcT() + if not isLandscape() then headerH() }
+		height:			{ if isLocFront() then  wcH() - headerH() }
+		left:			{ wcL() + if isLandscape() then headerH() }
+		width:			{ wcW() }
+		angle:			{ wcA() }
+		z_index:		52
+		alignment:		left middle
+		padding_left:	2
+		padding_right:	2
+		padding_top:	2
+		padding_bottom:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+			
+	wpc:
+		visible:		{ isLocFront() or (isLocBack() and card.closed_rules = "WHEN PERMANENTLY CLOSED") }
+		top:			{ wpcT() + if not isLandscape() then headerH() }
+		height:			{ if isLocFront() or (isLocBack() and card.closed_rules = "WHEN PERMANENTLY CLOSED") then wpcH() - headerH() - 14 }
+		left:			{ wpcL() + if isLandscape() then headerH() }
+		width:			{ wpcW() }
+		angle:			{ wpcA() }
+		z_index:		52
+		alignment:		left middle
+		padding_left:	2
+		padding_right:	2
+		padding_top:	2
+		padding_bottom:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+		
+
+extra_card_style:
+
+	deck_table:
+		visible:		{ isLocFront() }
+		top:			{ deckT() }
+		height:			{ deckH() }
+		left:			{ deckL() }
+		width:			{ deckW() + 2 }
+		angle:			{ deckA() }
+		z_index:		50
+	deck_header:
+		visible:		{ isLocFront() }
+		top:			{ deckT() }
+		height:			{ headerH() }
+		left:			{ deckL() }
+		width:			{ deckW() }
+		angle:			{ deckA() }
+		z_index:		51
+		alignment:		center middle
+		font:
+			name:			{ getFont() }
+			color:			{ "white" }
+			weight:			bold
+			size:			{ getFontSize(11) }
+			shadow_color:	{ getShadowColour() }
+			shadow_blur:	4
+	
+	deck_monster_cell_0:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 0) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 0) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_barrier_cell_0:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 1) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 1) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_weapon_cell_0:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 2) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 2) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_spell_cell_0:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 3) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 3) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_armour_cell_0:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 4) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 4) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_item_cell_0:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 5) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 5) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_ally_cell_0:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 6) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 6) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_blessing_cell_0:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 7) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 7) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		51
+
+	deck_monster_cell_1:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 0) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 1, row: 0) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_barrier_cell_1:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 1) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 1, row: 1) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_weapon_cell_1:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 2) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 1, row: 2) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_spell_cell_1:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 3) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 1, row: 3) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_armour_cell_1:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 4) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 1, row: 4) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_item_cell_1:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 5) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 1, row: 5) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_ally_cell_1:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 6) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 1, row: 6) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		51
+	deck_blessing_cell_1:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 1, row: 7) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 1, row: 7) }
+		width:			{ deckCellW(col: 1) }
+		angle:			{ deckA() }
+		z_index:		51
+
+	deck_monster_header:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 0) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 0) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_barrier_header:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 1) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 1) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_weapon_header:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 2) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 2) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_spell_header:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 3) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 3) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_armour_header:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 4) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 4) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_item_header:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 5) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 5) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_ally_header:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 6) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 6) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+	deck_blessing_header:
+		visible:		{ isLocFront() }
+		top:			{ deckCellT(col: 0, row: 7) }
+		height:			{ deckCellH() }
+		left:			{ deckCellL(col: 0, row: 7) }
+		width:			{ deckCellW(col: 0) }
+		angle:			{ deckA() }
+		z_index:		52
+		alignment:		center middle
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+
+# AT THIS LOCATION
+# WHEN CLOSING
+# WHEN PERMANANTLY CLOSED
+	atl_table:
+		visible:		{ isLocFront() or (isLocBack() and card.closed_rules = "AT THIS LOCATION") }
+		top:			{ atlT() }
+		height:			{ atlH() }
+		left:			{ atlL() }
+		width:			{ atlW() + 2 }
+		angle:			{ atlA() }
+		z_index:		50
+	atl_header:
+		visible:		{ isLocFront() or (isLocBack() and card.closed_rules = "AT THIS LOCATION") }
+		top:			{ atlT() }
+		height:			{ headerH() }
+		left:			{ atlL() }
+		width:			{ atlW() }
+		angle:			{ atlA() }
+		z_index:		51
+		alignment:		left middle shrink-overflow
+		font:
+			name:			{ getFont() }
+			color:			{ "white" }
+			weight:			bold
+			size:			{ getFontSize(11) }
+			shadow_color:	{ getShadowColour() }
+			shadow_blur:	4
+	atl_cell:
+		visible:		{ isLocFront() or (isLocBack() and card.closed_rules = "AT THIS LOCATION") }
+		top:			{ atlT() + if not isLandscape() then headerH() }
+		height:			{ atlH() - headerH() }
+		left:			{ atlL() + if isLandscape() then headerH() }
+		width:			{ atlW() }
+		angle:			{ atlA() }
+		z_index:		51
+		
+	wc_table:
+		visible:		{ isLocFront() }
+		top:			{ wcT() }
+		height:			{ wcH() }
+		left:			{ wcL() }
+		width:			{ wcW() + 2 }
+		angle:			{ wcA() }
+		z_index:		50
+	wc_header:
+		visible:		{ isLocFront() }
+		top:			{ wcT() }
+		height:			{ headerH() }
+		left:			{ wcL() }
+		width:			{ wcW() }
+		angle:			{ wcA() }
+		z_index:		51
+		alignment:		left middle shrink-overflow
+		font:
+			name:			{ getFont() }
+			color:			{ "white" }
+			weight:			bold
+			size:			{ getFontSize(11) }
+			shadow_color:	{ getShadowColour() }
+			shadow_blur:	4
+	wc_cell:
+		visible:		{ isLocFront() }
+		top:			{ wcT() + if not isLandscape() then headerH() }
+		height:			{ wcH() - headerH() }
+		left:			{ wcL() + if isLandscape() then headerH() }
+		width:			{ wcW() }
+		angle:			{ wcA() }
+		z_index:		51
+		
+	wpc_table:
+		visible:		{ isLocFront() or (isLocBack() and card.closed_rules = "WHEN PERMANENTLY CLOSED") }
+		top:			{ wpcT() }
+		height:			{ wpcH() }
+		left:			{ wpcL() }
+		width:			{ wpcW() + 2 }
+		angle:			{ wpcA() }
+		z_index:		50
+	wpc_header:
+		visible:		{ isLocFront() or (isLocBack() and card.closed_rules = "WHEN PERMANENTLY CLOSED") }
+		top:			{ wpcT() }
+		height:			{ headerH() }
+		left:			{ wpcL() }
+		width:			{ wpcW() }
+		angle:			{ wpcA() }
+		z_index:		51
+		alignment:		left middle shrink-overflow
+		font:
+			name:			{ getFont() }
+			color:			{ "white" }
+			weight:			bold
+			size:			{ getFontSize(11) }
+			shadow_color:	{ getShadowColour() }
+			shadow_blur:	4
+	wpc_cell:
+		visible:		{ isLocFront() or (isLocBack() and card.closed_rules = "WHEN PERMANENTLY CLOSED") }
+		top:			{ wpcT() + if not isLandscape() then headerH() }
+		height:			{ wpcH() - headerH() }
+		left:			{ wpcL() + if isLandscape() then headerH() }
+		width:			{ wpcW() }
+		angle:			{ wpcA() }
+		z_index:		51

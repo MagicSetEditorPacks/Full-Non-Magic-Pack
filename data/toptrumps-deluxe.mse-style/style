@@ -1,0 +1,402 @@
+mse version: 2.0.0
+game: toptrumps
+full name: Top Trumps - Deluxe
+short name: Deluxe
+installer group: top trumps/deluxe
+icon: icon.png
+position hint: 001
+
+version: 2014-08-08
+depends on:
+	package: toptrumps.mse-game
+	version: 2014-08-08
+
+card width: 375
+card height: 523
+card dpi: 150
+#Fonts used:
+#Times New Roman
+card style:
+	background:
+		left: 0
+		top: 0
+		width: script: if set.custom_background then 0 else 375
+		height: script: if set.custom_background then 0 else 523
+		visible: script: if set.custom_background then false else true
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			color blue: blue.jpg
+			color green: green.jpg
+			color purple: purple.jpg
+			color red: red.jpg
+			color teal: teal.jpg
+			color yellow: yellow.jpg
+			pattern marble: marble.jpg
+			pattern rusty Steel: steel.jpg
+			pattern scales: scales.jpg
+			pattern steel: steel.jpg
+			pattern stones: stones.jpg
+			pattern zebra: zebra.jpg
+	overlay:
+		left: 0
+		top: 0
+		width: 375
+		height: 523
+		z index: -1
+		render style: image
+		choice images:
+			rft4: rft4.png
+			rft5: rft5.png
+			rft6: rft6.png
+			lft4: lft4.png
+			lft5: lft5.png
+			lft6: lft6.png
+			nft4: nft4.png
+			nft5: nft5.png
+			nft6: nft6.png
+
+	image:
+		left: 6
+		top: 65
+		width: 353
+		height: 254
+		z index: 0
+		mask: 
+			script:
+				if set.image_mask=="arc" then "arc_mask.png" else
+				if set.image_mask=="point" then "point_mask.png" else
+				if set.image_mask=="tripoint" then "tripoint_mask.png" else
+				if set.image_mask=="bubble" then  "bubble_mask.png"
+	artist:
+		left: 359
+		top: 319
+		height: 12
+		width: 127
+		z index: 1
+		alignment: left middle
+		angle: 90
+		font: 
+			name: Times New Roman
+			size: 8
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow color: white
+	copyright:
+		left: 359
+		top: 192
+		height: 15
+		width: 127
+		z index: 1
+		alignment: right middle
+		angle: 90
+		font: 
+			name: Times New Roman
+			size: 8
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow color: white
+	flavortext:	
+		left: 
+			script:
+				if set.flavor_text=="right" then 238 else
+				if set.flavor_text=="left" then 9
+		top: 331
+		width: 
+			script:
+				if set.flavor_text=="none" then 0 else 117
+		height:
+			script:
+				if set.flavor_text=="none" then 0 else 174
+		z index: 1
+		visible:
+			script:
+				if set.flavor_text=="none" then false else true
+		font:
+			name: Times New Roman
+			size: 12
+	custombackgroundimage:
+		left: 0
+		top: 0
+		width: 375
+		height: 523
+		z index: -3
+	name:
+		left: 16
+		top: 12
+		width: 343
+		height: 41
+		z index: 1
+		alignment: center middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 24
+	stat1:
+		left: 
+			script: 
+				if set.flavor_text=="right" or set.flavor_text=="none" then 9 else 149
+		top: 331
+		width:
+			script: 
+				if set.flavor_text=="none" then 317 else 177
+		height:
+			script:
+				if set.stats=="4" then 42 else
+				if set.stats=="5" then 32 else
+				if set.stats=="6" then 26 else 0
+		z index: 1
+		padding left: 4
+		padding bottom: 2
+		alignment: left middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 20
+	stat2:
+		left: 
+			script: 
+				if set.flavor_text=="right" or set.flavor_text=="none" then 9 else 149
+		top: 
+			script:
+				if set.stats=="4" then 379 else
+				if set.stats=="5" then 370 else
+				if set.stats=="6" then 363 else 0
+		width:
+			script:
+				if set.flavor_text=="none" then 317 else 177
+		height:
+			script:
+				if set.stats=="4" then 42 else
+				if set.stats=="5" then 32 else
+				if set.stats=="6" then 26 else 0
+		z index: 1
+		padding left: 4
+		padding bottom: 2
+		alignment: left middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 20
+	stat3:
+		left: 
+			script: 
+				if set.flavor_text=="right" or set.flavor_text=="none" then 9 else 149
+		top: 
+			script:
+				if set.stats=="4" then 427 else
+				if set.stats=="5" then 408 else
+				if set.stats=="6" then 395 else 0
+		width:
+			script:
+				if set.flavor_text=="none" then 317 else 177
+		height:
+			script:
+				if set.stats=="4" then 42 else
+				if set.stats=="5" then 32 else
+				if set.stats=="6" then 26 else 0
+		z index: 1
+		padding left: 4
+		padding bottom: 2
+		alignment: left middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 20
+	stat4:
+		left: 
+			script: 
+				if set.flavor_text=="right" or set.flavor_text=="none" then 9 else 149
+		top: 
+			script:
+				if set.stats=="4" then 474 else
+				if set.stats=="5" then 446 else
+				if set.stats=="6" then 427 else 0
+		width:
+			script:
+				if set.flavor_text=="None" then 317 else 177
+		height:
+			script:
+				if set.stats=="4" then 42 else
+				if set.stats=="5" then 32 else
+				if set.stats=="6" then 26 else 0
+		z index: 1
+		padding left: 4
+		padding bottom: 2
+		alignment: left middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 20
+	stat5:
+		left: 
+			script: 
+				if set.flavor_text=="right" or set.flavor_text=="none" then 9 else 149
+		top: 
+			script:
+				if set.stats=="5" then 484 else
+				if set.stats=="6" then 459 else 0
+		width:
+			script:
+				if set.flavor_text=="none" then 317 else 177
+		height:
+			script:
+				if set.stats=="5" then 32 else
+				if set.stats=="6" then 26 else 0
+		z index: 1
+		visible:
+			script:
+				if set.stats=="4" then false else true
+		padding left: 4
+		padding bottom: 2
+		alignment: left middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 20
+	stat6:
+		left: 
+			script: 
+				if set.flavor_text=="right" or set.flavor_text=="none" then 9 else 149
+		top: 490
+		width:
+			script:
+				if set.flavor_text=="none" then 317 else 177
+		height:
+			script:
+				if set.stats=="6" then 26 else 0
+		z index: 1
+		visible:
+			script:
+				if set.stats=="6" then true else false
+		padding left: 4
+		padding bottom: 2
+		alignment: left middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 20
+	value1: 
+		left:
+			script:
+				if set.flavor_text=="right" then 186 else 326
+		top: 331
+		width: 40
+		height:
+			script:
+				if set.stats=="4" then 42 else
+				if set.stats=="5" then 32 else
+				if set.stats=="6" then 26 else 0
+		z index: 1
+		padding right: 6
+		padding bottom: 2
+		alignment: right middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 20
+	value2: 
+		left:
+			script:
+				if set.flavor_text=="right" then 186 else 326
+		top: 
+			script:
+				if set.stats=="4" then 379 else
+				if set.stats=="5" then 370 else
+				if set.stats=="6" then 363 else 0 
+		width: 40
+		height:
+			script:
+				if set.stats=="4" then 42 else
+				if set.stats=="5" then 32 else
+				if set.stats=="6" then 26 else 0
+		z index: 1
+		padding right: 6
+		padding bottom: 2
+		alignment: right middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 20
+	value3: 
+		left:
+			script:
+				if set.flavor_text=="right" then 186 else 326
+		top: 
+			script:
+				if set.stats=="4" then 427 else
+				if set.stats=="5" then 408 else
+				if set.stats=="6" then 395 else 0
+		width: 40
+		height:
+			script:
+				if set.stats=="4" then 42 else
+				if set.stats=="5" then 32 else
+				if set.stats=="6" then 26 else 0
+		z index: 1
+		padding right: 6
+		padding bottom: 2
+		alignment: right middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 20
+	value4: 
+		left:
+			script:
+				if set.flavor_text=="right" then 186 else 326
+		top: 
+			script:
+				if set.stats=="4" then 474 else
+				if set.stats=="5" then 446 else
+				if set.stats=="6" then 427 else 0
+		width: 40
+		height:
+			script:
+				if set.stats=="4" then 42 else
+				if set.stats=="5" then 32 else
+				if set.stats=="6" then 26 else 0
+		z index: 1
+		padding right: 6
+		padding bottom: 2
+		alignment: right middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 20
+	value5: 
+		left:
+			script:
+				if set.flavor_text=="right" then 186 else 326
+		top: 
+			script:
+				if set.stats=="5" then 484 else
+				if set.stats=="6" then 459 else 0
+		width:
+			script:
+				if set.stats=="4" then 0 else 40
+		height:
+			script:
+				if set.stats=="5" then 32 else
+				if set.stats=="6" then 26 else 0
+		z index: 1
+		visible:
+			script:
+				if set.stats=="4" then false else true
+		padding right: 6
+		padding bottom: 2
+		alignment: right middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 20
+	value6: 
+		left:
+			script:
+				if set.flavor_text=="right" then 186 else  326
+		top: 490
+		width:
+			script:
+				if set.stats=="6" then 40 else 0
+		height:
+			script:
+				if set.stats=="6" then 26 else 0
+		z index: 1
+		visible:
+			script:
+				if set.stats=="6" then true else false
+		padding right: 6
+		padding bottom: 2
+		alignment: right middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 20

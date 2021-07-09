@@ -1,0 +1,353 @@
+﻿mse version: 0.3.8
+game: chrononauts
+short name: Linchpin+Ripplepoint
+full name: Chrononauts Linchpin+Ripplepoint
+icon: card-sample.png
+position hint: 001
+installer group: chrononauts/styles/linchpin+Ripplepoint
+
+version: 2.1.0
+depends on:
+	package: chrononauts.mse-game
+	version: 2.1.0
+
+card width: 661
+card height: 514
+card dpi: 150
+
+############################################################## Extra scripts
+init script:
+	type_script := {
+		if is_timeline() then card.type
+		else                  "linchpin" }
+
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	type:
+		left: 0
+		top: 0
+		width: 661
+		height: 514
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			linchpin: linchpin.png
+			ripplepoint: ripplepoint.png
+			mission: /chrononauts.mse-game/none.png
+			id: /chrononauts.mse-game/none.png
+			patch: /chrononauts.mse-game/none.png
+			artifact: /chrononauts.mse-game/none.png
+			gadget: /chrononauts.mse-game/none.png
+			inverter: /chrononauts.mse-game/none.png
+			action: /chrononauts.mse-game/none.png
+			timewarp: /chrononauts.mse-game/none.png
+	
+	############################# Year/Date
+	year1:
+		left: 100
+		top: 31
+		width: 129
+		height: 62
+		z index: 1
+		alignment: middle center
+		font:
+			name: Times New Roman
+			weight: bold
+			size: 35
+			color: black
+	
+	year2:
+		left: 33
+		top: 48
+		width: 60
+		height: 34
+		z index: 1
+		alignment: middle left
+		font:
+			name: Olympia-Bold
+			size: 17
+			color: { if is_ripplepoint() then "black" else "white" }
+	
+	year3:
+		left: { if is_ripplepoint() then 450 else 431 }
+		top: { if is_ripplepoint()" then 220 else 31 }
+		width: { if is_ripplepoint() then 108 else 129 }
+		height: { if is_ripplepoint() then 52 else 62 }
+		z index: 1
+		angle: {if is_ripplepoint() then -15 else 0 }
+		alignment: middle center
+		font:
+			name: { if is_ripplepoint() then "Olympia-DemiBoldCond" else "Times New Roman" }
+			weight: { if is_ripplepoint() then "normal" else "bold" }
+			size: { if is_ripplepoint() then 50 else 35 }
+			color: rgb(255,80,82)
+	
+	year4:
+		left: 364
+		top: 48
+		width: 60
+		height: 34
+		z index: 1
+		visible: { not is_ripplepoint() }
+		alignment: middle left
+		font:
+			name: Olympia-Bold
+			size: 17
+			color: white
+	
+	date:
+		left: 234
+		top: 48
+		width: 60
+		height: 34
+		z index: 1
+		alignment: middle center
+		font:
+			name: Olympia-Bold
+			size: 12
+			color: { if is_ripplepoint() then "black" else "white" }
+	
+	############################# Name
+	name:
+		left: 18
+		top: 105
+		width: 294
+		height:
+			{ if is_ripplepoint() then 166 - card_style.text1.content_height
+			  else                             160 - card_style.text1.content_height }
+		z index: 1
+		alignment: top center
+		font:
+			name: Times New Roman
+			weight: bold
+			size: 35
+			scale down to: 24
+			color: black
+		padding left: 6
+		padding right: 6
+		padding top: -6
+		line height soft: 0.8
+	
+	name2:
+		left: 349
+		top: 106
+		width: 294
+		height:
+			{ if card_style.name2.content_height > 80 then 160 - card_style.text2.content_height
+			  else                                         80 }
+		z index: 1
+		alignment: top center
+		visible: { not is_ripplepoint() }
+		font:
+			name: Times New Roman
+			weight: bold
+			size: 35
+			scale down to: 24
+			color: black
+		padding left: 6
+		padding right: 6
+		line height soft: 0.8
+	
+	############################# Text
+	text1:
+		left: 18
+		bottom: { if is_ripplepoint() then 271 else 265 }
+		width: 294
+		height: 80
+		z index: 2
+		alignment: bottom center
+		font:
+			name: Times New Roman
+			size: 17
+			scale down to: 12
+			color: black
+		padding left: 6
+		padding right: 6
+	
+	text2:
+		left: 349
+		bottom: 265
+		width: 294
+		height: 80
+		z index: 2
+		alignment: bottom center
+		visible: { not is_ripplepoint() }
+		font:
+			name: Times New Roman
+			size: 17
+			scale down to: 12
+			color: black
+		padding left: 6
+		padding right: 6
+		padding top: 6
+	
+	############################# Year List
+	year list:
+		left: 24
+		top: 312
+		width: 71
+		height: { if card_style.year_list.content_lines==5 then 110 else 116 }
+		z index: 1
+		alignment: top center
+		visible: { not is_ripplepoint() }
+		font:
+			name: Olympia-Bold
+			size: 18
+			scale down to: 12
+			color: black
+	
+	############################# Images
+	image:
+		left: { if is_ripplepoint() then 72 else 115 }
+		top: { if is_ripplepoint() then 336 else 314 }
+		width: { if is_ripplepoint() then 178 else 198 }
+		height: { if is_ripplepoint() then 92 else 183 }
+		z index: 1
+		mask: { if is_linchpin() then "linchpin mask.png" }
+	
+	image2:
+		left: { if is_ripplepoint() then 485 else 446 }
+		top: { if is_ripplepoint() then 404 else 314 }
+		width: { if is_ripplepoint() then 157 else 198 }
+		height: { if is_ripplepoint() then 57 else 183 }
+		z index: 1
+		mask: { if is_linchpin() then "linchpin mask.png" }
+	
+	############################# Timeline Position
+	placement:
+		left: 24
+		top: 470
+		width: 48
+		height: 18
+		z index: 1
+		alignment: middle left
+		font:
+			name: Olympia-Bold
+			weight: bold
+			size: 17
+			color: { if is_ripplepoint() then rgb(71,84,167) else rgb(76,67,123) }
+
+############################################################## Extra card fields
+
+############################# Date
+extra card field:
+	type: text
+	name: date2
+	show statistics: false
+	editable: false
+	default: card.date
+	description: The date for timeline cards
+
+############################# Year List
+extra card field:
+	type: text
+	name: year list2
+	multi line: true
+	show statistics: false
+	editable: false
+	default: card.year_list
+	description: List of years rippled by a Linchpin
+
+############################# Ripples Boxes
+extra card field:
+	type: choice
+	name: box1
+	choice: default
+	show statistics: false
+	editable: false
+extra card field:
+	type: choice
+	name: box2
+	choice: default
+	show statistics: false
+	editable: false
+
+############################# Timeline Position
+extra card field:
+	type: text
+	name: placement2
+	show statistics: false
+	editable: false
+	default: card.placement
+	description: The timeline placement of the card. e.g. "A-1"
+
+############################################################## Extra card field styles
+
+extra card style:
+	############################# Date
+	date2:
+		left: 565
+		top: 48
+		width: 60
+		height: 34
+		z index: 1
+		visible: { not is_ripplepoint() }
+		alignment: middle center
+		font:
+			name: Olympia-Bold
+			size: 12
+			color: white
+	
+	############################# Year List
+	year list2:
+		left: 355
+		top: 312
+		width: 71
+		height: { if card_style.year_list.content_lines==5 then 110 else 116 }
+		z index: 1
+		alignment: top center
+		visible: { not is_ripplepoint() }
+		font:
+			name: Olympia-Bold
+			size: 18
+			scale down to: 12
+			color: black
+	
+	############################# Timeline Position
+	placement2:
+		left: 355
+		top: 470
+		width: 48
+		height: 18
+		z index: 1
+		alignment: middle left
+		font:
+			name: Olympia-Bold
+			weight: bold
+			size: 17
+			color: { if is_ripplepoint() then rgb(255,80,82) else rgb(111,63,67) }
+	
+	############################# Ripples Boxes
+	box1:
+		left: 24
+		top: 290
+		width: 71
+		height: 141
+		z index: 0
+		render style: image
+		visible: { not is_ripplepoint() }
+		choice images:
+			default:
+				{ if card_style.year_list.content_lines==1 then "rip1.png"
+				  else if card_style.year_list.content_lines=="2" then "rip2.png"
+				  else if card_style.year_list.content_lines=="3" then "rip3.png"
+				  else if card_style.year_list.content_lines=="4" then "rip4.png"
+				  else if card_style.year_list.content_lines=="5" then "rip5.png" }
+	
+	box2:
+		left: 355
+		top: 290
+		width: 71
+		height: 141
+		z index: 0
+		render style: image
+		visible: { not is_ripplepoint() }
+		choice images:
+			default:
+				{ if card_style.year_list.content_lines==1 then "rip1.png"
+				  else if card_style.year_list.content_lines=="2" then "rip2.png"
+				  else if card_style.year_list.content_lines=="3" then "rip3.png"
+				  else if card_style.year_list.content_lines=="4" then "rip4.png"
+				  else if card_style.year_list.content_lines=="5" then "rip5.png" }

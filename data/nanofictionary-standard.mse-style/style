@@ -1,0 +1,189 @@
+﻿mse version: 0.3.5
+game: nanofictionary
+short name: Standard
+full name: Nanofictionary Standard
+icon: card-sample.png
+position hint: 001
+installer group: nanofictionary/styles/
+
+version: 1.0.0
+depends on:
+	package: nanofictionary.mse-game
+	version: 1.0.0
+
+card width: 375
+card height: 523
+card dpi: 150
+
+############################################################## Extra scripts
+init script:
+	# Index for determining card color
+	card_color := {
+		if card.symbol == "resolution"		then rgb(255,255,122)
+		else if card.symbol == "character"	then rgb(154,213,148)
+		else if card.symbol == "problem"	then rgb(251,154,145)
+		else if card.symbol == "setting"	then rgb(156,218,233)
+		else if card.symbol == "action"		then rgb(189,132,189)
+		else					     rgb(0,0,0)
+	}
+
+############################################################## Card field styles
+card style:
+	############################# Type line
+	symbol:
+		left: 27
+		top: 26
+		width: 51
+		height: 51
+		z index: 1
+		render style: image
+		choice images:
+			resolution: resolution.png
+			character: character.png
+			problem: problem.png
+			setting: setting.png
+			action: action.png
+	type:
+		left: 88
+		top: 26
+		width: 256
+		height: 51
+		z index: 1
+		alignment: middle right
+		font:
+			name: Arial
+			size: 30
+			color: rgb(0,0,0)
+	
+	############################# Image
+	image:
+		left: 22
+		top: 103                        
+		width: 331
+		height:
+			{ if card.symbol=="action" then 116
+			  else                          291 }
+		z index: 1
+		mask:
+			{ if card.symbol=="action" then "image_maska.png"
+			  else                          "image_mask.png" }
+		default: /nanofictionary.mse-game/default-image.png
+	
+	############################# Text box
+	name:
+		left: 32
+		top: 
+			{ if card.symbol=="action" then 255
+			  else                          420 }
+		width: 310
+		height:
+			{ if card.symbol=="action" then 50
+			  else                          77 }
+		z index: 1
+		alignment: middle center
+		font:
+			name: Arial
+			size:
+				{ if card.symbol=="action" then 34
+				  else                          28 }
+			scale down to:
+				{ if card.symbol=="action" then 34
+				  else                          24 }
+			color: rgb(0,0,0)
+		line height soft: 0.9
+		line height hard: 0.9
+	text:
+		left: 32
+		top: 320
+		width: 310
+		height: 177
+		z index: 0
+		alignment: top left
+		visible:
+			{ if card.symbol=="action" then "true"
+			  else                          "false" }
+		font:
+			name: Arial
+			size: 18
+			color: rgb(0,0,0)
+
+############################################################## Extra card fields
+
+############################# Background stuff
+extra card field:
+	type: color
+	name: border
+	default: rgb(0,0,0)
+	show statistics: false
+	editable: false
+extra card field:
+	type: color
+	name: color
+	script: card_color()
+	choice: rgb(255,255,122)
+	choice: rgb(154,213,148)
+	choice: rgb(251,154,145)
+	choice: rgb(156,218,233)
+	choice: rgb(189,132,189)
+	show statistics: false
+	editable: false
+extra card field:
+	type: color
+	name: color 2
+	script: card_color()
+	choice: rgb(255,255,122)
+	choice: rgb(154,213,148)
+	choice: rgb(251,154,145)
+	choice: rgb(156,218,233)
+	choice: rgb(189,132,189)
+	show statistics: false
+	editable: false
+
+############################# Text box
+extra card field:
+	type: color
+	name: bar
+	default: rgb(0,0,0)
+	show statistics: false
+	editable: false
+
+############################################################## Extra card field styles
+
+extra card style:
+	############################# Background stuff
+	border:
+		left: 0
+		top: 0
+		width: 375
+		height: 523
+		radius: 18
+		z index: -2
+	color:
+		left: 22
+		top: 22
+		width: 331
+		height: 59
+		radius: 18
+		z index: -1
+	color 2:
+		left: 22
+		top:
+			{ if card.symbol=="action" then 241
+			  else                          416 }
+		width: 331
+		height:
+			{ if card.symbol=="action" then 261
+			  else                          85 }
+		radius: 18
+		z index: -1
+
+	############################# Text box
+	bar:
+		left: 32
+		top: 309
+		width: 310
+		height: 4
+		visible:
+			{ if card.symbol=="action" then "true"
+			  else                          "false" }
+		z index: 0

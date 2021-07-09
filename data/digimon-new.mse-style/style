@@ -1,0 +1,577 @@
+﻿mse version: 0.3.8
+game: digimon
+short name: New
+installer group: Digimon/New
+icon: card-sample.png
+position hint: 02
+
+version: 2008-12-03
+depends on:
+	package: digimon.mse-game
+	version: 2008-12-03
+
+card background: white
+card width: 375
+card height: 523
+card dpi: 150
+
+#Fonts Used: Arial Narrow, MS Reference Sans Serif, SerpentineDBol Italic, & Serpentine-Light
+#CREDIT: 
+#Fonts: For locating free versions of the necessary fonts, credit goes to Blackikun. Thanks for finding them! :D - AF
+#Images: All by Art_Freak. (Images used are all mockups based on online images. Will scan higher quality images when I have time. -AF)
+#Foil scripts: Pichoro and Shiv2503
+############################################################## Extra scripts
+############################################################## Extra style
+styling field:
+	type: boolean
+	name: digimon second name line
+	description: Should the Digimon have a second name line like on Imperialdramon?
+	initial: no
+styling field:
+	type: package choice
+	name: overlay
+	description: Should there be an overlay applied, such as foil?
+	match: magic-overlay-*.mse-include
+	required: false
+styling field:
+	type: choice
+	name: overlay combine type
+	description: What type of combine should the overlay use? Only works if overlay is enabled.
+	choice: normal
+	choice: add
+	choice: subtract
+	choice: stamp
+	choice: difference
+	choice: negation
+	choice: multiply
+	choice: darken
+	choice: lighten
+	choice: color dodge
+	choice: color burn
+	choice: screen
+	choice: overlay
+	choice: hard light
+	choice: soft light
+	choice: reflect
+	choice: glow
+	choice: freeze
+	choice: heat
+	choice: and
+	choice: or
+	choice: xor
+	choice: shadow
+	choice: symmetric overlay
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	card type:
+		left: 0
+		top: 0
+		width: 375
+		height: 523
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			digimon: digimon.png
+			power option digivolve: digivolve.png
+			power option field: fieldmockup.png
+			power option force fx: forcefx.png
+			power option power blast: powerblast.png
+
+	############################# Name line
+	name:
+		left: 35
+		top : { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 317 else 347 ) else 347 }
+		width: { if card.card_type!="digimon" and card.color!="" then 270 else 298 }
+		height: 30
+		alignment: middle right shrink-overflow
+		padding bottom: 0
+		z index: 3
+		font:
+			name: SF Atarian System Extended
+			size: { if card.card_type!="digimon" and card.color!="" then 18 else 20 }
+			color: rgb(242,191,46)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 3
+			shadow displacement y: 3
+	name 2:
+		left: 35
+		top : { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 317 else 347 ) else 347 }
+		width: { if card.card_type!="digimon" and card.color!="" then 270 else 298 }
+		height: 30
+		alignment: middle right shrink-overflow
+		padding bottom: 0
+		z index: 2
+		font:
+			name: SF Atarian System Extended
+			size: { if card.card_type!="digimon" and card.color!="" then 18 else 20 }
+			color: rgb(242,191,46)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: -3
+			shadow displacement y: -3
+	name 3:
+		left: 35
+		top : { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 317 else 347 ) else 347 }
+		width: { if card.card_type!="digimon" and card.color!="" then 270 else 298 }
+		height: 30
+		alignment: middle right shrink-overflow
+		padding bottom: 0
+		z index: 2
+		font:
+			name: SF Atarian System Extended
+			size: { if card.card_type!="digimon" and card.color!="" then 18 else 20 }
+			color: rgb(242,191,46)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 3
+			shadow displacement y: -3
+	name 4:
+		left: 35
+		top : { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 317 else 347 ) else 347 }
+		width: { if card.card_type!="digimon" and card.color!="" then 270 else 298 }
+		height: 30
+		alignment: middle right shrink-overflow
+		padding bottom: 0
+		z index: 2
+		font:
+			name: SF Atarian System Extended
+			size: { if card.card_type!="digimon" and card.color!="" then 18 else 20 }
+			color: rgb(242,191,46)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: -3
+			shadow displacement y: 3
+	color:
+		left: { if card.card_type!="digimon" then 310 else 35 }
+		top : { if card.card_type!="digimon" then 350 else 347 }
+		width: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 298 else 0 ) else 250 }
+		height: 23
+		angle: { if card.card_type!="digimon" then 90 else 0 }
+		alignment: { if card.card_type!="digimon" then "middle left shrink-overflow" else "middle right shrink-overflow" }
+		padding bottom: 0
+		z index: 3
+		font:
+			name: SF Atarian System Extended
+			size: 20
+			color: rgb(242,191,46)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 3
+			shadow displacement y: 3
+		visible: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then "true" else "false" ) else "true" }
+	color 2:
+		left: { if card.card_type!="digimon" then 310 else 35 }
+		top : { if card.card_type!="digimon" then 350 else 347 }
+		width: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 298 else 0 ) else 250 }
+		height: 23
+		angle: { if card.card_type!="digimon" then 90 else 0 }
+		alignment: { if card.card_type!="digimon" then "middle left shrink-overflow" else "middle right shrink-overflow" }
+		padding bottom: 0
+		z index: 3
+		font:
+			name: SF Atarian System Extended
+			size: 20
+			color: rgb(242,191,46)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: -3
+			shadow displacement y: -3
+		visible: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then "true" else "false" ) else "true" }
+	color 3:
+		left: { if card.card_type!="digimon" then 310 else 35 }
+		top : { if card.card_type!="digimon" then 350 else 347 }
+		width: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 298 else 0 ) else 250 }
+		height: 23
+		angle: { if card.card_type!="digimon" then 90 else 0 }
+		alignment: { if card.card_type!="digimon" then "middle left shrink-overflow" else "middle right shrink-overflow" }
+		padding bottom: 0
+		z index: 3
+		font:
+			name: SF Atarian System Extended
+			size: 20
+			color: rgb(242,191,46)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 3
+			shadow displacement y: -3
+		visible: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then "true" else "false" ) else "true" }
+	color 4:
+		left: { if card.card_type!="digimon" then 310 else 35 }
+		top : { if card.card_type!="digimon" then 350 else 347 }
+		width: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 298 else 0 ) else 250 }
+		height: 23
+		angle: { if card.card_type!="digimon" then 90 else 0 }
+		alignment: { if card.card_type!="digimon" then "middle left shrink-overflow" else "middle right shrink-overflow" }
+		padding bottom: 0
+		z index: 3
+		font:
+			name: SF Atarian System Extended
+			size: 20
+			color: rgb(242,191,46)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: -3
+			shadow displacement y: 3
+		visible: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then "true" else "false" ) else "true" }
+
+	############################# Digital Info
+	battle type:
+		left: 29
+		top: 42
+		height: 51
+		width: 45
+		z index: 2
+		render style: image
+		choice images:
+			data:		data.png
+			vaccine:	vaccine.png
+			virus:		virus.png
+			digivolve:	digi.png
+			field:		field.png
+			force fx:	force.png
+			power blast:	blast.png
+	battle bar:
+		left: 68
+		top: 23
+		height: 23
+		width: 229
+		z index: 2
+		render style: image
+		choice images:
+			data:		bar-da.png
+			vaccine:	bar-va.png
+			virus:		bar-vi.png
+	digivolve level:
+		left: 79
+		top: 53
+		height: 21
+		width: 208
+		z index: 2
+		render style: image
+		choice images:
+			rookie level:	level-r.png
+			champion level:	level-c.png
+			ultimate level:	level-u.png
+			mega level:	level-m.png
+		visible: { card.card_type=="digimon" }
+	digivolve requirement:
+		left: 80
+		top : 69
+		width: 205
+		height: 36
+		z index: 3
+		font:
+			name: MS Reference Sans Serif
+			size: 8
+			color: rgb(0,0,0)
+		visible: { card.card_type=="digimon" }
+		alignment: top left
+		padding left: 2
+		padding right: 2
+		padding top: 0
+		padding bottom: 2
+		line height hard: 0.5
+		line height line: 0.5
+		line height soft: 0.5
+		line height hard max: 0.9
+		line height line max: 0.9
+	symbols:
+		left: 290
+		top : 59
+		width: 50
+		height: 34
+		z index: 2
+		render style: image
+		choice images:
+			dig:					sym-dig.png
+			fly:					sym-fly.png
+			swim:					sym-swim.png
+			digimon:				sym-digimon.png
+			double dig and fly:			sym-dig-fly.png
+			double dig and swim:			sym-dig-swim.png
+			double dig and digimon:			sym-dig-digi.png
+			double fly and swim:			sym-fly-swim.png
+			double fly and digimon:			sym-fly-digi.png
+			double swim and digimon:		sym-swim-digi.png
+			power option digivolve digiegg:		sym-digiegg.png
+			power option digivolve digivice:	sym-digivice.png
+			power option field:			sym-field.png
+			power option force fx:			sym-ffx.png
+			power option powerblast one:		sym-pb1.png
+			power option powerblast two:		sym-pb2.png
+
+	############################# Number
+	card number:
+		left: 310
+		top : 43
+		width: 25
+		height: 16
+		alignment: middle center shrink-overflow
+		z index: 2
+		font:
+			name: SerpentineDBol
+			size: 8
+			color: rgb(0,0,0)
+
+	############################# Image
+	image:
+		left: { if card.card_type=="digimon" then 29 else 28 }
+		top: 97
+		width: 312
+		height: 279
+		z index: 1
+		mask: { if card.card_type=="digimon" then "mask.png" else "mask2.png" }
+
+	############################# Power Techniques
+	digimon power 1:
+		left: 53
+		top: 390
+		width: 30
+		height: 10
+		z index: 3
+		alignment: top left shrink-overflow
+		font:
+			name: MS Reference Sans Serif
+			weight: bold
+			size: 8
+			color: rgb(0,0,0)
+		visible: { card.card_type=="digimon" }
+	alternate pt1:
+		left: 52
+		top: 390
+		width: 75
+		height: 24
+		z index: 2
+		alignment: { if card.alternate_pt1=="DEFEND" then "bottom left" else "top right" }
+		font:
+			name: Arial Narrow
+			weight: bold
+			size: 9
+			color: rgb(0,0,0)
+		line height hard: 0.8
+		line height line: 0.8
+		line height soft: 0.8
+		line height hard max: 1.2
+		line height line max: 1.2
+		visible: { card.card_type=="digimon" }
+	digimon power 2:
+		left: 154
+		top: 390
+		width: 30
+		height: 10
+		z index: 3
+		alignment: top left shrink-overflow
+		font:
+			name: MS Reference Sans Serif
+			weight: bold
+			size: 8
+			color: rgb(0,0,0)
+		visible: { card.card_type=="digimon" }
+	alternate pt2:
+		left: 154
+		top: 390
+		width: 75
+		height: 24
+		z index: 2
+		alignment: { if card.alternate_pt2=="DEFEND" then "bottom left" else "top right" }
+		font:
+			name: Arial Narrow
+			weight: bold
+			size: 9
+			color: rgb(0,0,0)
+		line height hard: 0.8
+		line height line: 0.8
+		line height soft: 0.8
+		line height hard max: 1.2
+		line height line max: 1.2
+		visible: { card.card_type=="digimon" }
+	digimon power 3:
+		left: 259
+		top: 390
+		width: 30
+		height: 10
+		z index: 2
+		alignment: top left shrink-overflow
+		font:
+			name: MS Reference Sans Serif
+			weight: bold
+			size: 8
+			color: rgb(0,0,0)
+		visible: { card.card_type=="digimon" }
+	alternate pt3:
+		left: 259
+		top: 390
+		width: 72
+		height: 24
+		z index: 2
+		alignment: { if card.alternate_pt3=="DEFEND" then "bottom left" else "top right" }
+		font:
+			name: Arial Narrow
+			weight: bold
+			size: 9
+			color: rgb(0,0,0)
+		line height hard: 0.8
+		line height line: 0.8
+		line height soft: 0.8
+		line height hard max: 1.2
+		line height line max: 1.2
+		visible: { card.card_type=="digimon" }
+
+	############################# Card type
+	complex type:
+		left: 32
+		top: 420
+		width: 306
+		height: 15
+		z index: 2
+		font:
+			name: SerpentineDBol Italic
+			size: 10
+			scale down to: 6
+			color: rgb(0,0,0)
+		alignment: top left
+		padding left:   0
+		padding top:    0
+		padding right:  0
+		padding bottom: 0
+		line height hard: 0.7
+		line height line: 0.7
+		line height soft: 0.7
+		line height hard max: 1.2
+		line height line max: 1.2
+		visible: { card.card_type=="digimon" }
+
+	############################# Text box
+	rule text:
+		left: { if card.card_type=="digimon" then 32 else 31 }
+		top : { if card.card_type=="digimon" then 435 else 391 }
+		width: { if card.card_type=="digimon" then 306 else 308 }
+		height: { if card.card_type=="digimon" then 25 else 49 }
+		font:
+			name: Serpentine-Light
+			italic name: SerpentineDBol Italic
+			size: 10
+			scale down to: 4
+			color: rgb(0,0,0)
+		alignment: top left
+		z index: 3
+		padding left:   0
+		padding top:    0
+		padding right:  2
+		padding bottom: 1
+		line height hard: 0.9
+		line height line: 0.9
+		line height soft: 0.9
+		line height hard max: 1.2
+		line height line max: 1.2
+	reminder:
+		left: 31
+		top : 450
+		width: { if card.card_type=="digimon" then 0 else 308 }
+		height: 27
+		font:
+			name: Serpentine-Light
+			weight: bold
+			size: 10
+			scale down to: 4
+			color: rgb(255,255,255)
+		alignment: middle left shrink-overflow
+		z index: 3
+		visible: { card.card_type!="digimon" }
+		padding left:   0
+		padding top:    0
+		padding right:  0
+		padding bottom: 0
+		line height hard: 0.9
+		line height line: 0.9
+		line height soft: 0.9
+		line height hard max: 1.2
+		line height line max: 1.2
+
+	############################# Scores
+	rookie score:
+		left: 115
+		top: 465
+		width: 35
+		height: 10
+		z index: 2
+		font:
+			name: SerpentineDBol Italic
+			size: 9
+			color: rgb(255,255,255)
+		alignment: top left shrink-overflow
+		visible: { card.card_type=="digimon" }
+	champion score:
+		left: 175
+		top: 465
+		width: 35
+		height: 10
+		z index: 2
+		font:
+			name: SerpentineDBol Italic
+			size: 9
+			color: rgb(255,255,255)
+		alignment: top left shrink-overflow
+		visible: { card.card_type=="digimon" }
+	ultimate score:
+		left: 240
+		top: 465
+		width: 35
+		height: 10
+		z index: 2
+		font:
+			name: SerpentineDBol Italic
+			size: 9
+			color: rgb(255,255,255)
+		alignment: top left shrink-overflow
+		visible: { card.card_type=="digimon" }
+	mega score:
+		left: 304
+		top: 465
+		width: 35
+		height: 10
+		z index: 2
+		font:
+			name: SerpentineDBol Italic
+			size: 9
+			color: rgb(255,255,255)
+		alignment: top left shrink-overflow
+		visible: { card.card_type=="digimon" }
+
+	############################# Copyright stuff
+	illustrator:
+		left: 28
+		top : 483
+		width: 211
+		height: 12
+		z index: 2
+		alignment: middle left shrink-overflow
+		font:
+			name: MS Reference Sans Serif
+			weight: bold
+			size: 9
+			color: rgb(255,255,255)
+	copyright:
+		left: 239
+		top : 483
+		width: 100
+		height: 12
+		z index: 2
+		alignment: middle right shrink-overflow
+		font:
+			name: MS Reference Sans Serif
+			weight: bold
+			size: 9
+			color: rgb(255,255,255)
+
+############################################extra card field:
+extra card field:
+	type: choice
+	name: foil layer
+	choice: foil
+	save value: false
+	editable: false
+extra card style:
+	foil layer:
+		left: 0
+		top : 0
+		width: 375
+		height: 523
+		z index: 5
+		render style: image
+		image: {if styling.overlay == "" then nil else set_combine(input: styling.overlay + "/overlay.png", combine: styling.overlay_combine_type)}

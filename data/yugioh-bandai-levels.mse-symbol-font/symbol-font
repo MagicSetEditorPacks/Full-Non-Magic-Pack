@@ -1,0 +1,53 @@
+mse version: 0.3.6
+version: 2008-05-19
+short name: Bandai
+position hint: 002
+icon: star.png
+installer group: Yugioh/Symbol Fonts/Bandai
+# Symbol font for level symbols
+
+image font size: 16
+horizontal space: 3
+symbol:
+	code: %
+	image: continuous.png
+symbol:
+	code: !
+	image: counter.png
+symbol:
+	code: +
+	image: equipment.png
+symbol:
+	code: &
+	image: field.png
+symbol:
+	code: $
+	image: quickplay.png
+symbol:
+	code: #
+	image: ritual.png
+symbol:
+	code: [
+	image: leftbracket.png
+	image font size: 28
+symbol:
+	code: ]
+	image: rightbracket.png
+	image font size: 28
+symbol:
+	code: *
+	image: star.png
+	image font size: 10
+
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: %
+	item: !
+	item: +
+	item: &
+	item: $
+	item: #
+	item: [
+	item: ]
+	item: *

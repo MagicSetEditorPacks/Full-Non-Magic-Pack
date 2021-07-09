@@ -1,0 +1,674 @@
+mse version: 2.0.0
+version: 2018-09-06
+short name: normal
+position hint: 001
+icon: void.png
+installer group: fow/symbol-font
+
+image font size: 14
+horizontal space: 2
+######################################## Full Art Symbols
+symbol:
+	code: B
+	image: black-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: G
+	image: green-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: R
+	image: red-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: U
+	image: blue-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: W
+	image: white-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: V
+	image: void-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: M
+	image: moon-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: I
+	image: time-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	image: colorless-fa.png
+	code: [0-9].
+	enabled: { full_art }
+	regex: yes
+	draw text: 0
+	text margin left:   1
+	text margin right:  1
+	text margin top:    -.14
+	text margin bottom: 0.8
+	text font:
+		name: Constantia
+		size: 3
+		style: italic
+		color: rgb(0,0,0)
+		max stretch: 0.57
+symbol:
+	code: 0
+	image: 0-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 1
+	image: 1-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 2
+	image: 2-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 3
+	image: 3-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 4
+	image: 4-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 5
+	image: 5-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 6
+	image: 6-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 7
+	image: 7-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 8
+	image: 8-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 9
+	image: 9-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: X
+	image: X-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: T
+	image: rest-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: gem
+	image: gem-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: >
+	image: arrow-fa.png
+	enabled: { full_art }
+	draw text: -1
+
+symbol:
+	code: activate
+	image: lapis-activate-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: awakening
+	image: lapis-awakening-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: bane
+	image: valhalla-bane-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: barrier
+	image: lapis-barrier-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: bestow
+	image: lapis-bestow-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: bloodlust
+	image: lapis-bloodlust-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: continuous
+	image: lapis-continuous-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: crest
+	image: reiya-crest-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: divinity
+	image: valhalla-divinity-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: drain
+	image: reiya-drain-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: energize
+	image: lapis-energize-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: enter
+	image: lapis-enter-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: eternal
+	image: valhalla-eternal-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: evolution
+	image: lapis-evolution-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: explode
+	image: lapis-explode-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: firststrike
+	image: lapis-firststrike-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: flying
+	image: lapis-flying-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: force
+	image: lapis-force-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: grimoire
+	image: reiya-grimoire-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: imperishable
+	image: lapis-imperishable-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: inheritance
+	image: lapis-inheritance-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: incarnation
+	image: lapis-incarnation-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: jactivate
+	image: lapis-jactivate-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: judgment
+	image: lapis-judgment-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: legend
+	image: reiya-legend-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: limit
+	image: lapis-limit-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: mana
+	image: lapis-mana-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: mobilize
+	image: reiya-mobilize-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: null
+	image: reiya-null-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: pierce
+	image: lapis-pierce-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: precision
+	image: lapis-precision-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: quickcast
+	image: lapis-quickcast-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: remnant
+	image: lapis-remnant-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: rune
+	image: valhalla-rune-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: shift
+	image: lapis-shift-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: stealth
+	image: lapis-stealth-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: swiftness
+	image: lapis-swiftness-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: targetattack
+	image: lapis-targetattack-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: torrent
+	image: lapis-torrent-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: trigger
+	image: lapis-trigger-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: resonance
+	image: lapis-resonance-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: seal
+	image: lapis-seal-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: willofhope
+	image: lapis-willofhope-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: willofdespair
+	image: lapis-willofdespair-fa.png
+	enabled: { full_art }
+	draw text: -1
+
+################################### Symbol Skills (non fullart)
+symbol:
+	code: activate
+	image: lapis-activate.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: awakening
+	image: lapis-awakening.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: bane
+	image: valhalla-bane.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: barrier
+	image: lapis-barrier.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: bestow
+	image: lapis-bestow.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: bloodlust
+	image: lapis-bloodlust.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: continuous
+	image: lapis-continuous.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: crest
+	image: reiya-crest.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: divinity
+	image: valhalla-divinity.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: drain
+	image: reiya-drain.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: energize
+	image: lapis-energize.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: enter
+	image: lapis-enter.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: eternal
+	image: valhalla-eternal.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: evolution
+	image: lapis-evolution.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: explode
+	image: lapis-explode.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: firststrike
+	image: lapis-firststrike.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: flying
+	image: lapis-flying.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: force
+	image: lapis-force.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: grimoire
+	image: reiya-grimoire.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: imperishable
+	image: lapis-imperishable.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: inheritance
+	image: lapis-inheritance.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: incarnation
+	image: lapis-incarnation.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: jactivate
+	image: lapis-jactivate.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: judgment
+	image: lapis-judgment.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: legend
+	image: reiya-legend.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: limit
+	image: lapis-limit.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: mana
+	image: lapis-mana.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: mobilize
+	image: reiya-mobilize.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: null
+	image: reiya-null.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: pierce
+	image: lapis-pierce.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: precision
+	image: lapis-precision.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: quickcast
+	image: lapis-quickcast.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: remnant
+	image: lapis-remnant.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: rune
+	image: valhalla-rune.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: shift
+	image: lapis-shift.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: stealth
+	image: lapis-stealth.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: swiftness
+	image: lapis-swiftness.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: targetattack
+	image: lapis-targetattack.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: torrent
+	image: lapis-torrent.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: trigger
+	image: lapis-trigger.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: resonance
+	image: lapis-resonance.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: seal
+	image: lapis-seal.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: willofhope
+	image: lapis-willofhope.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: willofdespair
+	image: lapis-willofdespair.png
+	enabled: { lapis_enable() }
+	draw text: -1
+
+symbol:
+	code: lifeburst
+	image: lifeburst.png
+	enabled: { lapis_enable() }
+	draw text: -1
+###################################
+symbol:
+	code: B
+	image: black.png
+symbol:
+	code: G
+	image: green.png
+symbol:
+	code: R
+	image: red.png
+symbol:
+	code: U
+	image: blue.png
+symbol:
+	code: W
+	image: white.png
+symbol:
+	code: V
+	image: void.png
+symbol:
+	code: M
+	image: moon.png
+symbol:
+	code: I
+	image: time.png
+symbol:
+	image: colorless.png
+	code: [0-9].
+	regex: yes
+	draw text: 0
+	text margin left:   1
+	text margin right:  1
+	text margin top:    -.14
+	text margin bottom: 0.8
+	text font:
+		name: Constantia
+		size: 3
+		style: italic
+		color: rgb(0,0,0)
+		max stretch: 0.57
+symbol:
+	code: 0
+	image: 0.png
+symbol:
+	code: 1
+	image: 1.png
+symbol:
+	code: 2
+	image: 2.png
+symbol:
+	code: 3
+	image: 3.png
+symbol:
+	code: 4
+	image: 4.png
+symbol:
+	code: 5
+	image: 5.png
+symbol:
+	code: 6
+	image: 6.png
+symbol:
+	code: 7
+	image: 7.png
+symbol:
+	code: 8
+	image: 8.png
+symbol:
+	code: 9
+	image: 9.png
+symbol:
+	code: X
+	image: X.png
+symbol:
+	code: T
+	image: rest.png
+symbol:
+	code: gem
+	image: gem.png
+symbol:
+	code: >
+	image: arrow.png
+symbol:
+	code: myth
+	image: lapis-myth.png
+symbol:
+	code: ascend
+	image: lapis-ascend.png
+	

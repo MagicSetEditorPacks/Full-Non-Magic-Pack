@@ -1,0 +1,32 @@
+mse version:	2.0.0
+short name:		BoonBane
+full name:		Boons and Banes
+icon:			boonbane_sample.png
+position hint:	120
+version:		2015-07-14
+installer_group: PACG/Custom Styles/Boons and Banes
+
+# Dependencies
+depends on:		PACG.mse-game 2014-05-01
+depends on:		PACG-common.mse-include 2015-07-14
+depends on:		PACG-check.mse-symbol-font 2014-05
+
+#  Stylesheet
+game:			PACG
+card width:		375
+card height:	525
+card dpi:		150
+card background: rgb(0,0,0)
+
+#  Initialisation
+init script:
+	Width := 375
+	Height := 525
+	include file:	script-bb.mse
+
+# Fields Specific to the Boon & Bane Style
+include file:	extra-fields-bb.mse
+
+#  Styling
+include file:	style-pacg.mse
+include file:	style-bb.mse

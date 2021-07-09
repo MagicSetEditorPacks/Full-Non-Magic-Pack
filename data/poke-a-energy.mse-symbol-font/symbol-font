@@ -1,0 +1,138 @@
+mse version: 0.3.8
+version: 2016-08-01
+short name: normal
+position hint: 001
+icon: colorless.png
+# Symbol font for energy
+
+image font size: 53
+horizontal space: 1
+vertical space: 2
+symbol:
+	code: C
+	image: {if is_outline() then "colorless-outline.png" else "colorless.png" }
+	image font size: 53
+symbol:
+	code: D
+	image: {if is_outline() then "dark-outline.png" else "dark.png" }
+	image font size: 53
+symbol:
+	code: L
+	image: {if is_outline() then "lightning-outline.png" else "lightning.png" }
+	image font size: 53
+symbol:
+	code: F
+	image: {if is_outline() then "fighting-outline.png" else "fighting.png" }
+	image font size: 53
+symbol:
+	code: R
+	image: {if is_outline() then "fire-outline.png" else "fire.png" }
+	image font size: 53
+symbol:
+	code: G
+	image: {if is_outline() then "grass-outline.png" else "grass.png" }
+	image font size: 53
+symbol:
+	code: M
+	image: {if is_outline() then "metal-outline.png" else "metal.png" }
+	image font size: 53
+symbol:
+	code: P
+	image: {if is_outline() then "psychic-outline.png" else "psychic.png" }
+	image font size: 53
+symbol:
+	code: W
+	image: {if is_outline() then "water-outline.png" else "water.png" }
+	image font size: 53
+symbol:
+	code: O
+	image: {if is_outline() then "dragon-outline.png" else "dragon.png" }
+	image font size: 53
+symbol:
+	code: Y
+	image: {if is_outline() then "fairy-outline.png" else "fairy.png" }
+	image font size: 53
+symbol:
+	code: SB
+	image: {if is_outline() then "sp-rainbow-outline.png" else "sp-rainbow.png" }
+	image font size: 53
+symbol:
+	code: SH
+	image: {if is_outline() then "sp-miracle-outline.png" else "sp-miracle.png" }
+	image font size: 53
+symbol:
+	code: SD
+	image: {if is_outline() then "sp-dangerous-outline.png" else "sp-dangerous.png" }
+	image font size: 53
+symbol:
+	code: SL
+	image: {if is_outline() then "sp-flash-outline.png" else "sp-flash.png" }
+	image font size: 53
+symbol:
+	code: SF
+	image: {if is_outline() then "sp-strong-outline.png" else "sp-strong.png" }
+	image font size: 53
+symbol:
+	code: SR
+	image: {if is_outline() then "sp-burning-outline.png" else "sp-burning.png" }
+	image font size: 53
+symbol:
+	code: SG
+	image: {if is_outline() then "sp-herbal-outline.png" else "sp-herbal.png" }
+	image font size: 53
+symbol:
+	code: SM
+	image: {if is_outline() then "sp-shield-outline.png" else "sp-shield.png" }
+	image font size: 53
+symbol:
+	code: SP
+	image: {if is_outline() then "sp-mystery-outline.png" else "sp-mystery.png" }
+	image font size: 53
+symbol:
+	code: SW
+	image: {if is_outline() then "sp-splash-outline.png" else "sp-splash.png" }
+	image font size: 53
+symbol:
+	code: SO
+	image: {if is_outline() then "sp-dd-outline.png" else "sp-dd.png" }
+	image font size: 53
+symbol:
+	code: SY
+	image: {if is_outline() then "sp-wonder-outline.png" else "sp-wonder.png" }
+	image font size: 53
+symbol:
+	code: AB
+	image: {if is_outline() then "ability.png" else "ability.png" }
+	image font size: 24
+symbol:
+	code: X
+	image: { if is_outline() then "X-outline.png" else if is_wt_wrr() then "X-wt.png" else "X-bk.png" }
+	image font size: 60
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: C
+	item: D
+	item: L
+	item: F
+	item: R
+	item: G
+	item: M
+	item: P
+	item: W
+	item: O
+	item: Y
+	item: X
+	item: SB
+	item: SH
+	item: SD
+	item: SL
+	item: SF
+	item: SR
+	item: SG
+	item: SM
+	item: SP
+	item: SW
+	item: SO
+	item: SY
+	item: AB

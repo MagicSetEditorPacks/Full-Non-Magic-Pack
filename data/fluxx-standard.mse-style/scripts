@@ -1,0 +1,14 @@
+init script:
+	#Scripts to set fonts
+	bar_font := { styling.name_font }
+	name_font := { bar_font() }
+	name_weight :=
+		{ if bar_font()=="Helvetica" then "bold"
+			else                            "normal" }
+	text_font := { "Times New Roman" }
+	warning_font :=
+		{ if styling.warning=="old" then text_font()
+			else                           bar_font() }
+
+	#Script to pad name bar for Surprises
+	name_pad := { if is_surprise() then 10 else 0 }

@@ -1,0 +1,193 @@
+# BOON and BANE Scripts
+# Not used in ALT:
+# checkR()
+# checkDiscR()
+
+# 1-COMMON
+# 2-VHL TYPE
+# 3-CHECKS
+# 4-POWERS
+# 5-RECHARGE
+
+
+# 1-COMMON
+isbbFront :=	{ styling.card_side == "Front" or card.type == "SHIP" }
+
+
+cardartT := {
+	if card.type == "BARRIER" or card.type == "SPELL" then 40 
+}
+cardartH := {
+	max(
+		(if check3Visible() then check3T() + check3H() + checkCell3H() - cardartT() ),
+		(if card.type == "VILLAIN" then 268
+		else if card.type == "MONSTER" or card.type == "HENCHMAN" then 306
+		else 292)
+		- cardartT()
+	)
+}
+
+
+# 2-VHL TYPE (Villain Henchman Loot)
+typeVisible := {
+	card.type == "VILLAIN" or card.type == "HENCHMAN" or card.type == "LOOT" or card.type == "SUPPORT"
+}
+typeTblT :=	40
+typeTblH := 32
+typeCellT := { typeTblT + 16 }
+typeCellH :=	16
+
+
+# 3-CHECKS
+
+# Check to Defeat \ Acquire - Override
+getCheckInfo := {
+	"CHECK TO "
+	+ if card.type == "HENCHMAN" or card.type == "MONSTER" or card.type == "BARRIER" or card.type == "VILLAIN" or (card.type == "SHIP" and styling.card_side == "Front") then "DEFEAT"
+	else if card.type == "SHIP" then "REPAIR"
+	else "ACQUIRE"
+}
+
+checkFontClr := {
+	if card.type == "MONSTER" or card.type == "HENCHMAN" or card.type == "VILLAIN" then rgb(0,0,0) 
+	else rgb (255,255,255) 
+}
+
+checkW := 	54
+checkR :=	{ Width - 16 }
+checkL :=	{ if set.banner_position == "Right" then 18 else 42 }
+
+# checkDiscD := 40
+# Disc radius hardcoded on style sheet as radius not scriptable
+checkDiscR := { checkR() - (checkW - input)/2 }
+
+# Check 1
+isLootSupportCohort :=	{ card.type == "LOOT" or card.type == "SUPPORT" or card.type == "COHORT" }
+
+check1Visible := {
+	if styling.card_side == "Front" then
+		card.check_list_1 != "NONE" and card.check_list_1 != "" 
+	else
+		card.check_list_4 != "NONE" and card.check_list_4 != ""
+}
+
+check1T := { if typeVisible() then typeTblT + typeTblH else typeTblT }
+check1H := { if isLootSupportCohort() then 0 else 22 }
+
+checkList1H := {
+	if isLootSupportCohort() then 0
+	else min(100, max(10, if styling.card_side == "Front" then card_style.check_list_text_1.content_height else card_style.check_list_text_4.content_height) + 2)
+}
+
+checkCell1H := {
+	if isLootSupportCohort() then 0
+	else if check1Visible() then checkList1H() + 44
+	else checkList1H()
+}
+
+# Check 2
+check2Visible := {
+	card.check_header_2 != "" and card.check_list_1 != "NONE" and styling.card_side == "Front"
+}
+
+check2H :=	{ if check1Visible() then 11 }
+
+check2T :=	{
+	check1T() + check1H() + checkCell1H()
+}
+
+checkCell2H := {
+	checkList2H() + 44
+}
+
+checkList2H := {
+	if check2Visible() then min(100,max(10, card_style.check_list_text_2.content_height) + 2)
+}
+
+# Check 3
+check3Visible := {
+	check2Visible() and card.check_header_3 != "" and card.check_list_2 != "NONE" and styling.card_side == "Front"
+}
+
+check3H :=	{ if check2Visible() then 11 }
+
+check3T :=	{
+	check2T() + check2H() + checkCell2H()
+}
+
+checkCell3H := {
+	checkList3H() + 44
+}
+
+checkList3H := {
+	if check3Visible() then min(100,max(10, card_style.check_list_text_3.content_height) + 2)
+}
+
+bb_border_fill_2_T := {
+	if check3Visible() then check3T() + check3H() +  checkCell3H() + 2
+	else if check2Visible() then check2T() + check2H() + checkCell2H() + 2
+	else check1T() + check1H() + checkCell1H() + 2
+} 
+
+# 4-POWERS
+isPowersVisible := {
+	card.type != "SHIP"
+}
+
+isSupportHeaderVisible :=	{
+	card.type == "SUPPORT"
+}
+
+headerH := 18
+
+getbbPowersT := {
+	max(cardartT() + cardartH(), bb_border_fill_2_T() - 2 )
+}
+
+getbbPowersH := {
+	Height 
+	- getbbPowersT()
+	- 18
+	- (if isRechargeVisible() or isSupportHeaderVisible() then getRechargeH() - 2)
+}
+
+# 5-RECHARGE
+isRechargeVisible := {
+	styling.use_recharge == "yes" and
+	(card.type == "SPELL" 
+	or card.type == "ITEM" 
+	or (card.type == "BLESSING" and card.name != "BLESSING OF THE GODS") 
+	or (card.type == "LOOT" and card.vhl_type == "ITEM"))
+}
+
+getRechargeT := {
+	Height - getRechargeH() - 18
+}
+
+getRechargeH := {
+	if isRechargeVisible() == false and card.type != "SUPPORT" then 0
+	else if card.type == "SPELL" 
+		or (card.type == "BLESSING" and card.name != "BLESSING OF THE GODS") 
+		or ((card.type == "SUPPORT" or (card.type == "LOOT" and card.vhl_type == "ITEM")) and card_style.recharge.content_lines > 1) then 64 + 14
+	else 44 + 14
+}
+
+# 6-WHEN ENCOUNTERING
+isEncVisible := {
+	card.type == "SHIP" and styling.card_side == "Front"
+}
+
+getEncT	:=	{ getbbPowersT() }
+getEncH :=	{
+	(Height
+	- getEncT()
+	- 18) / 2
+}
+
+# 7-WHEN COMMANDING
+isCmdVisible :=	{
+	card.type == "SHIP"
+}
+
+getCmdT :=	{ getEncT() + getEncH() }
+getCmdH :=	{ getEncH() }

@@ -1,0 +1,65 @@
+mse version: 0.3.8
+version: 2009-12-23
+short name: UFS Standard
+installer group: UFS System/Standard Symbols
+icon: fire.png
+
+image font size: 145
+horizontal space: 2
+vertical space: 2
+
+symbol:
+	code: air
+	image: air.png
+symbol:
+	code: all
+	image: all.png
+symbol:
+	code: chaos
+	image: chaos.png
+symbol:
+	code: death
+	image: death.png
+symbol:
+	code: earth
+	image: earth.png
+symbol:
+	code: evil
+	image: evil.png
+symbol:
+	code: fire
+	image: fire.png
+symbol:
+	code: good
+	image: good.png
+symbol:
+	code: infinity
+	image: infinity.png
+symbol:
+	code: life
+	image: life.png
+symbol:
+	code: order
+	image: order.png
+symbol:
+	code: void
+	image: void.png
+symbol:
+	code: water
+	image: water.png
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: air
+	item: all
+	item: chaos
+	item: death
+	item: earth
+	item: evil
+	item: fire
+	item: good
+	item: infinity
+	item: life
+	item: order
+	item: void
+	item: water

@@ -1,0 +1,16 @@
+# The watermark choices
+# Included by a game file
+
+choice:
+	name: none
+	line below: true
+choice:
+	name: race
+	choice: Centauri
+	choice: Drakh
+	choice: Human
+	choice: League
+	choice: Minbari
+	choice: Narn
+	choice: Psi Corps
+	choice: Rangers

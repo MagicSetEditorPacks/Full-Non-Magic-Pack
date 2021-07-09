@@ -1,0 +1,8 @@
+init script:
+	name_text_filter := { input }
+	
+	#Scripts to set fonts
+	bar_font := { "Trebuchet MS SC" }
+	name_font := { bar_font() }
+	name_weight := { "bold" }
+	text_font := { "Times New Roman" }

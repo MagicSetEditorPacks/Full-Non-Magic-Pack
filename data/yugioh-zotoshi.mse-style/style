@@ -1,0 +1,302 @@
+﻿mse version: 0.3.7
+game: yugioh
+short name: Zotoshi
+installer group: Yugioh/Zotoshi
+icon: card-sample.png
+position hint: 05
+
+version: 2008-08-11
+depends on:
+	package: yugioh.mse-game
+	version: 2008-05-14
+depends on:
+	package: yugioh-standard-levels.mse-symbol-font
+	version: 2007-09-23
+depends on:
+	package: yugioh-text-replacements.mse-symbol-font
+	version: 2008-01-04
+depends on:
+	package: yugioh-standard-zotoshi.mse-symbol-font
+	version: 2008-01-04
+
+card background: white
+card width: 375
+card height: 523
+card dpi: 150
+
+############################################################## Extra scripts
+############################################################## Extra style
+styling field:
+	type: choice
+	name: foil image
+	description: What foil should be on the cards?
+	initial: none
+	choice: none
+	choice: holo image
+	choice: secret holo image
+	choice: parallel holo image
+styling field:
+	type: choice
+	name: foil name
+	description: What color foil should be used on the name?
+	initial: normal
+	choice: normal
+	choice: silver
+	choice: gold
+styling style:
+	foil image:
+		render style: text
+	foil name:
+		render style: text
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	card type:
+		left: 0
+		top: 0
+		width: 361
+		height: 523
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			normal monster: card-normal.jpg
+			effect monster: card-effect.jpg
+			ritual monster: card-ritual.jpg
+			synchro monster: card-synchro.jpg
+			fusion monster: card-fusion.jpg
+			token monster: card-token.jpg
+			obelisk: card-obelisk.jpg
+			slifer: card-slifer.jpg
+			ra: card-ra.jpg
+			legendary dragons: card-dragons.jpg
+			spell card: card-spell.jpg
+			trap card: card-trap.jpg
+	foils:
+		left: { if styling.foil_image=="parallel holo image" then 0 else 51}
+		top: { if styling.foil_image=="parallel holo image" then 0 else 114}
+		width: { if styling.foil_image=="parallel holo image" then 361 else 259}
+		height: { if styling.foil_image=="parallel holo image" then 523 else 259}
+		z index: 5
+		visible: { styling.foil_image!="none" }
+		render style: image
+		popup style: in place
+		image:
+			script:	if styling.foil_image=="parallel holo image" then "parallelfoil.png" else
+				if styling.foil_image=="secret holo image" then "secretfoil.png" else "superfoil.png"
+	############################# Name line
+	name:
+		left: 30
+		top : 26
+		width: 302
+		height: 40
+		alignment: center shrink-overflow
+		padding bottom: 0
+		z index: 2
+		font:
+			name: MatrixRegularSmallCaps
+			size: 28
+			color:
+				script: if styling.foil_name=="silver" then rgb(230,230,230)
+				else if styling.foil_name=="gold" then rgb(216,199,53)
+				else if is_nmonster() then rgb(255,255,255)
+				else rgb(0,0,0)
+	attribute:
+		left: 31
+		top : 447
+		width: 45
+		height: 45
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			earth: earth.png
+			water: water.png
+			fire: fire.png
+			wind: wind.png
+			light: light.png
+			dark: dark.png
+			divine: divine.png
+			spell: spell.png
+			trap: trap.png
+	level:
+		angle: 90
+		left: 20
+		top : 356
+		width: 280
+		height: 28
+		z index: 2
+		alignment: right center
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix
+			size: 20
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-standard-levels
+			alignment: right bottom
+			scale down to: 1
+			size: 8
+	############################# Image
+	image:
+		left: 56
+		top: 77
+		width: 280
+		height: 304
+		z index: 1
+	############################# Card type
+	monster type:
+		left: 93
+		top : 391
+		width: 193
+		height: 14
+		alignment: middle left
+		z index: 2
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix
+			size: 12
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 3.5
+		visible: script: if is_nmonster() then false else true
+	############################# Edition and Card ID
+	number:
+		left: 95
+		top : 495
+		width: 115
+		height: 15
+
+		z index: 2
+		alignment: top right
+		font:
+			name: Palatino Linotype
+			size: 8
+			color: rgb(250,250,250)
+	edition:
+		left: 220
+		top: 378
+		width: 115
+		height: 15
+		z index: 2
+		alignment: right middle
+		font:
+			name: Palatino Linotype Bold
+			size: 8
+			color: rgb(250,250,250)
+	############################# Text box
+	rule text:
+		left: 93
+		top :
+			script: if is_nmonster() then 391 else 404
+		width: 239
+		height:
+			script: if is_nmonster() then 102 else 92
+		font:
+			name: MatrixBook
+			size: 12
+			scale down to: 4
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 3.5
+		alignment: top left
+		z index: 3
+		padding left: 1
+		padding top: 2
+		padding right: 0
+		padding bottom: 1
+		line height hard: 1.0
+		line height line: 1.0
+		line height soft: 0.9
+		line height hard max: 1.1
+		line height line max: 1.1
+	############################# Attack/Defense
+	attack:
+		left: 29
+		top: 391
+		width: 50
+		height: 18
+		z index: 2
+		alignment: middle center
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix-Bold
+			size: 14
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-standard-zotoshi
+			alignment: middle center
+			scale down to: 1
+			size: 14
+		visible: script: if is_nmonster() then false else true
+	defense:
+		z index: 4
+		left: 29
+		top: 418
+		width: 50
+		height: 18
+		z index: 2
+		alignment: middle center
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix-Bold
+			size: 14
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 8
+		visible: script: if is_nmonster() then false else true
+	############################# Card sorting / numbering
+	############################# Copyright stuff
+	gamecode:
+		left: 16
+		top : 495
+		width: 96
+		height: 12
+		alignment: middle left
+		z index: 2
+		font:
+			name: Palatino Linotype
+			size: 7
+			color: rgb(250,250,250)
+	copyright:
+		left: 200
+		top : 495
+		width: 145
+		height: 12
+		z index: 2
+		alignment: middle right
+		font:
+			name: Palatino Linotype
+			size: 7
+			color: rgb(250,250,250)
+
+extra card field:
+	type: text
+	name: level2
+	description: The title of a character, usually a nickname or description.
+
+extra card style:
+	level2:
+		left: 31
+		top : 391
+		width: 45
+		height: 
+			script: if is_nmonster() then 45 else 0
+		z index: 2
+		alignment: middle center
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix
+			size: 17
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-standard-levels
+			alignment: middle center
+			scale down to: 1
+			size: 20

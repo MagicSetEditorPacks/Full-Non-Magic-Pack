@@ -1,0 +1,426 @@
+# Card Back
+
+card_style:
+
+# Favoured Card
+	favoured_card_choice:
+		visible: 			{ isCharBack() }
+		top:				{ cardsListCellT(0) }
+		left:				{ cardsListCellL(6 + if has_cohort() then 1) + boxHeight }
+		width:				180
+		height:				{ if isCharBack() then boxHeight }
+		render_style:		hidden
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+			color:				rgb(255,255,255)
+		alignment: 			center middle
+		angle:				90
+		z_index: 			52
+# Cohort Choice
+	cohort_choice:
+		visible:			{ isCharBack() }
+		left:				{ cardsListL() }
+		top:				{ cardsListT() }
+		width:				275
+		height:				{ boxHeight }
+		render_style:		hidden
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+			color:				rgb(255,255,255)
+		alignment: 			center middle
+		angle:				90
+		z_index: 			40
+# Cards in starting hand
+	weapon_cards:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(0) }
+		top:				{ cardsListCellT(1) }
+		width:				20
+		height:				{ if  isCharBack()  then boxHeight }
+		alignment: 			center middle
+		always_symbol:		true
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			52
+	spell_cards:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(1) }
+		top:				{ cardsListCellT(1) }
+		width:				20
+		height:				{ if  isCharBack()  then boxHeight }
+		alignment: 			center middle
+		always_symbol:		true
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			52
+	armor_cards:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(2) }
+		top:				{ cardsListCellT(1) }
+		width:				20
+		height:				{ if  isCharBack()  then boxHeight }
+		alignment: 			center middle
+		always_symbol:		true
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			52
+	item_cards:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(3) }
+		top:				{ cardsListCellT(1) }
+		width:				20
+		height:				{ if  isCharBack()  then boxHeight }
+		alignment: 			center middle
+		always_symbol:		true
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			52
+	ally_cards:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(4) }
+		top:				{ cardsListCellT(1) }
+		width:				20
+		height:				{ if  isCharBack()  then boxHeight }
+		alignment: 			center middle
+		always_symbol:		true
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			52
+	blessing_cards:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(5) }
+		top:				{ cardsListCellT(1) }
+		width:				20
+		height:				{ if  isCharBack()  then boxHeight }
+		alignment: 			center middle
+		always_symbol:		true
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			52
+
+# Card Advancement Boxes
+	weapon_advance:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(0) }
+		top:				{ cardsListCellT(2) }
+		width:				180
+		height: 			{ if isCharBack() then boxHeight }
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			52
+	spell_advance:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(1) }
+		top:				{ cardsListCellT(2) }
+		width:				180
+		height: 			{ if isCharBack() then boxHeight }
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		symbol_font:
+			name:				PACG-symbol
+			size:				{ getFontSize(11) }
+		angle:				90
+		z_index: 			52
+	armor_advance:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(2) }
+		top:				{ cardsListCellT(2) }
+		width:				180
+		height: 			{ if isCharBack() then boxHeight }
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			52
+	item_advance:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(3) }
+		top:				{ cardsListCellT(2) }
+		width:				180
+		height: 			{ if isCharBack() then boxHeight }
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			52
+	ally_advance:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(4) }
+		top:				{ cardsListCellT(2) }
+		width:				180
+		height: 			{ if isCharBack() then boxHeight }
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			52
+	blessing_advance:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(5) }
+		top:				{ cardsListCellT(2) }
+		width:				180
+		height: 			{ if isCharBack() then boxHeight }
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		angle:				90
+		z_index: 			52
+
+extra_card_style:
+
+# Card Table and Headings
+		
+	cards_list_table:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListL() }
+		top:				{ cardsListT() }
+		width:				275
+		height:				{ (8 + if has_cohort() then 1) * (boxHeight + 2) + boxHeight }
+		angle:				90
+		z_index: 			39
+	cards_list_header:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListL() }
+		top:				{ cardsListCellT(0) }
+		width:				277
+		height:				{ boxHeight }
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+			color:				{ "white" }
+		alignment: 			left middle
+		angle:				90
+		z_index: 			51
+
+	weapon_header:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(0) }
+		top:				{ cardsListCellT(0) }
+		width:				50
+		height:				{ boxHeight }
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		alignment: 			left middle
+		angle:				90
+		z_index: 			52
+	spell_header:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(1) }
+		top:				{ cardsListCellT(0) }
+		width:				50
+		height:				{ boxHeight }
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		alignment: 			left middle
+		angle:				90
+		z_index: 			52
+	armor_header:
+		visible:			{ isCharBack() }
+		left:				{ cardsListCellL(2) }
+		top:				{ cardsListCellT(0) }
+		width:				50
+		height:				{ boxHeight }
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		alignment: 			left middle
+		angle:				90
+		z_index: 			52
+	item_header:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(3) }
+		top:				{ cardsListCellT(0) }
+		width:				50
+		height:				{ boxHeight }
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		alignment: 			left middle
+		angle:				90
+		z_index: 			52
+	ally_header:
+		visible:			{ isCharBack() }
+		left:				{ cardsListCellL(4) }
+		top:				{ cardsListCellT(0) }
+		width:				50
+		height:				{ boxHeight }
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		alignment: 			left middle
+		angle:				90
+		z_index: 			52
+	blessing_header:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(5) }
+		top:				{ cardsListCellT(0) }
+		width:				50
+		height:				{ boxHeight }
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		alignment: 			left middle
+		angle:				90
+		z_index: 			52
+	cohort_forward:
+		visible: 			{ isCharBack() and has_cohort() }
+		left:				{ cardsListCellL(6) }
+		top:				{ cardsListCellT(0) }
+		width:				{ cardsListCellT(0)-cardsListCellT(2) + 180}
+		height:				{ boxHeight }
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+		alignment: 			left middle
+		angle:				90
+		z_index: 			52
+		
+# border lines
+	weapon_cell:
+		visible: 			{ isCharBack() }
+		top:				{ cardsListT() }
+		left:				{ cardsListCellL(0) }
+		width:				{ 273 }
+		height:				{ boxHeight }
+		angle:				90
+		z_index: 			51
+	spell_cell:
+		visible: 			{ isCharBack() }
+		top:				{ cardsListT() }
+		left:				{ cardsListCellL(1) }
+		width:				{ 273 }
+		height:				{ boxHeight }
+		angle:				90
+		z_index: 			51
+	armour_cell:
+		visible: 			{ isCharBack() }
+		top:				{ cardsListT() }
+		left:				{ cardsListCellL(2) }
+		width:				{ 273 }
+		height:				{ boxHeight }
+		angle:				90
+		z_index: 			51
+	item_cell:
+		visible: 			{ isCharBack() }
+		top:				{ cardsListT() }
+		left:				{ cardsListCellL(3) }
+		width:				{ 273 }
+		height:				{ boxHeight }
+		angle:				90
+		z_index: 			51
+	ally_cell:
+		visible: 			{ isCharBack() }
+		top:				{ cardsListT() }
+		left:				{ cardsListCellL(4) }
+		width:				{ 273 }
+		height:				{ boxHeight }
+		angle:				90
+		z_index: 			51
+	blessing_cell:
+		visible: 			{ isCharBack() }
+		top:				{ cardsListT() }
+		left:				{ cardsListCellL(5) }
+		width:				{ 273 }
+		height:				{ boxHeight }
+		angle:				90
+		z_index: 			51
+	cohort_cell:
+		visible: 			{ isCharBack() and has_cohort() }
+		top:				{ cardsListT() }
+		left:				{ cardsListCellL(6) }
+		width:				{ 273 }
+		height:				{ boxHeight }
+		angle:				90
+		z_index: 			51
+	
+	favoured_header:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(6 + if has_cohort() then 1) }
+		top:				{ cardsListCellT(0) }
+		width:				180
+		height:				{ boxHeight }
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+			color:				{ "white" }
+		alignment: 			left middle
+		angle:				90
+		z_index: 			52
+		
+	favoured_card_value:
+		visible: 			{ isCharBack() }
+		left:				{ cardsListCellL(6 + if has_cohort() then 1) + boxHeight }
+		top:				{ cardsListCellT(0) }
+		width:				180
+		height:				{ boxHeight }
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+			color:				{ "white" }
+		alignment: 			left middle
+		angle:				90
+		z_index: 			52

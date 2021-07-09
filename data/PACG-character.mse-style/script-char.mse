@@ -1,0 +1,300 @@
+# Character Card Scripts
+
+# OVERRIDE common Script for Character Cards
+
+setT :=			{ if not isToken() then Height - setHW() - 11 else Height - setHW() - 11 }
+setR :=			{ if not isToken() then Width - 11 - setHW() else 11 + setHW() }
+setA :=			{ if not isToken() then 90 }
+
+bannerTextL := 	{ if not isToken() then Width - 40 else 8 }
+bannerTextT := 	{ if not isToken() then Height - 8 else Height - 40 }
+bannerTextW := 	{ if not isToken() then Width - 80 else Height - 80 }
+bannerTextA := 	{ if not isToken() then 180 else 90 }
+advAngle :=		{ if not isToken() then 90 }
+
+topTextL :=		{ if not isToken() then 8 else 42 }
+topTextT :=		{ if not isToken() then Height - 42 else 8 }
+topTextW :=		{ if not isToken() then Height - 58 else Width - 58 }
+topTextA :=		{ if not isToken() then 90 }
+
+card_type_requirements := { 
+	if stylesheet.short_name == "Character" then
+		to_upper(styling.char_card)
+	else if stylesheet.short_name == "Adventure" then 
+		require_exclusive_choice(
+			choice1: "ADVENTURE", 
+			choice2: "SCENARIO", 
+			choice3: "LOCATION",
+			remove_choice(
+				choice1: "CHARACTER", 
+				choice2: "TOKEN", 
+				choice3: "ROLE",
+				choice4: "VILLAIN",
+				choice5: "HENCHMAN",
+				choice6: "MONSTER",
+				choice7: "BARRIER",
+				choice8: "WEAPON",
+				choice9: "SPELL",
+				choice10: "ARMOR",
+				choice11: "ITEM",
+				choice12: "ALLY",
+				choice13: "LOOT",
+				choice14: "BLESSING",
+				card.type
+			)
+		)
+	else
+		require_exclusive_choice(
+			choice1: "VILLAIN",
+			choice2: "HENCHMAN",
+			choice3: "MONSTER",
+			choice4: "BARRIER",
+			choice5: "WEAPON",
+			choice6: "SPELL",
+			choice7: "ARMOR",
+			choice8: "ITEM",
+			choice9: "ALLY",
+			choice10: "LOOT",
+			choice11: "BLESSING",
+			remove_choice(
+				choice1: "CHARACTER", 
+				choice2: "TOKEN", 
+				choice3: "ROLE",
+				choice4: "ADVENTURE", 
+				choice5: "SCENARIO", 
+				choice6: "LOCATION",
+				card.type
+			)
+		)
+}
+
+# Card qualifiers
+
+isCharacter :=	{ styling.char_card == "Character" }
+isCharFront :=	{ styling.char_card == "Character" and styling.char_side == "Front" }
+isCharBack :=	{ styling.char_card == "Character" and styling.char_side == "Back" }
+
+isToken :=		{ styling.char_card == "Token" }
+isTokenFront :=	{ styling.char_card == "Token" and styling.char_side == "Front" }
+isTokenBack :=	{ styling.char_card == "Token" and styling.char_side == "Back" }
+
+isRole :=		{ styling.char_card == "Role" }
+isRoleFront :=	{ styling.char_card == "Role" and styling.char_side == "Front" }
+isRoleBack :=	{ styling.char_card == "Role" and styling.char_side == "Back" }
+
+# Rotate 90deg for Character and Role cards
+charAngle :=  { if not isToken() then 90 }
+
+# Border Masks for Character Cards
+setCharBorderDkMask := {
+	"/PACG-common.mse-include/res/borderdk_mask" + styleMask[styling.char_card + styling.char_side] + ".png"
+}
+setCharBorderLtMask := {
+	"/PACG-common.mse-include/res/borderlt_mask" + styleMask[styling.char_card + styling.char_side] + ".png"
+}
+
+# Character Front
+
+boxHeight := 18
+
+# Skill Table
+skillTblL := 	{ 40 }
+skillTblT := 	{ Height - 40 }
+skillTblW := 	{ 275 }
+skillTblH := 	{ skill_box_left("all") + 18 }
+
+# Skill Boxes
+skillBoxL := {
+	skillTblL() 
+	+ skill_box_left(input) 
+	+ 20 
+}
+skillBoxH := 	{ if isCharFront() then skillsH(input) + 10 }
+skillBoxT := 	{ skillTblT() - 4 }
+skillBoxW := 	{ skillTblW() - 8 }
+
+# Skill Dice
+skillDiceL := 	{ skillTblL() + 18 + skill_box_left(input) }
+
+skillDiceH := 	{ if isCharFront() then 14 }
+skillDiceT := 	{ skillTblT() -110 }
+skillDiceW := 	{ 20 }
+
+# Skill Advancement
+skillAdvL := 	{ skillDiceL() }
+skillAdvH := 	{ skillDiceH() }
+skillAdvT := 	{ skillDiceT() - 35 }
+skillAdvW := 	{ skillTblW() - 147 }
+
+# Additional Skills
+skillsL := 		{ skillTblL() + 32 + skill_box_left(input) }
+skillsH := 		{ if isCharFront() and chosen(choice: to_upper(statFullName[input]) + " Skills", card.skills_choice) then max(13,skillsH_Col[input]() ) }
+
+skillsT := 		{ skillTblT() - 17 }
+skillsW := 		{ skillTblW() - 20 }
+
+skill_box_left := {
+	x := skillIndex[input]
+	0
+	+ if x > skillIndex["str"] then 16 + skillsH("str")
+	+ if x > skillIndex["dex"] then 16 + skillsH("dex")
+	+ if x > skillIndex["con"] then 16 + skillsH("con")
+	+ if x > skillIndex["int"] then 16 + skillsH("int")
+	+ if x > skillIndex["wis"] then 16 + skillsH("wis")
+	+ if x > skillIndex["cha"] then 16 + skillsH("cha")
+}
+
+
+# POWERS
+
+powersH := 18
+handH := 16
+
+getPowerFontSize := { getFontSize(10) }
+isProficient := 	{ isProficient_Col[role]() == "Proficiency" }
+
+powersTblH := {
+	if isCharacter() then 
+		powersH + handH
+		+ max(powersH, card_style.power1.content_height) + 2
+		+ max(powersH, card_style.power2.content_height) + 2
+		+ (if card.power3 != "" then max(powersH, card_style.power3.content_height) + 2 )
+		+ (if card.power4 != "" then max(powersH, card_style.power4.content_height) + 2 )
+	else if isRoleFront() then
+		powersH + handH
+		+ max(powersH, card_style.role_1_power_1.content_height) + 2
+		+ max(powersH, card_style.role_1_power_2.content_height) + 2
+		+ (if card.role_1_power_3 != "" then max(powersH, card_style.role_1_power_3.content_height) + 2 )
+		+ (if card.role_1_power_4 != "" then max(powersH, card_style.role_1_power_4.content_height) + 2 )
+		+ (if card.role_1_power_5 != "" then max(powersH, card_style.role_1_power_5.content_height) + 2 )
+		+ (if card.role_1_power_6 != "" then max(powersH, card_style.role_1_power_6.content_height) + 2 )
+		+ (if card.role_1_power_7 != "" then max(powersH, card_style.role_1_power_7.content_height) + 2 )
+	else
+		powersH + handH
+		+ max(powersH, card_style.role_2_power_1.content_height) + 2
+		+ max(powersH, card_style.role_2_power_2.content_height) + 2
+		+ (if card.role_2_power_3 != "" then max(powersH, card_style.role_2_power_3.content_height) + 2 )
+		+ (if card.role_2_power_4 != "" then max(powersH, card_style.role_2_power_4.content_height) + 2 )
+		+ (if card.role_2_power_5 != "" then max(powersH, card_style.role_2_power_5.content_height) + 2 )
+		+ (if card.role_2_power_6 != "" then max(powersH, card_style.role_2_power_6.content_height) + 2 )
+		+ (if card.role_2_power_7 != "" then max(powersH, card_style.role_2_power_7.content_height) + 2 )
+}
+
+powersTblT :=	{
+	Height - 42
+}
+
+powersTblW :=	{
+	Height - 58
+}
+powersTblL :=	{
+	Width - powersTblH() - 30
+}
+
+powersCellT :=	{ Height - 42 }
+powersCellW :=	{ Height - 60 }
+
+# ROLE scripts
+rolePowerL :=	{
+	powersTblL() + powersH + handH
+	+ (if power > 1 then rolePowerH(role: role, power: 1) + 2 )
+	+ (if power > 2 then rolePowerH(role: role, power: 2) + 2 )
+	+ (if power > 3 then rolePowerH(role: role, power: 3) + 2 )
+	+ (if power > 4 then rolePowerH(role: role, power: 4) + 2 )
+	+ (if power > 5 then rolePowerH(role: role, power: 5) + 2 )
+	+ (if power > 6 then rolePowerH(role: role, power: 6) + 2 )
+	+ (if power > 7 then rolePowerH(role: role, power: 7) + 2 )
+}
+
+rolePowerH :=	{
+	rolePowerH_Col["role" + role + "power" + power]()
+}
+
+rolePowerH_Col := [
+	role0power1:	{ max(powersH, card_style.power1.content_height) }
+	role0power2:	{ max(powersH, card_style.power2.content_height) }
+	role0power3:	{ max(powersH, card_style.power3.content_height) }
+	role0power4:	{ max(powersH, card_style.power4.content_height) }
+	role1power1:	{ max(powersH, card_style.role_1_power_1.content_height) }
+	role1power2:	{ max(powersH, card_style.role_1_power_2.content_height) }
+	role1power3:	{ max(powersH, card_style.role_1_power_3.content_height) }
+	role1power4:	{ max(powersH, card_style.role_1_power_4.content_height) }
+	role1power5:	{ max(powersH, card_style.role_1_power_5.content_height) }
+	role1power6:	{ max(powersH, card_style.role_1_power_6.content_height) }
+	role1power7:	{ max(powersH, card_style.role_1_power_7.content_height) }
+	role2power1:	{ max(powersH, card_style.role_2_power_1.content_height) }
+	role2power2:	{ max(powersH, card_style.role_2_power_2.content_height) }
+	role2power3:	{ max(powersH, card_style.role_2_power_3.content_height) }
+	role2power4:	{ max(powersH, card_style.role_2_power_4.content_height) }
+	role2power5:	{ max(powersH, card_style.role_2_power_5.content_height) }
+	role2power6:	{ max(powersH, card_style.role_2_power_6.content_height) }
+	role2power7:	{ max(powersH, card_style.role_2_power_7.content_height) }
+]
+
+
+# Character Back
+
+cardsListT :=		{ Height - 42 }
+cardsListL :=		{ 40 }
+
+cardsListCellL :=	{ cardsListL() + ( (boxHeight + 2) * (input + 1) ) }
+cardsListCellT :=	{ 
+	cardsListT() - 
+	if input == 0 then 4
+	else if input == 1 then 67
+	else if input == 2 then 92
+	else 0
+}
+
+# Favoured card
+get_favoured_value := {
+	replace(input: card.favoured_card_choice, match: ", ", replace: " OR ")
+	}
+
+# Use Cohort
+has_cohort := { card.cohort_choice == "Use Cohort" }
+	
+# Option Lists
+
+isProficient_Col :=	[
+	0:				{ card.role_0_proficient_choice }
+	1:				{ card.role_1_proficient_choice }
+	2:				{ card.role_2_proficient_choice }
+]
+
+styleMask := [
+	CharacterFront:	"h1"
+	CharacterBack:	"h2"
+	TokenFront:		"1"
+	TokenBack:		"4"
+	RoleFront:		"h3"
+	RoleBack:		"h3"
+]
+
+statFullName := [
+	str:	"Strength"
+	dex:	"Dexterity"
+	con:	"Constitution"
+	int:	"Intelligence"
+	wis:	"Wisdom"
+	cha:	"Charisma"
+]
+
+skillsH_Col := [
+	str:	{ card_style.str_skills.content_height }
+	dex:	{ card_style.dex_skills.content_height }
+	con:	{ card_style.con_skills.content_height }
+	int:	{ card_style.int_skills.content_height }
+	wis:	{ card_style.wis_skills.content_height }
+	cha:	{ card_style.cha_skills.content_height }
+]
+
+skillIndex := [
+	str:	1
+	dex:	2
+	con:	3
+	int:	4
+	wis:	5
+	cha:	6
+	all:	7
+]

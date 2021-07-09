@@ -1,0 +1,95 @@
+mse version: 2.0.0
+game: bang
+full name: Characters
+short name: Bang!
+installer group: Bang!/Characters
+icon: sample.png
+
+version: 2014-01-29
+depends on:
+	package: bang.mse-game
+	version: 2010-01-23
+
+card width: 375
+card height: 585
+card dpi: 173
+# By Tocsik
+# Renovated by Pichoro
+card style:
+	name:
+		top: 27
+		left: 50
+		width: 283
+		height: 55
+		alignment: middle center shrink-overflow
+		z index: 0
+		font:
+			name: Western
+			size: 35
+			color: rgb(0,0,0)
+			scale down to: 40
+	ability:
+		top: 390
+		left: 50
+		width: 273
+		height: 160
+		alignment: top left shrink-overflow
+		z index: 0
+		font:
+			name: Palatino Linotype
+			size: 14
+			color: rgb(0,0,0)
+			scale down to: 40
+	bullets:
+		top: 85
+		left: 298
+		width: 73
+		height: 143
+		z index: 3
+		render style: image
+		choice images:
+			1: 1bullet.png
+			2: 2bullets.png
+			3: 3bullets.png
+			4: 4bullets.png
+			5: 5bullets.png
+	image:
+		top: 95
+		left: 60
+		width: 255
+		height: 275
+		z index: 2
+extra card field:
+	type: choice
+	name: bgimage
+	editable: false
+	show statistics: false
+	save value: false
+	choice: default
+extra card field:
+	type: choice
+	name: fgimage
+	editable: false
+	show statistics: false
+	save value: false
+	choice: default
+extra card style:	
+	bgimage:
+		top: 0
+		left: 0
+		height: 585
+		width: 375
+		z index: -1
+		render style: image
+		choice images:
+			default: characterblank.png
+extra card style:	
+	fgimage:
+		top: 27
+		left: 50
+		width: 283
+		height: 55
+		z index: 1
+		render style: image
+		choice images:
+			default: fontoverlay.png

@@ -1,0 +1,2378 @@
+mse version: 2.0.0
+game: pokemon
+full name: Break from XY
+short name: Break
+icon: card-sample.jpg
+position hint: 066
+
+version: 2018-07-22
+depends on:
+	package: pokemon.mse-game
+	version: 2018-07-22
+depends on:
+	package: pokemon-a-energy.mse-symbol-font
+	version: 2018-06-28
+depends on:
+	package: pokemon-a-color.mse-symbol-font
+	version: 2016-09-10
+depends on:
+	package: pokemon-a-title.mse-symbol-font
+	version: 2018-07-02
+depends on:
+	package: pokemon-a-rule.mse-symbol-font
+	version: 2018-06-28
+depends on:
+	package: pokemon-b-common.mse-include
+	version: 2018-07-04
+
+#By: Imp Elemental Spirit Guide
+
+#expand_size()==2
+#border included
+#card width: 1026
+#card height: 736
+#card dpi: 294
+
+#expand_size()==1
+card width: 513
+card height: 368
+card dpi: 147
+
+#Actual card width is 2.5", height is 3.5" almost exactly
+############################################################## Extra scripts
+init script:
+	##############################These two equations were originally used for centering and placing the different frames and text so that they matched the original card.
+	##############################			They have been kept in here because they would allow a different resolution of card should such thing apply
+	##############################                  Be careful to change the card size when altering these value
+	expand_size := { 1 }
+	is_not_blur := { expand_size()==2 }
+	# 2 is the size of the actual images used
+	# to watch 2 , card width 736, height 750, expand_size==2, slide_up == 0 or 276
+	# for 2   card width: 736, card height: 1026, card dpi: 294
+	# for 1.5 card width: 552, card height:  770, card dpi: 220
+	# for 1.4 card width: 515, card height:  717, card dpi: 205
+	# for 1   card width: 368, card height:  513, card dpi: 147
+	slide_left := { 0 }
+	slide_up := { 0 }
+	x_left := { to_int(input * expand_size()) - slide_left() }
+	y_top := { to_int(input * expand_size()) - slide_up() }
+	fun_expand_size := { to_int(input * expand_size()) }
+	fun_expand_font := { input * expand_size() }
+	fun_decompress := { input / expand_size() }
+	###############################Equations for transfering between templates
+	##############################These equations make sure that the cost for the classic template and the modern template match in spite of being different fields
+	cost_classic_1_placekeep := { card.cost_new_1 }
+	cost_classic_2_placekeep := { card.cost_new_2 }
+	cost_classic_3_placekeep := { card.cost_new_3 }
+	text_option_filter_1 := { text_option_filter(card.text_options_3) } + replace@(match: "Default Ability Color", replace: "Default Pokemon Power Color")
+	text_option_filter_2 := { text_option_filter(card.text_options_3) } + replace@(match: "Default Ability Color", replace: "Default PokeBody and PokePower Color")
+	text_option_filter_3 := { text_option_filter(value) }
+	fade_avail := { false }
+	############################### Equations for symbol text coloration
+	############################### Tag equations for the symbol fonts
+	is_outline_energy := { true }
+	is_outline_rule := { true }
+	is_wt_rule := { false }
+	is_two_tone_rule := { false }
+	is_outline_title := { is_outline() }
+	is_wt_title := { is_dark_1() }
+	is_ec_pbp := { contains(styling.Ability_and_Energy_Icons, match: "Use E-Card Poke-Body & Poke-Power Icons") }
+	is_sm_ab := { not(contains(styling.Ability_and_Energy_Icons, match: "Use Black & White or XY Style Ability Icon")) }
+	is_ab_gold := { contains(card.general_options_08, match: "Secret Rare (Gold)") }
+	is_dpp_free := { contains(styling.Ability_and_Energy_Icons, match: "Use Transparent Free Energy Icon (aka No Energy)") }
+	gx_color := { "Gold" }
+	############################### Other diagnostic equations
+	############################## Equations to centralize the mask settings for dual types
+	dual_mask := { "mask-s-split-break.png" }
+	dual_mask_reverse := { "mask-s-split-break-reverse.png" }
+	blend_mask := { "mask-s-split-break.png" }
+	blend_mask_reverse := { "mask-s-split-break-reverse.png" }
+	##############################Equations for the backgrounds
+	texture_type_1 := { if background_type_1()=="User Defined" then to_string(card.color_texture_1)
+		else if card.texture_type_1=="Default" then "Nintendo"
+		else to_string(card.texture_type_1) }
+	texture_type_2 := { if background_type_2()=="User Defined" then to_string(card.color_texture_2)
+		else if card.texture_type_2=="Default" then "Nintendo"
+		else to_string(card.texture_type_2) }
+	colored_pokemon_suffix_1 := { to_string(card.color_texture_1) } + replace@(match: " Black Text", replace: "") + replace@(match: " White Text", replace: "")
+	colored_pokemon_suffix_2 := { to_string(card.color_texture_2) } + replace@(match: " Black Text", replace: "") + replace@(match: " White Text", replace: "")
+	background_type_1 := { to_string(card.card_color_1) }
+	background_type_2 := { to_string(card.card_color_2) }
+	is_image_1 := { (is_pokemon() and contains(texture_type_1(), match: "User Image")) or (is_energy() and contains(basic_energy_suffix(), match: "User Image")) }
+	is_image_2 := { (card.card_type=="Dual-Type" and contains(texture_type_2(), match: "User Image")) }
+	############################### Equations for text coloration
+	############################### Text color equations to determin the color and types of text
+	ability_color := { if contains(card.text_options_3, match: "Purple") then rgb(89,46,132)
+				else if contains(card.text_options_3, match: "Yellow") then rgb(255,242,19)
+				else if (contains(card.text_options_3, match: "Default") and (card.card_color_1=="Fire" or card.card_color_1=="Fairy")) or contains(card.text_options_3, match: "Dark Red") then rgb(134,35,38)
+				else if contains(card.text_options_3, match: "Green") then rgb(2,146,64)
+				else rgb(216,5,20) }
+	is_outline := { contains(card.art_options, match: "Popout Art (for Advanced Users)") }
+	is_outline_title := { contains(card.text_options_3, match: "Outline Text") or is_outline() or contains(card.art_options, match: "Full Art") }
+	is_dark_1 := { is_pokemon() and
+		((background_type_1()=="Dark" or 
+			((background_type_1()=="Dragon" and not(texture_type_1()=="SunMoon")) or 
+				(texture_type_1()=="ISG" and (background_type_1()=="Fighting" or background_type_1()=="Grass")))) or
+		(contains(texture_type_1(), match: "White Text"))) }
+	is_dark_2 := { ((background_type_2()=="Dark" or 
+			((background_type_2()=="Dragon" and not(texture_type_2()=="SunMoon")) or 
+				(texture_type_2()=="ISG" and (background_type_2()=="Fighting" or background_type_2()=="Grass")))) or
+		(contains(texture_type_2(), match: "White Text"))) }
+	##############################Equations to centralize the information for the pokemon attack energy symbol so that user defined and dual texts are synchronized.
+	energy_left := { 465 }
+	energy_top := { 16 }
+	energy_left_difference := { 16 }
+	energy_right_difference := { 6 }
+	energy_width := { 31 }
+	###############################################Equations that define spacing and text for attack
+	is_ability := { is_pokemon() and contains(card.cost_new_1, match:"AB") }
+	rule_line_1 := { if length(to_text(card.rule_text_1))==0 then 0 else to_int(length(to_text(card.rule_text_1))/55)+1 }
+	#################Determines spacing for reminder text at the top (equals out left and right)
+	evo_line_width := { if fun_decompress(card_style.evolution_entry.content_width)<=10 then 10 else fun_decompress(card_style.evolution_entry.content_width) }
+	evo_total_width := { evo_line_width() + fun_decompress(card_style.evolution_reminder_1.content_width) }
+	evo_goal := { 130 }
+	################# Reminder Texts
+	###################################################### Functions to centralize information for all text fields allowing two-tone & outline texts
+	#######Card Name (remder size)
+	card_name_left := { x_left(90) }
+	card_name_top := { y_top(24) }
+	card_name_width := { fun_expand_size(235) }
+	card_name_height := { fun_expand_size(if is_pokemon() then 24 else 0) }
+	card_name_visible := { if is_energy() and not(card.energy_type=="Special") then "no" else "yes" }
+	card_name_outline_visible := { card_name_visible() and is_outline_title() and is_not_blur() }
+	card_name_outline_blur := { card_name_visible() and is_outline_title() and not(is_not_blur()) }
+	card_name_font := { "PokeTitleXY" }
+	card_name_weight := { "normal" }
+	card_name_style := { "normal" }
+	card_name_size := { fun_expand_font(17.5) }
+	card_name_align := { "bottom shrink-overflow" }
+	card_name_symbol_font := { "pokemon-a-title" }
+	card_name_symbol_size := { fun_expand_font(140) }
+
+	#######HP Number
+	hp_left := { x_left(385) }
+	hp_top := { y_top(22) }
+	hp_width := { fun_expand_size(76-(if card.card_type=="Dual-Type" then energy_left_difference() else 0)) }
+	hp_height := { fun_expand_size(if is_pokemon() then 26 else 0) }
+	hp_size := { fun_expand_font(19) }
+	hp_font := { "PokeTitleNeo" }
+	hp_visible := { is_pokemon() }
+	hp_outline_visible := { hp_visible() and is_outline_title() and is_not_blur() }
+	hp_outline_blur := { hp_visible() and is_outline_title() and not(is_not_blur()) }
+	hp_weight := { "normal" }
+	hp_style := { "normal" }
+	hp_align := { "bottom right shrink-overflow" }
+	hp_color := { if not(is_outline()) and ((is_dark_2() and card.card_type=="Dual-Type") or (is_dark_1() and card.card_type=="Pokemon")) then rgb(255,255,255) else rgb(0,0,0) }
+
+	#######Reminder text explaining what this pokemone evolved from
+	evolution_left := { x_left(76) }
+	evolution_top := { y_top(if is_pokemon() then 50 else 164) }
+	evolution_width := { fun_expand_size(if is_pokemon() then if contains(styling.Automated_Text_Usage, match: "Evolution Reminder") then if evo_total_width()>=evo_goal() then (evo_total_width()-evo_line_width())*evo_goal()/evo_total_width() else evo_goal()-evo_line_width() else evo_goal() else 361) }
+	evolution_size := { fun_expand_font(if is_pokemon() then 6 else 36) }
+	evolution_font := { "Humanist521BT" }
+	evolution_weight := { "bold" }
+	evolution_style := { "italic" }
+	evolution_align := { "bottom left shrink-overflow" }
+	evolution_color := { rgb(0,0,0) }
+	evolution_visible := { true }
+	evolution_outline_visible := { evolution_visible() and is_outline() and is_not_blur() }
+	evolution_outline_blur := { evolution_visible() and is_outline() and not(is_not_blur()) }
+	evolution_outline_separator := { if contains(styling.Automated_Text_Usage, match: "Evolution Reminder") then card.evolution_reminder_1 else card.evolution_text_1 }
+	evolution_height := { fun_expand_size(if is_pokemon() then 8 else if is_trainer() or is_energy() then 40 else 0) }
+	evolution_rem_visible := { evolution_visible() and (contains(styling.Automated_Text_Usage, match: "Evolution Reminder") or is_trainer() or is_energy()) }
+	evolution_rem_height := { fun_expand_size(if contains(styling.Automated_Text_Usage, match: "Evolution Reminder") and is_pokemon() then 8 else if is_trainer() or is_energy() then 40 else 0) }
+	evolution_txt_visible := { evolution_visible() and not(contains(styling.Automated_Text_Usage, match: "Evolution Reminder")) and is_pokemon() }
+	evolution_txt_height := { fun_expand_size(if not(contains(styling.Automated_Text_Usage, match: "Evolution Reminder")) and is_pokemon() then 8 else 0) }
+	evo_left := { x_left(if is_pokemon() then 78+fun_decompress(card_style.evolution_reminder_1.content_width)*(if evo_total_width()>=evo_goal() then evo_goal()/evo_total_width() else 1)) }
+	evo_width := { fun_expand_size(if evo_total_width()>=evo_goal() then evo_line_width()*evo_goal()/evo_total_width() else evo_line_width()) }
+	evo_height := { fun_expand_size(if contains(styling.Automated_Text_Usage, match: "Evolution Reminder") and is_pokemon() then 8 else 0) }
+	evo_visible := { contains(styling.Automated_Text_Usage, match: "Evolution Reminder") and is_pokemon() }
+	evo_outline_visible := { evo_visible() and is_outline() and is_not_blur() }
+	evo_outline_blur := { evo_visible() and is_outline() and not(is_not_blur()) }
+
+	#######Pokemon Stage Title for pokemon / Card Sub-Type for Trainers / Special Energy Sub-Bar
+	title_1_left := { x_left(299) }
+	title_1_top := { y_top(50) }
+	title_1_width := { fun_expand_size(148) }
+	title_1_font := { "Humanist521EBD" }
+	title_1_weight := { "normal" }
+	title_1_style := { "normal" }
+	title_1_size := { fun_expand_font(7) }
+	title_1_align := { "left bottom shrink-overflow" }
+	title_1_color := { if is_outline() then rgb(0,0,0) else rgb(255,255,255) }
+	title_1_outline_visible := { is_pokemon() and is_outline() and is_not_blur() }
+	title_1_outline_blur := { is_pokemon() and is_outline() and not(is_not_blur()) }
+	title_1_outline_separator := { if contains(styling.Automated_Text_Usage, match: "Break Rule Reminder") then card.title_reminder_1_8 else card.title_text_1 }
+	title_1_height := { fun_expand_size(if is_pokemon() then 9 else 0) }
+	title_rem_1_visible := { is_pokemon() and contains(styling.Automated_Text_Usage, match: "Break Rule Reminder") }
+	title_rem_1_height := { fun_expand_size(if contains(styling.Automated_Text_Usage, match: "Break Rule Reminder") and is_pokemon() then 9 else 0) }
+	title_txt_1_visible := { is_pokemon() and not(contains(styling.Automated_Text_Usage, match: "Break Rule Reminder")) }
+	title_txt_1_height := { fun_expand_size(if not(contains(styling.Automated_Text_Usage, match: "Break Rule Reminder")) and is_pokemon() then 9 else 0) }
+
+	#######Multi-line reminder text explaining the baby pokemon's auto defense ability and explaining how to use the different trainer cards.
+	special_rule_left := { x_left(304) }
+	special_rule_top := { y_top(60) }
+	special_rule_width := { fun_expand_size(192) }
+	special_rule_align := { "top left" }
+	special_rule_font := { "Humanist521BDCdn" }
+	special_rule_weight := { "normal" }
+	special_rule_style := { "normal" }
+	special_rule_size := { fun_expand_font(7) }
+	special_rule_lh_soft := { 0.8 }
+	special_rule_color := { rgb(0,0,0) }
+	special_rule_outline_visible := { is_pokemon() and is_outline() and is_not_blur() }
+	special_rule_outline_blur := { is_pokemon() and is_outline() and not(is_not_blur()) }
+	special_rule_outline_separator := { if contains(styling.Automated_Text_Usage, match: "Break Rule Reminder") then card.special_rule_reminder_1_8 else card.special_rule_text_1 }
+	special_rule_height := { fun_expand_size(if is_pokemon() then 30
+		else if is_trainer() and (card.trainer=="Tool" or card.trainer=="Stadium" or card.trainer=="Supporter") then 34.4/3*to_int((length(to_text(special_rule_outline_separator()))-1)/50+1)+6 
+		else 0) }
+	special_rule_rem_visible := { contains(styling.Automated_Text_Usage, match: "Break Rule Reminder") and is_pokemon() }
+	special_rule_rem_height := { fun_expand_size(if special_rule_rem_visible() then 30 else 0) }
+	special_rule_txt_visible := { not(contains(styling.Automated_Text_Usage, match: "Break Rule Reminder")) and is_pokemon() }
+	special_rule_txt_height := { fun_expand_size(if special_rule_txt_visible() then 30 else 0) }
+	special_rule_mask := { "mask-reminder.png" }
+	special_rule_pad_left := { fun_expand_size(12) }
+	special_rule_lh_hard := { 0.8 }
+
+	#######Artist
+	ill_left := { x_left(241) }
+	ill_top := { y_top(342) }
+	ill_width := { fun_expand_size(100) }
+	ill_height := { fun_expand_size(10) }
+	ill_size := { fun_expand_font(6) }
+	ill_font := { "Humanist521BT" }
+	ill_weight := { "bold" }
+	ill_style := { "italic" }
+	ill_align := { "bottom right" }
+	ill_outline_visible := { is_not_blur() }
+	ill_outline_blur := { not(is_not_blur()) }
+	ill_outline_separator := { if contains(card.text_options_3, match: "Use Primary Set Artist") then set.artist else card.illustrator }
+
+	#######Copyright
+	copy_left := { x_left(94) }
+	copy_top := { y_top(342) }
+	copy_width := { fun_expand_size(48) }
+	copy_height := { fun_expand_size(10) }
+	copy_size := { fun_expand_font(6) }
+	copy_font := { "Humanist521BDCdn" }
+	copy_weight := { "normal" }
+	copy_style := { "normal" }
+	copy_align := { "bottom center" }
+	copy_outline_visible := { contains(set.visibility_options, match: "Visible Copyright on all cards") and is_not_blur() }
+	copy_outline_blur := { contains(set.visibility_options, match: "Visible Copyright on all cards") and not(is_not_blur()) }
+	copy_outline_separator := { if contains(card.text_options_3, match: "Use Primary Set Artist") then set.copyright else card.copyright }
+
+	#######Card Number
+	card_no_left := { x_left(345) }
+	card_no_top := { y_top(342) }
+	card_no_width := { fun_expand_size(44) }
+	card_no_height := { fun_expand_size(10) }
+	card_no_size := { fun_expand_font(7) }
+	card_no_font := { "Humanist521BT" }
+	card_no_style := { "normal" }
+	card_no_weight := { "bold" }
+	card_no_align := { "bottom right" }
+	card_no_outline_visible := { contains(set.visibility_options, match: "Visible Card Numbers on all cards") and is_not_blur() }
+	card_no_outline_blur := { contains(set.visibility_options, match: "Visible Card Numbers on all cards") and not(is_not_blur()) }
+
+	#######Attack Costs
+	cost_1_left := { x_left(101) }
+	cost_1_top := { y_top(if length(to_text(card.rule_text_1))>=245 then 228 else 259) }
+	cost_1_width := { fun_expand_size(if is_pokemon() then if fun_decompress(card_style.cost_new_1.content_width)>=91 then 116 else if fun_decompress(card_style.cost_new_1.content_width)>=73 then 91 else 73 else 0) }
+	cost_1_height := { fun_expand_size(if is_pokemon() then 23 else 0) }
+	cost_1_visible := { is_pokemon() }
+	cost_align := { "bottom left" }
+	cost_symbol_font := { "pokemon-a-energy" }
+	cost_symbol_size := { fun_expand_size(20) }
+
+	##########Poke-Power / Poke-Body Titles
+	attack_1_left := { x_left(if fun_decompress(card_style.cost_new_1.content_width)>=91 then 217 else if fun_decompress(card_style.cost_new_1.content_width)>=73 then 192 else 174) }
+	attack_1_top := { y_top(if length(to_text(card.rule_text_1))>=245 then 228 else 259) }
+	attack_1_width := { fun_expand_size(if fun_decompress(card_style.cost_new_1.content_width)>=91 then 153 else if fun_decompress(card_style.cost_new_1.content_width)>=73 then 178 else 196) }
+	attack_1_height := { fun_expand_size(if is_pokemon() then 23 else 0) }
+	attack_1_visible := { is_pokemon() }
+	attack_1_outline_visible := { attack_1_visible() and is_not_blur() }
+	attack_1_outline_blur := { attack_1_visible() and not(is_not_blur()) }
+	attack_align := { "bottom left shrink-overflow" }
+	attack_font := { "GillSansCdn" }
+	attack_weight := { "bold" }
+	attack_style := { "normal" }
+	attack_size := { fun_expand_font(11) }
+	attack_color := {  if contains(card.cost_new_1, match:"AB") then ability_color() else rgb(0,0,0) }
+
+	#######Attack Damage
+	damage_1_left := { x_left(370) }
+	damage_1_top := { y_top(if length(to_text(card.rule_text_1))>=245 then 228 else 259) }
+	damage_1_width := { fun_expand_size(if contains(card.damage_1, match:"+") or contains(card.damage_1, match:"x") then 47 else 37) }
+	damage_1_height := { fun_expand_size(if damage_1_visible() then 23 else 0) }
+	damage_1_visible := { is_pokemon() and not(is_ability()) }
+	damage_1_outline_visible := { damage_1_visible() and is_not_blur() }
+	damage_1_outline_blur := { damage_1_visible() and not(is_not_blur()) }
+	damage_align := { "bottom right" }
+	damage_font := { "PokeTitleXY" }
+	damage_weight := { "normal" }
+	damage_style := { "normal" }
+	damage_size := { fun_expand_font(14) }
+
+	#######Attack rules text and title
+	rule_1_left := { x_left(104) }
+	rule_1_top := { y_top(if length(to_text(card.rule_text_1))>=245 then 251 else 282) }
+	rule_1_width := { fun_expand_size(306) }
+	rule_1_height := { fun_expand_size(if is_pokemon() then if length(to_text(card.rule_text_1))>=245 then 91 else 60 else 0) }
+	rule_1_visible := { is_pokemon() }
+	rule_1_align := { "left top" }
+	rule_1_outline_visible := { rule_1_visible() and is_not_blur() }
+	rule_1_outline_blur := { rule_1_visible() and not(is_not_blur()) }
+	rule_size := { fun_expand_font(10.6) }
+	rule_font := { "Humanist521BT" }
+	rule_weight := { "normal" }
+	rule_style := { "normal" }
+	rule_symbol_font := { "pokemon-a-rule" }
+	rule_symbol_size := { fun_expand_font(18) }
+	rule_lh_hard := { 1.4 }
+	rule_lh_soft := { if is_pokemon() then 0.9 else 1 }
+############################################################## Styling fields
+#All Card Options
+styling field:
+	type: multiple choice
+	name: Automated Text Usage
+	choice: Evolution Reminder
+	choice: Break Rule Reminder
+	initial: Evolution Reminder, Break Rule Reminder
+styling field:
+	type: multiple choice
+	name: Ability and Energy Icons
+	choice: Use Black & White or XY Style Ability Icon
+	choice: Use E-Card Poke-Body & Poke-Power Icons
+	choice: Use Transparent Free Energy Icon (aka No Energy)
+	initial: Use Black & White or XY Style Ability Icon
+styling field:
+	type: color
+	name: User Input Team Color
+	initial: rgb(150,150,150)
+	description: The color used for backgrounds for basic energy designs
+styling style:
+	Automated Text Usage:
+		render style: checklist
+		direction: vertical
+	Ability and Energy Icons:
+		render style: checklist
+		direction: vertical
+############################################################## Throughout this odd number layers are reserved for shading/covering up etc.
+card style:
+	######################## Hidden Layer -18
+	######################## this layer provids a layer to place hidden buttons and images
+	######################## Some of these items are found in the extra card fields
+#########User defined color fields (there but not seen)
+	energy color 1:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(513) }
+		height: { fun_expand_size(if background_type_1()=="User Defined" or is_trainer() or is_energy() then 368 else 0) }
+		visible: { if background_type_1()=="User Defined" or is_trainer() or is_energy() then "yes" else "no" }
+		mask: { if card.card_type=="Dual-Type" then dual_mask() else "/pokemon-b-common.mse-include/mask-blank-s.png" }
+		z index: -19
+	energy color 2:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(513) }
+		height: { fun_expand_size(if (card.card_type=="Dual-Type" and background_type_1()=="User Defined") then 368 else 0) }
+		mask: { if card.card_type=="Dual-Type" then dual_mask_reverse() else "/pokemon-b-common.mse-include/mask-blank-s.png" }
+		visible: { if (card.card_type=="Dual-Type" and background_type_1()=="User Defined") then "yes" else "no" }
+		z index: -19
+#########Image used for user defined background image
+	background pic 1:
+		left: { x_left(257)-513 }
+		top: { y_top(183)-368 }
+		width: { 1026 }
+		height: { if is_image_1() then 736 else 0 }
+		visible: { if is_image_1() then "yes" else "no" }
+		z index: -18
+		mask: { if card.card_type=="Dual-Type" then dual_mask() else "/pokemon-b-common.mse-include/mask-blank-s.png" }
+#########Image used for second user defined background image
+	background pic 2:
+		left: { x_left(257)-513 }
+		top: { y_top(183)-368 }
+		width: { 1026 }
+		height: { if is_image_2() then 736 else 0 }
+		z index: -18
+		visible: { if is_image_2() then "yes" else "no" }
+		mask: { dual_mask_reverse() }
+	######################## Background Layer -14
+	######################## this layer provids the background image modified slightly for dual type (changed some z-index)
+	#########Blank image to separate hidden images
+	blank image:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(513) }
+		height: { fun_expand_size(368) }
+		visible: { "yes" }
+		z index: -17
+		render style: image
+		image: { "/pokemon-b-common.mse-include/mask-blank-s.png" }
+	#########Background Image
+	background:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(513) }
+		height: { fun_expand_size(368) }
+		z index: -14
+		render style: image
+		image:
+			script: if card.card_type=="Pokemon" 
+					then if is_image_1() then				card.background_pic_1
+					else if texture_type_1()=="Color" and not(background_type_1()=="User Defined") or (colored_pokemon_suffix_1()=="Color" and background_type_1()=="User Defined") then recolor_image(input: "/pokemon-b-common.mse-include/blank-s-color.png", red: texture_color_1(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+					else if background_type_1()=="User Defined" then	recolor_image(input: "/pokemon-b-common.mse-include/back-s-colored-"+colored_pokemon_suffix_1()+".png", red: card.energy_color_1, green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+					else							"/pokemon-b-common.mse-include/back-s-"+background_type_1()+"-"+texture_type_1()+".png"
+				else if card.card_type=="Dual-Type" then masked_blend(light: 
+						(if is_image_1() then					card.background_pic_1
+						else if texture_type_1()=="Color" and not(background_type_1()=="User Defined") or (colored_pokemon_suffix_1()=="Color" and background_type_1()=="User Defined") then recolor_image(input: "/pokemon-b-common.mse-include/blank-s-color.png", red: texture_color_1(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+						else if background_type_1()=="User Defined" then	recolor_image(input: "/pokemon-b-common.mse-include/back-s-colored-"+colored_pokemon_suffix_1()+".png", red: card.energy_color_1, green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+						else							"/pokemon-b-common.mse-include/back-s-"+background_type_1()+"-"+texture_type_1()+".png"),
+					dark:	(if is_image_2() then					card.background_pic_2
+						else if texture_type_2()=="Color" and not(background_type_2()=="User Defined") or (colored_pokemon_suffix_2()=="Color" and background_type_2()=="User Defined") then recolor_image(input: "/pokemon-b-common.mse-include/blank-s-color.png", red: texture_color_2(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+						else if background_type_2()=="User Defined" then	recolor_image(input: "/pokemon-b-common.mse-include/back-s-colored-"+colored_pokemon_suffix_2()+".png", red: card.energy_color_2, green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+						else							"/pokemon-b-common.mse-include/back-s-"+background_type_2()+"-"+texture_type_2()+".png"),
+					mask:	blend_mask())
+				else if is_trainer() then "back-t-break.png"
+				else if is_energy() then "back-e-break.png"
+				else "/pokemon-b-common.mse-include/mask-blank-s.png"
+	######################## Frame Layer -12
+	######################## This layer provides the image framework underneath the image
+	image overlay:
+		left: { x_left(if is_pokemon() then 9 else 0) }
+		top: { y_top(if is_pokemon() then 9 else 0) }
+		width: { fun_expand_size(if is_pokemon() then 495 else 513) }
+		height: { fun_expand_size(if is_pokemon() and contains(card.general_options_08, match: "User Defined Team") and contains(card.general_options_08, match: "Colored Frame") then 350 else if is_trainer() then 368 else 0) }
+		visible: { is_trainer() or (is_pokemon() and contains(card.general_options_08, match: "User Defined Team") and contains(card.general_options_08, match: "Colored Frame")) }
+		z index: -8
+		render style: image
+		image:
+			script: if is_pokemon() and contains(card.general_options_08, match: "User Defined Team") and contains(card.general_options_08, match: "Colored Frame") then "frame-p-shadow.png"
+				else if is_trainer() then "overlay-t-break.png"
+				else "/pokemon-b-common.mse-include/mask-blank-s.png"
+	######################## Image Layer -10
+	######################## This layer is for the user input image
+	card image:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(513) }
+		height: { fun_expand_size(if is_pokemon() then 368 else 0) }
+		visible: { if is_pokemon() then true else false }
+		z index: -10
+		mask: { if contains(card.art_options, match: "Full Art") then "/pokemon-b-common.mse-include/mask-blank-s.png" else "mask-image.png" }
+	######################## Overimage Under Border Frame -8
+	######################## This layer is for items between the image and the border (aka might need covered up by the border)
+	######################## Border Layer -6
+	######################## This layer is for the border
+	border:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(513) }
+		height: { fun_expand_size(368) }
+		z index: -6
+		render style: image
+		image:
+			script: if contains(card.general_options_08, match: "Secret Rare (Gold) Border") then "border-gold.png"
+				else if contains(card.general_options_08, match: "Team Plasma") then "border-blue.png"
+				else if contains(card.general_options_08, match: "Team Flare") then "border-red.png"
+				else if contains(card.general_options_08, match: "User Defined Team") and contains(card.general_options_08, match: "Colored Border") then recolor_image(input: "border-colored.png", red: styling.User_Input_Team_Color, green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+				else if is_trainer() then "border-yellow.png"
+				else "border-yellow.png"
+	######################## Overborder Frame -4
+	######################## This layer is for items over the border
+	border overlay:
+		left: { x_left(if is_pokemon() then 9 else 0) }
+		top: { y_top(if is_pokemon() then 9 else 0) }
+		width: { fun_expand_size(if is_pokemon() then 495 else 513) }
+		height: { fun_expand_size(if is_pokemon() then 350 else 368) }
+		visible: { true }
+		z index: -4
+		render style: image
+		image:
+			script: if is_pokemon() then if contains(card.general_options_08, match: "Team Plasma") then "frame-p-plasma.png"
+					else if contains(card.general_options_08, match: "Team Flare") then "frame-p-flare.png"
+					else if contains(card.general_options_08, match: "Secret Rare (Gold) Frame") then "frame-p-gold.png"
+					else if contains(card.general_options_08, match: "User Defined Team") and contains(card.general_options_08, match: "Colored Frame") then recolor_image(input: "frame-p-colored.png", red: styling.User_Input_Team_Color, green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+					else "frame-p-grey.png"
+				else if is_trainer() then "frame-t-break.png"
+				else if is_energy() then "frame-e-break.png"
+				else "/pokemon-b-common.mse-include/blank-s.png"
+	######################## Part of these items are found in the extra card fields
+	######################## Popout layers 0
+	######################## This layer is for the popout image
+	card popout:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(513) }
+		height: { fun_expand_size(if is_pokemon() and contains(card.art_options, match: "Popout Art (for Advanced Users)") then 368 else 0) }
+		z index: 0
+		mask: { "mask-popout-break.png" }
+		visible: { if is_pokemon() and contains(card.art_options, match: "Popout Art (for Advanced Users)") then "yes" else "no" }
+	######################## Choice layers 2
+	######################## This for choice tabs
+	card type:
+		left: { x_left(0) }
+		top: { y_top(350) }
+		width: { fun_expand_size(256) }
+		height: { fun_expand_size(18) }
+		z index: 2
+		render style: image
+		popup style: in place
+		image: /pokemon-b-common.mse-include/blank-s.png
+	art options:
+		left: { x_left(257) }
+		top: { y_top(350) }
+		width: { fun_expand_size(257) }
+		height: { fun_expand_size(18) }
+		z index: 2
+		render style: image
+		popup style: in place
+		image: /pokemon-b-common.mse-include/blank-s.png
+	text options 3:
+		left: { x_left(257) }
+		top: { y_top(0) }
+		width: { fun_expand_size(257) }
+		height: { fun_expand_size(20) }
+		z index: 2
+		render style: image
+		popup style: in place
+		image: /pokemon-b-common.mse-include/blank-s.png
+	general options 08:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(256) }
+		height: { fun_expand_size(20) }
+		z index: 2
+		render style: image
+		popup style: in place
+		image: /pokemon-b-common.mse-include/blank-s.png
+	card color 1:
+		left: { x_left(if card.card_type=="Dual-Type" then energy_left()-energy_left_difference() else energy_left()) }
+		top: { y_top(0) }
+		width: { fun_expand_size(energy_width()) }
+		height: { fun_expand_size(if is_pokemon() or (is_energy() and card.energy_type=="Basic") then energy_top()+energy_width() else 0) }
+		visible: { if is_pokemon() or is_energy() then "yes" else "no" }
+		z index: 2
+		render style: image
+		popup style: in place
+		image: /pokemon-b-common.mse-include/blank-s.png
+	card color 2:
+		left: { x_left(energy_left()+energy_right_difference()) }
+		top: { y_top(0) }
+		width: { fun_expand_size(energy_width()) }
+		height: { fun_expand_size(if card.card_type=="Dual-Type" then energy_top()+energy_width() else 0) }
+		visible: { if card.card_type=="Dual-Type" then "yes" else "no" }
+		z index: 2
+		render style: image
+		popup style: in place
+		image: /pokemon-b-common.mse-include/blank-s.png
+	texture type 1:
+		left: { x_left(0) }
+		top: { y_top(270) }
+		width: { fun_expand_size(20) }
+		height: { fun_expand_size(if is_pokemon() and not(background_type_1()=="User Defined") then 80 else 0) }
+		z index: 2
+		render style: image
+		popup style: in place
+		visible: { if is_pokemon() and not(background_type_1()=="User Defined") then "yes" else "no" }
+		image: /pokemon-b-common.mse-include/blank-s.png
+	texture type 2:
+		left: { x_left(493) }
+		top: { y_top(270) }
+		width: { fun_expand_size(20) }
+		height: { fun_expand_size(if card.card_type=="Dual-Type" and not(background_type_2()=="User Defined") then 80 else 0) }
+		z index: 2
+		render style: image
+		popup style: in place
+		visible: { if card.card_type=="Dual-Type" and not(background_type_2()=="User Defined") then "yes" else "no" }
+		image: /pokemon-b-common.mse-include/blank-s.png
+	color texture 1:
+		left: { x_left(0) }
+		top: { y_top(270) }
+		width: { fun_expand_size(20) }
+		height: { fun_expand_size(if is_pokemon() and background_type_1()=="User Defined" then 80 else 0) }
+		z index: 2
+		render style: image
+		popup style: in place
+		visible: { if is_pokemon() and background_type_1()=="User Defined" then "yes" else "no" }
+		image: /pokemon-b-common.mse-include/blank-s.png
+	color texture 2:
+		left: { x_left(493) }
+		top: { y_top(270) }
+		width: { fun_expand_size(20) }
+		height: { fun_expand_size(if card.card_type=="Dual-Type" and background_type_2()=="User Defined" then 80 else 0) }
+		z index: 2
+		render style: image
+		popup style: in place
+		visible: { if card.card_type=="Dual-Type" and background_type_2()=="User Defined" then "yes" else "no" }
+		image: /pokemon-b-common.mse-include/blank-s.png
+	######################## Overborder Frame 4
+	######################## This layer is for items needed just before the user input text.
+
+	######################## Also has materials found in the extra card fields
+#########These two fields show the pokemon energy symbol.  It was converted to a symbol font to allow easy modification in the future to alternate symbols
+	color text 1:
+		left: { x_left(if card.card_type=="Dual-Type" then energy_left()-energy_left_difference() else energy_left()) }
+		top: { y_top(energy_top()) }
+		width: { fun_expand_size(energy_width()) }
+		height: { fun_expand_size(if is_pokemon() and not(card.card_color_1=="User Defined") then energy_width() else 0) }
+		visible: { if is_pokemon() and not(card.card_color_1=="User Defined") then "yes" else "no" }
+		z index: 5
+		always symbol: true
+		symbol font:
+			name: pokemon-a-color
+			size: { fun_expand_font(energy_width()) }
+	color text 2:
+		left: { x_left(energy_left()+energy_right_difference()) }
+		top: { y_top(energy_top()) }
+		width: { fun_expand_size(energy_width()) }
+		height: { fun_expand_size(if card.card_type=="Dual-Type" and not(card.card_color_2=="User Defined") then energy_width() else 0) }
+		z index: 3
+		visible: { if (card.card_type=="Dual-Type" and not(card.card_color_2=="User Defined")) then "yes" else "no" }
+		always symbol: true
+		symbol font:
+			name: pokemon-a-color
+			size: { fun_expand_font(energy_width()) }
+#########These two fields allow a user input energy orb image
+	energy orb pic 1:
+		left: { x_left(if card.card_type=="Dual-Type" then energy_left()-energy_left_difference() else energy_left()) }
+		top: { y_top(energy_top()) }
+		width: { fun_expand_size(energy_width()) }
+		height: { fun_expand_size(if is_pokemon() and card.card_color_1=="User Defined" then energy_width() else 0) }
+		visible: { if is_pokemon() and card.card_color_1=="User Defined" then "yes" else "no" }
+		z index: 6
+	energy orb pic 2:
+		left: { x_left(energy_left()+energy_right_difference()) }
+		top: { y_top(energy_top()) }
+		width: { fun_expand_size(energy_width()) }
+		height: { fun_expand_size(if card.card_type=="Dual-Type" and card.card_color_2=="User Defined" then energy_width() else 0) }
+		z index: 4
+		visible: { if card.card_type=="Dual-Type" and card.card_color_2=="User Defined" then "yes" else "no" }
+#########Set Symbol
+	set:
+		left: { x_left(402) }
+		top: { y_top(335) }
+		width: { fun_expand_size(22) }
+		height: { fun_expand_size(22) }
+		z index: 4
+		visible: { contains(set.visibility_options, match: "Visible Set Symbol") and not(contains(set.visibility_options, match: "User image for set symbol")) }
+		render style: image
+		choice images:
+			common: script: symbol_variation(symbol: set.symbol, border_radius: if set.include_border_on_set_symbol=="yes" then 0.1 else 0, fill_color: set.set_symbol_fill_color, border_color: set.set_symbol_border_color)
+	set symbol:
+		left: { x_left(402) }
+		top: { y_top(335) }
+		width: { fun_expand_size(22) }
+		height: { fun_expand_size(22) }
+		z index: 4
+		visible: { contains(set.visibility_options, match: "Visible Set Symbol") and contains(set.visibility_options, match: "User image for set symbol") }
+		render style: image
+		image: { set.symbol_image }
+	######################## First Text Frame 6
+	######################## This layer is for input text
+
+	######################## Also has materials found in the extra card fields
+#########card number
+######### Do not change any values found in field specific function/variables these are used to keep the duplicate text fields the same, the duplicate fields are found in the extra card fields
+	card number:
+		left: { card_no_left() }
+		top: { card_no_top() }
+		width: { card_no_width() }
+		height: { if contains(set.visibility_options, match: "Visible Card Numbers on all cards") then card_no_height() else 0 }
+		z index: 6
+		alignment: { card_no_align() }
+		visible: { contains(set.visibility_options, match: "Visible Card Numbers on all cards") }
+		font:
+			name: { card_no_font() }
+			size: { card_no_size() }
+			weight: { card_no_weight() }
+			style: { card_no_style() }
+			color: { rgb(0,0,0) }
+#########Illustrator name
+######### Do not change any values found in field specific function/variables these are used to keep the duplicate text fields the same, the duplicate fields are found in the extra card fields
+	illustrator:
+		left: { ill_left() }
+		top: { ill_top() }
+		width: { ill_width() }
+		height: { if contains(card.text_options_3, match: "Use Primary Set Artist") then 0 else ill_height() }
+		z index: 6
+		alignment: { ill_align() }
+		visible: { if contains(card.text_options_3, match: "Use Primary Set Artist") then "no" else "yes" }
+		font:
+			name: { ill_font() }
+			weight: { ill_weight() }
+			style: { ill_style() }
+			size: { ill_size() }
+			color: { rgb(0,0,0) }
+#########Copyright
+######### Do not change any values found in field specific function/variables these are used to keep the duplicate text fields the same, the duplicate fields are found in the extra card fields
+	copyright:
+		left: { copy_left() }
+		top: { copy_top() }
+		width: { copy_width() }
+		height: { if contains(set.visibility_options, match: "Visible Copyright on all cards") and not(contains(card.text_options_3, match: "Use Set Copyright")) then copy_height() else 0 }
+		z index: 6
+		alignment: { copy_align() }
+		visible: { if contains(set.visibility_options, match: "Visible Copyright on all cards") and not(contains(card.text_options_3, match: "Use Set Copyright")) then "yes" else "no" }
+		font:
+			name: { copy_font() }
+			size: { copy_size() }
+			weight: { copy_weight() }
+			style: { copy_style() }
+			color: { rgb(0,0,0) }
+#########Rarity Symbol
+	rarity:
+		left: { x_left(390) }
+		top: { y_top(341) }
+		height: { fun_expand_size(11) }
+		width: { fun_expand_size(11) }
+		z index: 6
+		render style: image
+		visible: { if contains(set.visibility_options, match: "Visible Rarity symbol on all cards") then "yes" else "no" }
+		choice images:
+			common:		{ "/pokemon-b-common.mse-include/rarity-out-common.png" }
+			uncommon:	{ "/pokemon-b-common.mse-include/rarity-out-uncommon.png" }
+			rare:		{ "/pokemon-b-common.mse-include/rarity-out-rare.png" }
+			extra rare:	{ "/pokemon-b-common.mse-include/rarity-out-erare.png" }
+#########Card Title
+######### Do not change any values found in field specific function/variables these are used to keep the duplicate text fields the same, the duplicate fields are found in the extra card fields
+	card name:
+		left: { card_name_left() }
+		top: { card_name_top() }
+		width: { card_name_width() }
+		height: { card_name_height() }
+		visible: { card_name_visible() }
+		z index: 6
+		alignment: { card_name_align() }
+		symbol font:
+			name: { card_name_symbol_font() }
+			size: { card_name_symbol_size() }
+		font:
+			name: { card_name_font() }
+			weight: { card_name_weight() }
+			style: { card_name_style() }
+			size: { card_name_size() }
+			color: { if is_dark_1() then rgb(255,255,255) else rgb(0,0,0) }
+#########HP Text
+######### Do not change any values found in field specific function/variables these are used to keep the duplicate text fields the same, the duplicate fields are found in the extra card fields
+	hp:
+		left: { hp_left() }
+		top: { hp_top() }
+		width: { hp_width() }
+		height: { hp_height() }
+		z index: 6
+		alignment: { hp_align() }
+		visible: { hp_visible() }
+		font:
+			name: { hp_font() }
+			weight: { hp_weight() }
+			style: { hp_style() }
+			size: { hp_size() }
+			color: { hp_color() }
+#########The pokemon this one evolves from
+######### Do not change any values found in field specific function/variables these are used to keep the duplicate text fields the same, the duplicate fields are found in the extra card fields
+	evolution reminder 1:
+		left: { evolution_left() }
+		top: { evolution_top() }
+		width: { evolution_width() }
+		height: { evolution_rem_height() }
+		alignment: { evolution_align() }
+		z index: 6
+		visible: { evolution_rem_visible() }
+		font:
+			name: { evolution_font() }
+			weight: { evolution_weight() }
+			style: { evolution_style() }
+			size: { evolution_size() }
+			color: { evolution_color() }
+	evolution text 1:
+		left: { evolution_left() }
+		top: { evolution_top() }
+		width: { evolution_width() }
+		height: { evolution_txt_height() }
+		alignment: { evolution_align() }
+		z index: 6
+		visible: { evolution_txt_visible() }
+		font:
+			name: { evolution_font() }
+			weight: { evolution_weight() }
+			style: { evolution_style() }
+			size: { evolution_size() }
+			color: { evolution_color() }
+######### User input, the actual pokemon it is evolved from
+	evolution entry:
+		left: { evo_left() }
+		top: { evolution_top() }
+		width: { evo_width() }
+		height: { evo_height() }
+		alignment: { evolution_align() }
+		z index: 6
+		visible: { evo_visible() }
+		font:
+			name: { evolution_font() }
+			weight: { evolution_weight() }
+			style: { evolution_style() }
+			size: { evolution_size() }
+			color: { evolution_color() }
+#########Image showing the evolution line of the evolved pokemon
+	evolution pic:
+		left: { x_left(14) }
+		top: { y_top(34) }
+		width: { fun_expand_size(54) }
+		height: { fun_expand_size(if is_pokemon() then 47 else 0) }
+		z index: 6
+		visible: { is_pokemon() }
+		mask: { "/pokemon-b-common.mse-include/mask-p-stage-evolution.png" }
+#########Text on the stage bar & basic Pokemon for Classic/Neo
+######### Do not change any values found in field specific function/variables these are used to keep the duplicate text fields the same, the duplicate fields are found in the extra card fields
+	title reminder 1 8:
+		left: { title_1_left() }
+		top: { title_1_top() }
+		width: { title_1_width() }
+		height: { title_rem_1_height() }
+		z index: 6
+		visible: { title_rem_1_visible() }
+		alignment: { title_1_align() }
+		font:
+			name: { title_1_font() }
+			weight: { title_1_weight() }
+			style: { title_1_style() }
+			size: { title_1_size() }
+			color: { title_1_color() }
+	title text 1:
+		left: { title_1_left() }
+		top: { title_1_top() }
+		width: { title_1_width() }
+		height: { title_txt_1_height() }
+		z index: 6
+		visible: { title_txt_1_visible() }
+		alignment: { title_1_align() }
+		font:
+			name: { title_1_font() }
+			weight: { title_1_weight() }
+			style: { title_1_style() }
+			size: { title_1_size() }
+			color: { title_1_color() }
+#########This text explains the the rules of the trainers and the larger red text for baby pokemon
+######### Do not change any values found in field specific function/variables these are used to keep the duplicate text fields the same, the duplicate fields are found in the extra card fields
+	special rule reminder 1 8:
+		left: { special_rule_left() }
+		top: { special_rule_top() }
+		width: { special_rule_width() }
+		height: { special_rule_rem_height() }
+		z index: 6
+		visible: { special_rule_rem_visible() }
+		alignment: { special_rule_align() }
+		line height soft: { special_rule_lh_soft() }
+		mask: { special_rule_mask() }
+		padding left: { special_rule_pad_left() }
+		line height hard: { special_rule_lh_hard() }
+		font:
+			name: { special_rule_font() }
+			weight: { special_rule_weight() }
+			style: { special_rule_style() }
+			size: { special_rule_size() }
+			color: { special_rule_color() }
+	special rule text 1:
+		left: { special_rule_left() }
+		top: { special_rule_top() }
+		width: { special_rule_width() }
+		height: { special_rule_txt_height() }
+		z index: 6
+		visible: { special_rule_txt_visible() }
+		alignment: { special_rule_align() }
+		line height soft: { special_rule_lh_soft() }
+		mask: { special_rule_mask() }
+		padding left: { special_rule_pad_left() }
+		line height hard: { special_rule_lh_hard() }
+		font:
+			name: { special_rule_font() }
+			weight: { special_rule_weight() }
+			style: { special_rule_style() }
+			size: { special_rule_size() }
+			color: { special_rule_color() }
+######################## Rule Text everything that follows within this layer is Attack/Rule Text on the cards.
+#########The next field lists the cost of the first attack
+######### Do not change any values found in field specific function/variables these are used to keep the duplicate text fields the same, the duplicate fields are found in the extra card fields
+	cost new 1:
+		left: { cost_1_left() }
+		top: { cost_1_top() }
+		width: { cost_1_width() }
+		height: { cost_1_height() }
+		z index: 6
+		visible: { cost_1_visible() }
+		alignment: { cost_align() }
+		always symbol: true
+		symbol font:
+			name: { cost_symbol_font() }
+			size: { cost_symbol_size() }
+#########This shows title of the 1st poke-power or body
+######### Do not change any values found in field specific function/variables these are used to keep the duplicate text fields the same, the duplicate fields are found in the extra card fields
+	attack 1:
+		left: { attack_1_left() }
+		top: { attack_1_top() }
+		width: { attack_1_width() }
+		height: { attack_1_height() }
+		z index: 6
+		visible: { attack_1_visible() }
+		alignment: { attack_align() }
+		font:
+			name: { attack_font() }
+			weight: { attack_weight() }
+			style: { attack_style() }
+			size: { attack_size() }
+			color: { attack_color() }
+#########This shows the 1st attacks damage
+######### Do not change any values found in field specific function/variables these are used to keep the duplicate text fields the same, the duplicate fields are found in the extra card fields
+	damage 1:
+		left: { damage_1_left() }
+		top: { damage_1_top() }
+		width: { damage_1_width() }
+		height: { damage_1_height() }
+		z index: 6
+		visible: { damage_1_visible() }
+		alignment: { damage_align() }
+		font:
+			name: { damage_font() }
+			weight: { damage_weight() }
+			style: { damage_style() }
+			size: { damage_size() }
+			color: { rgb(0,0,0) }
+#########This field is the title and rules text
+######### Do not change any values found in field specific function/variables these are used to keep the duplicate text fields the same, the duplicate fields are found in the extra card fields
+	rule text 1:
+		left: { rule_1_left() }
+		top: { rule_1_top() }
+		width: { rule_1_width() }
+		height: { rule_1_height() }
+		z index: 6
+		visible: { rule_1_visible() }
+		alignment: { rule_1_align() }
+		line height hard: { rule_lh_hard() }
+		symbol font:
+			name: { rule_symbol_font() }
+			size: { rule_symbol_size() }
+		font:
+			name: { rule_font() }
+			weight: { rule_weight() }
+			style: { rule_style() }
+			size: { rule_size() }
+			scale down to: 6
+			color: { rgb(0,0,0) }
+	######################## Choice layers 8
+	######################## This layer displays the informational text for the use of this tool template
+#########This is the image field to show the notification for the tournament placement
+	place:
+		left: { x_left(64) }
+		top: { y_top(83) }
+		width: { fun_expand_size(94) }
+		height: { fun_expand_size(if contains(card.art_options, match: "Add Tournament Place Icons") then 14 else 0) }
+		visible: { if contains(card.art_options, match: "Add Tournament Place Icons") then "yes" else "no" }
+		z index: 8
+		render style: image
+		popup style: in place
+		choice images:
+			1st:	/pokemon-b-common.mse-include/place-1.png
+			2nd:	/pokemon-b-common.mse-include/place-2.png
+			3rd:	/pokemon-b-common.mse-include/place-3.png
+			4th:	/pokemon-b-common.mse-include/place-4.png
+			5th:	/pokemon-b-common.mse-include/place-5.png
+			6th:	/pokemon-b-common.mse-include/place-6.png
+			7th:	/pokemon-b-common.mse-include/place-7.png
+			8th:	/pokemon-b-common.mse-include/place-8.png
+############################################################## Extra Card Fields
+############################# Non-User Input Choice Fields for Images
+extra card field:
+	type: image
+	name: logo input
+	show statistics: false
+	card list allow: false
+extra card style:
+	logo input:
+		left: { x_left(375) }
+		top: { y_top(91) }
+		width: { fun_expand_size(110) }
+		height: { fun_expand_size(if contains(card.general_options_08, match: "Team Logo") and contains(card.general_options_08, match: "User Defined Team") then 20 else 0) }
+		z index: 4
+		visible: { contains(card.general_options_08, match: "Team Logo") and contains(card.general_options_08, match: "User Defined Team") }
+############################# Duplicate text files found behind the Text Popout Image for two-tone text (None for Card Name / HP / Retreat Cost / pokedex1 / Title 1 / Title 2 / Special Rule 1 / Ability 1 / Ability 2)
+extra card field:
+	type: text
+	name: illustrator dup
+	show statistics: false
+	default: set.artist
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: copyright dup
+	show statistics: false
+	default: set.copyright
+	card list allow: false
+	save value: false
+	editable: false
+extra card style:
+#########Duplicate for when non-card input
+	illustrator dup:
+		left: { ill_left() }
+		top: { ill_top() }
+		width: { ill_width() }
+		height: { if contains(card.text_options_3, match: "Use Primary Set Artist") then ill_height() else 0 }
+		z index: 6
+		alignment: { ill_align() }
+		visible: { if contains(card.text_options_3, match: "Use Primary Set Artist") then "yes" else "no" }
+		font:
+			name: { ill_font() }
+			weight: { ill_weight() }
+			style: { ill_style() }
+			size: { ill_size() }
+			color: { rgb(0,0,0) }
+#########Duplicate for when non-card input
+	copyright dup:
+		left: { copy_left() }
+		top: { copy_top() }
+		width: { copy_width() }
+		height: { if contains(set.visibility_options, match: "Visible Copyright on all cards") and contains(card.text_options_3, match: "Use Set Copyright") then copy_height() else 0 }
+		z index: 6
+		alignment: { copy_align() }
+		visible: { if contains(set.visibility_options, match: "Visible Copyright on all cards") and contains(card.text_options_3, match: "Use Set Copyright") then "yes" else "no" }
+		font:
+			name: { copy_font() }
+			size: { copy_size() }
+			weight: { copy_weight() }
+			style: { copy_style() }
+			color: { rgb(0,0,0) }
+############################# Duplicate text fields for all outline text (regardless of file size, values for medium and small need to be changed to 2, from x: 2/x: -2/y: 2/y: -2 to x: 2/x: -2/y: 2/y: -2)
+extra card field:
+	type: text
+	name: card number blur 01
+	show statistics: false
+	default: card.card_number
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: card number blur 02
+	show statistics: false
+	default: card.card_number
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: card number blur 03
+	show statistics: false
+	default: card.card_number
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: card number blur 04
+	show statistics: false
+	default: card.card_number
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: illustrator blur 01
+	show statistics: false
+	default: ill_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: illustrator blur 02
+	show statistics: false
+	default: ill_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: illustrator blur 03
+	show statistics: false
+	default: ill_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: illustrator blur 04
+	show statistics: false
+	default: ill_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: copyright blur 01
+	show statistics: false
+	default: copy_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: copyright blur 02
+	show statistics: false
+	default: copy_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: copyright blur 03
+	show statistics: false
+	default: copy_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: copyright blur 04
+	show statistics: false
+	default: copy_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: card name blur 01
+	show statistics: false
+	default: card.card_name
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: card name blur 02
+	show statistics: false
+	default: card.card_name
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: card name blur 03
+	show statistics: false
+	default: card.card_name
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: card name blur 04
+	show statistics: false
+	default: card.card_name
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: hp blur 01
+	show statistics: false
+	default: card.hp
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: hp blur 02
+	show statistics: false
+	default: card.hp
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: hp blur 03
+	show statistics: false
+	default: card.hp
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: hp blur 04
+	show statistics: false
+	default: card.hp
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: evolution 1 blur 01
+	show statistics: false
+	default: evolution_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: evolution 1 blur 02
+	show statistics: false
+	default: evolution_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: evolution 1 blur 03
+	show statistics: false
+	default: evolution_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: evolution 1 blur 04
+	show statistics: false
+	default: evolution_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: stuff blur 01
+	show statistics: false
+	default: reverse(set_filter("Extra Special Monster"))
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: evolution entry blur 01
+	show statistics: false
+	default: card.evolution_entry
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: evolution entry blur 02
+	show statistics: false
+	default: card.evolution_entry
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: evolution entry blur 03
+	show statistics: false
+	default: card.evolution_entry
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: evolution entry blur 04
+	show statistics: false
+	default: card.evolution_entry
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: title 1 blur 01
+	show statistics: false
+	default: title_1_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: title 1 blur 02
+	show statistics: false
+	default: title_1_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: title 1 blur 03
+	show statistics: false
+	default: title_1_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: title 1 blur 04
+	show statistics: false
+	default: title_1_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: special rule 1 blur 01
+	show statistics: false
+	default: special_rule_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+	multi line: true
+extra card field:
+	type: text
+	name: special rule 1 blur 02
+	show statistics: false
+	default: special_rule_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+	multi line: true
+extra card field:
+	type: text
+	name: special rule 1 blur 03
+	show statistics: false
+	default: special_rule_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+	multi line: true
+extra card field:
+	type: text
+	name: special rule 1 blur 04
+	show statistics: false
+	default: special_rule_outline_separator()
+	card list allow: false
+	save value: false
+	editable: false
+	multi line: true
+extra card field:
+	type: text
+	name: damage 1 blur 01
+	show statistics: false
+	default: card.damage_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: damage 1 blur 02
+	show statistics: false
+	default: card.damage_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: damage 1 blur 03
+	show statistics: false
+	default: card.damage_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: damage 1 blur 04
+	show statistics: false
+	default: card.damage_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rule text 1 blur 01
+	show statistics: false
+	default: card.rule_text_1
+	card list allow: false
+	save value: false
+	editable: false
+	multi line: true
+extra card field:
+	type: text
+	name: rule text 1 blur 02
+	show statistics: false
+	default: card.rule_text_1
+	card list allow: false
+	save value: false
+	editable: false
+	multi line: true
+extra card field:
+	type: text
+	name: rule text 1 blur 03
+	show statistics: false
+	default: card.rule_text_1
+	card list allow: false
+	save value: false
+	editable: false
+	multi line: true
+extra card field:
+	type: text
+	name: rule text 1 blur 04
+	show statistics: false
+	default: card.rule_text_1
+	card list allow: false
+	save value: false
+	editable: false
+	multi line: true
+extra card field:
+	type: text
+	name: attack 1 blur 01
+	show statistics: false
+	default: card.attack_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: attack 1 blur 02
+	show statistics: false
+	default: card.attack_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: attack 1 blur 03
+	show statistics: false
+	default: card.attack_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: attack 1 blur 04
+	show statistics: false
+	default: card.attack_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card style:
+	card number blur 01:
+		left: { card_no_left() }
+		top: { card_no_top() }
+		width: { card_no_width() }
+		height: { card_no_height() }
+		z index: 5
+		alignment: { card_no_align() }
+		visible: { card_no_outline_blur() }
+		font:
+			name: { card_no_font() }
+			size: { card_no_size() }
+			weight: { card_no_weight() }
+			style: { card_no_style() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	card number blur 02:
+		left: { card_no_left() }
+		top: { card_no_top() }
+		width: { card_no_width() }
+		height: { card_no_height() }
+		z index: 5
+		alignment: { card_no_align() }
+		visible: { card_no_outline_blur() }
+		font:
+			name: { card_no_font() }
+			size: { card_no_size() }
+			weight: { card_no_weight() }
+			style: { card_no_style() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	card number blur 03:
+		left: { card_no_left() }
+		top: { card_no_top() }
+		width: { card_no_width() }
+		height: { card_no_height() }
+		z index: 5
+		alignment: { card_no_align() }
+		visible: { card_no_outline_blur() }
+		font:
+			name: { card_no_font() }
+			size: { card_no_size() }
+			weight: { card_no_weight() }
+			style: { card_no_style() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	card number blur 04:
+		left: { card_no_left() }
+		top: { card_no_top() }
+		width: { card_no_width() }
+		height: { card_no_height() }
+		z index: 5
+		alignment: { card_no_align() }
+		visible: { card_no_outline_blur() }
+		font:
+			name: { card_no_font() }
+			size: { card_no_size() }
+			weight: { card_no_weight() }
+			style: { card_no_style() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	illustrator blur 01:
+		left: { ill_left() }
+		top: { ill_top() }
+		width: { ill_width() }
+		height: { ill_height() }
+		z index: 5
+		alignment: { ill_align() }
+		visible: { ill_outline_blur() }
+		font:
+			name: { ill_font() }
+			weight: { ill_weight() }
+			style: { ill_style() }
+			size: { ill_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	illustrator blur 02:
+		left: { ill_left() }
+		top: { ill_top() }
+		width: { ill_width() }
+		height: { ill_height() }
+		z index: 5
+		alignment: { ill_align() }
+		visible: { ill_outline_blur() }
+		font:
+			name: { ill_font() }
+			weight: { ill_weight() }
+			style: { ill_style() }
+			size: { ill_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	illustrator blur 03:
+		left: { ill_left() }
+		top: { ill_top() }
+		width: { ill_width() }
+		height: { ill_height() }
+		z index: 5
+		alignment: { ill_align() }
+		visible: { ill_outline_blur() }
+		font:
+			name: { ill_font() }
+			weight: { ill_weight() }
+			style: { ill_style() }
+			size: { ill_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	illustrator blur 04:
+		left: { ill_left() }
+		top: { ill_top() }
+		width: { ill_width() }
+		height: { ill_height() }
+		z index: 5
+		alignment: { ill_align() }
+		visible: { ill_outline_blur() }
+		font:
+			name: { ill_font() }
+			weight: { ill_weight() }
+			style: { ill_style() }
+			size: { ill_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	copyright blur 01:
+		left: { copy_left() }
+		top: { copy_top() }
+		width: { copy_width() }
+		height: { copy_height() }
+		z index: 5
+		alignment: { copy_align() }
+		visible: { copy_outline_blur() }
+		font:
+			name: { copy_font() }
+			size: { copy_size() }
+			weight: { copy_weight() }
+			style: { copy_style() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	copyright blur 02:
+		left: { copy_left() }
+		top: { copy_top() }
+		width: { copy_width() }
+		height: { copy_height() }
+		z index: 5
+		alignment: { copy_align() }
+		visible: { copy_outline_blur() }
+		font:
+			name: { copy_font() }
+			size: { copy_size() }
+			weight: { copy_weight() }
+			style: { copy_style() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	copyright blur 03:
+		left: { copy_left() }
+		top: { copy_top() }
+		width: { copy_width() }
+		height: { copy_height() }
+		z index: 5
+		alignment: { copy_align() }
+		visible: { copy_outline_blur() }
+		font:
+			name: { copy_font() }
+			size: { copy_size() }
+			weight: { copy_weight() }
+			style: { copy_style() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	copyright blur 04:
+		left: { copy_left() }
+		top: { copy_top() }
+		width: { copy_width() }
+		height: { copy_height() }
+		z index: 5
+		alignment: { copy_align() }
+		visible: { copy_outline_blur() }
+		font:
+			name: { copy_font() }
+			size: { copy_size() }
+			weight: { copy_weight() }
+			style: { copy_style() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	card name blur 01:
+		left: { card_name_left() }
+		top: { card_name_top() }
+		width: { card_name_width() }
+		height: { card_name_height() }
+		visible: { card_name_outline_blur() }
+		z index: 5
+		alignment: { card_name_align() }
+		symbol font:
+			name: { card_name_symbol_font() }
+			size: { card_name_symbol_size() }
+		font:
+			name: { card_name_font() }
+			weight: { card_name_weight() }
+			style: { card_name_style() }
+			size: { card_name_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	card name blur 02:
+		left: { card_name_left() }
+		top: { card_name_top() }
+		width: { card_name_width() }
+		height: { card_name_height() }
+		visible: { card_name_outline_blur() }
+		z index: 5
+		alignment: { card_name_align() }
+		symbol font:
+			name: { card_name_symbol_font() }
+			size: { card_name_symbol_size() }
+		font:
+			name: { card_name_font() }
+			weight: { card_name_weight() }
+			style: { card_name_style() }
+			size: { card_name_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	card name blur 03:
+		left: { card_name_left() }
+		top: { card_name_top() }
+		width: { card_name_width() }
+		height: { card_name_height() }
+		visible: { card_name_outline_blur() }
+		z index: 5
+		alignment: { card_name_align() }
+		symbol font:
+			name: { card_name_symbol_font() }
+			size: { card_name_symbol_size() }
+		font:
+			name: { card_name_font() }
+			weight: { card_name_weight() }
+			style: { card_name_style() }
+			size: { card_name_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	card name blur 04:
+		left: { card_name_left() }
+		top: { card_name_top() }
+		width: { card_name_width() }
+		height: { card_name_height() }
+		visible: { card_name_outline_blur() }
+		z index: 5
+		alignment: { card_name_align() }
+		symbol font:
+			name: { card_name_symbol_font() }
+			size: { card_name_symbol_size() }
+		font:
+			name: { card_name_font() }
+			weight: { card_name_weight() }
+			style: { card_name_style() }
+			size: { card_name_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	hp blur 01:
+		left: { hp_left() }
+		top: { hp_top() }
+		width: { hp_width() }
+		height: { hp_height() }
+		z index: 5
+		alignment: { hp_align() }
+		visible: { hp_outline_blur() }
+		font:
+			name: { hp_font() }
+			weight: { hp_weight() }
+			style: { hp_style() }
+			size: { hp_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	hp blur 02:
+		left: { hp_left() }
+		top: { hp_top() }
+		width: { hp_width() }
+		height: { hp_height() }
+		z index: 5
+		alignment: { hp_align() }
+		visible: { hp_outline_blur() }
+		font:
+			name: { hp_font() }
+			weight: { hp_weight() }
+			style: { hp_style() }
+			size: { hp_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	hp blur 03:
+		left: { hp_left() }
+		top: { hp_top() }
+		width: { hp_width() }
+		height: { hp_height() }
+		z index: 5
+		alignment: { hp_align() }
+		visible: { hp_outline_blur() }
+		font:
+			name: { hp_font() }
+			weight: { hp_weight() }
+			style: { hp_style() }
+			size: { hp_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	hp blur 04:
+		left: { hp_left() }
+		top: { hp_top() }
+		width: { hp_width() }
+		height: { hp_height() }
+		z index: 5
+		alignment: { hp_align() }
+		visible: { hp_outline_blur() }
+		font:
+			name: { hp_font() }
+			weight: { hp_weight() }
+			style: { hp_style() }
+			size: { hp_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	evolution 1 blur 01:
+		left: { evolution_left() }
+		top: { evolution_top() }
+		width: { evolution_width() }
+		height: { evolution_height() }
+		alignment: { evolution_align() }
+		z index: 5
+		visible: { evolution_outline_blur() }
+		font:
+			name: { evolution_font() }
+			weight: { evolution_weight() }
+			style: { evolution_style() }
+			size: { evolution_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	evolution 1 blur 02:
+		left: { evolution_left() }
+		top: { evolution_top() }
+		width: { evolution_width() }
+		height: { evolution_height() }
+		alignment: { evolution_align() }
+		z index: 5
+		visible: { evolution_outline_blur() }
+		font:
+			name: { evolution_font() }
+			weight: { evolution_weight() }
+			style: { evolution_style() }
+			size: { evolution_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	evolution 1 blur 03:
+		left: { evolution_left() }
+		top: { evolution_top() }
+		width: { evolution_width() }
+		height: { evolution_height() }
+		alignment: { evolution_align() }
+		z index: 5
+		visible: { evolution_outline_blur() }
+		font:
+			name: { evolution_font() }
+			weight: { evolution_weight() }
+			style: { evolution_style() }
+			size: { evolution_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	evolution 1 blur 04:
+		left: { evolution_left() }
+		top: { evolution_top() }
+		width: { evolution_width() }
+		height: { evolution_height() }
+		alignment: { evolution_align() }
+		z index: 5
+		visible: { evolution_outline_blur() }
+		font:
+			name: { evolution_font() }
+			weight: { evolution_weight() }
+			style: { evolution_style() }
+			size: { evolution_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	evolution entry blur 01:
+		left: { evo_left() }
+		top: { evolution_top() }
+		width: { evo_width() }
+		height: { evo_height() }
+		alignment: { evolution_align() }
+		z index: 5
+		visible: { evo_outline_blur() }
+		font:
+			name: { evolution_font() }
+			weight: { evolution_weight() }
+			style: { evolution_style() }
+			size: { evolution_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	evolution entry blur 02:
+		left: { evo_left() }
+		top: { evolution_top() }
+		width: { evo_width() }
+		height: { evo_height() }
+		alignment: { evolution_align() }
+		z index: 5
+		visible: { evo_outline_blur() }
+		font:
+			name: { evolution_font() }
+			weight: { evolution_weight() }
+			style: { evolution_style() }
+			size: { evolution_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	evolution entry blur 03:
+		left: { evo_left() }
+		top: { evolution_top() }
+		width: { evo_width() }
+		height: { evo_height() }
+		alignment: { evolution_align() }
+		z index: 5
+		visible: { evo_outline_blur() }
+		font:
+			name: { evolution_font() }
+			weight: { evolution_weight() }
+			style: { evolution_style() }
+			size: { evolution_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	evolution entry blur 04:
+		left: { evo_left() }
+		top: { evolution_top() }
+		width: { evo_width() }
+		height: { evo_height() }
+		alignment: { evolution_align() }
+		z index: 5
+		visible: { evo_outline_blur() }
+		font:
+			name: { evolution_font() }
+			weight: { evolution_weight() }
+			style: { evolution_style() }
+			size: { evolution_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	title 1 blur 01:
+		left: { title_1_left() }
+		top: { title_1_top() }
+		width: { title_1_width() }
+		height: { title_1_height() }
+		z index: 5
+		visible: { title_1_outline_blur() }
+		alignment: { title_1_align() }
+		font:
+			name: { title_1_font() }
+			weight: { title_1_weight() }
+			style: { title_1_style() }
+			size: { title_1_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	title 1 blur 02:
+		left: { title_1_left() }
+		top: { title_1_top() }
+		width: { title_1_width() }
+		height: { title_1_height() }
+		z index: 5
+		visible: { title_1_outline_blur() }
+		alignment: { title_1_align() }
+		font:
+			name: { title_1_font() }
+			weight: { title_1_weight() }
+			style: { title_1_style() }
+			size: { title_1_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	title 1 blur 03:
+		left: { title_1_left() }
+		top: { title_1_top() }
+		width: { title_1_width() }
+		height: { title_1_height() }
+		z index: 5
+		visible: { title_1_outline_blur() }
+		alignment: { title_1_align() }
+		font:
+			name: { title_1_font() }
+			weight: { title_1_weight() }
+			style: { title_1_style() }
+			size: { title_1_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	title 1 blur 04:
+		left: { title_1_left() }
+		top: { title_1_top() }
+		width: { title_1_width() }
+		height: { title_1_height() }
+		z index: 5
+		visible: { title_1_outline_blur() }
+		alignment: { title_1_align() }
+		font:
+			name: { title_1_font() }
+			weight: { title_1_weight() }
+			style: { title_1_style() }
+			size: { title_1_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	stuff blur 01:
+		left: { x_left(486) }
+		top: { y_top(357) }
+		width: { fun_expand_size(33) }
+		height: { fun_expand_size(14) }
+		angle: { 35 }
+		z index: 10
+		font:
+			name: "GillSansCdn"
+			size: { fun_expand_font(9) }
+			weight: "bold"
+			color: 
+				script: if contains(card.general_options_08, match: "Secret Rare (Gold) Border") then rgb(255,220,55)
+					else if contains(card.general_options_08, match: "Team Plasma") then rgb(17,116,180)
+					else if contains(card.general_options_08, match: "Team Flare") then rgb(214,16,26)
+					else if contains(card.general_options_08, match: "User Defined Team") and contains(card.general_options_08, match: "Colored Border") then rgb(191,186,47)
+					else if is_trainer() then rgb(191,186,47)
+					else rgb(191,186,47)
+	special rule 1 blur 01:
+		left: { special_rule_left() }
+		top: { special_rule_top() }
+		width: { special_rule_width() }
+		height: { special_rule_height() }
+		z index: 5
+		visible: { special_rule_outline_blur() }
+		alignment: { special_rule_align() }
+		line height soft: { special_rule_lh_soft() }
+		mask: { special_rule_mask() }
+		padding left: { special_rule_pad_left() }
+		line height hard: { special_rule_lh_hard() }
+		font:
+			name: { special_rule_font() }
+			weight: { special_rule_weight() }
+			style: { special_rule_style() }
+			size: { special_rule_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	special rule 1 blur 02:
+		left: { special_rule_left() }
+		top: { special_rule_top() }
+		width: { special_rule_width() }
+		height: { special_rule_height() }
+		z index: 5
+		visible: { special_rule_outline_blur() }
+		alignment: { special_rule_align() }
+		line height soft: { special_rule_lh_soft() }
+		mask: { special_rule_mask() }
+		padding left: { special_rule_pad_left() }
+		line height hard: { special_rule_lh_hard() }
+		font:
+			name: { special_rule_font() }
+			weight: { special_rule_weight() }
+			style: { special_rule_style() }
+			size: { special_rule_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	special rule 1 blur 03:
+		left: { special_rule_left() }
+		top: { special_rule_top() }
+		width: { special_rule_width() }
+		height: { special_rule_height() }
+		z index: 5
+		visible: { special_rule_outline_blur() }
+		alignment: { special_rule_align() }
+		line height soft: { special_rule_lh_soft() }
+		mask: { special_rule_mask() }
+		padding left: { special_rule_pad_left() }
+		line height hard: { special_rule_lh_hard() }
+		font:
+			name: { special_rule_font() }
+			weight: { special_rule_weight() }
+			style: { special_rule_style() }
+			size: { special_rule_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	special rule 1 blur 04:
+		left: { special_rule_left() }
+		top: { special_rule_top() }
+		width: { special_rule_width() }
+		height: { special_rule_height() }
+		z index: 5
+		visible: { special_rule_outline_blur() }
+		alignment: { special_rule_align() }
+		line height soft: { special_rule_lh_soft() }
+		mask: { special_rule_mask() }
+		padding left: { special_rule_pad_left() }
+		line height hard: { special_rule_lh_hard() }
+		font:
+			name: { special_rule_font() }
+			weight: { special_rule_weight() }
+			style: { special_rule_style() }
+			size: { special_rule_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	damage 1 blur 01:
+		left: { damage_1_left() }
+		top: { damage_1_top() }
+		width: { damage_1_width() }
+		height: { damage_1_height() }
+		z index: 5
+		visible: { damage_1_outline_blur() }
+		alignment: { damage_align() }
+		font:
+			name: { damage_font() }
+			weight: { damage_weight() }
+			style: { damage_style() }
+			size: { damage_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	damage 1 blur 02:
+		left: { damage_1_left() }
+		top: { damage_1_top() }
+		width: { damage_1_width() }
+		height: { damage_1_height() }
+		z index: 5
+		visible: { damage_1_outline_blur() }
+		alignment: { damage_align() }
+		font:
+			name: { damage_font() }
+			weight: { damage_weight() }
+			style: { damage_style() }
+			size: { damage_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	damage 1 blur 03:
+		left: { damage_1_left() }
+		top: { damage_1_top() }
+		width: { damage_1_width() }
+		height: { damage_1_height() }
+		z index: 5
+		visible: { damage_1_outline_blur() }
+		alignment: { damage_align() }
+		font:
+			name: { damage_font() }
+			weight: { damage_weight() }
+			style: { damage_style() }
+			size: { damage_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	damage 1 blur 04:
+		left: { damage_1_left() }
+		top: { damage_1_top() }
+		width: { damage_1_width() }
+		height: { damage_1_height() }
+		z index: 5
+		visible: { damage_1_outline_blur() }
+		alignment: { damage_align() }
+		font:
+			name: { damage_font() }
+			weight: { damage_weight() }
+			style: { damage_style() }
+			size: { damage_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	rule text 1 blur 01:
+		left: { rule_1_left() }
+		top: { rule_1_top() }
+		width: { rule_1_width() }
+		height: { rule_1_height() }
+		z index: 5
+		visible: { rule_1_outline_blur() }
+		alignment: { rule_1_align() }
+		line height hard: { rule_lh_hard() }
+		symbol font:
+			name: { rule_symbol_font() }
+			size: { rule_symbol_size() }
+		font:
+			name: { rule_font() }
+			weight: { rule_weight() }
+			style: { rule_style() }
+			size: { rule_size() }
+			scale down to: 6
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	rule text 1 blur 02:
+		left: { rule_1_left() }
+		top: { rule_1_top() }
+		width: { rule_1_width() }
+		height: { rule_1_height() }
+		z index: 5
+		visible: { rule_1_outline_blur() }
+		alignment: { rule_1_align() }
+		line height hard: { rule_lh_hard() }
+		symbol font:
+			name: { rule_symbol_font() }
+			size: { rule_symbol_size() }
+		font:
+			name: { rule_font() }
+			weight: { rule_weight() }
+			style: { rule_style() }
+			size: { rule_size() }
+			scale down to: 6
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	rule text 1 blur 03:
+		left: { rule_1_left() }
+		top: { rule_1_top() }
+		width: { rule_1_width() }
+		height: { rule_1_height() }
+		z index: 5
+		visible: { rule_1_outline_blur() }
+		alignment: { rule_1_align() }
+		line height hard: { rule_lh_hard() }
+		symbol font:
+			name: { rule_symbol_font() }
+			size: { rule_symbol_size() }
+		font:
+			name: { rule_font() }
+			weight: { rule_weight() }
+			style: { rule_style() }
+			size: { rule_size() }
+			scale down to: 6
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	rule text 1 blur 04:
+		left: { rule_1_left() }
+		top: { rule_1_top() }
+		width: { rule_1_width() }
+		height: { rule_1_height() }
+		z index: 5
+		visible: { rule_1_outline_blur() }
+		alignment: { rule_1_align() }
+		line height hard: { rule_lh_hard() }
+		symbol font:
+			name: { rule_symbol_font() }
+			size: { rule_symbol_size() }
+		font:
+			name: { rule_font() }
+			weight: { rule_weight() }
+			style: { rule_style() }
+			size: { rule_size() }
+			scale down to: 6
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	attack 1 blur 01:
+		left: { attack_1_left() }
+		top: { attack_1_top() }
+		width: { attack_1_width() }
+		height: { attack_1_height() }
+		z index: 5
+		visible: { attack_1_outline_blur() }
+		alignment: { attack_align() }
+		font:
+			name: { attack_font() }
+			weight: { attack_weight() }
+			style: { attack_style() }
+			size: { attack_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	attack 1 blur 02:
+		left: { attack_1_left() }
+		top: { attack_1_top() }
+		width: { attack_1_width() }
+		height: { attack_1_height() }
+		z index: 5
+		visible: { attack_1_outline_blur() }
+		alignment: { attack_align() }
+		font:
+			name: { attack_font() }
+			weight: { attack_weight() }
+			style: { attack_style() }
+			size: { attack_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	attack 1 blur 03:
+		left: { attack_1_left() }
+		top: { attack_1_top() }
+		width: { attack_1_width() }
+		height: { attack_1_height() }
+		z index: 5
+		visible: { attack_1_outline_blur() }
+		alignment: { attack_align() }
+		font:
+			name: { attack_font() }
+			weight: { attack_weight() }
+			style: { attack_style() }
+			size: { attack_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	attack 1 blur 04:
+		left: { attack_1_left() }
+		top: { attack_1_top() }
+		width: { attack_1_width() }
+		height: { attack_1_height() }
+		z index: 5
+		visible: { attack_1_outline_blur() }
+		alignment: { attack_align() }
+		font:
+			name: { attack_font() }
+			weight: { attack_weight() }
+			style: { attack_style() }
+			size: { attack_size() }
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2

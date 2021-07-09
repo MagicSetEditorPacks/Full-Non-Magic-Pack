@@ -1,0 +1,560 @@
+mse version: 2.0.0
+game: pokemon
+full name: Pokemon Template Development Tools
+short name: Tools
+icon: card-sample.jpg
+position hint: 099
+
+version: 2016-09-31
+depends on:
+	package: pokemon.mse-game
+	version: 2016-09-30
+depends on:
+	package: pokemon-a-energy.mse-symbol-font
+	version: 2016-09-22
+depends on:
+	package: pokemon-a-color.mse-symbol-font
+	version: 2016-09-10
+depends on:
+	package: pokemon-a-lg-color.mse-symbol-font
+	version: 2016-09-24
+depends on:
+	package: pokemon-a-title.mse-symbol-font
+	version: 2016-09-22
+depends on:
+	package: pokemon-a-rule.mse-symbol-font
+	version: 2016-09-22
+depends on:
+	package: pokemon-b-common.mse-include
+	version: 2016-09-30
+depends on:
+	package: pokemon-b-publicdomain.mse-include
+	version: 2018-07-01
+
+#By: Imp Elemental Spirit Guide
+#	Version 0.6.03
+
+#expand_size()==2
+#card face only
+card width: 700
+card height: 990
+card dpi: 294
+
+#sideways card face
+#card width: 1026
+#card height: 736
+#card dpi: 294
+
+#expand_size()==2
+#border included
+#card width: 736
+#card height: 1026
+#card dpi: 294
+
+#Actual card width is 2.5", height is 3.5" almost exactly
+############################################################## Extra scripts
+init script:
+	diagnostic := { "   " }
+	##############################These two equations were originally used for centering and placing the different frames and text so that they matched the original card.
+	##############################			They have been kept in here because they would allow a different resolution of card should such thing apply
+	##############################                  Be careful to change the card size when altering these value
+	expand_size := { 2 }
+	# 2 is the size of the actual images used
+	# to watch 2 , card width 736, height 750, expand_size==2, slide_up == 0 or 276
+	# for 2   card width: 736, card height: 1026, card dpi: 294
+	# for 1.5 card width: 552, card height:  770, card dpi: 220
+	# for 1.4 card width: 515, card height:  717, card dpi: 205
+	# for 1   card width: 368, card height:  513, card dpi: 147
+	slide_left := { 0 }
+	slide_up := { 0 }
+	x_left := { to_int(input * expand_size()) - slide_left() }
+	y_top := { to_int(input * expand_size()) - slide_up() }
+	fun_expand_size := { to_int(input * expand_size()) }
+	fun_expand_font := { input * expand_size() }
+	fun_decompress := { input / expand_size() }
+	##Basic pokemon are Sunmoon with Foreground=Background (only 2 colors), Evolution is BW, Color1=Foreground, Color2=Stencil, Color3=Background
+	saturation_light := { if styling.Toolkit_Selection=="Create Super Rare Gold Artwork"
+			then if styling.Gold_Image_Type=="SunMoon Style" then rgb(252,198,1)
+			else if styling.Gold_Image_Type=="BlackWhite Style" then rgb(252,201,0)
+			else if styling.Gold_Image_Type=="Light Spectrum" then rgb(255,230,145)
+			else rgb(252,201,0)
+		else styling.Image_Color_Light }
+	saturation_dark := { if styling.Toolkit_Selection=="Create Super Rare Gold Artwork"
+			then if styling.Gold_Image_Type=="SunMoon Style" then rgb(187,107,8)
+			else if styling.Gold_Image_Type=="BlackWhite Style" then rgb(211,175,1)
+			else if styling.Gold_Image_Type=="Light Spectrum" then rgb(211,175,1)
+			else if styling.Gold_Image_Type=="Large Spectrum" then rgb(156,121,0)
+			else rgb(0,0,0)
+		else styling.Image_Color_Dark }
+	####### The SunMoon gold colors use a stencil the background is rgb(252,198,1) the foreground is rgb(181,107,8)
+	####### The BW gold colors use a stencil with fill the background is rgb(230,184,0) the stencil is rgb(221,175,1) and the fill is rgb(252,201,0)
+	white_sat := { if styling.White_Conversion=="5" then rgb(255,255,255) else if styling.White_Conversion=="0" then rgb(255,0,0) else if styling.White_Conversion=="-5" then rgb(0,0,0)
+		else if to_int(styling.White_Conversion)<0 then rgb((250+50*to_int(styling.White_Conversion)),0,0)
+		else rgb(255,50*to_int(styling.White_Conversion),50*to_int(styling.White_Conversion)) }
+	red_sat := { if (styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" and styling.Red_Conversion<0) or styling.Color_Conversion<0
+			then rgb(250+50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Red_Conversion else styling.Color_Conversion),0,0)
+			else rgb(255,50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Red_Conversion else styling.Color_Conversion),50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Red_Conversion else styling.Color_Conversion)) }
+	blue_sat := { if (styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" and styling.Blue_Conversion<0) or styling.Color_Conversion<0
+			then rgb(250+50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Blue_Conversion else styling.Color_Conversion),0,0)
+			else rgb(255,50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Blue_Conversion else styling.Color_Conversion),50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Blue_Conversion else styling.Color_Conversion)) }
+	green_sat := { if (styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" and styling.Green_Conversion<0) or styling.Color_Conversion<0
+			then rgb(250+50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Green_Conversion else styling.Color_Conversion),0,0)
+			else rgb(255,50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Green_Conversion else styling.Color_Conversion),50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Green_Conversion else styling.Color_Conversion)) }
+	image_sat := { rgb(128+25*to_int(styling.Image_Saturation),128+25*to_int(styling.Image_Saturation),128+25*to_int(styling.Image_Saturation)) }
+	################### Crystal Background Creator
+	is_pokemon := { true }
+	texture_type_1 := { if card.texture_type_1=="Default" then "Wizards"
+		else to_string(card.texture_type_1) }
+	texture_type_2 := { if card.texture_type_2=="Default" then "Wizards"
+		else to_string(card.texture_type_2) }
+	texture_type_3 := { if card.texture_type_3=="Default" then "Wizards"
+		else to_string(card.texture_type_3) }
+	texture_type_4 := { if card.texture_type_4=="Default" then "Wizards"
+		else to_string(card.texture_type_4) }
+	background_type_1 := { to_string(card.card_color_1) }
+	background_type_2 := { to_string(card.card_color_2) }
+	background_type_3 := { to_string(card.card_color_3) }
+	colored_pokemon_suffix_1 := { to_string(card.color_texture_1) }
+	colored_pokemon_suffix_2 := { to_string(card.color_texture_2) }
+	colored_pokemon_suffix_3 := { to_string(card.color_texture_3) }
+	is_image_1 := { (texture_type_1()=="User Image" and not(background_type_1()=="User Defined")) or (colored_pokemon_suffix_1()=="User Image" and background_type_1()=="User Defined") }
+	is_image_2 := { (texture_type_2()=="User Image" and not(background_type_2()=="User Defined")) or (colored_pokemon_suffix_2()=="User Image" and background_type_2()=="User Defined") }
+	is_image_3 := { (texture_type_3()=="User Image" and not(background_type_3()=="User Defined")) or (colored_pokemon_suffix_3()=="User Image" and background_type_3()=="User Defined") }
+	is_image_4 := { texture_type_4()=="User Image" }
+############################################################## Styling fields
+styling field:
+	type: choice
+	name: Toolkit Selection
+	description: What are you trying to accomplish
+	choice: Create Super Rare Gold Artwork
+	choice: Create Super Rare Rainbow Artwork
+	choice: Create Super Rare Rainbow Outlined Artwork
+	choice: Create Colored Artwork or Background
+	choice: Create Crystal Background
+	initial: Create Crystal Background
+styling field:
+	type: multiple choice
+	name: Coloration Settings
+	description: Panel of coloration settings
+	choice: Invert Colors
+styling field:
+	type: choice
+	name: Image Conversion Type
+	description: Options for converting the image to a mono-colored image
+	choice: Strict Desaturation
+	choice: Convert All Colors to Grey
+	choice: Convert Red Green & Blue Separately to Grey
+	initial: Strict Desaturation
+styling field:
+	type: choice
+	name: Gold Image Type
+	description: Options for the type of gold image to convert to
+	choice: SunMoon Style
+	choice: BlackWhite Style
+	choice: Light Spectrum
+	choice: Large Spectrum
+	choice: Full Spectrum
+styling field:
+	type: color
+	name: Image Color Light
+	description: The color used to color the image
+	initial: rgb(170,170,170)
+styling field:
+	type: color
+	name: Image Color Dark
+	description: The color used to color the image
+	initial: rgb(85,85,85)
+styling field:
+	type: choice
+	name: White Conversion
+	description: Set the Image White Conversion
+	choice: 5
+	choice: 4
+	choice: 3
+	choice: 2
+	choice: 1
+	choice: 0
+	choice: -1
+	choice: -2
+	choice: -3
+	choice: -4
+	choice: -5
+	initial: 0
+styling field:
+	type: choice
+	name: Color Conversion
+	description: Set the Color Conversion
+	choice: 5
+	choice: 4
+	choice: 3
+	choice: 2
+	choice: 1
+	choice: 0
+	choice: -1
+	choice: -2
+	choice: -3
+	choice: -4
+	choice: -5
+	initial: 0
+styling field:
+	type: choice
+	name: Red Conversion
+	description: Set the Red Conversion
+	choice: 5
+	choice: 4
+	choice: 3
+	choice: 2
+	choice: 1
+	choice: 0
+	choice: -1
+	choice: -2
+	choice: -3
+	choice: -4
+	choice: -5
+	initial: 0
+styling field:
+	type: choice
+	name: Blue Conversion
+	description: Set the Blue Conversion
+	choice: 5
+	choice: 4
+	choice: 3
+	choice: 2
+	choice: 1
+	choice: 0
+	choice: -1
+	choice: -2
+	choice: -3
+	choice: -4
+	choice: -5
+	initial: 0
+styling field:
+	type: choice
+	name: Green Conversion
+	description: Set the Green Conversion
+	choice: 5
+	choice: 4
+	choice: 3
+	choice: 2
+	choice: 1
+	choice: 0
+	choice: -1
+	choice: -2
+	choice: -3
+	choice: -4
+	choice: -5
+	initial: 0
+styling field:
+	type: choice
+	name: Image Saturation
+	description: Set the Image Color Saturation
+	choice: 5
+	choice: 4
+	choice: 3
+	choice: 2
+	choice: 1
+	choice: 0
+	choice: -1
+	choice: -2
+	choice: -3
+	choice: -4
+	choice: -5
+	initial: 0
+styling style:
+	Toolkit Selection:
+	Coloration Settings:
+		render style: checklist
+		direction: vertical
+		visible: { not(styling.Toolkit_Selection=="Create Crystal Background") }
+	Image Conversion Type:
+		visible: { not(styling.Toolkit_Selection=="Create Crystal Background") }
+	Gold Image Type
+		visible: { styling.Toolkit_Selection=="Create Super Rare Gold Artwork" }
+	Image Color Light:
+		visible: { styling.Toolkit_Selection=="Create Colored Artwork or Background" }
+	Image Color Dark:
+		visible: { styling.Toolkit_Selection=="Create Colored Artwork or Background" }
+	White Conversion:
+		visible: { not(styling.Toolkit_Selection=="Create Crystal Background") and not(styling.Image_Conversion_Type=="Strict Desaturation") }
+	Color Conversion:
+		visible: { not(styling.Toolkit_Selection=="Create Crystal Background") and styling.Image_Conversion_Type=="Convert All Colors to Grey" }
+	Red Conversion:
+		visible: { not(styling.Toolkit_Selection=="Create Crystal Background") and styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" }
+	Blue Conversion:
+		visible: { not(styling.Toolkit_Selection=="Create Crystal Background") and styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" }
+	Green Conversion:
+		visible: { not(styling.Toolkit_Selection=="Create Crystal Background") and styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" }
+	Image Saturation:
+		visible: { not(styling.Toolkit_Selection=="Create Crystal Background") and not(styling.Image_Conversion_Type=="Strict Desaturation") }
+############################################################## Throughout this odd number layers are reserved for shading/covering up etc.
+card style:
+	######################## Unused card fields
+
+	################## Choice Fields
+	#card type:	#trainer:	#energy type:
+	#basic texture:	#metal texture:
+	#stage restored:	#stage levelup:	#stage baby:	#stage base:
+	#dual blend type:	#dual blend sideways:	#rarity:	#place:
+	#basic user image type: (Multiple Choice)
+
+	################## Image Fields
+	#energy orb pic 1:	#energy orb pic 2:
+	#evolution pic:	#gym leader pic:	#team watermark:
+
+	################## Text Fields
+	#card name:	#hp:	#pokedex text 1:	#pokedex text 2:	#evolution entry:	#evolution text 1:	#evolution text 2:
+	#copyright:	#illustrator:	#weakness:	#resistance:	#retreat cost:	#flavor text:
+	#rule np 1:	#rule np 2:	#rule text 1:	#rule text 2:	#rule text 3:
+	#cost new 1:	#cost new 2:	#cost new 3:	#cost classic 1:	#cost classic 2:	#cost classic 3:
+	#attack 1:	#attack 2:	#attack 3:	#damage 1:	#damage 2:	#damage 3:
+	#title text 1:	#title text 2:	#title text 3:	#ability text 1:	#ability text 2:	#ability rule text 1::	#special rule text 1:	#special rule text 2:
+
+	################## Text Fields based upon equations (will need to add equation to use)
+	#rule reminder 1:	#special rule reminder 1:	#special rule reminder 2:
+	#ability reminder 1:	#ability reminder 2:	#title reminder 1:	#title reminder 2:	#title reminder 3:
+	#evolution reminder 1:	#evolution reminder 2:	#weakoverlay:	#resoverlay:	#retoverlay:
+	#color text 1:	#color text 2:	#color text 1 dup:
+
+	################## Non-user input choices fields (for use as images)
+	#image overlay:
+	#border:
+	#border overlay:
+	#text popout image:
+
+#########Colors used for user defined card color background image
+	energy color 1:
+		left: { x_left(175) }
+		top: { y_top(0) }
+		width: { fun_expand_size(175) }
+		height: { fun_expand_size(if styling.Toolkit_Selection=="Create Crystal Background" and background_type_1()=="User Defined" and not(is_image_1()) then 247 else 0) }
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" and background_type_1()=="User Defined" and not(is_image_1()) }
+		z index: -16
+	energy color 2:
+		left: { x_left(175) }
+		top: { y_top(247) }
+		width: { fun_expand_size(175) }
+		height: { fun_expand_size(if styling.Toolkit_Selection=="Create Crystal Background" and background_type_2()=="User Defined" and not(is_image_2()) then 247 else 0) }
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" and background_type_2()=="User Defined" and not(is_image_2()) }
+		z index: -16
+	energy color 3:
+		left: { x_left(0) }
+		top: { y_top(247) }
+		width: { fun_expand_size(175) }
+		height: { fun_expand_size(if styling.Toolkit_Selection=="Create Crystal Background" and background_type_3()=="User Defined" and not(is_image_3()) then 247 else 0) }
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" and background_type_3()=="User Defined" and not(is_image_3()) }
+		z index: -16
+
+#########Image used for user defined card color background image
+	background pic 1:
+		left: { x_left(183)-350 }
+		top: { y_top(257)-495 }
+		width: { 700 }
+		height: { if is_image_1() or not(styling.Toolkit_Selection=="Create Crystal Background") then 990 else 0 }
+		visible: { is_image_1() or not(styling.Toolkit_Selection=="Create Crystal Background") }
+		mask: { if is_image_1() and styling.Toolkit_Selection=="Create Crystal Background" then "mask-image-1.png" else "/pokemon-b-common.mse-include/mask-blank.png" }
+		z index: -17
+	background pic 2:
+		left: { x_left(183)-350 }
+		top: { y_top(257)-495 }
+		width: { 700 }
+		height: { if is_image_2() and styling.Toolkit_Selection=="Create Crystal Background" then 990 else 0 }
+		visible: { is_image_2() and styling.Toolkit_Selection=="Create Crystal Background" }
+		mask: { if is_image_2() and styling.Toolkit_Selection=="Create Crystal Background" then "mask-image-2.png" else "/pokemon-b-common.mse-include/mask-blank.png" }
+		z index: -17
+	card image:	
+		left: { x_left(183)-350 }
+		top: { y_top(257)-495 }
+		width: { 700 }
+		height: { if is_image_3() and styling.Toolkit_Selection=="Create Crystal Background" then 990 else 0 }
+		visible: { is_image_3() and styling.Toolkit_Selection=="Create Crystal Background" }
+		mask: { if is_image_3() and styling.Toolkit_Selection=="Create Crystal Background" then "mask-image-3.png" else "/pokemon-b-common.mse-include/mask-blank.png" }
+		z index: -17
+	card popout:
+		left: { x_left(183)-350 }
+		top: { y_top(257)-495 }
+		width: { 700 }
+		height: { if is_image_4() and styling.Toolkit_Selection=="Create Crystal Background" then 990 else 0 }
+		visible: { is_image_4() and styling.Toolkit_Selection=="Create Crystal Background" }
+		mask: { if is_image_4() and styling.Toolkit_Selection=="Create Crystal Background" then "mask-image-4.png" else "/pokemon-b-common.mse-include/mask-blank.png" }
+		z index: -17
+#########Blank image to underlay the presented image but overlay the user input image (provides background for transparencies)
+	blank image:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(350) }
+		height: { fun_expand_size(495) }
+		z index: -15
+		visible: { true }
+		render style: image
+		image: 
+			script: if styling.Toolkit_Selection=="Create Crystal Background" then
+					masked_blend(light: if is_image_1() then card.background_pic_1
+							else if texture_type_1()=="Color" and not(background_type_1()=="User Defined") or (colored_pokemon_suffix_1()=="Color" and background_type_1()=="User Defined") 
+								then recolor_image(input: "/pokemon-b-common.mse-include/blank-color.png", red: texture_color_1(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+							else if background_type_1()=="User Defined" 
+								then recolor_image(input: "/pokemon-b-common.mse-include/back-p-colored-"+colored_pokemon_suffix_1()+".png", red: card.energy_color_1, green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+							else "/pokemon-b-common.mse-include/back-p-"+texture_type_1()+"-"+background_type_1()+".png",
+						dark: if is_image_4() then card.card_popout
+							else if texture_type_4()=="Color" then "/pokemon-b-common.mse-include/mask-blank.png"
+							else "/pokemon-b-common.mse-include/back-p-"+texture_type_4()+"-colorless.png",
+						mask: "Color 1 Mask.png")
+				else "/pokemon-b-common.mse-include/mask-blank.png"
+#########Background image
+	background:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(350) }
+		height: { fun_expand_size(495) }
+		z index: -14
+		render style: image
+		mask: { if styling.Toolkit_Selection=="Create Crystal Background" then "Color 2 Mask.png" else "/pokemon-b-common.mse-include/mask-blank.png" }
+		image: 
+			script: if styling.Toolkit_Selection=="Create Crystal Background" 
+					then if is_image_2() then card.background_pic_2
+					else if texture_type_2()=="Color" and not(background_type_2()=="User Defined") or (colored_pokemon_suffix_2()=="Color" and background_type_2()=="User Defined") 
+						then recolor_image(input: "/pokemon-b-common.mse-include/blank-color.png", red: texture_color_2(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+					else if background_type_2()=="User Defined" 
+						then recolor_image(input: "/pokemon-b-common.mse-include/back-p-colored-"+colored_pokemon_suffix_2()+".png", red: card.energy_color_2, green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+					else "/pokemon-b-common.mse-include/back-p-"+texture_type_2()+"-"+background_type_2()+".png"
+				else if styling.Toolkit_Selection=="Create Super Rare Rainbow Outlined Artwork" then masked_blend(
+					light: 	if styling.Image_Conversion_Type=="Strict Desaturation"
+							then if contains(styling.Coloration_Settings, match: "Invert Colors") then masked_blend(light: "fore-rainbow-bright.png", dark: "fore-rainbow.png", mask: saturate(input: invert_image(input: card.background_pic_1), amount: -1))
+							else masked_blend(light: "fore-rainbow-bright.png", dark: "fore-rainbow.png", mask: saturate(input: card.background_pic_1, amount: -1))
+						else if contains(styling.Coloration_Settings, match: "Invert Colors") then masked_blend(light: "fore-rainbow-bright.png", dark: "fore-rainbow.png", mask: recolor_image(input: recolor_image(input: invert_image(input: card.background_pic_1), red: red_sat(), green: green_sat(), blue: blue_sat(), white: white_sat()), red: image_sat(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)))
+						else masked_blend(light: "fore-rainbow-bright.png", dark: "fore-rainbow.png", mask: recolor_image(input: recolor_image(input: card.background_pic_1, red: red_sat(), green: green_sat(), blue: blue_sat(), white: white_sat()), red: image_sat(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)))
+					dark: "out-rainbow.png", 
+					mask: saturate(input: combine_blend(image1: combine_blend(image1: card.background_pic_1, image2: "/pokemon-b-common.mse-include/mask-blank.png", combine: "overlay"), image2: "/pokemon-b-common.mse-include/mask-blank.png", combine: "overlay"), amount: -1))
+				else if styling.Image_Conversion_Type=="Strict Desaturation"
+					then if contains(styling.Coloration_Settings, match: "Invert Colors") then masked_blend(light: if styling.Toolkit_Selection=="Create Super Rare Rainbow Artwork" then "fore-rainbow-bright.png" else recolor_image(input: "mask-color.png", red: saturation_light(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), dark: if styling.Toolkit_Selection=="Create Super Rare Rainbow Artwork" then "fore-rainbow.png" else recolor_image(input: "mask-color.png", red: saturation_dark(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), mask: saturate(input: invert_image(input: card.background_pic_1), amount: -1))
+					else masked_blend(light: if styling.Toolkit_Selection=="Create Super Rare Rainbow Artwork" then "fore-rainbow-bright.png" else recolor_image(input: "mask-color.png", red: saturation_light(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), dark: if styling.Toolkit_Selection=="Create Super Rare Rainbow Artwork" then "fore-rainbow.png" else recolor_image(input: "mask-color.png", red: saturation_dark(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), mask: saturate(input: card.background_pic_1, amount: -1))
+				else if contains(styling.Coloration_Settings, match: "Invert Colors") then masked_blend(light: if styling.Toolkit_Selection=="Create Super Rare Rainbow Artwork" then "fore-rainbow-bright.png" else recolor_image(input: "mask-color.png", red: saturation_light(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), dark: if styling.Toolkit_Selection=="Create Super Rare Rainbow Artwork" then "fore-rainbow.png" else recolor_image(input: "mask-color.png", red: saturation_dark(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), mask: recolor_image(input: recolor_image(input: invert_image(input: card.background_pic_1), red: red_sat(), green: green_sat(), blue: blue_sat(), white: white_sat()), red: image_sat(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)))
+				else masked_blend(light: if styling.Toolkit_Selection=="Create Super Rare Rainbow Artwork" then "fore-rainbow-bright.png" else recolor_image(input: "mask-color.png", red: saturation_light(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), dark: if styling.Toolkit_Selection=="Create Super Rare Rainbow Artwork" then "fore-rainbow.png" else recolor_image(input: "mask-color.png", red: saturation_dark(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), mask: recolor_image(input: recolor_image(input: card.background_pic_1, red: red_sat(), green: green_sat(), blue: blue_sat(), white: white_sat()), red: image_sat(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)))
+	background 2:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(350) }
+		height: { fun_expand_size(495) }
+		z index: -14
+		render style: image
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" }
+		mask: { "Color 3 Mask.png" }
+		image: 
+			script: if is_image_3() then card.card_image
+				else if texture_type_3()=="Color" and not(background_type_3()=="User Defined") or (colored_pokemon_suffix_3()=="Color" and background_type_3()=="User Defined") 
+					then recolor_image(input: "/pokemon-b-common.mse-include/blank-color.png", red: texture_color_3(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+				else if background_type_3()=="User Defined" 
+					then recolor_image(input: "/pokemon-b-common.mse-include/back-p-colored-"+colored_pokemon_suffix_3()+".png", red: card.energy_color_3, green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255))
+				else "/pokemon-b-common.mse-include/back-p-"+texture_type_3()+"-"+background_type_3()+".png"
+	card color 1:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(50) }
+		z index: 2
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" }
+		render style: image
+		image: { "/pokemon-b-common.mse-include/blank.png" }
+	card color 2:
+		left: { x_left(25) }
+		top: { y_top(0) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(50) }
+		z index: 2
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" }
+		render style: image
+		image: { "/pokemon-b-common.mse-include/blank.png" }
+	card color 3:
+		left: { x_left(50) }
+		top: { y_top(0) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(50) }
+		z index: 2
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" }
+		render style: image
+		image: { "/pokemon-b-common.mse-include/blank.png" }
+	texture type 1:	
+		left: { x_left(0) }
+		top: { y_top(50) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(if styling.Toolkit_Selection=="Create Crystal Background" and not(background_type_1()=="User Defined") then 50 else 0) }
+		z index: 1
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" and not(background_type_1()=="User Defined") }
+		render style: image
+		image: { "/pokemon-b-common.mse-include/blank.png" }
+	texture type 2:	
+		left: { x_left(25) }
+		top: { y_top(50) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(if styling.Toolkit_Selection=="Create Crystal Background" and not(background_type_2()=="User Defined") then 50 else 0) }
+		z index: 1
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" and not(background_type_2()=="User Defined") }
+		render style: image
+		image: { "/pokemon-b-common.mse-include/blank.png" }
+	texture type 3:	
+		left: { x_left(50) }
+		top: { y_top(50) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(if styling.Toolkit_Selection=="Create Crystal Background" and not(background_type_3()=="User Defined") then 50 else 0) }
+		z index: 1
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" and not(background_type_3()=="User Defined") }
+		render style: image
+		image: { "/pokemon-b-common.mse-include/blank.png" }
+	texture type 4:	
+		left: { x_left(75) }
+		top: { y_top(50) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(50) }
+		z index: 2
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" }
+		render style: image
+		image: { "/pokemon-b-common.mse-include/blank.png" }
+	color texture 1:
+		left: { x_left(0) }
+		top: { y_top(50) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(if styling.Toolkit_Selection=="Create Crystal Background" and background_type_1()=="User Defined" then 50 else 0) }
+		z index: 2
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" and background_type_1()=="User Defined" }
+		render style: image
+		image: { "/pokemon-b-common.mse-include/blank.png" }
+	color texture 2:	
+		left: { x_left(25) }
+		top: { y_top(50) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(if styling.Toolkit_Selection=="Create Crystal Background" and background_type_2()=="User Defined" then 50 else 0) }
+		z index: 2
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" and background_type_2()=="User Defined" }
+		render style: image
+		image: { "/pokemon-b-common.mse-include/blank.png" }
+	color texture 2:	
+		left: { x_left(50) }
+		top: { y_top(50) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(if styling.Toolkit_Selection=="Create Crystal Background" and background_type_3()=="User Defined" then 50 else 0) }
+		z index: 2
+		visible: { styling.Toolkit_Selection=="Create Crystal Background" and background_type_3()=="User Defined" }
+		render style: image
+		image: { "/pokemon-b-common.mse-include/blank.png" }
+
+extra card field:
+	type: text
+	name: info text
+	show statistics: false
+	default: diagnostic()
+	card list allow: false
+	save value: false
+	editable: false
+extra card style:
+	info text:
+		left: { x_left(50) }
+		top: { y_top(50)+slide_up() }
+		width: { fun_expand_size(200) }
+		height: { fun_expand_size(50) }
+		z index: 5
+		visible: { false }
+		font:
+			name: { "GillSans" }
+			weight: { "bold" }
+			style: { "normal" }
+			size: { fun_expand_font(10) }
+			color: rgb(255,0,0)

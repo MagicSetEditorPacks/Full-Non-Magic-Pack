@@ -1,0 +1,44 @@
+mse version: 0.3.6
+version: 2008-06-23
+short name: Cost Symbols
+installer group: Wheel of Time/Symbol Fonts/Cost Symbols
+position hint: 001
+icon: Power.png
+
+image font size: 135
+horizontal space: 0
+symbol:
+	code: x
+	image: Power.png
+	image font size: 430
+symbol:
+	code: p
+	image: Politics.png
+	image font size: 400
+symbol:
+	code: s
+	image: Sup.png
+symbol:
+	code: i
+	image: Intrigue.png
+	image font size: 425
+symbol:
+	code: c
+	image: Combat.png
+	image font size: 357
+symbol:
+	code: o
+	image: Opp.png
+symbol:
+	code: d
+	image: Dam.png
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: p
+	item: i
+	item: x
+	item: c
+	item: s
+	item: o
+	item: d

@@ -1,0 +1,14 @@
+styling field:
+	type: choice
+	name: keeper style
+	description: Choose the style of Keepers (and Creepers)
+	initial: top and bottom
+	choice: top and bottom
+styling field:
+	type: choice
+	name: goal images
+	description: Choose number of images to use for goals
+	initial: two
+	choice: none
+	choice: one
+	choice: two

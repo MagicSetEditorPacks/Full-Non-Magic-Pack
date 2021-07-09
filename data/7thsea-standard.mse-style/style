@@ -1,0 +1,783 @@
+version: 0.3.8
+game: 7thsea
+short name: Standard
+full name: 7th Sea
+icon: icon.png
+installer group: 7th Sea/Standard
+
+version: 2009-08-09
+depends on: 7thsea.mse-game 2009-08-09
+
+card width: 375
+card height: 514
+card dpi: 150
+#By: agent ig
+#Fonts used:
+#Freehand471 BT
+#Cheltenhm BdCn BT
+#ChelthmITC Bk BT
+############################################################# Scripts
+init script:
+	is_action := { contains(card.background, match: "action") }
+	is_adventure := { contains(card.background, match: "adventure") }
+	is_attachment := { contains(card.background, match: "attachment") }
+	is_captain := { contains(card.background, match: "captain") }
+	is_crew := { contains(card.background, match: "crew") }
+	is_chantey := { contains(card.background, match: "chantey") }
+	is_ship := { contains(card.background, match: "ship") }
+	
+	bonus_ok := { is_attachment() or is_adventure() }
+	single_costs_ok := { is_action() or is_attachment() or is_chantey() }
+	dual_costs_ok := { is_action() or is_chantey() }
+	factions_ok := { is_attachment() or is_captain() or is_crew() or is_ship() }
+
+	has_bonus := { contains(card.bonus, match: "skill") }
+	has_single_cost := { contains(card.single_costs, match: "cost") or contains(card.single_costs, match: "cancel") }
+	has_cost := { contains(card.cost, match: "cost") }
+	has_cancel := { contains(card.cancel, match: "cancel") }
+	has_boarding := { is_action() or is_adventure() or is_attachment() or is_crew() or is_chantey() }
+	no_boarding := { is_captain() or is_ship() }
+	is_person := { is_captain() or is_crew() }
+########################################################### Card Background and Picture
+card style:
+	picture:
+		left: 
+			script:
+				if is_action() then 56
+				else if is_adventure() then 45
+				else if is_attachment() then 51
+				else if is_captain() then 37
+				else if is_chantey() then 43
+				else if is_crew() then 46
+				else if is_ship() then 0
+		top:
+			script:
+				if is_action() then 84
+				else if is_adventure() then 81
+				else if is_attachment() then 88
+				else if is_chantey() then 84
+				else if is_crew() or is_captain() then 71
+				else if is_ship() then 0
+		width:
+			script:
+				if is_action() then 265
+				else if is_adventure() then 284
+				else if is_attachment() then 276
+				else if is_captain() then 301
+				else if is_chantey() then 287
+				else if is_crew() then 284
+				else if is_ship() then 375
+		height:
+			script:
+				if is_action() then 203
+				else if is_adventure() then 209
+				else if is_attachment() then 201
+				else if is_captain() then 214
+				else if is_chantey() then 213
+				else if is_crew() then 210
+				else if is_ship() then 514
+		mask:
+			script:
+				if is_action() then "action mask.png"
+				else if is_captain() then "captain mask.png"
+				else if is_adventure() then "adventure mask.png"
+				else if is_chantey() then "chantey mask.png"
+				else if is_crew() then "crew mask.png"
+				else if is_ship() then "ship mask.png"
+				else nil
+	background:
+		left: 0
+		top: 0
+		width: 375
+		height: 514
+		z index: -1
+		render style: image
+		popup style: in place
+		choice images:
+			action (dpt): action (dpt) card.png
+			action (sdp): action (sdp) card.png
+			adventure: adventure card.png
+			attachment: attachment card.png
+			captain: captain card.png
+			chantey: chantey card.png
+			crew: crew card.png
+			ship: ship card.png
+################################################################# Card Icons
+	faction_1:
+		left: 
+			script:
+				if factions_ok() then 31
+				else nil
+		top: 
+			script:
+				if factions_ok() then 68
+				else nil
+		width: 
+			script:
+				if factions_ok() then 59
+				else nil
+		height: 
+			script:
+				if factions_ok() then 59
+				else nil
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+			the black freighter: the black freighter.png
+			brotherhood: brotherhood.png
+			castille: castille.png
+			corsairs: corsairs.png
+			crimson rogers: crimson rogers.png
+			explorer's society: explorer's society.png
+			gosse's gentlemen: gosse's gentlemen.png
+			montainge: montainge.png
+			sea dogs: sea dogs.png
+			vesten: vesten.png
+			roberts: roberts.png
+			lion clan: lion clan.png
+			crab clan: crab clan.png
+			mantis clan: mantis clan.png
+			ratling: ratling.png
+	faction_2:
+		left: 
+			script:
+				if factions_ok() then 31
+				else nil
+		top: 
+			script:
+				if factions_ok() then 131
+				else nil
+		width: 
+			script:
+				if factions_ok() then 59
+				else nil
+		height: 
+			script:
+				if factions_ok() then 59
+				else nil
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+			the black freighter: the black freighter.png
+			brotherhood: brotherhood.png
+			castille: castille.png
+			corsairs: corsairs.png
+			crimson rogers: crimson rogers.png
+			explorer's society: explorer's society.png
+			gosse's gentlemen: gosse's gentlemen.png
+			montainge: montainge.png
+			sea dogs: sea dogs.png
+			vesten: vesten.png
+			roberts: roberts.png
+			lion clan: lion clan.png
+			crab clan: crab clan.png
+			mantis clan: mantis clan.png
+			ratling: ratling.png
+	secret_society:
+		left: 
+			script:
+				if factions_ok() then 303
+				else nil
+		top: 
+			script:
+				if factions_ok() then 83
+				else nil
+		width: 
+			script:
+				if factions_ok() then 44
+				else nil
+		height: 
+			script:
+				if factions_ok() then 44
+				else nil
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+			die kreutzritter: die kreutzritter.png
+			invisible college: invisible college.png
+			knights of the rose & cross: knights of the rose and cross.png
+			los vagos: los vagos.png
+			rilasciare: rilasciare.png
+			sophia's daughters: sophia's daughters.png
+	nation:
+		left: 
+			script:
+				if factions_ok() then 301
+				else nil
+		top: 
+			script:
+				if factions_ok() then 134
+				else nil
+		width: 
+			script:
+				if factions_ok() then 46
+				else nil
+		height: 
+			script:
+				if factions_ok() then 54
+				else nil
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+			avalon: avalon.png
+			eisen: eisen.png
+			ussura: ussura.png
+			vodacce: vodacce.png
+			rokugan: rokugan.png
+	single_costs:
+		left: 
+			script:
+				if single_costs_ok() then 166
+				else nil
+		top:
+			script:
+				if single_costs_ok() then 285
+				else nil
+		width:
+			script:
+				if single_costs_ok() then 49
+				else nil
+		height:
+			script:
+				if single_costs_ok() then 29
+				else nil
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			cost cannon: cannon cost icon.png
+			cost sailing: sailing cost icon.png
+			cost adventuring: adventuring cost icon.png
+			cost influence: influence cost icon.png
+			cost swashbuckling: swashbuckling cost icon.png
+			cost ship: ship cost icon.png
+			cancel cannon: cannon cancel icon.png
+			cancel sailing: sailing cancel icon.png
+			cancel adventuring: adventuring cancel icon.png
+			cancel influence: influence cancel icon.png
+			cancel swashbuckling: swashbuckling cancel icon.png
+			cancel ship: ship cancel icon.png
+	cost:
+		left: 
+			script:
+				if dual_costs_ok() then 136
+				else nil
+		top:
+			script:
+				if dual_costs_ok() then 285
+				else nil
+		width: 
+			script:
+				if dual_costs_ok() then 49
+				else nil
+		height: 
+			script:
+				if dual_costs_ok() then 29
+				else nil
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+			cost cannon: cannon cost icon.png
+			cost sailing: sailing cost icon.png
+			cost adventuring: adventuring cost icon.png
+			cost influence: influence cost icon.png
+			cost swashbuckling: swashbuckling cost icon.png
+			cost ship: ship cost icon.png
+	cancel:
+		left:
+			script:
+				if dual_costs_ok() then 195
+				else nil
+		top: 
+			script:
+				if dual_costs_ok() then 285
+				else nil
+		width: 
+			script:
+				if dual_costs_ok() then 49
+				else nil
+		height: 
+			script:
+				if dual_costs_ok() then 29
+				else nil
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+			cancel cannon: cannon cancel icon.png
+			cancel sailing: sailing cancel icon.png
+			cancel adventuring: adventuring cancel icon.png
+			cancel influence: influence cancel icon.png
+			cancel swashbuckling: swashbuckling cancel icon.png
+			cancel ship: ship cancel icon.png
+	bonus:
+		left: 
+			script:
+				if bonus_ok() then 290
+				else nil
+		top: 
+			script:
+				if bonus_ok() then 35
+				else nil
+		width: 
+			script:
+				if bonus_ok() then 49
+				else nil
+		height: 
+			script:
+				if bonus_ok() then 29
+				else nil
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			skill cannon: cannon skill icon.png
+			skill sailing: sailing skill icon.png
+			skill adventuring: adventuring skill icon.png
+			skill influence: influence skill icon.png
+			skill swashbuckling: swashbuckling skill icon.png
+############################################################################# Card Text
+	name:
+		left:
+			script:
+				if is_captain() or is_crew() then 89
+				else 32
+		top: 32
+		width:
+			script:
+				if is_captain() or is_crew() then 251
+				else if is_ship() then 247
+				else if has_bonus() then 258
+				else 307
+		height: 41
+		z index: 1
+		alignment: middle center
+		font:
+			name: Freehand471 BT
+			color: rgb(0,0,0)
+			size: 20
+			scale down to: 13
+	type:
+		left:
+			script: 
+				if is_attachment() then 83
+				else nil
+		top:
+			script: 
+				if is_attachment() then 311
+				else nil
+		width:
+			script:
+				if is_attachment() then 249
+				else nil
+		height:
+			script:
+				if is_attachment() then 34
+		z index: 1
+		alignment: middle center
+		font:
+			name: Cheltenhm BdCn BT
+			color: rgb(0,150,0)
+			size: 12
+			scale down to: 8
+	card_text:
+		left:
+			script:
+				if has_boarding() then 83
+				else if is_ship() then nil
+				else 39
+		top:
+			script:
+				if is_ship() then nil
+				else 336
+		width:
+			script:
+				if has_boarding() then 249
+				else if is_ship() then nil
+				else 297
+		height: 
+			script:
+				if is_ship() then nil
+				else 132
+		z index: 1
+		alignment: middle center
+		font:
+			name: ChelthmITC Bk BT
+			color: rgb(0,0,0)
+			size: 10
+			scale down to: 8
+	ship_text:
+		left: 
+			script:
+				if is_ship() then 39
+				else nil
+		top: 
+			script:
+				if is_ship() then 390
+				else nil
+		width:
+			script:
+				if is_ship() then 297
+				else nil
+		height: 
+			script:
+				if is_ship() then 85
+				else nil
+		z index: 1
+		alignment: middle center
+		font:
+			name: ChelthmITC Bk BT
+			color: rgb(0,0,0)
+			size: 10
+			scale down to: 8
+	bonus_text:
+		left:
+			script:
+				if has_bonus() then 306
+				else nil
+		top:
+			script:
+				if has_bonus() then 35
+				else nil
+		width:
+			script:
+				if has_bonus() then 27
+				else nil
+		height:
+			script:
+				if has_bonus() then 29
+				else nil
+		z index: 3
+		alignment: middle right
+		font:
+			name: Freehand471 BT
+			color: rgb(255,255,255)
+			size: 11
+			weight: bold
+	cost_cancel:
+		left:
+			script:
+				if has_single_cost() then 182
+				else nil
+		top:
+			script:
+				if has_single_cost() then 285
+				else nil
+		width:
+			script:
+				if has_single_cost() then 27
+				else nil
+		height:
+			script:
+				if has_single_cost() then 29
+				else nil
+		z index: 3
+		alignment: middle right
+		font:
+			name: Freehand471 BT
+			color: rgb(255,255,255)
+			size: 14
+			weight: bold
+	cost_text:
+		left:
+			script:
+				if has_cost() then 153
+				else nil
+		top:
+			script:
+				if has_cost() then 285
+				else nil
+		width:
+			script:
+				if has_cost() then 27
+				else nil
+		height:
+			script:
+				if has_cost() then 29
+				else nil
+		z index: 2
+		alignment: middle right
+		font:
+			name: Freehand471 BT
+			color: rgb(255,255,255)
+			size: 14
+			weight: bold
+	cancel_text:
+		left:
+			script:
+				if has_cancel() then 212
+				else nil
+		top:
+			script:
+				if has_cancel() then 285
+				else nil
+		width:
+			script:
+				if has_cancel() then 27
+				else nil
+		height:
+			script:
+				if has_cancel() then 29
+				else nil
+		z index: 2
+		alignment: middle right
+		font:
+			name: Freehand471 BT
+			color: rgb(255,255,255)
+			size: 14
+			weight: bold
+	cannon:
+		left:
+			script:
+				if is_person() then 68
+				else nil
+		top:
+			script:
+				if is_person() then 279
+				else nil
+		width:
+			script:
+				if is_person() then 27
+				else nil
+		height:
+			script:
+				if is_person() then 29
+				else nil
+		z index: 1
+		alignment: middle right
+		font:
+			name: Freehand471 BT
+			color: rgb(255,255,255)
+			size: 14
+			weight: bold
+	sailing:
+		left:
+			script:
+				if is_person() then 125
+				else nil
+		top:
+			script:
+				if is_person() then 279
+				else nil
+		width:
+			script:
+				if is_person() then 27
+				else nil
+		height:
+			script:
+				if is_person() then 29
+				else nil
+		z index: 1
+		alignment: middle right
+		font:
+			name: Freehand471 BT
+			color: rgb(255,255,255)
+			size: 14
+			weight: bold
+	adventuring:
+		left:
+			script:
+				if is_person() then 181
+				else nil
+		top:
+			script:
+				if is_person() then 279
+				else nil
+		width:
+			script:
+				if is_person() then 27
+				else nil
+		height:
+			script:
+				if is_person() then 29
+				else nil
+		z index: 1
+		alignment: middle right
+		font:
+			name: Freehand471 BT
+			color: rgb(255,255,255)
+			size: 14
+			weight: bold
+	influence:
+		left:
+			script:
+				if is_person() then 239
+				else nil
+		top:
+			script:
+				if is_person() then 279
+				else nil
+		width:
+			script:
+				if is_person() then 27
+				else nil
+		height:
+			script:
+				if is_person() then 29
+				else nil
+		z index: 1
+		alignment: middle right
+		font:
+			name: Freehand471 BT
+			color: rgb(255,255,255)
+			size: 14
+			weight: bold
+	swashbuckling:
+		left:
+			script:
+				if is_person() then 294
+				else nil
+		top:
+			script:
+				if is_person() then 279
+				else nil
+		width:
+			script:
+				if is_person() then 27
+				else nil
+		height:
+			script:
+				if is_person() then 29
+				else nil
+		z index: 1
+		alignment: middle right
+		font:
+			name: Freehand471 BT
+			color: rgb(255,255,255)
+			size: 14
+			weight: bold
+	starting_wealth:
+		left:
+			script:
+				if is_captain() then 44
+				else nil
+		top:
+			script:
+				if is_captain() then 28
+				else nil
+		width:
+			script:
+				if is_captain() then 37
+				else nil
+		height:
+			script:
+				if is_captain() then 37
+				else nil
+		z index: 1
+		alignment: middle center
+		font:
+			name: Freehand471 BT
+			color: rgb(0,0,0)
+			size: 20
+	crew_cost:
+		left:
+			script:
+				if is_crew() then 56
+				else nil
+		top:
+			script:
+				if is_crew() then 33
+				else nil
+		width:
+			script:
+				if is_crew() then 27
+				else nil
+		height:
+			script:
+				if is_crew() then 29
+				else nil
+		z index: 1
+		alignment: middle right
+		font:
+			name: Freehand471 BT
+			color: rgb(255,255,255)
+			size: 14
+			weight: bold
+	movement:
+		left:
+			script:
+				if is_ship() then 303
+				else nil
+		top:
+			script:
+				if is_ship() then 37
+				else nil
+		width:
+			script:
+				if is_ship() then 23
+				else nil
+		height:
+			script:
+				if is_ship() then 18
+				else nil
+		z index: 1
+		alignment: middle center
+		font:
+		font:
+			name: Freehand471 BT
+			color: rgb(0,0,0)
+			size: 16
+			weight: bold
+	rarity:
+		left:
+			script:
+				if card_count() > 99 then 263
+				else if card_count() > 9 then 270
+				else 273
+		top: 490
+		width: 12
+		height: 12
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			core set: set.png
+			common: common.png
+			uncommon: uncommon.png
+			rare: rare.png
+			promo: promo.png
+################################################################## Style Specific Card Fields
+extra card field:
+	type: text
+	name: setartist
+	show statistics: false
+	script: combined_editor(field1: card.set, separator: " Illus ", field2: card.artist)
+	description: The set code and artist for the card
+	save value: false
+extra card field:
+	type: text
+	name: copyrightnumber
+	show statistics: false
+	script: combined_editor(field1: card.copyright, separator: " ", field2: card.card_number)
+	description: The copyright line and number for the card
+	save value: false
+extra card style:
+	setartist:
+		left: 58
+		top: 490
+		width: 207
+		height: 12
+		z index: 1
+		alignment: left
+		font:
+			name: Cheltenhm BdCn BT
+			color: rgb(255,255,255)
+			size: 10
+			scale down to: 2
+	copyrightnumber:
+		right: 332
+		top: 490
+		width: 124
+		height: 12
+		z index: 1
+		alignment: right
+		font:
+			name: Cheltenhm BdCn BT
+			color: rgb(255,255,255)
+			size: 10
+			scale down to: 2

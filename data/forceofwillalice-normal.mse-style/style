@@ -1,0 +1,1645 @@
+﻿mse version: 2.0.0
+version: 2018-05-18
+game: forceofwillalice
+short name: Normal
+full name: Regular Card
+icon: ruler_icon.png
+position hint: 1
+installer group: fowalice/game/normal
+
+depends on: 
+	package: forceofwillalice.mse-game
+depends on:
+	package: forceofwillalice-symbols.mse-symbol-font
+	
+card width: 650
+card height: 908
+card dpi: 90
+card background: rgb(255,255,255)
+
+########################################
+
+init script:
+	full_art := "no"
+	style := { styling.card_format }
+
+########################################
+	
+styling field:
+	type: choice
+	name: card format
+	description: Render the card in different styles
+	choice: Alice Cluster
+	initial: Alice Cluster
+
+########################################
+
+card style:
+	
+	cardtype:
+		top: 0
+		left: 0
+		width: 650
+		height: 24
+		render style: hidden
+		z index: 15
+		
+	srborder:
+		top: 0
+		left: 0
+		width: 20
+		height: 20
+		render style: hidden
+		z index: 16
+	
+	card_art:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		z index: 1
+		
+	card_background:
+		top: 0
+		left: 0
+		width: 
+			{
+				if card.srborder == "No" then 0
+				else 650
+			}
+		height: 908
+		z index: 10
+		
+	card_name:
+		bottom:
+			{
+				if card.cardtype == "ruler" then 827
+				else if card.cardtype == "jruler" then 756
+				else if card.cardtype == "resonator" then 74
+				else if card.cardtype == "spell" then 74
+				else if card.cardtype == "regalia" then 99
+				else if card.cardtype == "stone" then 820
+			}
+		left: 
+			{
+				if card.cardtype == "resonator" then 172
+				else if card.cardtype == "spell" then 172
+				else if card.cardtype == "stone" then 50
+				else if card.cardtype == "ruler" then 50
+				else if card.cardtype == "jruler" then 50
+				else if card.cardtype == "regalia" then 172
+			}
+		width: 
+			{
+				if card.cardtype == "ruler" then 442
+				else if card.cardtype == "jruler" then 552
+				else if card.cardtype == "resonator" then 430
+				else if card.cardtype == "spell" then 430
+				else if card.cardtype == "regalia" then 430
+				else if card.cardtype == "stone" then 545
+			}
+		height: 40
+		alignment: 
+			{
+				if card.cardtype == "ruler" then "top center stretch if-overflow"
+				else if card.cardtype == "jruler" then "top center stretch if-overflow"
+				else if card.cardtype == "resonator" then "stretch if-overflow"
+				else if card.cardtype == "spell" then "stretch if-overflow"
+				else if card.cardtype == "regalia" then "stretch if-overflow"
+				else if card.cardtype == "stone" then "top center stretch if-overflow"
+			}
+		font:
+			name: Constantia
+			size: 25
+			color: { font_color_changer(type: card.cardtype, rarity: card.rarity, style: styling.card_format) }
+		z index: 12
+
+	color:
+		visible: true
+		top: 
+			{
+				if card.cardtype == "ruler" then 779
+				else if card.cardtype == "jruler" then 806
+				else if card.cardtype == "resonator" then 798
+				else if card.cardtype == "spell" then 830
+				else if card.cardtype == "regalia" then 830
+				else if card.cardtype == "stone" then 0
+			}
+		left: 
+			{
+				if card.cardtype == "ruler" then 505
+				else if card.cardtype == "jruler" then 509
+				else if card.cardtype == "resonator" then 512
+				else if card.cardtype == "spell" then 512
+				else if card.cardtype == "regalia" then 512
+				else if card.cardtype == "stone" then 0
+			}
+		width: 84
+		height: 
+			{
+				if card.cardtype == "ruler" then 130
+				else if card.cardtype == "jruler" then 103
+				else if card.cardtype == "resonator" then 110
+				else if card.cardtype == "spell" then 78
+				else if card.cardtype == "regalia" then 78
+				else if card.cardtype == "stone" then 0
+			}
+		z index: 12
+		render style: image
+		choice images:
+			white: {card_color(type: card.cardtype, color: "W", style: styling.card_format)}
+			red: {card_color(type: card.cardtype, color: "R", style: styling.card_format)}
+			blue: {card_color(type: card.cardtype, color: "U", style: styling.card_format)}
+			green: {card_color(type: card.cardtype, color: "G", style: styling.card_format)}
+			black: {card_color(type: card.cardtype, color: "B", style: styling.card_format)}
+			void: {card_color(type: card.cardtype, color: "V", style: styling.card_format)}
+			GB: {card_color(type: card.cardtype, color: "GB", style: styling.card_format)}
+			RB: {card_color(type: card.cardtype, color: "RB", style: styling.card_format)}
+			RG: {card_color(type: card.cardtype, color: "RG", style: styling.card_format)}
+			RU: {card_color(type: card.cardtype, color: "RU", style: styling.card_format)}
+			UB: {card_color(type: card.cardtype, color: "UB", style: styling.card_format)}
+			UG: {card_color(type: card.cardtype, color: "UG", style: styling.card_format)}
+			WB: {card_color(type: card.cardtype, color: "WB", style: styling.card_format)}
+			WG: {card_color(type: card.cardtype, color: "WG", style: styling.card_format)}
+			WR: {card_color(type: card.cardtype, color: "WR", style: styling.card_format)}
+			WU: {card_color(type: card.cardtype, color: "WU", style: styling.card_format)}
+		
+	resStatColor:
+		visible: true
+		top: 
+			{
+				if card.cardtype == "resonator" then 798
+				else if card.cardtype != "resonator" then 0
+			}
+		left: 
+			{
+				if card.cardtype == "resonator" then 34
+				else if card.cardtype != "resonator" then 0
+			}
+		width: 
+			{
+				if card.cardtype == "resonator" then 577
+				else if card.cardtype != "resonator" then 0
+			}
+		height: 
+			{
+				if card.cardtype == "resonator" then 87
+				else if card.cardtype != "resonator" then 0
+			}
+		z index: 11
+		render style: image
+		choice images:
+			default: {rescard_color(color: card.color)}
+			
+	spellStatColor:
+		visible: true
+		top: 
+			{
+				if card.cardtype == "spell" then 830
+				else if card.cardtype == "regalia" then 830
+				else if card.cardtype != "spell" then 0
+			}
+		left: 
+			{
+				if card.cardtype == "spell" then 34
+				else if card.cardtype == "regalia" then 34
+				else if card.cardtype != "spell" then 0
+			}
+		width: 
+			{
+				if card.cardtype == "spell" then 577
+				else if card.cardtype == "regalia" then 577
+				else if card.cardtype != "spell" then 0
+			}
+		height: 
+			{
+				if card.cardtype == "spell" then 49
+				else if card.cardtype == "regalia" then 49
+				else if card.cardtype != "spell" then 0
+			}
+		z index: 11
+		render style: image
+		choice images:
+			default: {spellcard_color(color: card.color)}
+
+	topBarColor:
+		visible: true
+		top: 
+			{
+				 if (card.cardtype == "resonator") or
+				(card.cardtype == "spell") then 33
+				else if card.cardtype == "regalia" then 58
+				else if card.cardtype != "resonator" then 0
+			}
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler") and styling.card_format == "Lapis Cluster" then 60
+				else if (card.cardtype == "resonator") or
+				(card.cardtype == "spell") or
+				(card.cardtype == "regalia") then 131
+				else if card.cardtype != "resonator" then 0
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler") and styling.card_format == "Lapis Cluster" then 528
+				else if styling.card_format == "Lapis Cluster" then 476
+				else if (card.cardtype == "resonator") or
+				(card.cardtype == "regalia") or
+				(card.cardtype == "spell") then 475
+				else if card.cardtype != "resonator" then 0
+			}
+		height: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler") and styling.card_format == "Lapis Cluster" then 48
+				else if (card.cardtype == "resonator") or
+				(card.cardtype == "regalia") or
+				(card.cardtype == "spell") then 41
+				else if card.cardtype != "resonator" then 0
+			}
+		z index: 1
+		render style: image
+		choice images:
+			default: {topcard_color(color: card.color, type: card.cardtype)}
+
+	canbattle:
+		visible:
+			{
+				if styling.card_format == "Lapis Cluster" and card.canbattle == "cannotbattle" then false
+				else true
+			}
+		top: 
+			{
+				if card.cardtype == "ruler" then 1000
+				else if card.cardtype == "spell" then 1000
+				else if card.cardtype == "regalia" then 1000
+				else if card.cardtype == "stone" then 1000
+				else if card.cardtype == "jruler" then 805
+				else if card.cardtype == "resonator" then 805
+			}
+		left: 49
+		width: 455
+		height: 70
+		render style: image
+		choice images:
+			atkdef: stats\ATKDEF.png
+			cannotbattle: stats\CANNOT.png
+		z index: 12
+	
+	ATK:
+		bottom: 
+			{
+				if card.cardtype == "ruler" then 0
+				else if card.cardtype == "spell" then 0
+				else if card.cardtype == "regalia" then 0
+				else if card.cardtype == "stone" then 0
+				else if card.canbattle == "cannotbattle" then 1000
+				else if styling.card_format == "Lapis Cluster" and card.canbattle != "cannotbattle" then 352
+				else if card.canbattle != "cannotbattle" then 850
+			}
+		right: 
+			{
+				if styling.card_format == "Lapis Cluster" then 65
+				else 252
+			}
+		width: 150
+		height: 60
+		alignment: right top
+		visible:
+			{
+				if card.cardtype == "ruler" then false
+				else if card.cardtype == "spell" then false
+				else if card.cardtype == "regalia" then false
+				else if card.cardtype == "stone" then false
+				else if card.canbattle == "atkdef" then true
+				else if card.canbattle == "cannotbattle" then false
+			}
+		font:
+			name: Georgia
+			size: { atk_def_font_size(style: styling.card_format)}
+			color: rgb(255,255,255)
+			style: italic
+		z index: 13
+		
+	DEF:
+		bottom:
+			{
+				if card.cardtype == "ruler" then 0
+				else if card.cardtype == "spell" then 0
+				else if card.cardtype == "regalia" then 0
+				else if card.cardtype == "stone" then 0
+				else if card.canbattle == "cannotbattle" then 1000
+				else if styling.card_format == "Lapis Cluster" and card.canbattle != "cannotbattle" then 202
+				else if card.canbattle != "cannotbattle" then 850
+			}
+		right: 
+			{
+				if styling.card_format == "Lapis Cluster" then 65
+				else 480
+			}
+		width: 150
+		height: 60
+		alignment: right top
+		visible:
+			{
+				if card.cardtype == "ruler" then false
+				else if card.cardtype == "spell" then false
+				else if card.cardtype == "regalia" then false
+				else if card.cardtype == "stone" then false
+				else if card.canbattle == "atkdef" then true
+				else if card.canbattle == "cannotbattle" then false
+			}
+		font:
+			name: Georgia
+			size: { atk_def_font_size(style: styling.card_format)}
+			color: rgb(255,255,255)
+			style: italic
+		z index: 13
+	
+	wheeltype:
+		visible: { wheel_visible_check(type: card.cardtype) }
+		top: 52
+		left: 49
+		height: 110
+		width: 110
+		z index: 9
+		render style: image
+		choice images:
+			Normal: color\blank.png
+		
+	
+	costwheel1:
+		top: 
+			{
+				if styling.card_format == "Lapis Cluster" then 57
+				else if card.cardtype == "regalia" then 73
+				else if card.cardtype == "stone" then 920
+				else if card.cardtype != "regalia" then 48
+			}
+		left: 
+			{
+				if styling.card_format == "Lapis Cluster" then 90
+				else 88
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" then 29
+				else 25
+			}
+		height:  
+			{
+				if styling.card_format == "Lapis Cluster" then 30
+				else 25
+			}
+		visible:
+			{
+				wheel_visible_check(type: card.cardtype)
+			}
+		z index: 11
+		render style: image
+		choice images:
+			none: color\empty.png
+			white: color\white.png
+			red: color\red.png
+			blue: color\blue.png
+			green: color\green.png
+			black: color\black.png
+			void: color\void.png
+	
+	costwheel2:
+		top:
+			{
+				if styling.card_format == "Lapis Cluster" then 86
+				else if card.cardtype == "regalia" then 98
+				else if card.cardtype == "stone" then 920
+				else if card.cardtype != "regalia" then 73
+			}
+		left: 
+			{
+				if styling.card_format == "Lapis Cluster" then 125
+				else 119
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" then 29
+				else 25
+			}
+		height:  
+			{
+				if styling.card_format == "Lapis Cluster" then 30
+				else 25
+			}
+		visible:
+			{
+				wheel_visible_check(type: card.cardtype)
+			}
+		z index: 11
+		render style: image
+		choice images:
+			none: color\empty.png
+			white: color\white.png
+			red: color\red.png
+			blue: color\blue.png
+			green: color\green.png
+			black: color\black.png
+			void: color\void.png
+			
+	costwheel3:
+		top: 
+			{
+				if styling.card_format == "Lapis Cluster" then 85
+				else if card.cardtype == "regalia" then 97
+				else if card.cardtype == "stone" then 920
+				else if card.cardtype != "regalia" then 72
+			}
+		left: 
+			{
+				if styling.card_format == "Lapis Cluster" then 56
+				else 59
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" then 29
+				else 25
+			}
+		height:  
+			{
+				if styling.card_format == "Lapis Cluster" then 30
+				else 25
+			}
+		visible:
+			{
+				wheel_visible_check(type: card.cardtype)
+			}
+		z index: 11
+		render style: image
+		choice images:
+			none: color\empty.png
+			white: color\white.png
+			red: color\red.png
+			blue: color\blue.png
+			green: color\green.png
+			black: color\black.png
+			void: color\void.png
+			
+			
+	costwheel4:
+		top: 
+			{
+				if styling.card_format == "Lapis Cluster" then 121
+				else if card.cardtype == "regalia" then 129
+				else if card.cardtype == "stone" then 920
+				else if card.cardtype != "regalia" then 104
+			}
+		left: 
+			{
+				if styling.card_format == "Lapis Cluster" then 69
+				else 70
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" then 29
+				else 25
+			}
+		height:  
+			{
+				if styling.card_format == "Lapis Cluster" then 30
+				else 25
+			}
+		visible:
+			{
+				wheel_visible_check(type: card.cardtype)
+			}
+		z index: 11
+		render style: image
+		choice images:
+			none: color\empty.png
+			white: color\white.png
+			red: color\red.png
+			blue: color\blue.png
+			green: color\green.png
+			black: color\black.png
+			void: color\void.png
+			
+			
+	costwheel5:
+		top: 
+			{
+				if styling.card_format == "Lapis Cluster" then 122
+				else if card.cardtype == "regalia" then 130
+				else if card.cardtype == "stone" then 920
+				else if card.cardtype != "regalia" then 105
+			}
+		left: 
+			{
+				if styling.card_format == "Lapis Cluster" then 110
+				else 107
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" then 29
+				else 25
+			}
+		height:  
+			{
+				if styling.card_format == "Lapis Cluster" then 30
+				else 25
+			}
+		visible:
+			{
+				wheel_visible_check(type: card.cardtype)
+			}
+		z index: 11
+		render style: image
+		choice images:
+			none: color\empty.png
+			white: color\white.png
+			red: color\red.png
+			blue: color\blue.png
+			green: color\green.png
+			black: color\black.png
+			void: color\void.png
+			
+			
+	colorless_cost:
+		bottom: 
+			{
+				if styling.card_format == "Lapis Cluster" then 124
+				else if card.cardtype == "regalia" then 150
+				else if card.cardtype != "regalia" then 125
+			}
+		left: 
+			{
+				if styling.card_format == "Lapis Cluster" then 88
+				else 158
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" then 33
+				else 41
+			}
+		height:  
+			{
+				if styling.card_format == "Lapis Cluster" then 33
+				else 41
+			}
+		visible:
+			{
+				wheel_visible_check(type: card.cardtype)
+			}
+		z index: 11
+		render style: image
+		choice images:
+			zero: stats\0.png
+			one: stats\1.png
+			two: stats\2.png
+			three: stats\3.png
+			four: stats\4.png
+			five: stats\5.png
+			six: stats\6.png
+			seven: stats\7.png
+			eight: stats\8.png
+			nine: stats\9.png
+			X: stats\X.png
+			none: color\empty.png
+			
+	race:
+		visible:
+			{
+				if card.cardtype == "ruler" then true
+				else if card.cardtype == "stone" then true
+				else if card.cardtype == "jruler" then true
+				else if card.cardtype == "spell" then true
+				else if card.cardtype == "regalia" then true
+				else if ((card_flavor_height()) == 0) and
+				((card_rules_height()) == 0) and (styling.card_format == "Alice Cluster")
+				then false
+				else true
+			}
+		top: 
+			{
+				if styling.card_format == "Lapis Cluster" then 562
+				else if card.cardtype == "ruler" then 842
+				else if card.cardtype == "stone" then 838
+				else if card.cardtype == "jruler" then 771
+				else if card.cardtype == "resonator" then (744 - card_rules_height() - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format))
+				else if card.cardtype == "spell" then 837
+				else if card.cardtype == "regalia" then 837
+			}
+		left: 
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "ruler" or card.cardtype == "jruler") then 206
+				else if styling.card_format == "Lapis Cluster" then 68
+				else if card.cardtype == "ruler" then 242
+				else if card.cardtype == "stone" then 50
+				else if card.cardtype == "jruler" then 234
+				else if card.cardtype == "resonator" then 54
+				else if card.cardtype == "spell" then 37
+				else if card.cardtype == "regalia" then 37
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "ruler" or card.cardtype == "jruler") then 260
+				else if styling.card_format == "Lapis Cluster" then 342
+				else if card.cardtype == "ruler" then 253
+				else if card.cardtype == "stone" then 545
+				else if card.cardtype == "jruler" then 361
+				else if card.cardtype == "resonator" then 355
+				else if card.cardtype == "spell" then 465
+				else if card.cardtype == "regalia" then 465
+			}
+		height: 30
+		alignment: 
+			{
+				if styling.card_format == "Lapis Cluster" then "stretch if-overflow"
+				else if card.cardtype != "resonator" then "top center stretch if-overflow"
+				else if card.cardtype == "resonator" then "stretch if-overflow"
+			}
+		font:
+			name: Constantia
+			size: {font_size_changer(type: card.cardtype, style: styling.card_format)}
+			color: 
+				{
+					if card.cardtype == "resonator" and styling.card_format = "Alice Cluster" then "black"
+					else if styling.card_format == "Alice Cluster" then "white"
+					else if (card.cardtype == "ruler" or card.cardtype == "jruler") and styling.card_format == "Lapis Cluster" and card.color_img1 == "green" and card.color_img2 == "black" then "white"
+					else if (card.color_img1 == "green" or card.color_img1 == "black") and styling.card_format == "Lapis Cluster" then "white"
+					else if styling.card_format == "Lapis Cluster" then "black"
+				}
+			max stretch: 0.5
+		z index: 14
+		
+	rules:
+		visible: true
+		bottom: 
+			{
+				if styling.card_format == "Lapis Cluster" then (855 - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format) - (if ceil(set.stylesheet.card_style.flavor.content_height) == 0 then 10))
+				else if card.cardtype == "ruler" then (755 - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format))
+				else if card.cardtype == "stone" then (749 - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format))
+				else if card.cardtype == "jruler" then (683 - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format))
+				else if card.cardtype == "resonator" then (777 - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format))
+				else if card.cardtype == "spell" then (807 - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format))
+				else if card.cardtype == "regalia" then (807 - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format))
+			}
+		left:
+			{
+				if styling.card_format == "Lapis Cluster" then 68
+				else if (card.cardtype == "ruler") or
+				(card.cardtype == "jruler") then 55
+				else 53
+			}
+		alignment:
+			{
+				if styling.card_format == "Lapis Cluster" then "middle"
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" then 520
+				else 544
+			}
+		height: 
+			script:
+				if styling.card_format == "Lapis Cluster" then (243 - card_flavor_height())
+				else (max(19, card_rules_height()))
+		line height hard: {rules_font(query: "hard", style: styling.card_format)}
+		line height soft: {rules_font(query: "soft", style: styling.card_format)}
+		symbol font:
+			name: forceofwillalice-symbols
+			size: {symbol_font(query: "size", style: styling.card_format)}
+		font:
+			name: {rules_font(query: "font", style: styling.card_format)}
+			size: {rules_font(query: "size", style: styling.card_format)}
+			color: rgb(0,0,0)
+			weight: {rules_font(query: "weight", style: styling.card_format)}
+		z index: 15
+		
+	flavor:
+		bottom: 
+			{
+				if styling.card_format == "Lapis Cluster" then 851
+				else if card.cardtype == "ruler" then 755
+				else if card.cardtype == "stone" then 749
+				else if card.cardtype == "jruler" then 683
+				else if card.cardtype == "resonator" then 777
+				else if card.cardtype == "spell" then 807
+				else if card.cardtype == "regalia" then 807
+			}
+		left:
+			{
+				if styling.card_format == "Lapis Cluster" then 68
+				else if (card.cardtype == "ruler") or
+				(card.cardtype == "jruler") then 55
+				else 53
+			}
+		width:  
+			{
+				if styling.card_format == "Lapis Cluster" then 520
+				else 544
+			}
+		height: 
+			{
+				if card.rules == "" and styling.card_format == "Lapis Cluster" then 248
+				else max(19, card_flavor_height())
+			}
+		font:
+			name: Constantia
+			size: 
+				{
+					if card.rules == "" and styling.card_format == "Lapis Cluster" then 18
+					else flavor_font(query: "size", style: styling.card_format)
+				}
+			color: rgb(0,0,0)
+		alignment: 
+			{
+				if card.rules == "" and styling.card_format == "Lapis Cluster" then "middle center"
+				else "center"
+			}
+		z index: 14
+	
+	card_id:
+		bottom: 
+			{
+				if styling.card_format == "Lapis Cluster" then 902
+				else 906
+			}
+		left: 
+			{
+				if styling.card_format == "Lapis Cluster" then 75
+				else 54
+			}
+		width: 30
+		height: 20
+		alignment: left top
+		allow formating: false
+		font:
+			name: Arial
+			size: 10
+			color: rgb(255,255,255)
+		z index: 13
+		
+	artist:
+		bottom: 
+			{
+				if styling.card_format == "Lapis Cluster" then 902
+				else 906
+			}
+		right: 
+			{
+				if styling.card_format == "Lapis Cluster" and card.cardtype != "stone" then 590
+				else if card.cardtype != "stone" then 492
+				else if card.cardtype == "stone" then 590
+				
+			}
+		width: 200
+		height: 20
+		alignment: right top
+		allow formating: false
+		font:
+			name: Arial
+			size: 10
+			color: rgb(255,255,255)
+		z index: 13
+	
+	rarity:
+		bottom: 
+			{
+				if styling.card_format == "Lapis Cluster" then 902
+				else 906
+			}
+		left: 88
+		width: 60
+		height: 20
+		render style: hidden
+		z index: 15
+		
+	copyright:
+		bottom: 
+			{
+				if styling.card_format == "Lapis Cluster" then 902
+				else 906
+			}
+		left: 250
+		width: 152
+		height: 20
+		alignment: center
+		allow formating: false
+		font:
+			name: Arial
+			size: 10
+			color: rgb(255,255,255)
+		z index: 13
+		
+extra card field:
+	type: choice
+	name: layer
+	editable: false
+	choice: default
+extra card field:
+	type: choice
+	name: layer_2
+	editable: false
+	choice: default
+extra card field:
+	type: choice
+	name: layer_3
+	editable: false
+	choice: default
+extra card field:
+	type: choice
+	name: cardOutline
+	editable: false
+	choice: default
+extra card field:
+	type: choice
+	name: layer_card_edges
+	editable: false
+	choice: default
+extra card field:
+	type: choice
+	name: bottom bar
+	editable: false
+	choice:	default
+extra card field:
+	type: choice
+	name: top bar
+	editable: false
+	choice:	default
+extra card field:
+	type: choice
+	name: middle bar
+	editable: false
+	choice:	default
+extra card field:
+	type: choice
+	name: top bar mask
+	editable: false
+	choice:	default
+extra card field:
+	type: text
+	name: cardshadow1
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardshadow3
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardshadow6
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardshadow8
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardNameShadowUp
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardNameShadowDown
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardNameShadowLeft
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardNameShadowRight
+	script: card.card_name
+	editable: false
+	save value: false
+extra card style:
+	layer:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		render style: image
+		choice images:
+			default: {card_background(type: card.cardtype, rarity: card.rarity, style: styling.card_format)}
+		z index: 2
+extra card style:
+	cardOutline:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		render style: image
+		choice images:
+			default: {card_outline(type: card.cardtype, rarity: card.rarity, style: styling.card_format, fullart: "No", battle: card.canbattle)}
+		z index: 1
+extra card style:
+	layer_2:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		render style: image
+		choice images:
+			default: {card_assets(type: card.cardtype, rarity: card.rarity, style: styling.card_format)}
+		z index: 11
+extra card style:
+	layer_3:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		render style: image
+		choice images:
+			default: {card_cost(type: card.cardtype, rarity: card.rarity, style: styling.card_format)}
+		z index: 8
+extra card style:
+	layer_card_edges:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		render style: image
+		choice images:
+			default: curved_edges.png
+		z index: 15
+extra card style:
+	bottom bar:
+		visible:
+			{
+				if card_rules_height() != 0 then true
+				else if card_flavor_height() != 0 then true
+				else if card_rules_height() == 0 then false
+				else if card_rules_height() == 0 then false
+			}
+		left: 
+			{
+				if styling.card_format == "Lapis Cluster" then 51
+				else if (card.cardtype == "ruler") or
+				(card.cardtype == "jruler") then 45
+				else 43
+			}
+		top: 
+			{
+				if styling.card_format == "Lapis Cluster" then 858
+				else if card.cardtype == "ruler" then 756
+				else if card.cardtype == "jruler" then 685
+				else if card.cardtype == "stone" then 750
+				else if card.cardtype == "resonator" then 779
+				else if card.cardtype == "spell" then 809
+				else if card.cardtype == "regalia" then 809
+			}
+		width:
+			{
+				if styling.card_format == "Lapis Cluster" then 554
+				else if card.cardtype == "ruler" then 561
+				else if card.cardtype != "ruler" then 562
+			}
+		height: 9
+		z index: 10
+		render style: image
+		choice images:
+			default: bars\bottom.png
+extra card style:
+	top bar:
+		visible:
+			{
+				if styling.card_format == "Lapis Cluster" then false
+				else if card_rules_height() != 0 then true
+				else if card_flavor_height() != 0 then true
+				else false
+			}
+		left: 
+			{
+				if styling.card_format == "Lapis Cluster" then 51
+				else if (card.cardtype == "ruler") or
+				(card.cardtype == "jruler") then 45
+				else 43
+			}
+		top: 
+			{
+				if styling.card_format == "Lapis Cluster" then 555
+				else if card.cardtype == "ruler" then (745 - card_rules_height() - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format))
+				else if card.cardtype == "stone" then (739 - card_rules_height() - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format))
+				else if card.cardtype == "jruler" then (674 - card_rules_height() - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format))
+				else if card.cardtype == "resonator" then (738 - card_rules_height() - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format))
+				else if card.cardtype == "spell" then (798 - card_rules_height() - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format))
+				else if card.cardtype == "regalia" then (798 - card_rules_height() - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format))
+			}
+		width:
+			{
+				if styling.card_format == "Lapis Cluster" then 554
+				else if card.cardtype == "ruler" then 561
+				else if card.cardtype != "ruler" then 562
+			}
+		height: 
+			{
+				if styling.card_format == "Lapis Cluster" then 39
+				else if card.cardtype == "resonator" then 39
+				else if card.cardtype != "resonator" then 9
+			}
+		z index: 10
+		render style: image
+		choice images:
+			default: {top_bar_use(type: card.cardtype, style: styling.card_format, color1: card.color, color2: card.color2, color3: card.color3)}
+extra card style:
+	top bar mask:
+		visible:
+			{
+				if styling.card_format != "Lapis Cluster" then false
+				else if card.color2 == "none" then false
+				else if card.color3 == "none" then false
+				else true
+			}
+		left: 51
+		top: 555
+		width:554
+		height: 39
+		z index: 11
+		render style: image
+		choice images:
+			default: {top_bar_masking(color: card.color2, checker: card.color3)}
+extra card style:
+	middle bar:
+		visible:
+			{
+				if card_rules_height() != 0 then true
+				else if card_flavor_height() != 0 then true
+				else if card_rules_height() == 0 then false
+				else if card_rules_height() == 0 then false
+			}
+		left: 
+			{
+				if styling.card_format == "Lapis Cluster" then 51
+				else if (card.cardtype == "ruler") or
+				(card.cardtype == "jruler") then 45
+				else 43
+			}
+		bottom: 
+			{
+				if styling.card_format == "Lapis Cluster" then 858
+				else if card.cardtype == "ruler" then 756
+				else if card.cardtype == "stone" then 750
+				else if card.cardtype == "jruler" then 685
+				else if card.cardtype == "resonator" then 779
+				else if card.cardtype == "spell" then 809
+				else if card.cardtype == "regalia" then 809
+			}
+		width:
+			{
+				if styling.card_format == "Lapis Cluster" then 554
+				else if card.cardtype == "ruler" then 561
+				else if card.cardtype != "ruler" then 562
+			}
+		height:
+			script:
+				if styling.card_format == "Lapis Cluster" then 264
+				else (max(19, card_rules_height() + card_flavor_height()  + card_rules_flavor_gap(style: styling.card_format) +2))
+		z index: 10
+		render style: image
+		choice images:
+			default: bars\middlebar.png
+extra card style:
+	cardshadow1:
+		visible:
+			{
+				if styling.card_format == "Lapis Cluster" then true
+				else if card.cardtype == "resonator" then true
+				else if card.cardtype == "spell" then true
+				else if card.cardtype == "regalia" then true
+				else if card.cardtype != "resonator" then false
+			}
+		bottom:
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 90
+				else if styling.card_format == "Lapis Cluster" then 84
+				else if card.cardtype == "ruler" then 827
+				else if card.cardtype == "jruler" then 756
+				else if card.cardtype == "resonator" then 74
+				else if card.cardtype == "spell" then 74
+				else if card.cardtype == "regalia" then 99
+				else if card.cardtype == "stone" then 820
+			}
+		left: 
+			{
+				if card.cardtype == "resonator" then 172
+				else if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.cardtype == "spell" then 172
+				else if card.cardtype == "stone" then 50
+				else if card.cardtype == "ruler" then 50
+				else if card.cardtype == "jruler" then 50
+				else if card.cardtype == "regalia" then 172
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 512
+				else if card.cardtype == "ruler" then 442
+				else if card.cardtype == "jruler" then 552
+				else if card.cardtype == "resonator" then 430
+				else if card.cardtype == "spell" then 430
+				else if card.cardtype == "regalia" then 430
+				else if card.cardtype == "stone" then 545
+			}
+		height: 40
+		alignment: 
+			{
+				if styling.card_format == "Lapis Cluster" then "middle center stretch if-overflow"
+				else if card.cardtype == "ruler" then "top center stretch if-overflow"
+				else if card.cardtype == "jruler" then "top center stretch if-overflow"
+				else if card.cardtype == "resonator" then "stretch if-overflow"
+				else if card.cardtype == "spell" then "stretch if-overflow"
+				else if card.cardtype == "regalia" then "stretch if-overflow"
+				else if card.cardtype == "stone" then "top center stretch if-overflow"
+			}
+		font:
+			name: Constantia
+			size: 25
+			color: black
+			shadow color: 
+				{
+					if card.rarity == "SR" then "black"
+					else if card.cardtype == "regalia" then "black"
+					else if styling.card_format == "Lapis Cluster" then "black"
+					else "white"
+				}
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardshadow3:
+		visible:
+			{
+				if styling.card_format == "Lapis Cluster" then true
+				else if card.cardtype == "resonator" then true
+				else if card.cardtype == "spell" then true
+				else if card.cardtype == "regalia" then true
+				else if card.cardtype != "resonator" then false
+			}
+		bottom:
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 90
+				else if styling.card_format == "Lapis Cluster" then 84
+				else if card.cardtype == "ruler" then 827
+				else if card.cardtype == "jruler" then 756
+				else if card.cardtype == "resonator" then 74
+				else if card.cardtype == "spell" then 74
+				else if card.cardtype == "regalia" then 99
+				else if card.cardtype == "stone" then 820
+			}
+		left: 
+			{
+				if card.cardtype == "resonator" then 172
+				else if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.cardtype == "spell" then 172
+				else if card.cardtype == "stone" then 50
+				else if card.cardtype == "ruler" then 50
+				else if card.cardtype == "jruler" then 50
+				else if card.cardtype == "regalia" then 172
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 512
+				else if card.cardtype == "ruler" then 442
+				else if card.cardtype == "jruler" then 552
+				else if card.cardtype == "resonator" then 430
+				else if card.cardtype == "spell" then 430
+				else if card.cardtype == "regalia" then 430
+				else if card.cardtype == "stone" then 545
+			}
+		height: 40
+		alignment: 
+			{
+				if styling.card_format == "Lapis Cluster" then "middle center stretch if-overflow"
+				else if card.cardtype == "ruler" then "top center stretch if-overflow"
+				else if card.cardtype == "jruler" then "top center stretch if-overflow"
+				else if card.cardtype == "resonator" then "stretch if-overflow"
+				else if card.cardtype == "spell" then "stretch if-overflow"
+				else if card.cardtype == "regalia" then "stretch if-overflow"
+				else if card.cardtype == "stone" then "top center stretch if-overflow"
+			}
+		font:
+			name: Constantia
+			size: 25
+			color: black
+			shadow color: 
+				{
+					if card.rarity == "SR" then "black"
+					else if card.cardtype == "regalia" then "black"
+					else if styling.card_format == "Lapis Cluster" then "black"
+					else "white"
+				}
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardshadow6:
+		visible:
+			{
+				if styling.card_format == "Lapis Cluster" then true
+				else if card.cardtype == "resonator" then true
+				else if card.cardtype == "spell" then true
+				else if card.cardtype == "regalia" then true
+				else if card.cardtype != "resonator" then false
+			}
+		bottom:
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 90
+				else if styling.card_format == "Lapis Cluster" then 84
+				else if card.cardtype == "ruler" then 827
+				else if card.cardtype == "jruler" then 756
+				else if card.cardtype == "resonator" then 74
+				else if card.cardtype == "spell" then 74
+				else if card.cardtype == "regalia" then 99
+				else if card.cardtype == "stone" then 820
+			}
+		left: 
+			{
+				if card.cardtype == "resonator" then 172
+				else if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.cardtype == "spell" then 172
+				else if card.cardtype == "stone" then 50
+				else if card.cardtype == "ruler" then 50
+				else if card.cardtype == "jruler" then 50
+				else if card.cardtype == "regalia" then 172
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 512
+				else if card.cardtype == "ruler" then 442
+				else if card.cardtype == "jruler" then 552
+				else if card.cardtype == "resonator" then 430
+				else if card.cardtype == "spell" then 430
+				else if card.cardtype == "regalia" then 430
+				else if card.cardtype == "stone" then 545
+			}
+		height: 40
+		alignment: 
+			{
+				if styling.card_format == "Lapis Cluster" then "middle center stretch if-overflow"
+				else if card.cardtype == "ruler" then "top center stretch if-overflow"
+				else if card.cardtype == "jruler" then "top center stretch if-overflow"
+				else if card.cardtype == "resonator" then "stretch if-overflow"
+				else if card.cardtype == "spell" then "stretch if-overflow"
+				else if card.cardtype == "regalia" then "stretch if-overflow"
+				else if card.cardtype == "stone" then "top center stretch if-overflow"
+			}
+		font:
+			name: Constantia
+			size: 25
+			color: black
+			shadow color: 
+				{
+					if card.rarity == "SR" then "black"
+					else if card.cardtype == "regalia" then "black"
+					else if styling.card_format == "Lapis Cluster" then "black"
+					else "white"
+				}
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardshadow8:
+		visible:
+			{
+				if styling.card_format == "Lapis Cluster" then true
+				else if card.cardtype == "resonator" then true
+				else if card.cardtype == "spell" then true
+				else if card.cardtype == "regalia" then true
+				else if card.cardtype != "resonator" then false
+			}
+		bottom:
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 90
+				else if styling.card_format == "Lapis Cluster" then 84
+				else if card.cardtype == "ruler" then 827
+				else if card.cardtype == "jruler" then 756
+				else if card.cardtype == "resonator" then 74
+				else if card.cardtype == "spell" then 74
+				else if card.cardtype == "regalia" then 99
+				else if card.cardtype == "stone" then 820
+			}
+		left: 
+			{
+				if card.cardtype == "resonator" then 172
+				else if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.cardtype == "spell" then 172
+				else if card.cardtype == "stone" then 50
+				else if card.cardtype == "ruler" then 50
+				else if card.cardtype == "jruler" then 50
+				else if card.cardtype == "regalia" then 172
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 512
+				else if card.cardtype == "ruler" then 442
+				else if card.cardtype == "jruler" then 552
+				else if card.cardtype == "resonator" then 430
+				else if card.cardtype == "spell" then 430
+				else if card.cardtype == "regalia" then 430
+				else if card.cardtype == "stone" then 545
+			}
+		height: 40
+		alignment: 
+			{
+				if styling.card_format == "Lapis Cluster" then "middle center stretch if-overflow"
+				else if card.cardtype == "ruler" then "top center stretch if-overflow"
+				else if card.cardtype == "jruler" then "top center stretch if-overflow"
+				else if card.cardtype == "resonator" then "stretch if-overflow"
+				else if card.cardtype == "spell" then "stretch if-overflow"
+				else if card.cardtype == "regalia" then "stretch if-overflow"
+				else if card.cardtype == "stone" then "top center stretch if-overflow"
+			}
+		font:
+			name: Constantia
+			size: 25
+			color: black
+			shadow color: 
+				{
+					if card.rarity == "SR" then "black"
+					else if card.cardtype == "regalia" then "black"
+					else if styling.card_format == "Lapis Cluster" then "black"
+					else "white"
+				}
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardNameShadowDown:
+		visible:
+			{
+				if styling.card_format == "Lapis Cluster" then true
+				else if card.cardtype == "resonator" then true
+				else if card.cardtype == "spell" then true
+				else if card.cardtype == "regalia" then true
+				else if card.cardtype != "resonator" then false
+			}
+		bottom:
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 90
+				else if styling.card_format == "Lapis Cluster" then 84
+				else if card.cardtype == "ruler" then 827
+				else if card.cardtype == "jruler" then 756
+				else if card.cardtype == "resonator" then 74
+				else if card.cardtype == "spell" then 74
+				else if card.cardtype == "regalia" then 99
+				else if card.cardtype == "stone" then 820
+			}
+		left: 
+			{
+				if card.cardtype == "resonator" then 172
+				else if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.cardtype == "spell" then 172
+				else if card.cardtype == "stone" then 50
+				else if card.cardtype == "ruler" then 50
+				else if card.cardtype == "jruler" then 50
+				else if card.cardtype == "regalia" then 172
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 512
+				else if card.cardtype == "ruler" then 442
+				else if card.cardtype == "jruler" then 552
+				else if card.cardtype == "resonator" then 430
+				else if card.cardtype == "spell" then 430
+				else if card.cardtype == "regalia" then 430
+				else if card.cardtype == "stone" then 545
+			}
+		height: 40
+		alignment: 
+			{
+				if styling.card_format == "Lapis Cluster" then "middle center stretch if-overflow"
+				else if card.cardtype == "ruler" then "top center stretch if-overflow"
+				else if card.cardtype == "jruler" then "top center stretch if-overflow"
+				else if card.cardtype == "resonator" then "stretch if-overflow"
+				else if card.cardtype == "spell" then "stretch if-overflow"
+				else if card.cardtype == "regalia" then "stretch if-overflow"
+				else if card.cardtype == "stone" then "top center stretch if-overflow"
+			}
+		font:
+			name: Constantia
+			size: 25
+			color: black
+			shadow color: 
+				{
+					if card.rarity == "SR" then "black"
+					else if card.cardtype == "regalia" then "black"
+					else if styling.card_format == "Lapis Cluster" then "black"
+					else "white"
+				}
+			shadow displacement x: 0
+			shadow displacement y: -1.5
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardNameShadowLeft:
+		visible:
+			{
+				if styling.card_format == "Lapis Cluster" then true
+				else if card.cardtype == "resonator" then true
+				else if card.cardtype == "spell" then true
+				else if card.cardtype == "regalia" then true
+				else if card.cardtype != "resonator" then false
+			}
+		bottom:
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 90
+				else if styling.card_format == "Lapis Cluster" then 84
+				else if card.cardtype == "ruler" then 827
+				else if card.cardtype == "jruler" then 756
+				else if card.cardtype == "resonator" then 74
+				else if card.cardtype == "spell" then 74
+				else if card.cardtype == "regalia" then 99
+				else if card.cardtype == "stone" then 820
+			}
+		left: 
+			{
+				if card.cardtype == "resonator" then 172
+				else if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.cardtype == "spell" then 172
+				else if card.cardtype == "stone" then 50
+				else if card.cardtype == "ruler" then 50
+				else if card.cardtype == "jruler" then 50
+				else if card.cardtype == "regalia" then 172
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 512
+				else if card.cardtype == "ruler" then 442
+				else if card.cardtype == "jruler" then 552
+				else if card.cardtype == "resonator" then 430
+				else if card.cardtype == "spell" then 430
+				else if card.cardtype == "regalia" then 430
+				else if card.cardtype == "stone" then 545
+			}
+		height: 40
+		alignment: 
+			{
+				if styling.card_format == "Lapis Cluster" then "middle center stretch if-overflow"
+				else if card.cardtype == "ruler" then "top center stretch if-overflow"
+				else if card.cardtype == "jruler" then "top center stretch if-overflow"
+				else if card.cardtype == "resonator" then "stretch if-overflow"
+				else if card.cardtype == "spell" then "stretch if-overflow"
+				else if card.cardtype == "regalia" then "stretch if-overflow"
+				else if card.cardtype == "stone" then "top center stretch if-overflow"
+			}
+		font:
+			name: Constantia
+			size: 25
+			color: black
+			shadow color: 
+				{
+					if card.rarity == "SR" then "black"
+					else if card.cardtype == "regalia" then "black"
+					else if styling.card_format == "Lapis Cluster" then "black"
+					else "white"
+				}
+			shadow displacement x: 1.5
+			shadow displacement y: 0
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardNameShadowRight:
+		visible:
+			{
+				if styling.card_format == "Lapis Cluster" then true
+				else if card.cardtype == "resonator" then true
+				else if card.cardtype == "spell" then true
+				else if card.cardtype == "regalia" then true
+				else if card.cardtype != "resonator" then false
+			}
+		bottom:
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 90
+				else if styling.card_format == "Lapis Cluster" then 84
+				else if card.cardtype == "ruler" then 827
+				else if card.cardtype == "jruler" then 756
+				else if card.cardtype == "resonator" then 74
+				else if card.cardtype == "spell" then 74
+				else if card.cardtype == "regalia" then 99
+				else if card.cardtype == "stone" then 820
+			}
+		left: 
+			{
+				if card.cardtype == "resonator" then 172
+				else if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.cardtype == "spell" then 172
+				else if card.cardtype == "stone" then 50
+				else if card.cardtype == "ruler" then 50
+				else if card.cardtype == "jruler" then 50
+				else if card.cardtype == "regalia" then 172
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 512
+				else if card.cardtype == "ruler" then 442
+				else if card.cardtype == "jruler" then 552
+				else if card.cardtype == "resonator" then 430
+				else if card.cardtype == "spell" then 430
+				else if card.cardtype == "regalia" then 430
+				else if card.cardtype == "stone" then 545
+			}
+		height: 40
+		alignment: 
+			{
+				if styling.card_format == "Lapis Cluster" then "middle center stretch if-overflow"
+				else if card.cardtype == "ruler" then "top center stretch if-overflow"
+				else if card.cardtype == "jruler" then "top center stretch if-overflow"
+				else if card.cardtype == "resonator" then "stretch if-overflow"
+				else if card.cardtype == "spell" then "stretch if-overflow"
+				else if card.cardtype == "regalia" then "stretch if-overflow"
+				else if card.cardtype == "stone" then "top center stretch if-overflow"
+			}
+		font:
+			name: Constantia
+			size: 25
+			color: black
+			shadow color: 
+				{
+					if card.rarity == "SR" then "black"
+					else if card.cardtype == "regalia" then "black"
+					else if styling.card_format == "Lapis Cluster" then "black"
+					else "white"
+				}
+			shadow displacement x: 1.5
+			shadow displacement y: 0
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardNameShadowUp:
+		visible:
+			{
+				if styling.card_format == "Lapis Cluster" then true
+				else if card.cardtype == "resonator" then true
+				else if card.cardtype == "spell" then true
+				else if card.cardtype == "regalia" then true
+				else if card.cardtype != "resonator" then false
+			}
+		bottom:
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 90
+				else if styling.card_format == "Lapis Cluster" then 84
+				else if card.cardtype == "ruler" then 827
+				else if card.cardtype == "jruler" then 756
+				else if card.cardtype == "resonator" then 74
+				else if card.cardtype == "spell" then 74
+				else if card.cardtype == "regalia" then 99
+				else if card.cardtype == "stone" then 820
+			}
+		left: 
+			{
+				if card.cardtype == "resonator" then 172
+				else if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.cardtype == "spell" then 172
+				else if card.cardtype == "stone" then 50
+				else if card.cardtype == "ruler" then 50
+				else if card.cardtype == "jruler" then 50
+				else if card.cardtype == "regalia" then 172
+			}
+		width: 
+			{
+				if styling.card_format == "Lapis Cluster" and (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 512
+				else if card.cardtype == "ruler" then 442
+				else if card.cardtype == "jruler" then 552
+				else if card.cardtype == "resonator" then 430
+				else if card.cardtype == "spell" then 430
+				else if card.cardtype == "regalia" then 430
+				else if card.cardtype == "stone" then 545
+			}
+		height: 40
+		alignment: 
+			{
+				if styling.card_format == "Lapis Cluster" then "middle center stretch if-overflow"
+				else if card.cardtype == "ruler" then "top center stretch if-overflow"
+				else if card.cardtype == "jruler" then "top center stretch if-overflow"
+				else if card.cardtype == "resonator" then "stretch if-overflow"
+				else if card.cardtype == "spell" then "stretch if-overflow"
+				else if card.cardtype == "regalia" then "stretch if-overflow"
+				else if card.cardtype == "stone" then "top center stretch if-overflow"
+			}
+		font:
+			name: Constantia
+			size: 25
+			color: black
+			shadow color: 
+				{
+					if card.rarity == "SR" then "black"
+					else if card.cardtype == "regalia" then "black"
+					else if styling.card_format == "Lapis Cluster" then "black"
+					else "white"
+				}
+			shadow displacement x: 0
+			shadow displacement y: 1.5
+			shadow blur: 0
+		z index: 11

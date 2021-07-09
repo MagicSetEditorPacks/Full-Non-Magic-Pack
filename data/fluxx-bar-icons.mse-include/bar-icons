@@ -1,0 +1,7 @@
+# Bar icon images
+
+choice images:
+	official anti-doom:       /fluxx-bar-icons.mse-include/adoom.png
+	official doom(creepers):  /fluxx-bar-icons.mse-include/cdoom.png
+	official doom(keepers):   /fluxx-bar-icons.mse-include/kdoom.png
+	official investigator:    /fluxx-bar-icons.mse-include/investigator.png

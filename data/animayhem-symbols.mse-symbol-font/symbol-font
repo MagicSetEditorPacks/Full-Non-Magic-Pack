@@ -1,0 +1,33 @@
+﻿mse version: 0.3.8
+short name: symbols
+full name: Ani-Mayhem/Symbols/original
+installer group: Ani-Mayhem/Symbols/Original
+position hint: 038
+icon: Attack.png
+version: 2009-07-22
+
+image font size: 72
+horizontal space: 1.2
+symbol:
+	code: !A
+	image: Attack.png
+symbol:
+	code: !C
+	image: Charm.png
+symbol:
+	code: !D
+	image: Defense.png
+symbol:
+	code: !E
+	image: Energy.png
+symbol:
+	code: !M
+	image: Move.png
+##################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: !A
+	item: !C
+	item: !D
+	item: !E
+	item: !M

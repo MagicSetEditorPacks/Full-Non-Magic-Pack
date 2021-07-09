@@ -1,0 +1,384 @@
+# Fields for styles which either
+# a. Should be available for Card List and Stats
+# b. Properties should be accessible in script
+
+# BOON BANE FIELDS
+#card_field:
+#	type:				text
+#	name:				check_header_1
+#	script:				getCheckInfo()
+#	multi_line:			true
+#	show_statistics: 	false
+#	card_list_allow: 	false
+#	editable: 			false
+#	save_value:			false
+
+#BoonBane type for VILLAIN, HENCHMEN, LOOT and RESOURCE only
+card_field:
+	type:				multiple choice
+	name:				vhl_type
+	default:			vhl_type_default()
+	default_name:		(Default)
+	choice:				
+		name:			MONSTER
+		enabled:		{ isBoonBaneStyle() and isVillainHenchman() }
+	choice:
+		name:			BARRIER
+		enabled:		{ isBoonBaneStyle() and isVillainHenchman() }
+		line_below:		true
+	choice:
+		name:			WEAPON
+		enabled:		{ isBoonBaneStyle() and not isVillainHenchman() }
+	choice:
+		name:			SPELL
+		enabled:		{ isBoonBaneStyle() and not isVillainHenchman() }
+	choice:
+		name:			ARMOR
+		enabled:		{ isBoonBaneStyle() and not isVillainHenchman() }
+	choice:
+		name:			ITEM
+		enabled:		{ isBoonBaneStyle() and not isVillainHenchman() }
+	choice:
+		name:			ALLY
+		enabled:		{ isBoonBaneStyle() and not isVillainHenchman() }
+	choice:
+		name:			BLESSING
+		enabled:		{ isBoonBaneStyle() and not isVillainHenchman() }
+	choice:
+		name:			SHIP
+		enabled:		{ isBoonBaneStyle() and not isVillainHenchman() }
+	choice:
+		name:			LOOT
+		enabled:		{ isBoonBaneStyle() and not isVillainHenchman() }
+	script:				vhl_card_type_requirements()
+	description: 		Villain, Henchman or Loot Type
+	card_list_name:		Villain Henchman Loot Type
+
+# Check to ACQUIRE / DEFEAT
+card_field:
+	type:				multiple choice
+	name:				check_list_1
+	choice:
+		name:			NONE
+		line_below:		true
+	choice: 			
+		name:			COMBAT
+		line_below:		true
+	choice:				STRENGTH
+	choice:
+		name:			MELEE
+		line_below:		true
+	choice:				DEXTERITY
+	choice:				RANGED
+	choice: 			ACROBATICS
+	choice: 			DISABLE
+	choice:
+		name:			STEALTH
+		line_below:		true
+	choice: 			CONSTITUTION
+	choice:
+		name:			FORTITUDE
+		line_below:		true
+	choice: 			INTELLIGENCE
+	choice:				CRAFT
+	choice: 			KNOWLEDGE
+	choice:
+		name:			ARCANE
+		line_below:		true
+	choice: 			WISDOM
+	choice: 			SURVIVAL
+	choice: 			ARCANE
+	choice: 			PERCEPTION
+	choice:
+		name:			DIVINE
+		line_below:		true
+	choice: 			CHARISMA
+	choice: 			DIPLOMACY
+	choice: 			ARCANE
+	description: 		Check Skill requirements.
+	script:				check_list_requirements(card.check_list_1)
+	card_list_name:		Check Skills 1
+
+# Render the choices from above
+# Regex to match ', ' or ' ' == '(?:, | )'
+# Investigate additional removal of duplicates in nested multiple choice field: parent choice is repeated
+# Regex to match word '\\b(\\w+)\\b \\1\\b' but replace doesn't allow replace with a regular expression
+# Use script to separate card.check_list_1 into a collection then remove duplicates in a 'bubble' script?
+card_field:
+	type:				text
+	name:				check_list_text_1
+	script:				replace(match: "(?:, | )", replace: "\n", card.check_list_1)
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+card_field:
+	type:				text
+	name:				check_1
+	description: 		Target number to acquire\defeat this card.
+	card_list_width:	25
+	card_list_name:		Check Value 1
+
+# OR, THEN header 2
+card_field:
+	type:				choice
+	name:				check_header_2
+	initial:
+	default: 			""
+	default_name: 		(None)
+	choice:				OR
+	choice: 			THEN
+	script:				check_header_requirements(card.check_header_2)
+	description:		Add an additional or alternative Check.
+	card_list_allow: 	false
+
+card_field:
+	type:				multiple choice
+	name:				check_list_2
+	choice:
+		name:			NONE
+		line_below:		true
+	choice: 			
+		name:			COMBAT
+		line_below:		true
+	choice:				STRENGTH
+	choice:
+		name:			MELEE
+		line_below:		true
+	choice:				DEXTERITY
+	choice:				RANGED
+	choice: 			ACROBATICS
+	choice: 			DISABLE
+	choice:
+		name:			STEALTH
+		line_below:		true
+	choice: 			CONSTITUTION
+	choice:
+		name:			FORTITUDE
+		line_below:		true
+	choice: 			INTELLIGENCE
+	choice: 			KNOWLEDGE
+	choice:
+		name:			ARCANE
+		line_below:		true
+	choice: 			WISDOM
+	choice: 			SURVIVAL
+	choice: 			ARCANE
+	choice: 			PERCEPTION
+	choice:
+		name:			DIVINE
+		line_below:		true
+	choice: 			CHARISMA
+	choice: 			DIPLOMACY
+	choice: 			ARCANE
+	script:				check_list_requirements(card.check_list_2)
+	description: 		Check Skill requirements for second Check.
+	card_list_name:		Check Skills 2
+
+# Render the choices from above
+card_field:
+	type:				text
+	name:				check_list_text_2
+	script:				replace(match: "(?:, | )", replace: "\n", card.check_list_2)
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+card_field:
+	type:				text
+	name:				check_2
+	description: 		Target number to acquire\defeat this card.
+	card_list_width:	25
+	card_list_name:		Check Value 2
+
+# OR, THEN header 3
+card_field:
+	type:				choice
+	name:				check_header_3
+	initial:
+	default: 			""
+	default_name: 		(None)
+	choice:				OR
+	choice: 			THEN
+	script:				check_header_requirements(card.check_header_3)
+	description:		Add an additional or alternative Check.
+	card_list_allow: 	false
+
+card_field:
+	type:				multiple choice
+	name:				check_list_3
+	choice:
+		name:			NONE
+		line_below:		true
+	choice: 			
+		name:			COMBAT
+		line_below:		true
+	choice:				STRENGTH
+	choice:
+		name:			MELEE
+		line_below:		true
+	choice:				DEXTERITY
+	choice:				RANGED
+	choice: 			ACROBATICS
+	choice: 			DISABLE
+	choice:
+		name:			STEALTH
+		line_below:		true
+	choice: 			CONSTITUTION
+	choice:
+		name:			FORTITUDE
+		line_below:		true
+	choice: 			INTELLIGENCE
+	choice: 			KNOWLEDGE
+	choice:
+		name:			ARCANE
+		line_below:		true
+	choice: 			WISDOM
+	choice: 			SURVIVAL
+	choice: 			ARCANE
+	choice: 			PERCEPTION
+	choice:
+		name:			DIVINE
+		line_below:		true
+	choice: 			CHARISMA
+	choice: 			DIPLOMACY
+	choice: 			ARCANE
+	script:				check_list_requirements(card.check_list_3)
+	description: 		Check Skill requirements for second Check.
+	card_list_name:		Check Skills 2
+
+# Render the choices from above
+card_field:
+	type:				text
+	name:				check_list_text_3
+	script:				replace(match: "(?:, | )", replace: "\n", card.check_list_3)
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+card_field:
+	type:				text
+	name:				check_3
+	description: 		Target number to acquire\defeat this card.
+	card_list_width:	25
+	card_list_name:		Check Value 3
+	
+# CHECK 4 for reverse of cards	
+card_field:
+	type:				multiple choice
+	name:				check_list_4
+	choice:
+		name:			NONE
+		line_below:		true
+	choice: 			
+		name:			COMBAT
+		line_below:		true
+	choice:				STRENGTH
+	choice:
+		name:			MELEE
+		line_below:		true
+	choice:				DEXTERITY
+	choice:				RANGED
+	choice: 			ACROBATICS
+	choice: 			DISABLE
+	choice:
+		name:			STEALTH
+		line_below:		true
+	choice: 			CONSTITUTION
+	choice:
+		name:			FORTITUDE
+		line_below:		true
+	choice: 			INTELLIGENCE
+	choice:				CRAFT
+	choice: 			KNOWLEDGE
+	choice:
+		name:			ARCANE
+		line_below:		true
+	choice: 			WISDOM
+	choice: 			SURVIVAL
+	choice: 			ARCANE
+	choice: 			PERCEPTION
+	choice:
+		name:			DIVINE
+		line_below:		true
+	choice: 			CHARISMA
+	choice: 			DIPLOMACY
+	choice: 			ARCANE
+	description: 		Check Skill requirements.
+	script:				check_list_requirements(card.check_list_4)
+	card_list_name:		Check Skills 4
+
+card_field:
+	type:				text
+	name:				check_list_text_4
+	script:				replace(match: "(?:, | )", replace: "\n", card.check_list_4)
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+	
+card_field:
+	type:				text
+	name:				check_4
+	description: 		Target number to acquire\defeat this card.
+	card_list_width:	25
+	card_list_name:		Check Value 4
+
+# POWERS and RECHARGE Data
+card_field:
+	type:				text
+	name:				bb_powers
+	multi_line: 		true
+	show_statistics: 	false
+	card_list_allow: 	false
+	description:		Boon or Bane Powers including flavour text.
+
+card_field:
+	type:				text
+	name:				recharge
+	multi_line: 		true
+	show_statistics: 	false
+	card_list_allow: 	false
+	description:		Conditions to Recharge this card.
+
+card_field:
+	type:				text
+	name:				bb_powers_header_1
+	show_statistics:	false
+	card_list_allow:	false
+	description:		Header for Special Rules 1
+
+card_field:
+	type:				text
+	name:				bb_powers_header_2
+	show_statistics:	false
+	card_list_allow:	false
+	description:		Header for Special Rules 2
+	
+card_field:
+	type:				text
+	name:				encountering
+	multi_line:			true
+	show_statistics:	false
+	card_list_allow:	false
+	description:		Rules for when you encounter this card
+
+card_field:
+	type:				text
+	name:				commanding_f
+	multi_line:			true
+	show_statistics:	false
+	card_list_allow:	false
+	description:		Rules for when you are commanding this card
+
+card_field:
+	type:				text
+	name:				commanding_b
+	multi_line:			true
+	show_statistics:	false
+	card_list_allow:	false
+	description:		Rules for when you are commanding this card and it is wrecked
+	

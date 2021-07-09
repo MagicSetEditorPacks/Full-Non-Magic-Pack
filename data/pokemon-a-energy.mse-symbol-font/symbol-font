@@ -1,0 +1,185 @@
+mse version: 2.0.0
+version: 2018-06-28
+short name: normal
+position hint: 001
+icon: colorless.png
+# Symbol font for energy
+
+image font size: 53
+horizontal space: 1
+vertical space: 2
+#Used symbols CDFGLMNOPRWY
+#Used symbols with S - BCDFGHLMOPRWY
+#Used symbols with A - B
+#Used symbols with K - BE
+#Colorless Energy
+symbol:
+	code: C
+	image: {if is_outline_energy() then "colorless-outline.png" else "colorless.png" }
+	image font size: 53
+#Dark Energy
+symbol:
+	code: D
+	image: {if is_outline_energy() then "dark-outline.png" else "dark.png" }
+	image font size: 53
+#Lightning Energy
+symbol:
+	code: L
+	image: {if is_outline_energy() then "lightning-outline.png" else "lightning.png" }
+	image font size: 53
+#Fighting Energy
+symbol:
+	code: F
+	image: {if is_outline_energy() then "fighting-outline.png" else "fighting.png" }
+	image font size: 53
+#Fire Energy
+symbol:
+	code: R
+	image: {if is_outline_energy() then "fire-outline.png" else "fire.png" }
+	image font size: 53
+#Grass Energy
+symbol:
+	code: G
+	image: {if is_outline_energy() then "grass-outline.png" else "grass.png" }
+	image font size: 53
+#Metal Energy
+symbol:
+	code: M
+	image: {if is_outline_energy() then "metal-outline.png" else "metal.png" }
+	image font size: 53
+#Psychic Energy
+symbol:
+	code: P
+	image: {if is_outline_energy() then "psychic-outline.png" else "psychic.png" }
+	image font size: 53
+#Water Energy
+symbol:
+	code: W
+	image: {if is_outline_energy() then "water-outline.png" else "water.png" }
+	image font size: 53
+#Dragon Energy
+symbol:
+	code: O
+	image: {if is_outline_energy() then "dragon-outline.png" else "dragon.png" }
+	image font size: 53
+#Fairy Energy
+symbol:
+	code: Y
+	image: {if is_outline_energy() then "fairy-outline.png" else "fairy.png" }
+	image font size: 53
+#Free or No Energy
+symbol:
+	code: N
+	image: {if is_dpp_free() then "no-transparent.png" else if is_outline_energy() then "no-outline.png" else "no.png" }
+	image font size: 38
+#Rainbow Energy
+symbol:
+	code: SB
+	image: {if is_outline_energy() then "sp-rainbow-outline.png" else "sp-rainbow.png" }
+	image font size: 53
+#Rainbow (Miracle) Energy
+symbol:
+	code: SH
+	image: {if is_outline_energy() then "sp-miracle-outline.png" else "sp-miracle.png" }
+	image font size: 53
+#Colorless (Special) Energy
+symbol:
+	code: SC
+	image: {if is_outline_energy() then "sp-colorless-outline.png" else "sp-colorless.png" }
+	image font size: 53
+#Dark (Dangerous) Energy
+symbol:
+	code: SD
+	image: {if is_outline_energy() then "sp-dangerous-outline.png" else "sp-dangerous.png" }
+	image font size: 53
+#Lightning (Flash) Energy
+symbol:
+	code: SL
+	image: {if is_outline_energy() then "sp-flash-outline.png" else "sp-flash.png" }
+	image font size: 53
+#Fighting (Strong) Energy
+symbol:
+	code: SF
+	image: {if is_outline_energy() then "sp-strong-outline.png" else "sp-strong.png" }
+	image font size: 53
+#Fire (Burning) Energy
+symbol:
+	code: SR
+	image: {if is_outline_energy() then "sp-burning-outline.png" else "sp-burning.png" }
+	image font size: 53
+#Grass (Herbal) Energy
+symbol:
+	code: SG
+	image: {if is_outline_energy() then "sp-herbal-outline.png" else "sp-herbal.png" }
+	image font size: 53
+#Metal (Shield) Energy
+symbol:
+	code: SM
+	image: {if is_outline_energy() then "sp-shield-outline.png" else "sp-shield.png" }
+	image font size: 53
+#Psychic (Mystery) Energy
+symbol:
+	code: SP
+	image: {if is_outline_energy() then "sp-mystery-outline.png" else "sp-mystery.png" }
+	image font size: 53
+#Water (Splash) Energy
+symbol:
+	code: SW
+	image: {if is_outline_energy() then "sp-splash-outline.png" else "sp-splash.png" }
+	image font size: 53
+#Dragon (Double Dragon) Energy
+symbol:
+	code: SO
+	image: {if is_outline_energy() then "sp-dd-outline.png" else "sp-dd.png" }
+	image font size: 53
+#Fairy (Wonder) Energy
+symbol:
+	code: SY
+	image: {if is_outline_energy() then "sp-wonder-outline.png" else "sp-wonder.png" }
+	image font size: 53
+#Ability
+symbol:
+	code: AB
+	image: {if is_sm_ab() then if is_ab_gold() then "ability-sm-gold.png" else "ability-sm.png" else "ability-bw.png" }
+	image font size: 41
+#Pokebody (E-Card)
+symbol:
+	code: KB
+	image: {if is_ec_pbp() then "poke-body-x-e-card.png" else "poke-body-x-hgss.png" }
+	image font size: 42
+#Pokepower (E-Card)
+symbol:
+	code: KE
+	image: {if is_ec_pbp() then "poke-power-x-e-card.png" else "poke-power-x-hgss.png" }
+	image font size: 42
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: AB
+	item: C
+	item: D
+	item: F
+	item: G
+	item: KB
+	item: KE
+	item: L
+	item: M
+	item: N
+	item: O
+	item: P
+	item: R
+	item: W
+	item: Y
+	item: SB
+	item: SC
+	item: SD
+	item: SF
+	item: SH
+	item: SG
+	item: SL
+	item: SO
+	item: SP
+	item: SR
+	item: SM
+	item: SW
+	item: SY

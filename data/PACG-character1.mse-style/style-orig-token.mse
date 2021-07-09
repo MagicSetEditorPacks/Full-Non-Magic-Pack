@@ -1,0 +1,25 @@
+#Token Styling
+
+card style:
+	flavour box:
+		visible: 			{ isTokenBack() }
+		top:				300
+		left:				16
+		width:				{ Width - 32 }
+		height:				{ if isTokenBack() then 208 }
+		render_style: 		image
+		image:				/PACG-common.mse-include/res-orig/tokenflavour.png
+		z_index: 			50
+	
+	flavour text:
+		visible: 			{ isTokenBack() }
+		top:				310
+		left:				26
+		width:				{ Width - 52 }
+		height:				{ if isTokenBack() then 188 }
+		alignment: 			justify middle
+		font:
+			name:				Dax-regular
+			size:				11.5
+			scale_down_to: 		8
+		z_index: 			51

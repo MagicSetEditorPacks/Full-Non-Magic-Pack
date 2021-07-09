@@ -1,0 +1,391 @@
+# Card Front
+
+card_style:
+
+# Height scripts embedded as separate scripts didn't render properly
+
+# Skill Boxes with Skill Name
+	skills_choice:
+		visible:			{ isCharFront() }
+		top:				{ skillBoxT() }
+		left:				{ skillTblL() }
+		width:				{ skillBoxW() / 4 }
+		height: 			{ if isCharFront() then 18 }
+		render_style:		hidden
+		angle:				90
+		z_index: 			51
+	
+	
+# Skill Dice boxes
+	str_dice:
+		visible: 			{ isCharFront() }
+		left:				{ skillDiceL("str") }
+		height:				{ skillDiceH() }
+		top:				{ skillDiceT() }
+		width:				{ skillDiceW() }
+		alignment: 			left top
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		angle:				90
+		z_index: 			51
+	dex_dice:
+		visible: 			{ isCharFront() }
+		left:				{ skillDiceL("dex") }
+		height:				{ skillDiceH() }
+		top:				{ skillDiceT() }
+		width:				{ skillDiceW() }
+		alignment: 			left top
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		angle:				90
+		z_index: 			51
+	con_dice:
+		visible: 			{ isCharFront() }
+		left:				{ skillDiceL("con") }
+		height:				{ skillDiceH() }
+		top:				{ skillDiceT() }
+		width:				{ skillDiceW() }
+		alignment: 			left top
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		angle:				90
+		z_index: 			51
+	int_dice:
+		visible: 			{ isCharFront() }
+		left:				{ skillDiceL("int") }
+		height:				{ skillDiceH() }
+		top:				{ skillDiceT() }
+		width:				{ skillDiceW() }
+		alignment: 			left top
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		angle:				90
+		z_index: 			51
+	wis_dice:
+		visible: 			{ isCharFront() }
+		left:				{ skillDiceL("wis") }
+		height:				{ skillDiceH() }
+		top:				{ skillDiceT() }
+		width:				{ skillDiceW() }
+		alignment: 			left top
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		angle:				90
+		z_index: 			51
+	cha_dice:
+		visible: 			{ isCharFront() }
+		left:				{ skillDiceL("cha") }
+		height:				{ skillDiceH() }
+		top:				{ skillDiceT() }
+		width:				{ skillDiceW() }
+		alignment: 			left top
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		angle:				90
+		z_index: 			51
+
+# Skill Advancement Data
+	str_advance:
+		visible:			{ isCharFront() }
+		left:				{ skillAdvL("str") }
+		height:				{ skillAdvH() }
+		top:				{ skillAdvT() }
+		width:				{ skillAdvW() }
+		alignment: 			left middle shrink-overflow
+		always_symbol: 		true
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		symbol_font:
+			name:				PACG-symbol
+			size:				10
+		angle:				90
+		z_index: 			51
+	dex_advance:
+		visible:			{ isCharFront() }
+		left:				{ skillAdvL("dex") }
+		height:				{ skillAdvH() }
+		top:				{ skillAdvT() }
+		width:				{ skillAdvW() }
+		alignment: 			left middle shrink-overflow
+		always_symbol: 		true
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		symbol_font:
+			name:				PACG-symbol
+			size:				10
+		angle:				90
+		z_index: 			51
+	con_advance:
+		visible:			{ isCharFront() }
+		left:				{ skillAdvL("con") }
+		height:				{ skillAdvH() }
+		top:				{ skillAdvT() }
+		width:				{ skillAdvW() }
+		alignment: 			left middle shrink-overflow
+		always_symbol: 		true
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		symbol_font:
+			name:				PACG-symbol
+			size:				10
+		angle:				90
+		z_index: 			51
+	int_advance:
+		visible:			{ isCharFront() }
+		left:				{ skillAdvL("int") }
+		height:				{ skillAdvH() }
+		top:				{ skillAdvT() }
+		width:				{ skillAdvW() }
+		alignment: 			left middle shrink-overflow
+		always_symbol: 		true
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		symbol_font:
+			name:				PACG-symbol
+			size:				10
+		angle:				90
+		z_index: 			51
+	wis_advance:
+		visible:			{ isCharFront() }
+		left:				{ skillAdvL("wis") }
+		height:				{ skillAdvH() }
+		top:				{ skillAdvT() }
+		width:				{ skillAdvW() }
+		alignment: 			left middle shrink-overflow
+		always_symbol: 		true
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		symbol_font:
+			name:				PACG-symbol
+			size:				10
+		angle:				90
+		z_index: 			51
+	cha_advance:
+		visible:			{ isCharFront() }
+		left:				{ skillAdvL("cha") }
+		height:				{ skillAdvH() }
+		top:				{ skillAdvT() }
+		width:				{ skillAdvW() }
+		alignment: 			left middle shrink-overflow
+		always_symbol: 		true
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		symbol_font:
+			name:				PACG-symbol
+			size:				10
+		angle:				90
+		z_index: 			51
+		
+# Additional listed skills e.g. MELEE: STRENGTH +2
+	str_skills:
+		visible: 			{ isCharFront() }
+		top:				{ skillsT() }
+		left:				{ skillsL("str") }
+		height:				{ if isCharFront() and chosen(choice: "STRENGTH Skills", card.skills_choice) then max(13,card_style.str_skills.content_height) }
+		width:				{ skillsW() }
+		angle:				90
+		alignment: 			left middle
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		z_index: 			52
+	dex_skills:
+		visible: 			{ isCharFront() }
+		top:				{ skillsT() }
+		left:				{ skillsL("dex") }
+		height:				{ if isCharFront() and chosen(choice: "DEXTERITY Skills", card.skills_choice) then max(13,card_style.dex_skills.content_height) }
+		width:				{ skillsW() }
+		angle:				90
+		alignment: 			left middle
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		z_index: 			52
+	con_skills:
+		visible: 			{ isCharFront() }
+		top:				{ skillsT() }
+		left:				{ skillsL("con") }
+		height:				{ if isCharFront() and chosen(choice: "CONSTITUTION Skills", card.skills_choice) then max(13,card_style.con_skills.content_height) }
+		width:				{ skillsW() }
+		angle:				90
+		alignment: 			left middle
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		z_index: 			52
+	int_skills:
+		visible: 			{ isCharFront() }
+		top:				{ skillsT() }
+		left:				{ skillsL("int") }
+		height:				{ if isCharFront() and chosen(choice: "INTELLIGENCE Skills", card.skills_choice) then max(13,card_style.int_skills.content_height) }
+		width:				{ skillsW() }
+		angle:				90
+		alignment: 			left middle
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		z_index: 			52
+	wis_skills:
+		visible: 			{ isCharFront() }
+		top:				{ skillsT() }
+		left:				{ skillsL("wis") }
+		height:				{ if isCharFront() and chosen(choice: "WISDOM Skills", card.skills_choice) then max(13,card_style.wis_skills.content_height) }
+		width:				{ skillsW() }
+		angle:				90
+		alignment: 			left middle
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		z_index: 			52
+	cha_skills:
+		visible: 			{ isCharFront() }
+		top:				{ skillsT() }
+		left:				{ skillsL("cha") }
+		height:				{ if isCharFront() and chosen(choice: "CHARISMA Skills", card.skills_choice) then max(13,card_style.cha_skills.content_height) }
+		width:				{ skillsW() }
+		angle:				90
+		alignment: 			left middle
+		font:
+			name:				{ getAltFont() }
+			size:				{ getPowerFontSize() }
+		z_index: 			52
+
+		
+extra_card_style:
+# Background of table
+
+# Main Skill box
+	skills_table:
+		visible: 			{ isCharFront() }
+		left:				{ skillTblL() }
+		top:				{ skillTblT() }
+		width:				{ skillTblW() }
+		height:
+			script:
+				114
+				+ (if chosen(choice: "STRENGTH Skills", card.skills_choice) then max(13, card_style.str_skills.content_height) )
+				+ (if chosen(choice: "DEXTERITY Skills", card.skills_choice) then max(13, card_style.dex_skills.content_height) )
+				+ (if chosen(choice: "CONSTITUTION Skills", card.skills_choice) then max(13, card_style.con_skills.content_height) )
+				+ (if chosen(choice: "INTELLIGENCE Skills", card.skills_choice) then max(13, card_style.int_skills.content_height) )
+				+ (if chosen(choice: "WISDOM Skills", card.skills_choice) then max(13, card_style.wis_skills.content_height) )
+				+ (if chosen(choice: "CHARISMA Skills", card.skills_choice) then max(13, card_style.cha_skills.content_height) )
+		angle:				90
+		z_index: 			4
+
+	skills_header:
+		visible: 			{ isCharFront() }
+		top:				{ skillBoxT() }
+		left:				{ skillTblL() }
+		width:				{ skillBoxW() }
+		height:				{ if isCharFront() then 18 }
+		alignment: 			left middle
+		padding_left: 		2
+		angle:				90
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(11) }
+			color:				{ "white" }
+		z_index: 			6
+	str_header:
+		visible: 			{ isCharFront() }
+		top:				{ skillBoxT() }
+		left:				{ skillBoxL("str") }
+		width:				{ skillBoxW() }
+		height:				{ 10 + if chosen(choice: "STRENGTH Skills", card.skills_choice) then max(13, card_style.str_skills.content_height) }
+		padding_top: 		-2
+		background_color: 	rgb(255,255,255)
+		alignment: 			left top
+		font:
+			name:				{ getFont() }
+			size:				{ getPowerFontSize() }
+			weight:				bold
+		angle:				90
+		z_index: 			50
+	dex_header:
+		visible: 			{ isCharFront() }
+		top:				{ skillBoxT() }
+		left:				{ skillBoxL("dex") }
+		width:				{ skillBoxW() }
+		height:				{ 10 + if chosen(choice: "DEXTERITY Skills", card.skills_choice) then max(13, card_style.dex_skills.content_height) }
+		padding_top: 		-2
+		background_color: 	rgb(255,255,255)
+		alignment: 			left top
+		font:
+			name:				{ getFont() }
+			size:				{ getPowerFontSize() }
+			weight:				bold
+		angle:				90
+		z_index: 			50
+	con_header:
+		visible: 			{ isCharFront() }
+		top:				{ skillBoxT() }
+		left:				{ skillBoxL("con") }
+		width:				{ skillBoxW("con") }
+		height:				{ 10 + if chosen(choice: "CONSTITUTION Skills", card.skills_choice) then max(13, card_style.con_skills.content_height) }
+		padding_top: 		-2
+		background_color: 	rgb(255,255,255)
+		alignment: 			left top
+		font:
+			name:				{ getFont() }
+			size:				{ getPowerFontSize() }
+			weight:				bold
+		angle:				90
+		z_index: 			50
+	int_header:
+		visible: 			{ isCharFront() }
+		top:				{ skillBoxT() }
+		left:				{ skillBoxL("int") }
+		width:				{ skillBoxW("int") }
+		height:				{ 10 + if chosen(choice: "INTELLIGENCE Skills", card.skills_choice) then max(13, card_style.int_skills.content_height) }
+		padding_top: 		-2
+		background_color: 	rgb(255,255,255)
+		alignment: 			left top
+		font:
+			name:				{ getFont() }
+			size:				{ getPowerFontSize() }
+			weight:				bold
+		angle:				90
+		z_index: 			50
+	wis_header:
+		visible:			{ isCharFront() }
+		top:				{ skillBoxT() }
+		left:				{ skillBoxL("wis") }
+		width:				{ skillBoxW("wis") }
+		height:				{ 10 + if chosen(choice: "WISDOM Skills", card.skills_choice) then max(13, card_style.wis_skills.content_height) }
+		padding_top: 		-2
+		background_color: 	rgb(255,255,255)
+		alignment: 			left top
+		font:
+			name:				{ getFont() }
+			size:				{ getPowerFontSize() }
+			weight:				bold
+		angle:				90
+		z_index: 			50
+	cha_header:
+		visible: 			{ isCharFront() }
+		top:				{ skillBoxT() }
+		left:				{ skillBoxL("cha") }
+		width:				{ skillBoxW("cha") }
+		height:				{ 10 + if chosen(choice: "CHARISMA Skills", card.skills_choice) then max(13, card_style.cha_skills.content_height) }
+		padding_top: 		-2
+		background_color: 	rgb(255,255,255)
+		alignment: 			left top
+		font:
+			name:				{ getFont() }
+			size:				{ getPowerFontSize() }
+			weight:				bold
+		angle:				90
+		z_index: 			50
+	

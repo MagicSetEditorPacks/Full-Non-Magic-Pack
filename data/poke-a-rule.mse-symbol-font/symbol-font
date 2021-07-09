@@ -1,0 +1,78 @@
+mse version: 0.3.8
+version: 2016-08-01
+short name: rule
+position hint: 002
+icon: ^-Bk.png
+# Symbol font for rule text
+
+image font size: 85
+horizontal space: 1
+vertical space: 1
+symbol:
+	code: G
+	image: {if is_outline() then "G-Outline.png" else if is_wt_text_nf() then "G-Wt.png" else "G-Bk.png"}
+	image font size: 85
+symbol:
+	code: R
+	image: {if is_outline() then "R-Outline.png" else if is_wt_text_nf() then "R-Wt.png" else "R-Bk.png"}
+	image font size: 85
+symbol:
+	code: W
+	image: {if is_outline() then "W-Outline.png" else if is_wt_text_nf() then "W-Wt.png" else "W-Bk.png"}
+	image font size: 85
+symbol:
+	code: L
+	image: {if is_outline() then "L-Outline.png" else if is_wt_text_nf() then "L-Wt.png" else "L-Bk.png"}
+	image font size: 85
+symbol:
+	code: F
+	image: {if is_outline() then "F-Outline.png" else if is_wt_text_nf() then "F-Wt.png" else "F-Bk.png"}
+	image font size: 85
+symbol:
+	code: P
+	image: {if is_outline() then "P-Outline.png" else if is_wt_text_nf() then "P-Wt.png" else "P-Bk.png"}
+	image font size: 85
+symbol:
+	code: C
+	image: {if is_outline() then "C-Outline.png" else if is_wt_text_nf() then "C-Wt.png" else "C-Bk.png"}
+	image font size: 85
+symbol:
+	code: D
+	image: {if is_outline() then "D-Outline.png" else if is_wt_text_nf() then "D-Wt.png" else "D-Bk.png"}
+	image font size: 85
+symbol:
+	code: M
+	image: {if is_outline() then "M-Outline.png" else if is_wt_text_nf() then "M-Wt.png" else "M-Bk.png"}
+	image font size: 85
+symbol:
+	code: O
+	image: {if is_outline() then "O-Outline.png" else if is_wt_text_nf() then "O-Wt.png" else "O-Bk.png"}
+	image font size: 85
+symbol:
+	code: Y
+	image: {if is_outline() then "Y-Outline.png" else if is_wt_text_nf() then "Y-Wt.png" else "Y-Bk.png"}
+	image font size: 85
+symbol:
+	code: $
+	image: {if is_outline() then "$-Outline.png" else if is_wt_text_nf() then "$-Wt.png" else "$-Bk.png"}
+	image font size: 85
+symbol:
+	code: AR
+	image: {if is_outline() then "AR-Outline.png" else if is_wt_text_nf() then "AR-Wt.png" else "AR-Bk.png"}
+	image font size: 65
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: G
+	item: R
+	item: W
+	item: L
+	item: F
+	item: P
+	item: C
+	item: D
+	item: M
+	item: O
+	item: Y
+	item: $
+	item: AR

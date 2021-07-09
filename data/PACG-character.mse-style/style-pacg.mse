@@ -1,0 +1,207 @@
+# Card Style for common fields
+# Overriden in style files where applicable
+
+# z_index zones
+# 0-29	Background, layout
+# 30	CARD ART
+# 41-49	Layout items in front of card art
+# 50-98	Character Stats etc in front of card art
+# 99 Black Border
+
+card_style:
+
+	name:
+		left:			{ if set.name_position == "Top" then topTextL() else bannerTextL() }
+		top:			{ if set.name_position == "Top" then topTextT() else bannerTextT() }
+		width:			{ if set.name_position == "Top" then topTextW() else bannerTextW() }
+		height:			{ 32 }
+		angle:			{ if set.name_position == "Top" then topTextA() else bannerTextA() }
+		alignment:		{ if set.name_position == "Top" then topTextAlign() else bannerTextAlign() }
+		z_index:		96
+		padding_left:	2
+		font:
+			name:			{ getFont() }
+			weight:			bold
+			size:			{ getFontSize(25) }
+			color:			{ getNameFontColour() }
+			shadow_color: 	{ getShadowColour() }
+			shadow_blur: 	10
+
+	type_text:
+		left:			{ if set.name_position == "Top" then bannerTextL() else topTextL() }
+		top:			{ if set.name_position == "Top" then bannerTextT() else topTextT() }
+		width:			{ if set.name_position == "Top" then bannerTextW() else topTextW() }
+		height:			{ 32 }
+		angle:			{ if set.name_position == "Top" then bannerTextA() else topTextA() }
+		alignment:		{ if set.name_position == "Top" then bannerTextAlign() else topTextAlign() }
+		z_index:		96
+		font:
+			name:			{ getFont() }
+			weight:			bold
+			size:			{ getFontSize(25) }
+			color:			{ getNameFontColour() }
+			shadow_color: 	{ getShadowColour() }
+			shadow_blur: 	10
+	type:
+		left:			{ if set.name_position == "Top" then bannerTextL() else topTextL() }
+		top:			{ if set.name_position == "Top" then bannerTextT() else topTextT() }
+		width:			{ if set.name_position == "Top" then bannerTextW() else topTextW() }
+		height:			{ 32 }
+		angle:			{ if set.name_position == "Top" then bannerTextA() else topTextA() }
+		alignment:		{ if set.name_position == "Top" then bannerTextAlign() else topTextAlign() }
+		z_index:		96
+		popup_style:	in place
+		render_style:	hidden
+
+	cardart:
+		left:			16
+		top:			0
+		width:			{ Width - 36 }
+		height:			{ 310 }
+		z_index:		40
+		
+	set:
+		right:			{ setR() }
+		top:			{ setT() }
+		width:			{ setHW() }
+		height:			{ setHW() }
+		angle:			{ setA() }
+		render_style:	hidden
+		popup_style:	in place
+		#image:			{ "/PACG-common.mse-include/res/set_" + input + ".png" }
+		z_index:		97
+	set_bg:
+		right:			{ setR() }
+		top:			{ setT() }
+		width:			{ setHW() }
+		height:			{ setHW() }
+		angle:			{ setA() }
+		radius:			12
+		radius:			12
+		z_index:		96
+	set_text:
+		right:			{ setR() }
+		top:			{ setT() }
+		width:			{ setHW() }
+		height:			{ setHW() }
+		angle:			{ setA() }
+		z_index:		97
+		alignment:		center middle
+		font:
+			name:			{ getFont() }
+			size:			{ getFontSize(18) }
+			weight:			bold
+			color:			{ "white" }
+		
+	traits:
+		visible: 		{ not isAdventureStyle() }
+		left:			24
+		top:			88
+		width:			150
+		height:			{ if not isAdventureStyle() then max(15,card_style.traits.content_height) }
+		alignment: 		left top
+		font:
+			name:			{ getFont() }
+			weight:			Bold
+			size:			{ getFontSize(10.5) }
+			shadow_color: 	{ "white" }
+			shadow_blur: 	10
+		z_index: 		41
+
+# Card Layout
+	bg:
+		left:			0
+		top:			0
+		width:			{ Width }
+		height:			{ Height }
+		render_style:	image
+		image:			/PACG-common.mse-include/res/background.png
+		z_index: 		0
+
+# Name Banner
+	bannerdk:
+		left:			{ if set.banner_position == "Right" then Width - 42 else 0 }
+		top:			{ 0 }
+		width:			{ 42 }
+		height:			{ Height }
+		z_index:		94
+	bannerlt:
+		left:			{ if set.banner_position == "Right" then Width - 40 else 0 }
+		top:			{ 0 }
+		width:			{ 40 }
+		height:			{ Height }
+		z_index:		95
+
+# Borders
+	borderdk:
+		top:			0
+		left:			0
+		width:			{ Width }
+		height:			{ Height }
+		mask:			/PACG-common.mse-include/res/border_dk.png
+		z_index: 		90
+#	borderlt:
+
+	borderblk:
+		top:			0
+		left:			0
+		width:			{ Width }
+		height:			{ Height }
+		mask:			/PACG-common.mse-include/res/border_blk.png
+		z_index:		99
+	borderprnt:
+		top:			0
+		left:			0
+		width:			{ Width }
+		height:			{ Height }
+		top_width:		1
+		bottom_width:	1
+		left_width:		1
+		right_width:	1
+		z_index: 		100
+# Corner Fill
+	border_fill_1:
+		top:			{ 40 }
+		left:			{ 42 }
+		width:			{ 20 }
+		height:			{ 20 }
+		mask:			/PACG-common.mse-include/res/border_corner.png
+		z_index:		50
+	
+# Logo, artist and copyright notice
+	pathlogo:
+		bottom:			{ Height - logo_top }
+		left:			{ if set.banner_position == "Right" then 12 else 44 }
+		width:			{ logo_width }
+		height:			{ logo_height }
+		render_style:	image
+		image:			{ if set.use_custom_logo then set.custom_logo else "/PACG-common.mse-include/res/RiseOfTheRunelords-Horizontal.png" }
+		z_index: 		100
+	
+	artist:
+		bottom:			{ Height - 8 }
+		right:			{ if set.banner_position == "Right" then Width - 42 else Width - 18 }
+		width:			{ Width - 195 - 16 - 42 }
+		height:			{ 10 }
+		alignment: 		right middle shrink-overflow
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(7) }
+			shadow_color: 	{ "white" }
+			shadow_blur: 	10
+		z_index: 		91
+
+	community_use:
+		top:			{ if set.banner_position == "Right" then Height - 36 else 36 }
+		left:			{ if set.banner_position == "Right" then 8 else Width - 8 }
+		width:			{ Height - 76 }
+		height:			{ 10 }
+		angle:			{ if set.banner_position == "Right" then 90 else 270 }
+		alignment: 		center bottom shrink-overflow
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(8) }
+			shadow_color: 	{ "white" }
+			shadow_blur: 	10
+		z_index: 		91
+		

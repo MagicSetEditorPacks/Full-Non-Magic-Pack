@@ -1,0 +1,285 @@
+﻿mse version: 0.3.8
+game: b5
+short name: Babylon 5
+full name: Actual Game
+installer group: Babylon 5/Actual
+icon: card-sample.png
+position hint: 001
+
+version: 2010-08-27
+depends on:
+	package: b5.mse-game
+	version: 2010-08-27
+depends on:
+	package: b5-icons.mse-include
+	version: 2008-05-14
+depends on:
+	package: b5-actual-marks.mse-include
+	version: 2008-05-14
+depends on:
+	package: b5-actual-small.mse-symbol-font
+	version: 2008-05-14
+
+card width: 360
+card height: 502
+card dpi: 150
+############################################################## Extra scripts
+############################################################## Set info fields
+############################################################## Extra style options
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	card type:
+		left:	0
+		top:	0
+		width:	360
+		height:	502
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			agenda: agenda.jpg
+			aftermath: aftermath.jpg
+			conflict: conflict.jpg
+			contingency: contingency.jpg
+			character: agenda.jpg
+			event: event.jpg
+			enhancement: enhancement.jpg
+			fleet: fleet.jpg
+			group: group.jpg
+			limitation: agenda.jpg
+			location: location.jpg
+			centauri: centauri.jpg
+			drakh: drakh.jpg
+			human: human.jpg
+			minbari: minbari.jpg
+			narn: narn.jpg
+			neutral: neutral.jpg
+			nexus: agenda.jpg
+			non-aligned: nonaligned.jpg
+			shadow: shadow.jpg
+			vorlon: vorlon.jpg
+	############################# Name line
+	name:
+		left:   29
+		top :   27
+		width:	307
+		height: 26
+		alignment: bottom center shrink-overflow
+		padding bottom: 0
+		z index: 1
+		font:
+			name: Serpentine-Bold-Bold
+			size: 16
+			color: rgb(0,0,0)
+	############################# Image
+	image:
+		left:	56
+		top:	67
+		width:	273
+		height:	182
+		z index: 1
+		mask: imagemask_standard.png
+	############################# Card type
+	type:
+		left: 58
+		top : 258
+		width: 288
+		height: 13
+		alignment: top center shrink-overflow
+		z index: 2
+		font:
+			name: Arial Narrow
+			size: 14
+			color: rgb(255,255,255)
+			separator color: rgb(128,128,128)
+	############################# Text box
+	rule text:
+		left: 29
+		top : 288
+		width: 307
+		height: 153
+		font:
+			name: Arial Narrow
+			italic name: Arial Narrow Italic
+			size: 15
+			scale down to: 6
+			color: rgb(0,0,0)
+		alignment: middle center
+		z index: 2
+		padding left:   6
+		padding right:  4
+		line height hard: 1.2
+		line height line: 1.5
+		line height soft: 0.9
+		line height hard max: 1.3
+		line height line max: 1.6
+	############################# Mark boxes
+	marka1:
+		z index: 4
+		left:	27
+		top:	446
+		width:	41
+		height:	33
+		render style: image
+		alignment: middle center
+		include file: /b5-actual-marks.mse-include/marks
+	marka2:
+		z index: 4
+		left:	68
+		top:	446
+		width:	41
+		height:	33
+		render style: image
+		alignment: middle center
+		include file: /b5-actual-marks.mse-include/marks
+	marka3:
+		z index: 4
+		left:	27
+		top:	410
+		width:	41
+		height:	33
+		render style: image
+		alignment: middle center
+		include file: /b5-actual-marks.mse-include/marks
+	############################# Influence box
+	influence:
+		z index: 4
+		left:	304
+		top:	434
+		width:	28
+		height:	47
+		alignment: center middle
+		symbol font:
+			name: b5-actual-small
+			size: 13
+			alignment: bottom center
+		always symbol: true
+	############################# Abilities
+	diplomacy:
+		z index: 4
+		left:	42
+		top:	86
+		width:	15
+		height:	28
+		alignment: center middle shrink-overflow
+		symbol font:
+			name: b5-actual-small
+			size: 11
+			alignment: bottom center
+		always symbol: true
+	intrigue:
+		z index: 4
+		left:	42
+		top:	125
+		width:	15
+		height:	28
+		alignment: center middle shrink-overflow
+		symbol font:
+			name: b5-actual-small
+			size: 11
+			alignment: bottom center
+		always symbol: true
+	psi:
+		z index: 4
+		left:	42
+		top:	163
+		width:	15
+		height:	28
+		alignment: center middle shrink-overflow
+		symbol font:
+			name: b5-actual-small
+			size: 11
+			alignment: bottom center
+		always symbol: true
+	military:
+		z index: 4
+		left:	42
+		top:	202
+		width:	15
+		height:	28
+		alignment: center middle shrink-overflow
+		symbol font:
+			name: b5-actual-small
+			size: 11
+			alignment: bottom center
+		always symbol: true
+	############################# Card sorting / numbering
+	############################# Copyright stuff
+############################################################## Extra card fields
+extra card field:
+	type: choice
+	name: diplomacy box
+	editable: false
+	choice: diplomacy
+extra card field:
+	type: choice
+	name: influence box
+	editable: false
+	choice: influence
+extra card field:
+	type: choice
+	name: intrigue box
+	editable: false
+	choice: intrigue
+extra card field:
+	type: choice
+	name: psi box
+	editable: false
+	choice: psi
+extra card field:
+	type: choice
+	name: military box
+	editable: false
+	choice: default
+extra card style:
+	diplomacy box:
+		left:	26
+		top:	86
+		width:	46
+		height:	28
+		z index: 3
+		render style: image
+		visible: { card.diplomacy !="" }
+		choice images:
+			diplomacy: ability_diplomacy.png
+	intrigue box:
+		left:	26
+		top:	125
+		width:	46
+		height:	28
+		z index: 3
+		render style: image
+		visible: { card.intrigue !="" }
+		choice images:
+			intrigue: ability_intrigue.png
+	psi box:
+		left:	26
+		top:	163
+		width:	46
+		height:	28
+		z index: 3
+		render style: image
+		visible: { card.psi !="" }
+		choice images:
+			psi: ability_psi.png
+	military box:
+		left:	26
+		top:	202
+		width:	46
+		height:	28
+		z index: 3
+		render style: image
+		visible: { card.military !="" }
+		choice images:
+			default: { if contains(card.type, match:"Character") then "ability_leadership.png" else "ability_military.png" }
+	influence box:
+		left:	297
+		top:	434
+		width:	41
+		height:	47
+		z index: 3
+		render style: image
+		visible: { card.influence !="" }
+		choice images:
+			influence: influence.png

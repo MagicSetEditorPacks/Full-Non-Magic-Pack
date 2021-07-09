@@ -1,0 +1,431 @@
+﻿
+############################################################## Card fields
+############################# Background stuff
+card field:
+	type: choice
+	name: card type
+	choice: normal monster
+	choice: effect monster
+	choice: fusion monster
+	choice: ritual monster
+	choice: synchro monster
+	choice: dark synchro monster
+	choice: xyz monster
+	choice: pendulum normal monster
+	choice: pendulum effect monster
+	choice: pendulum fusion monster
+	choice: pendulum ritual monster
+	choice: pendulum synchro monster
+	choice: pendulum dark synchro monster
+	choice: pendulum xyz monster
+	choice: pandemonium monster
+	choice: bigbang monster
+	choice: dlc monster
+	choice: token monster
+	choice: link monster
+	choice: spell card
+	choice: trap card
+	choice: trell card
+	default: card_type()
+	choice colors cardlist:
+		normal monster         :  rgb(197,179,53)
+		effect monster         :  rgb(208,109,41)
+		fusion monster         :  rgb(90,45,150)
+		ritual monster         :  rgb(55,77,197)
+		synchro monster        :  rgb(215,215,215)
+		dark synchro monster   :  rgb(92,64,51)
+		xyz monster            :  rgb(21,261,21)
+		pendulum normal monster:  rgb(197,179,53)
+		pendulum effect monster:  rgb(208,109,41)
+		pendulum fusion monster:  rgb(90,45,150)
+		pendulum ritual monster:  rgb(55,77,197
+		pendulum synchro monster: rgb(215,215,215)
+		pendulum dark synchro monster: rgb(92,64,51)
+		pendulum xyz monster   :  rgb(21,261,21)
+		pandemonium monster    : rgb(121,121,121)
+		bigbang monster        : rgb(121,121,121)
+		token monster          :  rgb(121,121,121)
+		link monster           :  rgb(89,89,171)
+		spell card             :  rgb(67,161,99)
+		trap card              :  rgb(148,54,128)
+card field:
+	type: choice
+	name: foils
+	editable: false
+	choice: none
+	choice: holo image
+	choice: secret holo image
+	choice: ultimate holo image
+	choice: parallel holo image
+	choice: gold holo image
+	choice: star holo image
+	choice: mosaic holo image
+	default: foil()
+
+############################# Link Marker Border
+card field:
+	type: choice
+	name: linkborder
+	choice: on
+	choice: off
+	show statistics: false
+	card list visible: false
+	editable: false
+	card list column: 0
+
+############################ End Link Border
+############################# Link Markers
+card field:
+	type: choice
+	name: linkul
+	choice: off
+	choice: on
+	show statistics: false
+	card list visible: false
+	card list column: 0
+card field:
+	type: choice
+	name: linku
+	choice: off
+	choice: on
+	show statistics: false
+	card list visible: false
+	card list column: 0
+card field:
+	type: choice
+	name: linkur
+	choice: off
+	choice: on
+	show statistics: false
+	card list visible: false
+	card list column: 0
+card field:
+	type: choice
+	name: linkl
+	choice: off
+	choice: on
+	show statistics: false
+	card list visible: false
+	card list column: 0
+card field:
+	type: choice
+	name: linkdl
+	choice: off
+	choice: on
+	show statistics: false
+	card list visible: false
+	card list column: 0
+card field:
+	type: choice
+	name: linkr
+	choice: off
+	choice: on
+	show statistics: false
+	card list visible: false
+	card list column: 0
+card field:
+	type: choice
+	name: linkd
+	choice: off
+	choice: on
+	show statistics: false
+	card list visible: false
+	card list column: 0
+card field:
+	type: choice
+	name: linkdr
+	choice: off
+	choice: on
+	show statistics: false
+	card list visible: false
+	card list column: 0
+############################# End Link Markers
+
+############################# Name
+card field:
+	type: text
+	name: name
+	identifying: true
+	show statistics: false
+	card list visible: true
+	card list column: 1
+############################# Attribute and Level
+card field:
+	type: choice
+	name: attribute
+	choice: none
+	choice: earth
+	choice: water
+	choice: fire
+	choice: wind
+	choice: light
+	choice: dark
+	choice: divine
+	choice: spell
+	choice: trap
+	choice: trell
+	default: attribute()
+	card list visible: true
+	card list column: 2
+card field:
+	type: text
+	name: level
+	description: `=] * = star, % = continuous, ! = counter, + = equipment, & = field, $ = quickplay, # = ritual
+	script: level_filter(value)
+
+############################# Image
+card field:
+	type: image
+	name: image
+	show statistics: false
+############################# Card type
+# Keep type1, type2, and separator fields for backwards compatibility until two or three versions after 0.3.8.
+#card field:
+#	type: text
+#	name: type1
+#	script: monster_type_filter(value)
+#	default: "   "
+#	editable: false
+#	show statistics: false
+#card field:
+#	type: text
+#	name: type2
+#	script: card_class_filter(value)
+#	editable: false
+#	show statistics: false
+#card field:
+#	type: text
+#	name: separator
+#	script: "/"
+#	editable: false
+#	save value: false
+#	show statistics: false
+# These are the new type fields.
+#card field:
+#	type: text
+#	name: type 1
+#	script: monster_type_filter(value)
+#	default: card.type1 # Remove when card.type1 is removed.
+#card field:
+#	type: text
+#	name: type 2
+#	script: card_class_filter(value)
+#	default: split_text(match:"/ ", card.type2).0 # Remove when card.type2 is removed.
+#card field:
+#	type: text
+#	name: type 3
+#	script: card_class_filter(value)
+#	default: if contains(card.type2, match:" / ") then split_text(match:" / ", card.type2).1 else "" # Remove when card.type2 is removed.
+#card field:
+#	type: text
+#	name: type 4
+#	script: card_class_filter(value)
+#	default: if contains(card.type2, match:" / ") then split_text(match:" / ", card.type3).2 else "" # Remove when card.type3 is removed.
+#card field:
+#	type: text
+#	name: monster type
+#	script:
+#		# Either just monster, monster / type1
+#		combined_editor(
+#			field1: card.type_1,
+#			separator1: "/",
+#			field2: card.type_2,
+#			separator2: "/",
+#			field3: card.type_3,
+#			separator3: "/",
+#			field4: card.type_4,
+#			prefix: if remove_tags(card.type_1)=="    " then "" else if is_jp() then "【" else if is_en() then "[" else "<sym-auto>[</sym-auto>",
+#			suffix: if remove_tags(card.type_1)=="    " then "" else if is_jp() then "】" else if is_en() then "]" else "<sym-auto>]</sym-auto>",
+#			soft_before_empty: true,
+#			hide_when_empty: true
+#		)
+#	card list visible: true
+#	card list column: 3
+#	show statistics: false
+############################# Card type
+# Keep type1, type2, and separator fields for backwards compatibility until two or three versions after 0.3.8.
+card field:
+	type: text
+	name: type1
+	script: monster_type_filter(value)
+	default: "    "
+	editable: false
+	show statistics: false
+card field:
+	type: text
+	name: type2
+	script: card_class_filter(value)
+	editable: false
+	show statistics: false
+card field:
+	type: text
+	name: separator
+	script: get_sep()
+	editable: false
+	save value: false
+	show statistics: false
+# These are the new type fields.
+card field:
+	type: text
+	name: type 1
+	script: monster_type_filter(value)
+	default: card.type1 # Remove when card.type1 is removed.
+card field:
+	type: text
+	name: type 2
+	script: card_class_filter(value)
+	default: if contains(card.type2, match:get_sep()) then split_text(match:get_sep(), card.type2).0 else "" # Remove when card.type2 is removed.
+card field:
+	type: text
+	name: type 3
+	script: card_class_filter(value)
+	default: if contains(card.type2, match:get_sep()) then split_text(match:get_sep(), card.type2).1 else "" # Remove when card.type2 is removed.
+card field:
+	type: text
+	name: type 4
+	script: card_class_filter(value)
+	default: if contains(card.type2, match:get_sep()) then split_text(match:get_sep(), card.type2).2 else "" # Remove when card.type2 is removed.
+card field:
+	type: text
+	name: type 5
+	script: card_class_filter(value)
+	default: if contains(card.type2, match:get_sep()) then split_text(match:get_sep(), card.type3).3 else "" # Remove when card.type2 is removed.
+card field:
+	type: text
+	name: monster type
+	description: If no Combobox, please input space.如果看不到下拉框，请输入空格
+	script:
+		# Either just monster, monster / type1
+		# prefix: "<sym-auto>[</sym-auto>",
+		# suffix: "<sym-auto>]</sym-auto>",
+		# 用来选择
+		combined_editor(
+			field1: card.type_1,
+			separator1: get_sep(),
+			field2: card.type_2,
+			separator2: get_sep(),
+			field3: card.type_3,
+			separator3: get_sep(),
+			field4: card.type_4,
+			separator4: get_sep(),
+			field5: card.type_5,
+			soft_before_empty: true,
+			hide_when_empty: true
+		)
+		#用来调整格式
+		combined_editor(
+			field1: card.type_1,
+			separator1: get_sepex(card.type_2),
+			field2: card.type_2,
+			separator2: get_sepex(card.type_3),
+			field3: card.type_3,
+			separator3: get_sepex(card.type_4),
+			field4: card.type_4,
+			separator4: get_sepex(card.type_5),
+			field5: card.type_5,
+			prefix: if remove_tags(card.type_1)=="    " then "" else if is_jp() or is_cn() or is_tw() then "【" else if is_en() then "[" else "<sym-auto>[</sym-auto>",
+			suffix: if remove_tags(card.type_1)=="    " then "" else if is_jp() or is_cn() or is_tw() then "】" else if is_en() then "]" else "<sym-auto>]</sym-auto>",
+			soft_before_empty: true,
+			hide_when_empty: true
+		)
+	card list visible: true
+	card list column: 3
+	show statistics: false
+############################# Edition and Card ID
+card field:
+	type: text
+	name: number
+	default: set.code
+	card list visible: false
+	card list column: 6
+	card list width: 55
+	card list name: set ID
+	editable: true
+	save value: true
+	show statistics: false
+card field:
+	type: text
+	name: edition
+	default: set.edition
+	show statistics: false
+############################# Text box
+card field:
+	type: text
+	name: rules
+	script: text_filter(value)
+	editable: false
+	show statistics: false
+card field:
+	type: text
+	name: rule text
+	multi line: true
+	save value: true
+	show statistics: false
+	script:
+		if nm_ext_querry(value) then flavor_text_filter(value)
+		else text_filter(value)
+	default: card.rules
+############################# Attack/Defense
+card field:
+	type: text
+	name: attack
+	save value: true
+	script: a_and_d_filter(value)
+	card list visible: true
+	card list column: 4
+	card list width: 33
+	card list name: ATK
+card field:
+	type: text
+	name: defense
+	save value: true
+	script: a_and_d_filter(value)
+	card list visible: true
+	card list column: 5
+	card list width: 33
+	card list name: DEF
+
+card field:
+	type: text
+	name: blue_scale
+card field:
+	type: text
+	name: red_scale
+card field:
+	type: text
+	name: pendulum_text
+	multi line: true
+	script: text_filter(value)
+############################# Copyright stuff
+card field:
+	type: text
+	name: gamecode
+	show statistics: false
+card field:
+	type: choice
+	name: rarity
+	show statistics: true
+	choice: common
+	choice: rare
+	choice: super rare
+	choice: ultra rare
+	choice: secret rare
+	choice: ultimate rare
+	choice: ultimate rare (No foil)
+	choice: parallel rare
+	choice: gold rare
+	choice: star rare
+	choice: mosaic rare
+	choice: promo
+	card list visible: true
+	card list column: 7
+card field:
+	type: choice
+	name: corner foil
+	choice: stamp
+	editable: false
+card field:
+	type: text
+	name: copyright
+	default: set.copyright
+	show statistics: false

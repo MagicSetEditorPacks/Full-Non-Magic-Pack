@@ -1,0 +1,527 @@
+﻿mse version: 0.3.8
+full name: UFS System
+short name: UFS
+installer group: UFS System/Game Files
+icon: card-back.png
+position hint: 23
+
+version: 2009-01-11
+depends on:
+	package: ufs-common.mse-include
+	version: 2008-05-25
+
+############################################################## Functions & filters
+# General functions
+############################################################## Set fields
+set field:
+	type: text
+	name: title
+	description: This information will not appear on the card.
+set field:
+	type: choice
+	name: logo
+	choice: none
+	choice: StreetFighter
+	choice: SoulCalibur
+	choice: SamuraiShowdown
+	choice: KingOfFighters
+	choice: Darkstalkers
+	choice: Other...
+	initial: none
+	description: The logo for the company.
+set field:
+	type: text
+	name: code
+	description: Recommended only 3 Capital digits. Will appear before card number.
+set field:
+	type: text
+	name: description
+	multi line: true
+	description: This information will not appear on the card.
+set field:
+	type: text
+	name: artist
+	description: Editting this will set 1 artist for all the cards and will appear in the artist bar below the picture.
+set field:
+	type: text
+	name: copyright
+	description: Copytight information. This information will not appear on the card.
+set field:
+	type: choice
+	name: set rarity
+	choice: common
+	choice: uncommon
+	choice: rare
+	choice: superrare
+	initial: none
+	description: Set the rarity for all cards in the set.
+set field:
+	type: boolean
+	name: automatic card numbers
+	description: Should card numbers be shown on the cards?
+############################# Default style
+default set style:
+	logo:
+		font:
+			size: 16
+		render style: both
+		choice images:
+			StreetFighter: /ufs-common.mse-include/StreetFighter.png
+			SoulCalibur: /ufs-common.mse-include/SoulCalibur.png
+			SamuraiShowdown: /ufs-common.mse-include/SamuraiShowdown.png
+			KingOfFIghters: /ufs-common.mse-include/KingOfFighters.png
+			Darkstalkers: /ufs-common.mse-include/Darkstalkers.png
+			Other...: /ufs-common.mse-include/other.png
+	title:
+		padding left: 2
+		font:
+			size: 16
+############################################################## Card fields
+############################# Background stuff
+card field:
+	type: choice
+	name: type
+	choice: action
+	choice: asset
+	choice: attack
+	choice: foundation
+card field:
+	type: choice
+	name: character
+	choice: character
+	show statistics: false
+############################# Name line
+card field:
+	type: text
+	name: name
+	editable: true
+	identifying: true
+	show statistics: false
+	card list visible: true
+	card list name: Name
+	card list column: 1
+	card list width: 200
+card field:
+	type: text
+	name: name outline
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.name
+card field:
+	type: text
+	name: name outline 2
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.name
+card field:
+	type: text
+	name: name outline 3
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.name
+card field:
+	type: text
+	name: name outline 4
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.name
+card field:
+	type: text
+	name: difficulty
+	card list visible: true
+	card list name: Difficulty
+	card list column: 2
+	card list width: 50
+card field:
+	type: text
+	name: difficulty outline
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.difficulty
+card field:
+	type: text
+	name: difficulty outline 2
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.difficulty
+card field:
+	type: text
+	name: difficulty outline 3
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.difficulty
+card field:
+	type: text
+	name: difficulty outline 4
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.difficulty
+card field:
+	type: text
+	name: control
+	card list visible: true
+	card list name: Control
+	card list column: 3
+	card list width: 50
+card field:
+	type: text
+	name: control outline
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.control
+card field:
+	type: text
+	name: control outline 2
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.control
+card field:
+	type: text
+	name: control outline 3
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.control
+card field:
+	type: text
+	name: control outline 4
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.control
+############################# Image
+card field:
+	type: image
+	name: image
+	show statistics: false
+card field:
+	type: choice
+	name: card symbol
+	choice: none
+	choice: StreetFighter
+	choice: SoulCalibur
+	choice: SamuraiShowdown
+	choice: KingOfFighters
+	choice: Darkstalkers
+	choice: PennyArcade
+	choice: Other...
+	default: set.logo
+	editable: false
+	description: Double click to load a symbol for the card
+card field:
+	type: image
+	name: custom symbol
+	show statistics: false
+############################# Type Bar
+card field:
+	type: multiple choice
+	name: symbols
+	icon: stats/symbols.png
+	choice: air
+	choice: all
+	choice: chaos
+	choice: death
+	choice: earth
+	choice: evil
+	choice: fire
+	choice: good
+	choice: life
+	choice: order
+	choice: void
+	choice: water
+	choice: infinity
+	choice: end
+	description: Symbols for this card air/all/chaos/etc. Multiple symbols can be selected
+	show statistics: false
+############################# Card ID
+############################# Text box
+card field:
+	type: text
+	name: keyword_text
+	show statistics: false
+	multi line: true
+	description: Rule text of the card,
+card field:
+	type: text
+	name: rule text
+	show statistics: false
+	multi line: true
+	description: Rule text of the card,
+############################# Attack Speed / Zone / Damage
+card field:
+	type: text
+	name: speed
+	save value: true
+	card list visible: true
+	card list column: 4
+	card list width: 50
+	card list name: ATK
+	card list alignment: right
+card field:
+	type: text
+	name: speed outliner
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.speed
+card field:
+	type: text
+	name: speed outliner 2
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.speed
+card field:
+	type: text
+	name: speed outliner 3
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.speed
+card field:
+	type: text
+	name: speed outliner 4
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.speed
+card field:
+	type: text
+	name: damage
+	save value: true
+	card list visible: true
+	card list column: 5
+	card list width: 50
+	card list name: DEF
+	card list alignment: right
+card field:
+	type: text
+	name: damage outliner
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.damage
+card field:
+	type: text
+	name: damage outliner 2
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.damage
+card field:
+	type: text
+	name: damage outliner 3
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.damage
+card field:
+	type: text
+	name: damage outliner 4
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.damage
+card field:
+	type: choice
+	name: zone
+	choice: high
+	choice: mid
+	choice: low
+############################# Block
+card field:
+	type: choice
+	name: blockzone
+	choice: none
+	choice: high
+	choice: mid
+	choice: low
+card field:
+	type: text
+	name: blockmodifier
+	save value: true
+card field:
+	type: text
+	name: blockmodifier outliner
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.blockmodifier
+card field:
+	type: text
+	name: blockmodifier outliner 2
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.blockmodifier
+card field:
+	type: text
+	name: blockmodifier outliner 3
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.blockmodifier
+card field:
+	type: text
+	name: blockmodifier outliner 4
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.blockmodifier
+############################# Character Stats
+card field:
+	type: text
+	name: handsize
+card field:
+	type: text
+	name: handsize outliner
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.handsize
+card field:
+	type: text
+	name: handsize outliner 2
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.handsize
+card field:
+	type: text
+	name: handsize outliner 3
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.handsize
+card field:
+	type: text
+	name: handsize outliner 4
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.handsize
+card field:
+	type: text
+	name: vitality
+card field:
+	type: text
+	name: vitality outliner
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.vitality
+card field:
+	type: text
+	name: vitality outliner 2
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.vitality
+card field:
+	type: text
+	name: vitality outliner 3
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.vitality
+card field:
+	type: text
+	name: vitality outliner 4
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.vitality
+card field:
+	type: text
+	name: gender
+card field:
+	type: text
+	name: height
+card field:
+	type: text
+	name: weight
+card field:
+	type: text
+	name: blood
+############################# Card sorting / numbering
+card field:
+	type: text
+	name: set
+card field:
+	type: text
+	name: set outliner
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.set
+card field:
+	type: text
+	name: set outliner 2
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.set
+card field:
+	type: text
+	name: set outliner 3
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.set
+card field:
+	type: text
+	name: set outliner 4
+	save value: false
+	show statistics: false
+	editable: false
+	default: card.set
+############################# Copyright stuff
+card field:
+	type: text
+	name: copyright
+############################################################## Auto replace
+# Do we need categories?
+#auto replace category: text box
+#auto replace category: copyright
+#auto replace category: everywhere
+auto replace:
+	match: (C)
+	replace: ©
+auto replace:
+	match: AE
+	replace: Æ
+	whole word: false
+auto replace:
+	match: TM
+	replace: ™
+	whole word: false
+auto replace:
+	match: @
+	replace: ·
+auto replace:
+	match: *
+	replace: •
+############################################################## Card pack items
+pack type:
+	name: card
+	filter: card.name != ""
+############################################################## Card packs
+pack type:
+	name: booster pack
+	item:
+		name: card
+		amount: 10
+pack type:
+	name: additional card
+	item:
+		name: card

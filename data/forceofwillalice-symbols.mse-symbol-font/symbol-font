@@ -1,0 +1,604 @@
+mse version: 2.0.0
+version: 2013-12-15
+short name: normal
+position hint: 001
+icon: 1.png
+installer group: fowalice/symbol-font
+
+image font size: 14
+horizontal space: 2
+######################################## Full Art Symbols
+symbol:
+	code: B
+	image: black-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: G
+	image: green-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: R
+	image: red-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: U
+	image: blue-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: W
+	image: white-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: V
+	image: void-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: M
+	image: moon-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 0
+	image: 0-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 1
+	image: 1-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 2
+	image: 2-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 3
+	image: 3-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 4
+	image: 4-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 5
+	image: 5-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 6
+	image: 6-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 7
+	image: 7-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 8
+	image: 8-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: 9
+	image: 9-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: X
+	image: X-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: T
+	image: rest-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: gem
+	image: gem-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: activate
+	image: lapis-activate.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: awakening
+	image: lapis-awakening.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: barrier
+	image: lapis-barrier.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: bestow
+	image: lapis-bestow.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: bloodlust
+	image: lapis-bloodlust.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: continuous
+	image: lapis-continuous.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: energize
+	image: lapis-energize.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: enter
+	image: lapis-enter.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: evolution
+	image: lapis-evolution.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: explode
+	image: lapis-explode.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: firststrike
+	image: lapis-firststrike.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: flying
+	image: lapis-flying.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: force
+	image: lapis-force.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: imperishable
+	image: lapis-imperishable.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: inheritance
+	image: lapis-inheritance.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: incarnation
+	image: lapis-incarnation.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: jactivate
+	image: lapis-jactivate.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: judgment
+	image: lapis-judgment.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: limit
+	image: lapis-limit.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: mana
+	image: lapis-mana.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: pierce
+	image: lapis-pierce.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: precision
+	image: lapis-precision.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: quickcast
+	image: lapis-quickcast.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: remnant
+	image: lapis-remnant.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: shift
+	image: lapis-shift.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: stealth
+	image: lapis-stealth.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: swiftness
+	image: lapis-swiftness.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: targetattack
+	image: lapis-targetattack.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: torrent
+	image: lapis-torrent.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: trigger
+	image: lapis-trigger.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: resonance
+	image: lapis-resonance.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: seal
+	image: lapis-seal.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: willofhope
+	image: lapis-willofhope.png
+	enabled: { lapis_enable() }
+	draw text: -1
+symbol:
+	code: willofdespair
+	image: lapis-willofdespair.png
+	enabled: { lapis_enable() }
+	draw text: -1
+######################################## Regular Symbols
+symbol:
+	code: activate
+	image: alice-activate-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: awakening
+	image: alice-awakening-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: barrier
+	image: alice-barrier-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: bestow
+	image: alice-bestow-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: bloodlust
+	image: alice-bloodlust-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: continuous
+	image: alice-continuous-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: energize
+	image: alice-energize-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: enter
+	image: alice-enter-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: evolution
+	image: alice-evolution-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: explode
+	image: alice-explode-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: firststrike
+	image: alice-firststrike-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: flying
+	image: alice-flying-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: force
+	image: alice-force-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: imperishable
+	image: alice-imperishable-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: inheritance
+	image: alice-inheritance-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: incarnation
+	image: alice-incarnation-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: jactivate
+	image: alice-jactivate-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: judgment
+	image: alice-judgment-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: limit
+	image: alice-limit-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: mana
+	image: alice-mana-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: pierce
+	image: alice-pierce-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: precision
+	image: alice-precision-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: quickcast
+	image: alice-quickcast-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: remnant
+	image: alice-remnant-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: shift
+	image: alice-shift-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: stealth
+	image: alice-stealth-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: swiftness
+	image: alice-swiftness-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: targetattack
+	image: alice-targetattack-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: torrent
+	image: alice-torrent-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: trigger
+	image: alice-trigger-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: >
+	image: arrow-fa.png
+	enabled: { full_art }
+	draw text: -1
+symbol:
+	code: resonance
+	image: alice-resonance-fa.png
+	enabled: { full_art }
+	draw text: -1
+###################################
+symbol:
+	code: 0
+	image: 0.png
+symbol:
+	code: 1
+	image: 1.png
+symbol:
+	code: 2
+	image: 2.png
+symbol:
+	code: 3
+	image: 3.png
+symbol:
+	code: 4
+	image: 4.png
+symbol:
+	code: 5
+	image: 5.png
+symbol:
+	code: 6
+	image: 6.png
+symbol:
+	code: 7
+	image: 7.png
+symbol:
+	code: 8
+	image: 8.png
+symbol:
+	code: 9
+	image: 9.png
+symbol:
+	code: X
+	image: X.png
+symbol:
+	code: B
+	image: black.png
+symbol:
+	code: G
+	image: green.png
+symbol:
+	code: R
+	image: red.png
+symbol:
+	code: U
+	image: blue.png
+symbol:
+	code: W
+	image: white.png
+symbol:
+	code: V
+	image: void.png
+symbol:
+	code: M
+	image: moon.png
+symbol:
+	code: T
+	image: rest.png
+symbol:
+	code: gem
+	image: gem.png
+symbol:
+	code: activate
+	image: alice-activate.png
+symbol:
+	code: awakening
+	image: alice-awakening.png
+symbol:
+	code: barrier
+	image: alice-barrier.png
+symbol:
+	code: bestow
+	image: alice-bestow.png
+symbol:
+	code: bloodlust
+	image: alice-bloodlust.png
+symbol:
+	code: continuous
+	image: alice-continuous.png
+symbol:
+	code: energize
+	image: alice-energize.png
+symbol:
+	code: enter
+	image: alice-enter.png
+symbol:
+	code: evolution
+	image: alice-evolution.png
+symbol:
+	code: explode
+	image: alice-explode.png
+symbol:
+	code: firststrike
+	image: alice-firststrike.png
+symbol:
+	code: flying
+	image: alice-flying.png
+symbol:
+	code: force
+	image: alice-force.png
+symbol:
+	code: imperishable
+	image: alice-imperishable.png
+symbol:
+	code: inheritance
+	image: alice-inheritance.png
+symbol:
+	code: incarnation
+	image: alice-incarnation.png
+symbol:
+	code: jactivate
+	image: alice-jactivate.png
+symbol:
+	code: judgment
+	image: alice-judgment.png
+symbol:
+	code: limit
+	image: alice-limit.png
+symbol:
+	code: mana
+	image: alice-mana.png
+symbol:
+	code: pierce
+	image: alice-pierce.png
+symbol:
+	code: precision
+	image: alice-precision.png
+symbol:
+	code: quickcast
+	image: alice-quickcast.png
+symbol:
+	code: remnant
+	image: alice-remnant.png
+symbol:
+	code: shift
+	image: alice-shift.png
+symbol:
+	code: stealth
+	image: alice-stealth.png
+symbol:
+	code: swiftness
+	image: alice-swiftness.png
+symbol:
+	code: targetattack
+	image: alice-targetattack.png
+symbol:
+	code: torrent
+	image: alice-torrent.png
+symbol:
+	code: trigger
+	image: alice-trigger.png
+symbol:
+	code: >
+	image: arrow.png
+symbol:
+	code: resonance
+	image: alice-resonance.png
+symbol:
+	code: myth
+	image: lapis-myth.png
+symbol:
+	code: ascend
+	image: lapis-ascend.png

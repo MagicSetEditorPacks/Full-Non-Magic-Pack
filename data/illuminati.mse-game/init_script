@@ -1,0 +1,83 @@
+﻿########## Helpful booleans
+
+	is_group := { card.card_type == "group" }
+	is_illuminati := { card.card_type == "illuminati" }
+	is_special := { card.card_type == "special" }
+	is_artifact := { card.card_type == "artifact" }
+	is_nwo := { card.card_type == "nwo" }
+	is_goal := { card.card_type == "goal" }
+
+	arrowsallowed := { is_group() or is_illuminati() }
+
+	powallowed := { chosen(choice: "power", card.select_stats) }
+	resallowed := { chosen(choice: "resistance", card.select_stats) }
+	incallowed := { chosen(choice: "income", card.select_stats) }
+
+########## Filters for arrows
+
+	defaultarrow := {
+		if chosen(styling.font_color, choice: "normal") then
+			if is_illuminati() then "out, gold"
+			else if is_group() and siding == "left" then "in, black"
+			else "out, black"
+		else if is_illuminati() then "out, gold"
+			else if is_group() and siding == "left" then "in, white"
+			else "out, white"
+	}
+
+	verifyarrow := {
+		if arrowsallowed() then
+			require_exclusive_choice(
+				require_exclusive_choice(
+					input,
+					choice1: "black",
+					choice2: "white",
+					choice3: "gold"
+				),
+				choice1: "out",
+				choice2: "in"
+			)
+		else require_exclusive_choice(input, choice1: "none")
+	}
+
+########## Filters for text
+
+	default_select_stats := {
+		if is_group() then "power, resistance, income"
+		else if is_illuminati() then "power, income"
+		else if is_artifact() then "resistance"
+		else ""
+	}
+
+	verify_select_stats := {
+		if is_group() or is_artifact() then card.select_stats
+		else "power, resistance, income"
+	}
+
+	verifyattributes := {
+		if chosen(set.opposites, choice: "no") then exclusive_choice(
+			exclusive_choice(
+				exclusive_choice(
+					exclusive_choice(
+						input,
+						choices: "peaceful, violent"
+					),
+					choices: "straight, weird"
+				),
+				choices: "liberal, conservative"
+			),
+			choices: "government, communist, corporate"
+		)
+		else value
+	}
+
+########## Sorting
+
+	sort_card_type := {
+		if is_illuminati() then "a"
+		else if is_goal() then "b"
+		else if is_group() then "c"
+		else if is_artifact() then "d"
+		else if is_special() then "e"
+		else if is_nwo() then "f"
+	}

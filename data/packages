@@ -1,0 +1,474 @@
+﻿mse_version: 2.0.1
+package:
+	name: cns.mse-locale
+	version: 2014-01-04
+	status: 34
+	file: A20170328T120700 cn.png
+	file: A20170328T120700 locale
+package:
+	name: cnt.mse-locale
+	version: 2013-08-13
+	status: 34
+	file: A20170328T120700 cn.png
+	file: A20170328T120701 locale
+package:
+	name: da.mse-locale
+	version: 2009-01-18
+	status: 34
+	file: A20140804T131038 dk.png
+	file: A20140804T131038 locale
+package:
+	name: de.mse-locale
+	version: 2009-01-15
+	status: 34
+	file: A20140804T131038 de.png
+	file: A20140804T131038 locale
+package:
+	name: en.mse-locale
+	version: 2011-01-22
+	status: 34
+	file: A20140804T131034 locale
+	file: A20140804T131034 usgb.png
+package:
+	name: es.mse-locale
+	version: 2009-01-15
+	status: 34
+	file: A20140804T131027 es.png
+	file: A20140804T131027 locale
+package:
+	name: fr.mse-locale
+	version: 2009-01-18
+	status: 34
+	file: A20140804T131035 fr.png
+	file: A20140804T131035 locale
+package:
+	name: it.mse-locale
+	version: 2009-02-02
+	status: 34
+	file: A20140804T131019 it.png
+	file: A20140804T131019 locale
+package:
+	name: jp.mse-locale
+	version: 2009-01-15
+	status: 34
+	file: A20140804T131018 jp.png
+	file: A20140804T131018 locale
+package:
+	name: pl.mse-locale
+	version: 2009-03-05
+	status: 34
+	file: A20140804T131019 locale
+	file: A20140804T131019 pl.png
+package:
+	name: pt-br.mse-locale
+	version: 2009-07-23
+	status: 34
+	file: A20140804T131049 br.png
+	file: A20140804T131049 locale
+package:
+	name: yugioh-ToText.mse-export-template
+	version: 2014-01-01
+	status: 34
+	file: A20170328T120704 export-template
+	file: A20170328T120704 icon.jpg
+package:
+	name: yugioh-forum.mse-export-template
+	version: 2009-12-18
+	status: 34
+	file: A20150916T234300 export-template
+	file: A20150916T234300 icon.png
+package:
+	name: yugioh-series10.mse-style
+	version: 2017-06-26
+	status: 34
+	file: A20150906T143810 bar.png
+	file: A20150906T143810 blank.png
+	file: A20150906T143810 blank2.png
+	file: A20160331T145352 boss1.png
+	file: A20160331T145444 boss2.png
+	file: A20160331T145432 boss3.png
+	file: A20160331T171620 boss4.png
+	file: A20160331T171832 boss5.png
+	file: A20170309T191014 card-bigbang.png
+	file: A20170321T210344 card-dark-synchro-pendulum-less.png
+	file: A20170321T210346 card-dark-synchro-pendulum-more.png
+	file: A20170321T210348 card-dark-synchro-pendulum.png
+	file: A20170403T165011 card-dlc.png
+	file: A20170321T155101 card-dsynchro.png
+	file: A20170321T210240 card-effect-pendulum-less.png
+	file: A20170321T210242 card-effect-pendulum-more.png
+	file: A20170321T210243 card-effect-pendulum.png
+	file: A20170321T155135 card-effect.png
+	file: A20170321T210303 card-fusion-pendulum-less.png
+	file: A20170321T210311 card-fusion-pendulum-more.png
+	file: A20170321T210323 card-fusion-pendulum.png
+	file: A20170321T155053 card-fusion.png
+	file: A20170324T204333 card-link.png
+	file: A20170321T210107 card-normal-pendulum-less.png
+	file: A20170321T210115 card-normal-pendulum-more.png
+	file: A20170321T210059 card-normal-pendulum.png
+	file: A20170321T155106 card-normal.png
+	file: A20150906T143814 card-obelisk.png
+	file: A20170325T114401 card-pandemonium-large.png
+	file: A20170324T235248 card-pandemonium-medium.png
+	file: A20170325T114552 card-pandemonium-small.png
+	file: A20150906T143814 card-ra.png
+	file: A20170321T210148 card-ritual-pendulum-less.png
+	file: A20170321T210147 card-ritual-pendulum-more.png
+	file: A20170321T210150 card-ritual-pendulum.png
+	file: A20170321T155055 card-ritual.png
+	file: A20170519T015307 card-sample-infdev.png
+	file: A20170521T223150 card-sample-infdev3.png
+	file: A20170626T081911 card-sample.png
+	file: A20170529T230333 card-sampleinfdev6.png
+	file: A20150906T143814 card-slifer.png
+	file: A20170321T205933 card-spell.png
+	file: A20170321T210414 card-synchro-pendulum-less.png
+	file: A20170321T210419 card-synchro-pendulum-more.png
+	file: A20170321T210416 card-synchro-pendulum.png
+	file: A20170321T155130 card-synchro.png
+	file: A20170321T155125 card-token.png
+	file: A20170321T205941 card-trap.png
+	file: A20170422T012435 card-trell.png
+	file: A20170321T210212 card-xyz-pendulum-less.png
+	file: A20170321T210211 card-xyz-pendulum-more.png
+	file: A20170321T210216 card-xyz-pendulum.png
+	file: A20170321T155120 card-xyz.png
+	file: A20150727T123550 cnball/dark.png
+	file: A20150727T123552 cnball/divine.png
+	file: A20150727T123552 cnball/earth.png
+	file: A20150727T123553 cnball/fire.png
+	file: A20150727T123553 cnball/light.png
+	file: A20150727T123553 cnball/spell.png
+	file: A20150727T123553 cnball/trap.png
+	file: A20150727T123553 cnball/water.png
+	file: A20150727T123554 cnball/wind.png
+	file: A20150906T143816 cornerfirst.png
+	file: A20150906T143816 cornerunlimited.png
+	file: A20170626T070700 customfoils/applefoil.png
+	file: A20160229T220337 customfoils/collectborder.png
+	file: A20160228T083742 customfoils/defaultfoil.png
+	file: A20151004T233346 customfoils/egyptfoil.png
+	file: A20160229T223404 customfoils/ghostfoil.png
+	file: A20160228T092222 customfoils/ghostfoil2.png
+	file: A20160228T212020 customfoils/ghostfoil3.png
+	file: A20160421T223536 customfoils/kaibararefoil.png
+	file: A20170626T070646 customfoils/lemonfoil.png
+	file: A20150906T143820 customfoils/mosaicfoil.png
+	file: A20150906T143820 customfoils/parallelfoil.png
+	file: A20141230T090832 customfoils/secretfoil.png
+	file: A20160228T092315 customfoils/secretfoil2.png
+	file: A20150906T143820 customfoils/starfoil.png
+	file: A20160415T113406 customfoils/superfoil.png
+	file: A20160228T092052 customfoils/ultimatefoil.png
+	file: A20160228T092207 customfoils/ultrafoil.png
+	file: A20150906T143818 dark.png
+	file: A20160228T083742 defaultfoil.png
+	file: A20150906T143818 divine.png
+	file: A20150906T143818 earth.png
+	file: A20151004T233346 egyptfoil.png
+	file: A20150906T143818 fire.png
+	file: A20170517T213415 fullart/bonus2ex.png
+	file: A20170517T213415 fullart/bonusex.png
+	file: A20170517T213415 fullart/effectex.png
+	file: A20170517T213416 fullart/fusionex.png
+	file: A20170517T214044 fullart/linkex.png
+	file: A20170517T213416 fullart/normalex.png
+	file: A20170517T213417 fullart/peffectex.png
+	file: A20170517T213417 fullart/pfusionex.png
+	file: A20170517T213418 fullart/pnormalex.png
+	file: A20170517T213418 fullart/pritualex.png
+	file: A20170517T213419 fullart/psynchroex.png
+	file: A20170517T213419 fullart/ptokenex.png
+	file: A20170517T213420 fullart/pxyzex.png
+	file: A20170517T213420 fullart/ritualex.png
+	file: A20170517T213421 fullart/spellex.png
+	file: A20170517T213421 fullart/synchroex.png
+	file: A20170517T213421 fullart/tokenex.png
+	file: A20170517T213422 fullart/trapex.png
+	file: A20170517T213422 fullart/xyzex.png
+	file: A20150906T143818 goldfoil-anniversary.png
+	file: A20150906T143818 goldfoil-pendulum.png
+	file: A20150906T143818 goldfoil-pendulum_less.png
+	file: A20150906T143818 goldfoil-pendulum_more.png
+	file: A20150906T143818 goldfoil.png
+	file: A20150727T123552 jpball/dark.png
+	file: A20150727T123552 jpball/divine.png
+	file: A20150727T123553 jpball/earth.png
+	file: A20150727T123553 jpball/fire.png
+	file: A20150727T123553 jpball/light.png
+	file: A20150727T123553 jpball/spell.png
+	file: A20150727T123553 jpball/trap.png
+	file: A20150727T123553 jpball/water.png
+	file: A20150727T123554 jpball/wind.png
+	file: A20150906T143818 light.png
+	file: A20170222T145046 linkdlon.png
+	file: A20170518T201522 linkdlonex.png
+	file: A20170222T144907 linkdon.png
+	file: A20170518T201554 linkdonex.png
+	file: A20170222T145046 linkdron.png
+	file: A20170518T201716 linkdronex.png
+	file: A20170222T144743 linklon.png
+	file: A20170518T201400 linklonex.png
+	file: A20170324T205128 linkmarker.png
+	file: A20170518T200608 linkmarkerex.png
+	file: A20170222T144743 linkron.png
+	file: A20170518T201434 linkronex.png
+	file: A20170222T145046 linkulon.png
+	file: A20170518T201208 linkulonex.png
+	file: A20170222T144907 linkuon.png
+	file: A20170518T201249 linkuonex.png
+	file: A20170222T145046 linkuron.png
+	file: A20170518T201327 linkuronex.png
+	file: A20170325T131747 mask-p.png
+	file: A20170325T131729 mask-p_less.png
+	file: A20170325T131759 mask-p_more.png
+	file: A20170325T131811 mask-p_opaque.png
+	file: A20170325T131820 mask-p_opaque_less.png
+	file: A20150906T143820 mask.png
+	file: A20170518T193932 maskex.png
+	file: A20170518T194232 maskex1.png
+	file: A20170519T011641 maskex2.png
+	file: A20160415T060021 milleniumrare.png
+	file: A20150906T143820 mosaicfoil.png
+	file: A20170524T173831 new/bigbangnew.png
+	file: A20170626T024849 new/effectnew-p.png
+	file: A20170626T024810 new/effectnew-pl.png
+	file: A20170626T024901 new/effectnew-pm.png
+	file: A20170524T172845 new/effectnew.png
+	file: A20170524T173856 new/evolutenew.png
+	file: A20170529T121136 new/fullart/effectex.png
+	file: A20170529T121217 new/fullart/fusionex.png
+	file: A20170529T120846 new/fullart/linkex.png
+	file: A20170529T121113 new/fullart/normalex.png
+	file: A20170529T121156 new/fullart/ritualex.png
+	file: A20170529T121528 new/fullart/spellex.png
+	file: A20170529T121237 new/fullart/synchroex.png
+	file: A20170529T121307 new/fullart/tokenex.png
+	file: A20170529T121550 new/fullart/trapex.png
+	file: A20170529T121345 new/fullart/xyzex.png
+	file: A20170626T025212 new/fusionnew-p.png
+	file: A20170626T025224 new/fusionnew-pl.png
+	file: A20170626T025153 new/fusionnew-pm.png
+	file: A20170524T173633 new/fusionnew.png
+	file: A20170522T171339 new/linkdlon.png
+	file: A20170522T171405 new/linkdon.png
+	file: A20170522T171459 new/linkdron.png
+	file: A20170522T171204 new/linklon.png
+	file: A20170522T170026 new/linkmarker.png
+	file: A20170529T205745 new/linkmarkerex.png
+	file: A20170521T143953 new/linknew.png
+	file: A20170522T171254 new/linkron.png
+	file: A20170522T170958 new/linkulon.png
+	file: A20170522T171044 new/linkuon.png
+	file: A20170522T171132 new/linkuron.png
+	file: A20170626T031412 new/mask-p.png
+	file: A20170626T033251 new/mask-p_less.png
+	file: A20170626T033041 new/mask-p_more.png
+	file: A20170529T222851 new/maskex.png
+	file: A20170529T222854 new/maskex1.png
+	file: A20170626T032207 new/maskex2.png
+	file: A20170626T032222 new/maskex3.png
+	file: A20170529T225630 new/maskex4.png
+	file: A20170626T024945 new/normalnew-p.png
+	file: A20170626T024959 new/normalnew-pl.png
+	file: A20170626T024928 new/normalnew-pm.png
+	file: A20170524T172912 new/normalnew.png
+	file: A20170524T173725 new/obelisknew.png
+	file: A20170524T173739 new/osirisnew.png
+	file: A20170524T173801 new/ranew.png
+	file: A20170626T025116 new/ritualnew-p.png
+	file: A20170626T025133 new/ritualnew-pl.png
+	file: A20170626T025043 new/ritualnew-pm.png
+	file: A20170524T173517 new/ritualnew.png
+	file: A20170524T173544 new/spellnew.png
+	file: A20170626T025319 new/synchronew-p.png
+	file: A20170626T025332 new/synchronew-pl.png
+	file: A20170626T025248 new/synchronew-pm.png
+	file: A20170524T173654 new/synchronew.png
+	file: A20170524T173815 new/tokennew.png
+	file: A20170524T173601 new/trapnew.png
+	file: A20170626T025517 new/xyznew-p.png
+	file: A20170626T025537 new/xyznew-pl.png
+	file: A20170626T025445 new/xyznew-pm.png
+	file: A20170524T173711 new/xyznew.png
+	file: A20150906T143820 parallelfoil.png
+	file: A20141230T090832 secretfoil.png
+	file: A20150906T143820 spell.png
+	file: A20150906T143820 starfoil.png
+	file: A20160331T145324 start.png
+	file: A20170626T121600 style
+	file: A20160415T113406 superfoil.png
+	file: A20150906T143822 trap.png
+	file: A20170422T013012 trell.png
+	file: A20160416T122538 udark.png
+	file: A20160416T122539 udivine.png
+	file: A20160416T122539 uearth.png
+	file: A20160416T122540 ufire.png
+	file: A20160416T122541 ulight.png
+	file: A20160416T145246 ultimatefoil.png
+	file: A20170518T010009 ultimatefoilex.png
+	file: A20160415T113406 ultrafoil.png
+	file: A20160416T122541 uspell.png
+	file: A20160416T122542 utrap.png
+	file: A20170422T013042 utrell.png
+	file: A20160416T122543 uwater.png
+	file: A20160416T122543 uwind.png
+	file: A20150906T143822 water.png
+	file: A20150906T143822 wind.png
+package:
+	name: yugioh-standard-extra.mse-style
+	version: 2014-01-26
+	status: 34
+	file: A20170209T105139 artmask.png
+	file: A20170209T105139 card-angel.jpg
+	file: A20170209T105139 card-chibi.jpg
+	file: A20170209T105139 card-construct.jpg
+	file: A20170209T105139 card-demon.jpg
+	file: A20170209T105139 card-fire.jpg
+	file: A20170209T105139 card-golden.jpg
+	file: A20170209T105139 card-ice.jpg
+	file: A20170209T105139 card-sample.png
+	file: A20170209T105139 card-spirit.jpg
+	file: A20170209T105139 card-toon.jpg
+	file: A20170209T105139 dragon.png
+	file: A20170209T105139 false.png
+	file: A20170209T105139 grass.png
+	file: A20170209T105140 man.png
+	file: A20170209T105140 style
+package:
+	name: yugioh-standard-levels.mse-symbol-font
+	version: 2014-04-11
+	status: 34
+	file: A20160307T180048 continuous.png
+	file: A20160307T180048 counter.png
+	file: A20160826T154446 dnstar.png
+	file: A20160608T222632 dstar.png
+	file: A20160307T180048 equipment.png
+	file: A20150906T143824 estar.png
+	file: A20150925T020514 evostar.png
+	file: A20160307T180048 field.png
+	file: A20150906T143824 leftbracket.png
+	file: A20170328T120705 leftbracket_jp.png
+	file: A20170328T120705 leftbracket_sc.png
+	file: A20170328T120705 leftbracket_tc.png
+	file: A20150925T005358 mstar.png
+	file: A20160307T180048 quickplay.png
+	file: A20150906T143824 rightbracket.png
+	file: A20170328T120706 rightbracket_jp.png
+	file: A20170328T120706 rightbracket_sc.png
+	file: A20170328T120706 rightbracket_tc.png
+	file: A20160307T180048 ritual.png
+	file: A20160514T173418 splice.png
+	file: A20150906T143824 star.png
+	file: A20170324T200953 symbol-font
+	file: A20160826T143654 tstar.png
+	file: A20160416T122540 uestar.png
+	file: A20160416T122542 ustar.png
+package:
+	name: yugioh-standard.mse-style
+	version: 2009-08-08
+	status: 34
+	file: A20140804T131044 bar.png
+	file: A20140804T131044 blank.png
+	file: A20140804T131044 blank2.png
+	file: A20140804T131044 card-dragons.jpg
+	file: A20140804T131044 card-dsynchro.jpg
+	file: A20140804T131044 card-effect.jpg
+	file: A20140804T131044 card-fusion.jpg
+	file: A20140804T131044 card-normal.jpg
+	file: A20140804T131044 card-obelisk.jpg
+	file: A20140804T131044 card-ra.jpg
+	file: A20140804T131044 card-ritual.jpg
+	file: A20140804T131044 card-sample.png
+	file: A20140804T131044 card-slifer.jpg
+	file: A20140804T131044 card-spell.jpg
+	file: A20140804T131044 card-synchro.jpg
+	file: A20140804T131044 card-token.jpg
+	file: A20140804T131044 card-trap.jpg
+	file: A20140804T131044 cornerfirst.png
+	file: A20140804T131044 cornerunlimited.png
+	file: A20140804T131044 dark.png
+	file: A20140804T131044 divine.png
+	file: A20140804T131044 earth.png
+	file: A20140804T131044 fire.png
+	file: A20140804T131044 goldfoil.png
+	file: A20140804T131044 light.png
+	file: A20140804T131044 parallelfoil.png
+	file: A20140804T131044 secretfoil.png
+	file: A20140804T131044 spell.png
+	file: A20140804T131044 style
+	file: A20140804T131044 superfoil.png
+	file: A20140804T131044 trap.png
+	file: A20140804T131044 water.png
+	file: A20140804T131044 wind.png
+package:
+	name: yugioh-text-numbers.mse-symbol-font
+	version: 2014-04-11
+	status: 34
+	file: A20150906T143824 0dot.png
+	file: A20170215T174424 dot.png
+	file: A20150906T143826 infinity.png
+	file: A20150906T143826 leftbracket.png
+	file: A20150906T143826 n1.png
+	file: A20150906T143826 n2.png
+	file: A20150906T143826 n3.png
+	file: A20150906T143826 n4.png
+	file: A20150906T143826 n5.png
+	file: A20150906T143826 qmark.png
+	file: A20150906T143826 rightbracket.png
+	file: A20150906T143826 symbol-font
+package:
+	name: yugioh-text-replacements.mse-symbol-font
+	version: 2014-04-11
+	status: 34
+	file: A20150906T143826 dot.png
+	file: A20150906T143826 infinity.png
+	file: A20150906T143828 leftbracket.png
+	file: A20150906T143828 qmark.png
+	file: A20150906T143828 rightbracket.png
+	file: A20150906T143828 symbol-font
+package:
+	name: yugioh-yvd.mse-export-template
+	version: 2009-12-18
+	status: 34
+	file: A20150916T234300 export-template
+	file: A20150916T234300 icon.jpg
+package:
+	name: yugioh.mse-game
+	version: 2017-06-26
+	status: 34
+	file: A20150906T143806 auto_replace
+	file: A20150906T143808 card-back.png
+	file: A20170422T013125 card_fields
+	file: A20170626T091855 game
+	file: A20170625T080245 icons/actualstyle.png
+	file: A20170626T071956 icons/applefoilpreview.png
+	file: A20170626T071956 icons/collectborderpreview.png
+	file: A20170626T071956 icons/defaultfoilpreview.png
+	file: A20170626T071957 icons/egyptfoilpreview.png
+	file: A20170626T071957 icons/ghostfoil2preview.png
+	file: A20170626T071957 icons/ghostfoil3preview.png
+	file: A20170626T071957 icons/ghostfoilpreview.png
+	file: A20170626T073442 icons/kaibararefoilpreview.png
+	file: A20140804T131039 icons/language-en.png
+	file: A20170625T074709 icons/language-gb.png
+	file: A20170625T074720 icons/language-ja.png
+	file: A20170625T074738 icons/language-tw.png
+	file: A20170625T074716 icons/language-zh.png
+	file: A20140804T131039 icons/large-image.png
+	file: A20170626T071957 icons/lemonfoilpreview.png
+	file: A20170626T071957 icons/mosaicfoilpreview.png
+	file: A20170626T071957 icons/parallelfoilpreview.png
+	file: A20170625T080126 icons/proxylike.png
+	file: A20170626T071957 icons/secretfoil2preview.png
+	file: A20170626T071957 icons/secretfoilpreview.png
+	file: A20140804T131039 icons/small-image.png
+	file: A20170626T071958 icons/starfoilpreview.png
+	file: A20170626T071958 icons/superfoilpreview.png
+	file: A20170626T071958 icons/ultimatefoilpreview.png
+	file: A20170626T071958 icons/ultrafoilpreview.png
+	file: A20150924T224708 packs
+	file: A20170422T012757 script
+	file: A20150906T143810 set_fields
+	file: A20170626T081622 word_lists

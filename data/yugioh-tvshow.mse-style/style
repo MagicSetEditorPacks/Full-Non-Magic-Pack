@@ -1,0 +1,423 @@
+mse version: 2.0.0
+game: yugioh
+short name: TV Show Style
+installer group: Yugioh/TV Show
+icon: card-sample.png
+position hint: 03
+
+version: 2014-03-11
+depends on:
+	package: yugioh.mse-game
+	version: 2008-05-14
+depends on:
+	package: yugioh-standard-levels.mse-symbol-font
+	version: 2007-09-23
+depends on:
+	package: yugioh-text-replacements.mse-symbol-font
+	version: 2008-01-04
+depends on:
+	package: yugioh-standard.mse-style
+	version: 2008-10-27
+
+card width: 375
+card height: 523
+card dpi: 300
+############################################################## Acknowledgements
+############################################################## Extra scripts
+init script:
+	textbox_choice := {
+		if card.card_type=="effect monster" then "effect monster" else
+		if card.card_type=="ritual monster" then "ritual monster" else
+		if card.card_type=="synchro monster" then "synchro monster" else
+		if card.card_type=="fusion monster" then "fusion monster" else
+		if card.card_type=="dark synchro monster" then "dark synchro monster" else
+		if card.card_type=="token monster" then "token monster" else
+		if card.card_type=="obelisk" then "obelisk" else
+		if card.card_type=="slifer" then "slifer" else
+		if card.card_type=="ra" then "ra" else
+		if card.card_type=="legendary dragons" then "legendary dragons" else
+		if card.card_type=="spell card" then "spell card" else
+		if card.card_type=="trap card" then "trap card" else
+		"normal monster"
+	}
+############################################################## Extra style
+styling field:
+	type: choice
+	name: display name
+	description: Should the name be displayed?
+	initial: yes
+	choice: yes
+	choice: no
+styling field:
+	type: choice
+	name: black or white name
+	description: What color should the name be?
+	initial: white
+	choice: black
+	choice: white
+styling field:
+	type: choice
+	name: use a textbox
+	description: Should a textbox be used?
+	initial: no
+	choice: yes
+	choice: no
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	card type:
+		left:	0
+		top:	0
+		width:	375
+		height:	523
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			normal monster:	   card-normal.jpg
+			effect monster:	   card-effect.jpg
+			ritual monster:	   card-ritual.jpg
+			synchro monster: card-synchro.jpg
+			dark synchro monster: card-dsynchro.jpg
+			fusion monster:	   card-fusion.jpg
+			token monster:	   card-token.jpg
+			obelisk: 	   card-obelisk.jpg
+			slifer: 	   card-slifer.jpg
+			ra:	 	   card-ra.jpg
+			legendary dragons: card-dragons.jpg
+			xyz monster: card-dsynchro.jpg
+			spell card:	   card-spell.jpg
+			trap card:	   card-trap.jpg
+	foils:
+		left:	{ if card.rarity=="parallel rare" then 0 else 8}
+		top:	{ if card.rarity=="parallel rare" then 0 else 10}
+		width: { if card.rarity=="parallel rare" then 375 else 357}
+		height:	{ if card.rarity=="parallel rare" then 523 else 352}
+		z index: 2
+		render style: image
+		popup style: in place
+		image: 
+			script:	if card.rarity=="super rare" then "/yugioh-standard.mse-style/superfoil.png" else
+				if card.rarity=="ultra rare" then "/yugioh-standard.mse-style/superfoil.png" else
+				if card.rarity=="secret rare" then "/yugioh-standard.mse-style/secretfoil.png" else
+				if card.rarity=="ultimate rare" then "/yugioh-standard.mse-style/superfoil.png" else
+				if card.rarity=="parallel rare" then "/yugioh-standard.mse-style/parallelfoil.png" else
+				if card.rarity=="gold tech" then "/yugioh-standard.mse-style/superfoil.png" else
+				if card.rarity=="promo" then "/yugioh-standard.mse-style/superfoil.png" else nil
+	############################# Name line
+	name:
+		left: 15
+		top : 15
+		width: 345
+		height: 35
+		alignment: middle center shrink-overflow
+		padding bottom: 0
+		z index: 3
+		visible: script: if styling.display_name=="yes"	then true else false
+		font:
+			name: MatrixBoldSmallCaps
+			size: 24
+			color: 
+				script: if card.rarity=="rare" then rgb(230,230,230)
+				else if card.rarity=="secret rare" then rgb(230,230,230)
+				else if card.rarity=="promo" then rgb(230,230,230)
+				else if card.rarity=="ultra rare" then rgb(216,199,53)
+				else if card.rarity=="ultimate rare" then rgb(60,0,0)
+				else if card.rarity=="parallel rare" then rgb(216,199,53)
+				else if card.rarity=="gold tech" then rgb(216,199,53)
+				else if card.card_type=="dark synchro monster" then rgb(255,255,255)
+				else if styling.black_or_white_name=="white" then rgb(255,255,255)
+				else rgb(0,0,0)
+	attribute:
+		left: { if styling.use_a_textbox=="yes" and is_nmonster() then 320 else if styling.use_a_textbox=="no" and is_nmonster() then 175 else if styling.use_a_textbox=="yes" and is_monster() then 320 else 300 }
+		top : { if styling.use_a_textbox=="yes" and is_nmonster() then 375 else if styling.use_a_textbox=="no" and is_nmonster() then 427 else if styling.use_a_textbox=="yes" and is_monster() then 375 else 390 }
+		width: { if styling.use_a_textbox=="yes" then 25 else 35 }
+		height: { if styling.use_a_textbox=="yes" then 25 else 35 }
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			earth:		/yugioh-standard.mse-style/earth.png
+			water:		/yugioh-standard.mse-style/water.png
+			fire:		/yugioh-standard.mse-style/fire.png
+			wind:		/yugioh-standard.mse-style/wind.png
+			light:		/yugioh-standard.mse-style/light.png
+			dark:		/yugioh-standard.mse-style/dark.png
+			divine:		/yugioh-standard.mse-style/divine.png
+			spell:		/yugioh-standard.mse-style/spell.png
+			trap:		/yugioh-standard.mse-style/trap.png
+	level:
+		left: { if styling.use_a_textbox=="yes" then 30 else 45 }
+		top : { if styling.use_a_textbox=="yes" then 377 else 395 }
+		height: 25
+		width: 230
+		z index: 2
+		alignment: { if styling.use_a_textbox=="yes" then "middle left" else "middle center" }
+		visible: { if styling.use_a_textbox then true else if is_monster() then true else false }
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix
+			size: 18
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-standard-levels
+			alignment: middle center
+			scale down to: 1
+			size: 7
+	############################# Image
+	image:
+		left:	8
+		top:	10
+		width: 357
+		height:	352
+		z index: 1
+	############################# Card type
+	monster type:
+		left: 39
+		top : 408
+		width: { card_style.monster_type.content_width + 6 }
+		height: 14
+		alignment: middle left
+		z index: 2
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix
+			size: 12
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 3.5
+		visible: { if styling.use_a_textbox and is_monster() then true else false }
+	############################# Edition and Card ID
+	number:
+		left: 240
+		top : 502
+		width: 120
+		height: 28
+		z index: 2
+		alignment: top right
+		font:
+			name: Palatino Linotype
+			size: 8
+			color: rgb(0,0,0)
+	############################# Text box
+	rule text:
+		left: 35
+		top :
+			script: if is_nmonster() then 404 else 421
+		width: 304
+		height:
+			script: if is_nmonster() then 92 else 60
+		font:
+			name: MatrixBook
+			size: 8
+			scale down to: 4
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 3.5
+		alignment: top left justify
+		visible: { styling.use_a_textbox }
+		z index: 0
+		padding left: 1
+		padding top: 2
+		padding right: 0
+		padding bottom: 0
+		line height hard: 1.0
+		line height line: 1.0
+		line height soft: 0.9
+		line height hard max: 1.1
+		line height line max: 1.1
+	############################# Attack/Defense
+	attack:
+		left:	{ if styling.use_a_textbox=="yes" then 220 else 38 }
+		top:	{ if styling.use_a_textbox=="yes" then 485 else 450 }
+		width:	{ if styling.use_a_textbox=="yes" then 40 else 125 }
+		height:	{ if styling.use_a_textbox=="yes" then 12 else 40 }
+		z index: 2
+		alignment: { if styling.use_a_textbox=="yes" then "middle right shrink-overflow" else "middle center" }
+		font:
+			name: { if styling.use_a_textbox=="yes" then "MatrixBoldSmallCaps" else "Bangle" }
+			size: { if styling.use_a_textbox=="yes" then 12 else 24 }
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 8
+		visible: script: if is_nmonster() then false else true
+	defense:
+		z index: 4
+		left:	{ if styling.use_a_textbox=="yes" then 295 else 210 }
+		top:	{ if styling.use_a_textbox=="yes" then 485 else 450 }
+		width:	{ if styling.use_a_textbox=="yes" then 40 else 125 }
+		height:	{ if styling.use_a_textbox=="yes" then 12 else 40 }
+		z index: 2
+		alignment: { if styling.use_a_textbox=="yes" then "middle right shrink-overflow" else "middle center" }
+		font:
+			name: { if styling.use_a_textbox=="yes" then "MatrixBoldSmallCaps" else "Bangle" }
+			size: { if styling.use_a_textbox=="yes" then 12 else 24 }
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 8
+		visible: script: if is_nmonster() then false else true
+	############################# Card sorting / numbering
+	############################# Copyright stuff
+	gamecode:
+		left: 15
+		top : 502
+		width: 100
+		height: 18
+		alignment: top left
+		z index: 2
+		font:
+			name: Palatino Linotype
+			size: 8
+			color: rgb(0,0,0)
+	rarity:
+		left: 350
+		top : 500
+		height: 20
+		width: 20
+		z index: 3
+		render style: image
+		popup style: in place
+	copyright:
+		left: 120
+		top : 501
+		width: 150
+		height: 18
+		z index: 2
+		alignment: middle center
+		font: 
+			name: Palatino Linotype
+			size: 8
+			color: rgb(0,0,0)
+############################################extra card field:
+extra card field:
+	type: choice
+	name: textbox
+	choice: normal monster
+	choice: effect monster
+	choice: ritual monster
+	choice: synchro monster
+	choice: dark synchro monster
+	choice: fusion monster
+	choice: token monster
+	choice: obelisk
+	choice: slifer
+	choice: ra
+	choice: legendary dragons
+	choice: spell card
+	choice: trap card
+	default: textbox_choice()
+	editable: false
+extra card field:
+	type: choice
+	name: bar
+	choice: bar
+	editable: false
+extra card field:
+	type: choice
+	name: leftbracket
+	choice: lbracket
+	editable: false
+extra card field:
+	type: choice
+	name: rightbracket
+	choice: rbracket
+	editable: false
+extra card field:
+	type: text
+	name: atkoverlay
+	default: "ATK/"
+	editable: false
+extra card field:
+	type: text
+	name: defoverlay
+	default: "DEF/"
+	editable: false
+extra card style:
+	textbox:
+		left: -2
+		top: 7
+		width: 378
+		height: 523
+		z index: -2
+		mask: mask.png
+		visible: { styling.use_a_textbox or is_nmonster() }
+		render style: image
+		popup style: in place
+		choice images:
+			normal monster: /yugioh-standard.mse-style/card-normal.jpg
+			effect monster: /yugioh-standard.mse-style/card-effect.jpg
+			ritual monster: /yugioh-standard.mse-style/card-ritual.jpg
+			synchro monster: /yugioh-standard.mse-style/card-synchro.jpg
+			dark synchro monster: /yugioh-standard.mse-style/card-dsynchro.jpg
+			fusion monster: /yugioh-standard.mse-style/card-fusion.jpg
+			token monster: /yugioh-standard.mse-style/card-token.jpg
+			obelisk: /yugioh-standard.mse-style/card-obelisk.jpg
+			slifer: /yugioh-standard.mse-style/card-slifer.jpg
+			ra: /yugioh-standard.mse-style/card-ra.jpg
+			legendary dragons: /yugioh-standard.mse-style/card-dragons.jpg
+			spell card: /yugioh-standard.mse-style/card-spell.jpg
+			trap card: /yugioh-standard.mse-style/card-trap.jpg
+	bar:
+		left: 37
+		top : 481
+		height: 1
+		width: 298
+		z index: -1
+		render style: image list
+		choice images:
+			bar: /yugioh-standard.mse-style/bar.png
+		visible: { if styling.use_a_textbox and is_monster() then true else false }
+	leftbracket:
+		left: { if is_nmonster() then 22 else 35 }
+		top : { if is_nmonster() then 380 else 407 }
+		height: { if is_nmonster() then 17 else 14 }
+		width: { if is_nmonster() then 5 else 4 }
+		z index: 0
+		render style: image list
+		choice images:
+			lbracket: /yugioh-standard-levels.mse-symbol-font/leftbracket.png
+		visible: { styling.use_a_textbox }
+	rightbracket:
+		left: { if is_nmonster() then (card_style.level.content_width + 33) else (card_style.monster_type.content_width + 40) }
+		top : { if is_nmonster() then 380 else 407 }
+		height: { if is_nmonster() then 17 else 14 }
+		width: { if is_nmonster() then 5 else 4 }
+		z index: 0
+		render style: image list
+		choice images:
+			rbracket: /yugioh-standard-levels.mse-symbol-font/rightbracket.png
+		visible: { styling.use_a_textbox }
+	atkoverlay:
+		left: 170
+		top: 482
+		width: 48
+		height: 18
+		z index: -1
+		alignment: right middle
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix-Bold
+			size: 12
+			color: rgb(0,0,0)
+		visible: { if styling.use_a_textbox and is_monster() then true else false }
+	defoverlay:
+		left: 244
+		top: 482
+		width: 48
+		height: 18
+		z index: -1
+		alignment: right middle
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix-Bold
+			size: 12
+			color: rgb(0,0,0)
+		visible: { if styling.use_a_textbox and is_monster() then true else false }

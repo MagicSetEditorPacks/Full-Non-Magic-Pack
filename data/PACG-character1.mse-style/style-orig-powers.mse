@@ -1,0 +1,701 @@
+#POWERS	
+# Field backgrounds
+
+card_style:
+
+# Character Front
+	role_0_proficient_choice:
+		visible: 			{ isCharFront() }
+		top:				{ Height - 20 }
+		left:				{ powerL(1) - powersH - handH }
+		height:				{ powersH }
+		width:				{ 100 }
+		render_style: 		hidden
+		angle:				90
+		z_index: 			61
+
+# Data Entry
+
+	hand:
+		visible: 			{ isCharFront() }
+		top:				{ Height - 160 }
+		left:				{ powerL(1) - handH - 2 }
+		height:				{ if isCharFront() then 14 }
+		width:				{ Height - 180 }
+		angle:				90
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		z_index: 			62
+# Powers
+	power1:
+		visible: 			{ isCharFront() }
+		top:				{ Height - ( if isProficient(role: 0) then 160 else 22 ) }
+		left:				{ powerL(1) }
+		height:				{ powerH(1) }
+		width:				{ Height - ( if isProficient(role: 0) then 180 else 44 ) }
+		angle:				90
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		z_index: 			62
+	power2:
+		visible: 			{ isCharFront() }
+		top:				{ Height - 22 }
+		left:				{ powerL(2) }
+		height:				{ powerH(2) }
+		width:				{ Height - 44 }
+		angle:				90
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		z_index: 			62
+	power3:
+		visible: 			{ isCharFront() }
+		top:				{ Height - 22 }
+		left:				{ powerL(3) }
+		height:				{ if card.power2 != "" then powerH(3) }
+		width:				{ Height - 44 }
+		angle:				90
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		z_index: 			62
+	power4:
+		visible: 			{ isCharFront() }
+		top:				{ Height - 22 }
+		left:				{ powerL(4) }
+		height:				{ if card.power3 != "" then powerH(4) }
+		width:				{ Height - 44 }
+		angle:				90
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		z_index: 			62
+
+# ROLE powers
+# Role 1
+	role_1_hand:
+		visible: 			{ isRoleFront() }
+		top:				{ Height - 160 }
+		left:				{ 30 + powersH - 2 }
+		height:				{ if isRoleFront() then 14 }
+		width:				{ Height - 180 }
+		angle:				90
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		z_index: 			62
+	role_1_proficient_choice:
+		visible:			{ isRoleFront() }
+		top:				{ Height - 20 }
+		left:				{ powersTblL() }
+		height:				{ if isRoleFront() then powersH }
+		width:				{ 100 }
+		render_style:		hidden
+		angle:				90
+		
+	role_1:
+		visible:			{ isRoleFront() }
+		left:				{ Width - 77 }
+		top:				{ max(Height/2, card_style.role_1.content_width) + 18 }
+		height:				{ if isRoleFront() then 33 }
+		width:				{ max(Height/2, card_style.role_1.content_width) }
+		angle:				90
+		alignment:			right middle
+		font:
+			name:			Dax
+			size:			25
+			weight:			bold
+			color:			{ "black" }
+		z_index:			50
+		
+	role_1_flavour:
+		visible:			{ isRoleFront() }
+		left:				{ powersTblL() + powersTblH() + 8 }
+		top:				{ Height - 25 }
+		width:				{ Height - 50 }
+		height:				{ if isRoleFront() then Width - powersTblL() - powersTblH() - 116 }
+		angle:				90
+		alignment:			left top
+		font:
+			name:					Dax-regular
+			size:					11.5
+			scale_down_to: 			8
+			shadow_color: 			rgb(255,255,255)
+			shadow_blur: 			2
+		z_index:			50
+			
+	role_1_power_1:
+		visible:			{ isRoleFront() }
+		top:				{ Height - ( if isProficient(role: 1) then 160 else 18 ) }
+		left:				{ rolePowerL(role: 1, power: 1) }
+		height:				{ if isRoleFront() then max(powersH,card_style.role_1_power_1.content_height) }
+		width:				{ Height - ( if isProficient(role: 1) then 178 else 36 ) }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+	role_1_power_2:
+		visible:			{ isRoleFront() }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 2) }
+		height:				{ if isRoleFront() then max(powersH,card_style.role_1_power_2.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+	role_1_power_3:
+		visible:			{ isRoleFront() and card.role_1_power_2 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 3) }
+		height:				{ if isRoleFront() and card.role_1_power_2 != "" then max(powersH,card_style.role_1_power_3.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+	role_1_power_4:
+		visible:			{ isRoleFront() and card.role_1_power_3 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 4) }
+		height:				{ if isRoleFront() and card.role_1_power_3 != "" then max(powersH,card_style.role_1_power_4.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+	role_1_power_5:
+		visible:			{ isRoleFront() and card.role_1_power_4 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 5) }
+		height:				{ if isRoleFront() and card.role_1_power_4 != "" then max(powersH,card_style.role_1_power_5.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+	role_1_power_6:
+		visible:			{ isRoleFront() and card.role_1_power_5 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 6) }
+		height:				{ if isRoleFront() and card.role_1_power_5 != "" then max(powersH,card_style.role_1_power_6.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+	role_1_power_7:
+		visible:			{ isRoleFront() and card.role_1_power_6 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 7) }
+		height:				{ if isRoleFront() and card.role_1_power_6 != "" then max(powersH,card_style.role_1_power_7.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+
+# Role 2
+	role_2_hand:
+		visible: 			{ isRoleBack() }
+		top:				{ Height - 160 }
+		left:				{ 30 + powersH - 2 }
+		height:				{ if isRoleBack() then 14 }
+		width:				{ Height - 180 }
+		angle:				90
+		alignment: 			left middle
+		always_symbol:		true
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+		z_index: 			62
+	role_2_proficient_choice:
+		visible:			{ isRoleBack() }
+		top:				{ Height - 20 }
+		left:				{ powersTblL() }
+		height:				{ if isRoleBack() then powersH }
+		width:				{ 100 }
+		render_style:		hidden
+		angle:				90
+		
+	role_2:
+		visible:			{ isRoleBack() }
+		left:				{ Width - 77 }
+		top:				{ max(Height/2, card_style.role_2.content_width) + 18 }
+		height:				{ if isRoleBack() then 33 }
+		width:				{ max(Height/2, card_style.role_2.content_width) }
+		angle:				90
+		alignment:			right middle
+		font:
+			name:			Dax
+			size:			25
+			weight:			bold
+			color:			{ "black" }
+		z_index:			50
+		
+	role_2_flavour:
+		visible:			{ isRoleBack() }
+		left:				{ powersTblL() + powersTblH() + 8 }
+		top:				{ Height - 25 }
+		width:				{ Height - 50 }
+		height:				{ if isRoleBack() then Width - powersTblL() - powersTblH() - 116 }
+		angle:				90
+		alignment:			left top
+		font:
+			name:					Dax-regular
+			size:					11.5
+			scale_down_to: 			8
+			shadow_color: 			rgb(255,255,255)
+			shadow_blur: 			2
+		z_index:			50
+			
+	role_2_power_1:
+		visible:			{ isRoleBack() }
+		top:				{ Height - ( if isProficient(role: 2) then 160 else 18 ) }
+		left:				{ rolePowerL(role: 2, power: 1) }
+		height:				{ if isRoleBack() then max(powersH, card_style.role_2_power_1.content_height) }
+		width:				{ Height - ( if isProficient(role: 2) then 178 else 36 ) }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+	role_2_power_2:
+		visible:			{ isRoleBack() }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 2) }
+		height:				{ if isRoleBack() then max(powersH, card_style.role_2_power_2.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+	role_2_power_3:
+		visible:			{ isRoleBack() and card.role_2_power_2 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 3) }
+		height:				{ if isRoleBack() and card.role_2_power_2 != "" then max(powersH, card_style.role_2_power_3.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+	role_2_power_4:
+		visible:			{ isRoleBack() and card.role_2_power_3 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 4) }
+		height:				{ if isRoleBack() and card.role_2_power_3 != "" then max(powersH, card_style.role_2_power_4.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+	role_2_power_5:
+		visible:			{ isRoleBack() and card.role_2_power_4 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 5) }
+		height:				{ if isRoleBack() and card.role_2_power_4 != "" then max(powersH, card_style.role_2_power_5.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+	role_2_power_6:
+		visible:			{ isRoleBack() and card.role_2_power_5 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 6) }
+		height:				{ if isRoleBack() and card.role_2_power_5 != "" then max(powersH, card_style.role_2_power_6.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+	role_2_power_7:
+		visible:			{ isRoleBack() and card.role_2_power_6 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 7) }
+		height:				{ if isRoleBack() and card.role_2_power_6 != "" then max(powersH, card_style.role_2_power_7.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			62
+		alignment: 			left middle
+		always_symbol:		true
+		padding_left:		2
+		padding_right:		2
+		font:
+			name:				Dax-regular
+			size:				9
+		symbol_font:
+			name:				PACG-symbol
+			size:				11
+
+extra_card_style:
+# Character Front, Role
+	powers_table:
+		visible:		 	{ isCharFront() or isRole() }
+		top:				{ Height - 16 }
+		left:				{ powersTblL() }
+		width:				{ Height - 32 }
+		height:				{ powersTblH() }
+		angle:				90
+		z_index:			60
+	
+	powers_header:
+		visible:			{ isCharFront() or isRole() }
+		top:				{ Height - 20 }
+		left:				{ powersTblL() }
+		height:				{ powersH }
+		width:				{ Height - 40 }
+		padding_left: 		2
+		padding_top: 		-2
+		angle:				90
+		font:
+			name:				Dax
+			size:				11
+			color:				rgb(255,255,255)
+		alignment:			left middle
+		z_index: 			60
+
+	hand_header:
+# info 2pt border
+		visible: 			{ isCharFront() or isRole() }
+		left:				{ if isCharFront() then powerL(1) - handH else 30 + powersH }
+		height: 			{ handH - 4 }
+		top:				{ Height - 20 }
+		width:				{ Height - 40 }
+		padding_top: 		-2
+		background_color: 	rgb(255,255,255)
+		alignment: 			left top
+		font:
+			name:				Dax
+			size:				9
+			weight:				bold
+		angle:				90
+		z_index: 			61
+
+# ROLE Power Cells
+# Role 0
+	role_0_power_1_cell:
+		visible: 			{ isCharFront() }
+		left:				{ powerL(1) + 2 }
+		height:				{ powerH(1) - 4 }
+		top:				{ Height - 20 }
+		width:				{ Height - 40 }
+		padding_top: 		-2
+		background_color: 	rgb(255,255,255)
+		alignment: 			left top
+		font:
+			name:				Dax
+			size:				9
+			weight:				bold
+		angle:				90
+		z_index:			61
+	role_0_power_2_cell:
+		visible:			{ isCharFront() }
+		left:				{ powerL(2) + 2 }
+		height:				{ powerH(2) - 4 }
+		top:				{ Height - 20 }
+		width:				{ Height - 40 }
+		angle:				90
+		z_index:			61
+	role_0_power_3_cell:
+		visible:			{ isCharFront() }
+		left:				{ powerL(3) + 2 }
+		height:				{ if card.power3 !="" then (powerH(3) - 4) }
+		top:				{ Height - 20 }
+		width:				{ Height - 40 }
+		angle:				90
+		z_index:			61
+	role_0_power_4_cell:
+		visible:			{ isCharFront() }
+		left:				{ powerL(4) + 2 }
+		height:				{ if card.power4 !="" then (powerH(4) - 4) }
+		top:				{ Height - 20 }
+		width:				{ Height - 40 }
+		angle:				90
+		z_index:			61
+
+# Role 1
+	role_1_power_1_header:
+		visible:			{ isRoleFront() and isProficient(role: 1) }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 1) }
+		height:				{ max(powersH,card_style.role_1_power_1.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		alignment: 			left middle
+		padding_left:		3
+		font:
+			name:				Dax
+			size:				9
+			weight:				bold
+		angle:				90
+		z_index:			62
+	role_1_power_1_cell:
+		visible:			{ isRoleFront() }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 1) }
+		height:				{ max(powersH,card_style.role_1_power_1.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61
+	role_1_power_2_cell:
+		visible:			{ isRoleFront() }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 2) }
+		height:				{ max(powersH,card_style.role_1_power_2.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61
+	role_1_power_3_cell:
+		visible:			{ isRoleFront() and card.role_1_power_3 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 3) }
+		height:				{ max(powersH,card_style.role_1_power_3.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61
+	role_1_power_4_cell:
+		visible:			{ isRoleFront() and card.role_1_power_4 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 4) }
+		height:				{ max(powersH,card_style.role_1_power_4.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61
+	role_1_power_5_cell:
+		visible:			{ isRoleFront() and card.role_1_power_5 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 5) }
+		height:				{ max(powersH,card_style.role_1_power_5.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61
+	role_1_power_6_cell:
+		visible:			{ isRoleFront() and card.role_1_power_6 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 6) }
+		height:				{ max(powersH,card_style.role_1_power_6.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61
+	role_1_power_7_cell:
+		visible:			{ isRoleFront() and card.role_1_power_7 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 1, power: 7) }
+		height:				{ max(powersH,card_style.role_1_power_7.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61
+	
+# Role 2
+	role_2_power_1_header:
+		visible:			{ isRoleBack() and isProficient(role: 2) }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 1) }
+		height:				{ max(powersH, card_style.role_2_power_1.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		alignment: 			left middle
+		padding_left:		3
+		font:
+			name:				Dax
+			size:				9
+			weight:				bold
+		angle:				90
+		z_index:			62
+	role_2_power_1_cell:
+		visible:			{ isRoleBack() }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 1) }
+		height:				{ max(powersH, card_style.role_2_power_1.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61
+		z_index:			61
+	role_2_power_2_cell:
+		visible:			{ isRoleBack() }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 2) }
+		height:				{ max(powersH, card_style.role_2_power_2.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61
+	role_2_power_3_cell:
+		visible:			{ isRoleBack() and card.role_2_power_3 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 3) }
+		height:				{ max(powersH, card_style.role_2_power_3.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61
+	role_2_power_4_cell:
+		visible:			{ isRoleBack() and card.role_2_power_4 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 4) }
+		height:				{ max(powersH, card_style.role_2_power_4.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61
+	role_2_power_5_cell:
+		visible:			{ isRoleBack() and card.role_2_power_5 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 5) }
+		height:				{ max(powersH, card_style.role_2_power_5.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61
+	role_2_power_6_cell:
+		visible:			{ isRoleBack() and card.role_2_power_6 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 6) }
+		height:				{ max(powersH, card_style.role_2_power_6.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61
+	role_2_power_7_cell:
+		visible:			{ isRoleBack() and card.role_2_power_7 != "" }
+		top:				{ Height - 18 }
+		left:				{ rolePowerL(role: 2, power: 7) }
+		height:				{ max(powersH, card_style.role_2_power_7.content_height) }
+		width:				{ Height - 36 }
+		angle:				90
+		z_index:			61

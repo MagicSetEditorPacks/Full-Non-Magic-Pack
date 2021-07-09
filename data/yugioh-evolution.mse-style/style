@@ -1,0 +1,233 @@
+﻿version: 0.3.8
+game: yugioh
+short name: Evolution
+full name: Evolution
+icon: card-sample.png
+installer group: Yugioh/Evolution
+position hint: 08
+
+version: 2009-12-18
+depends on:
+	package: yugioh.mse-game
+	version: 2009-08-08
+depends on:
+	package: yugioh-standard-evolution.mse-symbol-font
+	version: 2009-11-15
+
+card width: 375
+card height: 525
+card dpi: 158.5455
+#By Smr1313
+#Adapted by Pichoro
+init script:
+	is_trap := { contains(card.card_type, match: "trap") }
+	is_spell := { contains(card.card_type, match: "spell") }
+	is_monster := { not is_trap() and not is_spell() }
+	type_prefix := { if card.card_type == "effect monster" then "Effect Monster — "
+		else if card.card_type == "obelisk" then "Effect Monster — "
+		else if card.card_type == "slifer" then "Effect Monster — "
+		else if card.card_type == "ra" then "Effect Monster — "
+		else if card.card_type == "legendary dragons" then "Effect Monster — "
+		else if card.card_type == "fusion monster" then "Fusion Monster — "
+		else if card.card_type == "ritual monster" then "Ritual Monster — "
+		else if contains(card.card_type, match:"synchro") then "Ritual Monster — "
+		else if contains(card.card_type, match:"monster") then "Monster — "
+		else if card.card_type == "trap card" then "Trap"
+		else if card.card_type == "spell card" then "Spell"
+		else ""
+	}
+styling field:
+	type: text
+	name: artist
+	description: The default artist for the cards.
+card style:
+	card type:
+		top: 0
+		left: 0
+		width: 375
+		height: 525
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			normal monster: normal-monster.png
+			effect monster: effect-monster.png
+			fusion monster: fusion-monster.png
+			ritual monster: ritual-monster.png
+			synchro monster: ritual-monster.png
+			dark synchro monster: ritual-monster.png
+			token monster: normal-monster.png
+			obelisk: effect-monster.png
+			slifer: effect-monster.png
+			ra: effect-monster.png
+			legendary dragons: effect-monster.png
+			trap card: trap.png
+			spell card: spell.png
+	name:
+		top: 35
+		left: 25
+		width: 265
+		height: 35
+		alignment: left shrink-overflow
+		z index: 0
+		font:
+			name: Holy Mackerel!
+			size: 24
+			color: white
+			scale down to: 10
+	attribute:
+		top: 15
+		left: 290
+		width: 70
+		height: 80
+		z index: 0
+		render style: image
+		choice images:
+			dark: dark_orb.png
+			earth: earth_orb.png
+			fire: fire_orb.png
+			light: light_orb.png
+			water: water_orb.png
+			wind: wind_orb.png
+			trap: trap_orb.png
+			spell: spell_orb.png
+	level:
+		top: 65
+		left: 25
+		width: 275
+		height: 30
+		z index: 0
+		font:
+			name: Matrix
+			size: 14
+			scale down to: 10
+			color: white
+		symbol font:
+			name: yugioh-standard-evolution
+			scale down to: 8
+			size: 8
+	rule text:
+		top: 362
+		left: 30
+		width: 315
+		height:
+			script: if is_trap() or is_spell() then 100 else 58
+		alignment: top left
+		z index: 0
+		font:
+			name: TrebuchetMS
+			size: 10
+			color: white
+			scale down to: 8
+		symbol font:
+			name: yugioh-standard-evolution
+			scale down to: 1
+			size: 6
+	attack:
+		top: 475
+		left: 18
+		width: 85
+		height: 20
+		alignment: left
+		z index: 0
+		font:
+			name: Matrix
+			size: 24
+			color: white
+		visible: { is_monster() }
+	defense:
+		top: 475
+		left: 270
+		width: 87
+		height: 20
+		alignment: right
+		z index: 0
+		font:
+			name: Matrix
+			size: 24
+			color: white
+		visible: { is_monster() }
+	copyright:
+		top: 500
+		left: 100
+		width: 180
+		height:10
+		alignment: center center
+		z index: 0
+		font:
+			name: MPlantin
+			size: 8
+			color: black
+	image:
+		top: 15
+		left: 15
+		width: 345
+		height: 495
+		z index: -1
+		mask: image-mask.png
+extra card field:
+	type: text
+	name: flavor text
+	description: The flavor text for this card.
+	multi line: true
+extra card field:
+	type: text
+	name: artist
+	default: styling.artist
+	description: The artist of the card.
+extra card field:
+	type: text
+	name: type
+	script:
+		combined_editor(
+			prefix: type_prefix(),
+			field1: card.type_1,
+			separator1: " ",
+			field2: card.type_2,
+			separator2: " ",
+			field3: card.type_3,
+			soft_before_empty: true,
+			hide_when_empty: true
+		)
+extra card style:
+	flavor text:
+		top:
+			script: if is_trap() or is_spell() then 460 else 425
+		left: 30
+		width: 315
+		height: 30
+		alignment: middle center shrink-overflow
+		z index: 0
+		font:
+			name: MPlantin
+			size: 10
+			style: italic
+			color: white
+			scale down to: 8
+	artist:
+		top: 490
+		left: 100
+		width: 180
+		height:10
+		alignment: center center
+		z index: 0
+		font:
+			name: MPlantin
+			size: 8
+			color: black
+	type:
+		top: 337
+		left: 30
+		width: 315
+		height:	25
+		alignment: center center shrink-overflow
+		z index: 0
+		font:
+			name: ModMatrix
+			size: 14
+			color: black
+			scale down to: 8
+		symbol font:
+			name: yugioh-standard-evolution
+			scale down to: 1
+			size: 6

@@ -1,0 +1,117 @@
+mse version: 2.0.0
+game: pokemon
+short name: Custom Style
+full name: Style created by /vp/ anon
+icon: card-sample.png
+position hint: 05
+installer group: pokemon/style
+
+version: 0.25
+
+depends on: pokemon.mse-game 		    0.32
+depends on: pokemon-symbols.mse-symbol-font 0.32
+
+card background: white
+card width: 375
+card height: 523
+card dpi: 96
+
+#Fonts Used: Gill Sans Std, Sanvito Pro Light Caption, Futura Std, Frutiger LT Std
+#################### Background Stuff
+
+card style:
+	
+	card_type:
+		top: 0
+		left: 0
+		height: 523
+		width: 375
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+
+			Trainer Item: itemcard.png
+			#Trainer Tool: toolcard.png
+			Trainer Supporter: supportercard.png
+			Trainer Stadium: stadiumcard.png
+
+			#Special Energy: specialenergy.png
+		
+		mask: {if substring(card.card_type, end: 7) == "Pokemon" and substring(card.card_type, begin: 14, end: 5) == "Stage" then "mask1.png" else "mask2.png"}
+
+########## Name lists
+	name:
+		left: {if substring(card.card_type, end: 7) == "Pokemon" then 88 else 43}
+		top: {if substring(card.card_type, end: 7) == "Pokemon" then 20 else 47}
+		width: {if substring(card.card_type, end: 7) == "Trainer" then 205 else 125}
+		height: 18
+		alignment: left shrink-overflow
+		padding bottom: 0
+		z index: 2
+		font:
+			name: Myriad Pro Light
+			weight: bold
+			size: 14
+			max stretch: 0.5
+			color: {if substring(card.card_type, end: 13) == "Pokemon Dark " or substring(card.card_type, end: 13) == "Pokemon Dragn" then rgb(255,255,255) else rgb(0,0,0)}
+					
+		
+	slot1text:
+		left: {if card.card_type == "Trainer Item" or card.card_type == "Trainer Supporter" or card.card_type == "Trainer Tool" or card.card_type == "Trainer Stadium" or card.card_type == "Special Energy" then 65 else 29}
+		top: {if card.slot1cost == "A!" then 312 else if card.card_type == "Trainer Item" or card.card_type == "Trainer Supporter" or card.card_type == "Trainer Tool" or card.card_type == "Trainer Stadium" or card.card_type == "Special Energy" then 295 else if card.card_type == "Pokemon Metal Stage 1" then 345 else 405}
+		width: {if card.card_type == "Trainer Item" or card.card_type == "Trainer Supporter" or card.card_type == "Trainer Tool" or card.card_type == "Trainer Stadium" or card.card_type == "Special Energy" then 247 else 315}
+		height: {if card.card_type == "Trainer Item" or card.card_type == "Trainer Supporter" or card.card_type == "Trainer Tool" or card.card_type == "Trainer Stadium" or card.card_type == "Special Energy" then 100 else 65}
+		alignment: middle left justify
+		z index: 2
+		font:
+			name: Futura LT
+			size: 11
+			color: {if substring(card.card_type, end: 13) == "Pokemon Dark " or substring(card.card_type, end: 13) == "Pokemon Dragn" then rgb(255,255,255) else rgb(23,23,23)}
+		symbol font:
+			name: pokemon-symbols
+			size: 108
+			alignment: center top justify-all
+
+		allow formating: true
+
+########## Images
+	imageCard:
+		left: {if substring(card.card_type, end: 7) == "Trainer" then 38 else 32}
+		top: {if substring(card.card_type, end: 7) == "Trainer" then 73 else 50}
+		width: {if substring(card.card_type, end: 7) == "Pokemon" then 306 else if substring(card.card_type, end: 7) == "Trainer" then 303 else 300}
+		height: {if substring(card.card_type, end: 7) == "Trainer" then 177 else 201}
+		z index: -2
+
+	illustrator:
+		left: 37
+		top : 490
+		width: 105
+		height: 13
+		z index: 2
+		alignment: center left shrink-overflow
+		font:
+			name: Futura Std
+			style: italic
+			size: 8
+			color: {if substring(card.card_type, end: 13) == "Pokemon Dark " or substring(card.card_type, end: 13) == "Pokemon Dragn" then rgb(255,255,255) else rgb(0,0,0)}
+	set number:
+		left: 280
+		top: 486
+		width: 40
+		height: 12
+		z index: 2
+		alignment: middle center
+		font:
+			name: Futura STD
+			style: italic
+			size: 7
+			color: {if substring(card.card_type, end: 13) == "Pokemon Dark " or substring(card.card_type, end: 13) == "Pokemon Dragn" then rgb(255,255,255) else rgb(0,0,0)}
+
+
+	seticon:
+		left: 328
+		top: 478
+		width: 20
+		height: 20
+		z index: 2

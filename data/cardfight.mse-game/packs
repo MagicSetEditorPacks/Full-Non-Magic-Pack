@@ -1,0 +1,85 @@
+pack type:
+	name: ultra rare
+	filter: card.rarity == "UR"
+pack type:
+	name: generation rare
+	filter: card.rarity == "GR"
+pack type:
+	name: super rare
+	filter: card.rarity == "RRRR"
+pack type:
+	name: triple rare
+	filter: card.rarity == "RRR"
+pack type:
+	name: double rare
+	filter: card.rarity == "RR"
+pack type:
+	name: rare
+	filter: card.rarity == "R"
+pack type:
+	name: common
+	filter: card.rarity == "C"
+pack type:
+	name: special
+	filter: card.rarity == "SP"
+pack type:
+	name: secret generation rare
+	filter: card.rarity == "SGR"
+pack type:
+	name: secret rare
+	filter: card.rarity == "SCR"
+pack type:
+	name: special or ultra rare
+	selectable: false
+	filter: card.rarity == "SP" or card.rarity == "UR"
+pack type:
+	name: secret or secret generation rare
+	selectable: false
+	filter: card.rarity == "SCR" or card.rarity == "SGR"
+	
+################################ Randomized selections
+
+pack type:
+	name: random rare
+	selectable: false
+	select: proportional
+	item:
+		name: rare
+		weight: 480
+	item:
+		name: double rare
+		weight: 80
+	item:
+		name: triple rare
+		weight: 48
+	item:
+		name: generation rare
+		weight: 16
+	item:
+		name: super rare
+		weight: 4
+	item:
+		name: special or ultra rare
+		weight: 3
+	item:
+		name: secret or secret generation rare
+		weight: 1
+
+################################ Card packs
+
+pack type:
+	name: 5 card booster
+	item:
+		name: common
+		amount: 4
+	item:
+		name: random rare
+		amount: 1
+pack type:
+	name: 7 card booster
+	item:
+		name: common
+		amount: 5
+	item:
+		name: random rare
+		amount: 2

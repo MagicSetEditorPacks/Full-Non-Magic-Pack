@@ -1,0 +1,64 @@
+﻿mse version: 0.3.9
+version: 1.0
+short name: Standard HQ
+position hint: 002
+icon: star.png
+installer group: Yugioh/Symbol Fonts/Standard HQ
+
+# Symbols for Cards
+
+image font size: 16
+horizontal space: 3
+symbol:
+	code: %
+	image: continuous.png
+symbol:
+	code: !
+	image: counter.png
+symbol:
+	code: +
+	image: equipment.png
+symbol:
+	code: &
+	image: field.png
+symbol:
+	code: $
+	image: quickplay.png
+symbol:
+	code: #
+	image: ritual.png
+symbol:
+	code: [
+	image: leftbracket.png
+	image font size: 28
+symbol:
+	code: ]
+	image: rightbracket.png
+	image font size: 28
+symbol:
+	code: *
+	image: star-ds.png
+	enabled: {card.card_type=="dark synchro monster"}
+	image font size: 20
+symbol:
+	code: *
+	image: star-rank.png
+	enabled: {card.card_type=="xyz monster"}
+	image font size: 20
+symbol:
+	code: *
+	image: star.png
+	image font size: 20
+
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: %
+	item: !
+	item: +
+	item: &
+	item: $
+	item: #
+	item: [
+	item: ]
+	item: *

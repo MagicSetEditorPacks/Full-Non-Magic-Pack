@@ -1,0 +1,3833 @@
+mse version: 2.0.0
+game: poke
+full name: Pokemon Classic Face
+short name: Classic
+icon: card-sample.jpg
+position hint: 002
+
+version: 2016-08-08
+depends on:
+	package: poke.mse-game
+	version: 2016-08-01
+depends on:
+	package: poke-a-energy.mse-symbol-font
+	version: 2016-08-01
+
+#By: trucker monkey
+#	Version 0.4.00
+
+card width: 515
+card height: 718
+card dpi: 205
+
+#card width: 368
+#card height: 513
+#card dpi: 147
+
+#Actual card width is 2.5", height is 3.5" almost exactly
+############################################################## Extra scripts
+init script:
+	##############################These two equations were originally used for centering and placing the different frames and text so that they matched the original card.
+	##############################			They have been kept in here because they would allow a different resolution of card should such thing apply
+	##############################                  Be careful to change the card size when altering these value
+	##############################                    If you expand this to 2 or greater then modifications to the outline text will have to be performed for visibility
+	expand_size := { 1.4 }
+	# 2 is the size of the actual images used
+	# to watch 2 , card width 736, height 750, expand_size==2, slide_up == 0 or 276
+	# for 2   card width: 736, card height: 1026, card dpi: 294
+	# for 1.5 card width: 552, card height:  770, card dpi: 220
+	# for 1.4 card width: 515, card height:  717, card dpi: 205
+	# for 1   card width: 368, card height:  513, card dpi: 147
+	slide_left := { 0 }
+	slide_up := { 0 }
+	x_left := { to_int(input * expand_size()) - slide_left() }
+	y_top := { to_int(input * expand_size()) - slide_up() }
+	fun_expand_size := { to_int(input * expand_size()) }
+	fun_expand_font := { input * expand_size() }
+	##############################These equations make sure that the cost for the classic template and the modern template match in spite of being different fields
+	cost_new_1_placekeep := { card.cost_classic_1 }
+	cost_new_2_placekeep := { card.cost_classic_2 }
+	cost_new_3_placekeep := { card.cost_classic_3 }
+	#########Defining equation for text and other things
+	is_outline := {
+		(styling.full_art_setting == "full art" or styling.full_art_setting == "popout art (for advanced users)")
+	}
+	###############################################Equations that define spacing for attack
+	#######Determinines if it is an ability/pokemon power for classic
+	is_not_ability_classic_1 := { not(contains(card.rule_text_1, match:"mon Power"))
+	}
+	is_not_ability_classic_2 := { not(contains(card.rule_text_2, match:"mon Power"))
+	}
+	is_not_ability_classic_3 := { not(contains(card.rule_text_3, match:"mon Power"))
+	}
+	#######Determines if the number of lines of rule text are currently being used
+	rule_line_1 := { card_style.rule_text_1.content_lines - (if to_text(card.rule_text_1)=="" and card_style.rule_text_1.content_lines==1 then 1 else 0)
+	}
+	rule_line_2 := { card_style.rule_text_2.content_lines - (if to_text(card.rule_text_2)=="" and card_style.rule_text_2.content_lines==1 then 1 else 0)
+	}
+	rule_line_3 := { card_style.rule_text_3.content_lines - (if to_text(card.rule_text_3)=="" and card_style.rule_text_3.content_lines==1 then 1 else 0)
+	}
+	rule_lines := { rule_line_1() + rule_line_2() + rule_line_3() }
+	rule_lines_g6 := { rule_lines() }
+	#######Determines how many attacks have been input for Gen 6
+	#######Determines how many attacks have been input for Classic
+	attack_no_g1 := { if card.cost_classic_3!="" or card.damage_3!="" or to_text(card.rule_text_3)!="" then 3
+		else if card.cost_classic_2!="" or card.damage_2!="" or to_text(card.rule_text_3)!="" then 2
+		else 1
+	}
+	#######The height of the attack dividers for Classic
+	divider_height_1 := { if attack_no_g1()==1 then 392
+		else if attack_no_g1()==2 then if rule_line_1()<=3 then if rule_line_2()<=3 then 359 else 347
+		 else if rule_line_2()<=3 then 364 else (125*rule_line_1()/rule_lines_g6())
+		else 335
+	}
+	divider_height_2 := { if attack_no_g1()==3 then 378 else 417
+	}
+	############################### Use White Text Or Not
+	is_wt_text_nf := {
+		card.card_type=="pokemon" and (card.card_color == "dark" or card.card_color == "dragon") and not(is_outline())
+	}
+	is_wt_text_1 := {
+		is_pokemon() and (card.card_color == "dark" or card.card_color == "dragon") and not(is_outline())
+	}
+	is_wt_text_2 := {
+		((card.card_type=="pokemon" and (card.card_color == "dark" or card.card_color == "dragon")) or 
+		(card.card_type=="dual type" and (card.card_color_2 == "dark" or card.card_color_2 == "dragon"))) and
+		not(is_outline())
+	}
+	is_wt_wrr := { is_wt_text_nf()	}
+	############################## Three equations dependent upon styling options to modify filter text for the classic face to change card color
+	rule_text_filter_1 := { text_filter(value) } +
+		remove_tag@(tag: "<color") +
+		replace@(match: "<b>", replace: { if contains(card.rule_text_1, match:"mon Power")
+				then if card.card_color=="fire" or card.card_color=="fairy" or card.card_color=="psychic" or (card.card_color=="fighting" and styling.fighting_pokemon_render=="Purple Text") then "<b><color:rgb(89,46,132)>"
+				else "<b><color:rgb(198,34,12)>"
+			else "<b>" } ) +
+		replace@(match: "</b>", replace: { if is_not_ability_classic_1() then "</b>" else if is_wt_text_nf() then "</b><color:rgb(255,255,255)>" else "</b><color:rgb(0,0,0)>" })
+	rule_text_filter_2 := { text_filter(value) } +
+		remove_tag@(tag: "<color") +
+		replace@(match: "<b>", replace: { if contains(card.rule_text_2, match:"mon Power")
+				then if card.card_color=="fire" or card.card_color=="fairy" or card.card_color=="psychic" or (card.card_color=="fighting" and styling.fighting_pokemon_render=="Purple Text") then "<b><color:rgb(89,46,132)>"
+				else "<b><color:rgb(198,34,12)>"
+			else "<b>" } ) +
+		replace@(match: "</b>", replace: { if is_not_ability_classic_1() then "</b>" else if is_wt_text_nf() then "</b><color:rgb(255,255,255)>" else "</b><color:rgb(0,0,0)>" })
+	rule_text_filter_3 := { text_filter(value) } +
+		remove_tag@(tag: "<color") +
+		replace@(match: "<b>", replace: { if contains(card.rule_text_3, match:"mon Power")
+				then if card.card_color=="fire" or card.card_color=="fairy" or card.card_color=="psychic" or (card.card_color=="fighting" and styling.fighting_pokemon_render=="Purple Text") then "<b><color:rgb(89,46,132)>"
+				else "<b><color:rgb(198,34,12)>"
+			else "<b>" } ) +
+		replace@(match: "</b>", replace: { if is_not_ability_classic_1() then "</b>" else if is_wt_text_nf() then "</b><color:rgb(255,255,255)>" else "</b><color:rgb(0,0,0)>" })
+	##############################Equations to define the reminder text, reminder 2 has multi-line
+	rem_text_1 := { if is_pokemon() then if card.stage=="stage 2" then text_filter("Put "+card.card_name+" on the Stage 1 card") 
+			else if card.stage=="stage 1" then text_filter("Put "+card.card_name+" on the Basic Pokemon") 
+			else " "
+		else if is_trainer() then if card.trainer=="tool" then text_filter("Pokemon Tool")
+			else if card.trainer=="stadium" then "Stadium Card"
+			else if card.trainer=="supporter" then "Supporter Card"
+			else " "
+		else if is_energy() then "Special Energy Card"
+		else " "
+	}
+	rem_text_2 := { if is_trainer() and card.trainer=="tool" then text_filter("Attach "+card.card_name+" to 1 of your Pokemon that doesn't have a Pokemon Tool attached to it.")
+		else if is_trainer() and card.trainer=="stadium" then "This card stays in play when you play it. Discard this card if another Stadium card comes into play."
+		else if is_trainer() and card.trainer=="supporter" then text_filter("You can play only one Supporter card each turn. When you play "+card.card_name+", put it next to your Active Pokemon. When your turn ends, discard this card.")
+		else " "
+	}
+	##############################Equations to centrilize the information for texts so that I only need to change it once for outline text.
+	remder_1_left := { x_left(if is_trainer() then if card.trainer=="tool" then 233 else if card.trainer=="stadium" then 243 else 223 else if is_energy() then if card_style.card_name.content_width>=70 and card_style.card_name.content_width<313 then 0.7332*card_style.card_name.content_width+30.75 else if card_style.card_name.content_width>=313 then 260 else 83 else 205) }
+	remder_1_top := { y_top(if is_trainer() then 93 else if is_energy() then 376 else 28) }
+	remder_1_width := { fun_expand_size(if is_trainer() then if card.trainer=="tool" then 100 else if card.trainer=="stadium" then 90 else 110 else if is_energy() then 80 else 135) }
+	remder_1_height := { fun_expand_size(if is_trainer() then 19 else if is_energy() then 24 else 4) }
+	remder_1_visible := { if is_pokemon() or is_trainer() or (is_energy() and styling.card_face=="Gym") then true else false }
+	remder_1_font := { if is_trainer() then "Humanist 521 BT" else "GillSans" }
+	remder_1_size := { fun_expand_font(if is_trainer() then 12 else if is_energy() then 10 else 8) }
+	remder_1_align := { "bottom right shrink-overflow" }
+
+	card_no_left := { x_left(if is_energy() then 290 else if is_trainer() then 292 else 292) }
+	card_no_top := { y_top(if is_energy() then 473 else 479) }
+	card_no_width := { fun_expand_size(44) }
+	card_no_height := { fun_expand_size(16) }
+	card_no_size := { fun_expand_font(7) }
+	card_no_font := { "GillSans Condensed Bold" }
+	card_no_align := { "bottom right" }
+
+	weak_ov_left := { x_left(if styling.card_face=="Classic" then 36 else 25) }
+	weak_ov_top := { y_top(if styling.card_face=="Classic" then 421 else 429) }
+	weak_ov_width := { fun_expand_size(60) }
+	weak_ov_height := { fun_expand_size(12) }
+	weak_ov_size := { fun_expand_font(8) }
+	weak_ov_font := { "GillSans Condensed Bold" }
+	weak_ov_align := { "left middle" }
+
+	res_ov_left := { x_left(if styling.card_face=="Classic" then 161 else 126) }
+	res_ov_top := { y_top(if styling.card_face=="Classic" then 422 else 429) }
+	res_ov_width := { fun_expand_size(60) }
+	res_ov_height := { fun_expand_size(12) }
+	res_ov_size := { fun_expand_font(8) }
+	res_ov_font := { "GillSans Condensed Bold" }
+	res_ov_align := { "left middle" }
+
+	ret_ov_left := { x_left(if styling.card_face=="Classic" then 276 else 25) }
+	ret_ov_top := { y_top(if styling.card_face=="Classic" then 421 else 449) }
+	ret_ov_width := { fun_expand_size(140) }
+	ret_ov_height := { fun_expand_size(14) }
+	ret_ov_size := { fun_expand_font(8) }
+	ret_ov_align := { "left middle" }
+	ret_ov_font := { "GillSans Condensed Bold" }
+	ret_ov_visible := { if is_pokemon() then true else false }
+
+	weak_left := { x_left(if is_pokemon() then if styling.card_face=="Gym" then 73 else 51 else 31) }
+	weak_top := { y_top(if is_pokemon() then if styling.card_face=="Classic" then 427 else 419 else 12) }
+	weak_width := { fun_expand_size(if is_pokemon() then if styling.card_face=="Classic" then 59 else 50 else 83) }
+	weak_height := { fun_expand_size(if is_pokemon() then if styling.card_face=="Gym" then 25 else 30 else if is_energy() then 58 else 0) }
+	weak_visible := { if is_trainer() then "no" else "yes"}
+	weak_font := { "Pokemon Classic Title" }
+	weak_size := { fun_expand_font(if is_pokemon() then 8 else 16) }
+	weak_weight := { "normal" }
+	weak_symbol := { "poke-a-energy" }
+	weak_symbol_size := { fun_expand_font(if is_energy() then if card_style.weakness.content_width>=80 then 38 else 42 else if styling.card_face=="Classic" then if is_outline() then 18 else 20 else if is_outline() then 15 else 16) }
+	weak_align := { if is_pokemon() then if styling.card_face=="Classic" then "bottom left" else "middle left" else "bottom left" }
+
+	resistance_left := { x_left(if styling.card_face=="Classic" then 174 else 183) }
+	resistance_top := { y_top(if styling.card_face=="Classic" then 425 else 419) }
+	resistance_width := { fun_expand_size(if styling.card_face=="Classic" then 62 else 50) }
+	resistance_height := { fun_expand_size(if is_pokemon() then if styling.card_face=="Gym" then 25 else 30 else 0) }
+	resistance_visible := { if is_pokemon() then "yes" else "no"}
+	resistance_font := { "Pokemon Classic Title" }
+	resistance_size := { fun_expand_font(8) }
+	resistance_weight := { "normal" }
+	resistance_symbol := { "poke-a-energy" }
+	resistance_symbol_size := { fun_expand_font(if styling.card_face=="Classic" then if is_outline() then 18 else 20 else if is_outline() then 15 else 16) }
+	resistance_align := { if styling.card_face=="Classic" then "middle left" else "bottom left" }
+
+	card_name_left := { x_left(if is_pokemon() then if card.stage=="basic" then 34 else 97 else if is_trainer() then 40 else 25) }
+	card_name_top := { y_top(if is_pokemon() then 38 else if is_trainer() then 91 else 376) }
+	card_name_width := { fun_expand_size(if card.card_type=="pokemon" then if card.stage=="basic" then if card_style.hp.content_width>=15 then 266-0.675*card_style.hp.content_width else 251 else if card_style.hp.content_width>=15 then 203-0.675*card_style.hp.content_width else 188 else if card.card_type=="dual type" then if card.stage=="basic" then if card_style.hp.content_width>=15 then 256-0.675*card_style.hp.content_width else 241 else if card_style.hp.content_width>=15 then 193-0.675*card_style.hp.content_width else 178 else if is_trainer() then if card.trainer=="tool" then 194 else if card.trainer=="stadium" then 204 else if card.trainer=="supporter" then 184 else if card_style.hp.content_width>=15 then 281.5-0.675*card_style.hp.content_width else 272 else if styling.card_face=="Classic" then 318 else if card_style.card_name.content_width>=70 and card_style.card_name.content_width<313 then 0.7332*card_style.card_name.content_width+7.75 else if card_style.card_name.content_width>=313 then 230 else 60) }
+	card_name_height := { fun_expand_size(24) }
+	card_name_font_name := { if is_energy() or is_pokemon() then "Pokemon Classic Title Trainer" else "Pokemon Classic Title" }
+	card_name_weight := { "normal" }
+	card_name_size := { fun_expand_font(if is_energy() then 15 else if is_pokemon() then 19.5 else 18.5) }
+	card_name_symbol_size := { fun_expand_font(140) }
+	card_name_align := { "bottom shrink-overflow" }
+
+	hp_left := { x_left(if card.card_type=="pokemon" then if card_style.hp.content_width>=15 then 300-0.675*card_style.hp.content_width else 285 else if card.card_type=="dual type" then if card_style.hp.content_width>=15 then 290-0.675*card_style.hp.content_width else 275 else if card_style.hp.content_width>=15 then 323.5-0.675*card_style.hp.content_width else 314) }
+	hp_top := { y_top(if is_pokemon() then 38 else 93) }
+	hp_width := { fun_expand_size(if is_pokemon() then if card_style.hp.content_width>=15 then 0.675*card_style.hp.content_width+6.5 else 15 else if card_style.hp.content_width>=15 then 0.675*card_style.hp.content_width+6.5 else 15) }
+	hp_height := { fun_expand_size(if is_pokemon() then 24 else if is_trainer() and card.trainer=="item" then 24 else 0) }
+	hp_size := { fun_expand_font(if is_trainer() then 18.5 else 17) }
+	hp_font_name := { "Pokemon Classic Title" }
+	hp_visible := { if is_pokemon() or is_trainer() then true else false }
+	hp_align := { "bottom right shrink-overflow" }
+	hp_color := { if is_pokemon() then if styling.pokemon_hp_color=="Same as Pokemon Power" and (card.card_color=="fairy" or card.card_color=="fire" or card.card_color=="psychic" or (card.card_color=="fighting" and styling.fighting_pokemon_render=="Purple Text")) then rgb(89,46,132) else rgb(198,34,12) else if is_trainer() then rgb(198,34,12) else rgb(0,0,0) }
+	hp_symbol_size := { fun_expand_font(110) }
+
+	evo_left := { x_left(79) }
+	evo_top := { y_top(17) }
+	evo_width := { fun_expand_size(116) }
+	evo_height := { fun_expand_size(if is_pokemon() and (card.stage=="stage 1" or card.stage=="stage 2") then 15 else 0) }
+	evo_size := { fun_expand_font(7.8) }
+	evo_font_name := { "Humanist 521 BT" }
+	evo_weight := { "bold" }
+	evo_style := { "italic" }
+	evo_visible := { if is_pokemon() and (card.stage=="stage 1" or card.stage=="stage 2") then true else false }
+	evo_align := { "bottom left shrink-overflow" }
+
+	flavor_left := { x_left(39) }
+	flavor_top := { y_top(457) }
+	flavor_width := { fun_expand_size(294) }
+	flavor_height := { fun_expand_size(if is_pokemon() and styling.card_face=="Classic" then 24 else 0) }
+	flavor_visible := { if is_pokemon() and styling.card_face=="Classic" then true else false }
+	flavor_align := { "middle left shrink-overflow" }
+	flavor_font_name := { "Humanist 521 BT" }
+	flavor_weight := { "bold" }
+	flavor_style := { "italic" }
+	flavor_size := { fun_expand_font(7.8) }
+	flavor_pad_left := { fun_expand_size(2) }
+	flavor_pad_top := { fun_expand_size(2) }
+	flavor_pad_right := { fun_expand_size(2) }
+	flavor_pad_bottom := { fun_expand_size(2) }
+	flavor_lh_soft := { 0.9 }
+
+	ill_left := { x_left(20) }
+	ill_top := { y_top(if is_energy() then 479 else 484) }
+	ill_width := { fun_expand_size(98) }
+	ill_height := { fun_expand_size(10) }
+	ill_size := { fun_expand_font(6) }
+	ill_font_name := { "GillSans Condensed Bold" }
+	ill_weight := { "normal" }
+	ill_style := { "normal" }
+	ill_align := { "bottom left" }
+
+	copy_left := { x_left(118) }
+	copy_top := { y_top(if is_energy() then 479 else 485) }
+	copy_width := { fun_expand_size(172) }
+	copy_height := { fun_expand_size(10) }
+	copy_size := { fun_expand_font(6) }
+	copy_font := { "GillSans Condensed Bold" }
+	copy_align := { "bottom center" }
+
+	remder_2_left := { x_left(54) }
+	remder_2_top := { y_top(319) }
+	remder_2_width := { fun_expand_size(262) }
+	remder_2_height := { fun_expand_size(40) }
+	remder_2_visible := { if is_trainer() and (card.trainer=="tool" or card.trainer=="stadium" or card.trainer=="supporter") then "yes" else "no" }
+	remder_2_font := { "Humanist 521 Poke G1 Trainer" }
+	remder_2_size := { fun_expand_font(9) }
+	remder_2_lh_soft := { 0.8 }
+
+	rule_np_1_left := { x_left(if is_trainer() then 54 else 24) }
+	rule_np_1_top := { y_top(if is_trainer() then if card.trainer=="tool" or card.trainer=="stadium" then 347 else if card.trainer=="supporter" then 357 else 312 else 402) }
+	rule_np_1_width := { fun_expand_size(if is_trainer() then 262 else 309) }
+	rule_np_1_height := { fun_expand_size(if is_pokemon() then 0 else if is_trainer() then if card.trainer=="tool" or card.trainer=="stadium" then 115 else if card.trainer=="supporter" then 105 else 150 else 70) }
+	rule_np_1_size := { fun_expand_font(if is_energy() then 10 else if is_trainer() then 15 else 13.7) }
+	rule_np_1_align := { if is_trainer() then if card_style.rule_np_1.content_lines>=2 then "left top" else "center top" else if card_style.rule_np_1.content_lines>=2 then "left middle" else "center middle" }
+	rule_np_1_visible := { if is_energy() or is_trainer() then true else false }
+	rule_np_1_font_name := { if is_trainer() then "Humanist 521 Poke G1 Trainer"
+		else if is_energy() then "GillSansBold" else "GillSans" }
+	rule_np_1_symbol_name := { "poke-a-energy" }
+	rule_np_1_symbol_size := { fun_expand_font(if is_energy() then 11 else 20) }
+	rule_np_1_pad_left := { fun_expand_size(2) }
+	rule_np_1_pad_top := { fun_expand_size(if is_trainer() then 5 else 0) }
+	rule_np_1_pad_right := { fun_expand_size(2) }
+	rule_np_1_pad_bottom := { fun_expand_size(2) }
+	rule_np_1_lh_hard := { if is_energy() then 1 else 1.4 }
+	rule_np_1_lh_soft := { if is_energy() then 0.8 else 0.8 }
+
+	damage_1_left := { x_left(294) }
+	damage_1_top := { y_top(292) }
+	damage_1_width := { fun_expand_size(51) }
+	damage_1_height := { fun_expand_size(if is_pokemon() and is_not_ability_classic_1() then divider_height_1()-292 else 0) }
+	damage_1_visible := { if is_pokemon() and is_not_ability_classic_1() then true else false }
+	damage_1_align := { "middle left" }
+	damage_1_font_name := { "GillSans" }
+	damage_1_size := { fun_expand_font(20) }
+	damage_1_pad_left := { fun_expand_size(3) }
+
+	damage_2_left := { x_left(294) }
+	damage_2_top := { y_top(divider_height_1()) }
+	damage_2_width := { fun_expand_size(51) }
+	damage_2_height := { fun_expand_size(if is_pokemon() then if is_not_ability_classic_2() then if attack_no_g1()==1 then 421-divider_height_1() else divider_height_2()-divider_height_1() else 0 else 0) }
+	damage_2_visible := { if is_pokemon() and is_not_ability_classic_2() then true else false }
+	damage_2_align := { "middle left" }
+	damage_2_pad_left := { fun_expand_size(3) }
+	damage_2_font_name := { "GillSans" }
+	damage_2_size := { fun_expand_font(20) }
+
+	damage_3_left := { x_left(294) }
+	damage_3_top := { y_top(divider_height_2()) }
+	damage_3_width := { fun_expand_size(51) }
+	damage_3_height := { fun_expand_size(if is_pokemon() then if attack_no_g1()>=2 and is_not_ability_classic_3() then 421-divider_height_2() else 0 else 0) }
+	damage_3_visible := { if is_pokemon() then if attack_no_g1()>=2 and is_not_ability_classic_3() then true else false }
+	damage_3_align := { "middle left" }
+	damage_3_pad_left := { fun_expand_size(3) }
+	damage_3_font_name := { "GillSans" }
+	damage_3_size := { fun_expand_font(20) }
+
+	rule_1_left := { x_left(if is_not_ability_classic_1() then 72 else 50) }
+	rule_1_top := { y_top(if is_pokemon() then if rule_line_1()<=3 and attack_no_g1()<=2 then to_int(divider_height_1()/2)+118 else 292 else 0) }
+	rule_1_width := { fun_expand_size(if is_pokemon() then if is_not_ability_classic_1() then 221 else 267 else 0) }
+	rule_1_height := { fun_expand_size(if is_pokemon() then if rule_line_1()<=3 and attack_no_g1()<=2 then 55 else divider_height_1()-292 else 0) }
+	rule_1_visible := { if is_pokemon() then true else false }
+	rule_1_size := { fun_expand_font(16) }
+	rule_1_font_name := { "Humanist 521 Poke G1 Rule" }
+	rule_1_symbol_font := { "poke-a-energy" }
+	rule_1_symbol_size := { fun_expand_font(24) }
+	rule_1_align := { if rule_line_1()<=1 then "middle center" else "middle left justify" }
+	rule_1_pad_left := { fun_expand_size(2) }
+	rule_1_pad_top := { fun_expand_size(5) }
+	rule_1_pad_right := { fun_expand_size(2) }
+	rule_1_pad_bottom := { fun_expand_size(2) }
+	rule_1_lh_hard := { if is_energy() then 1 else 1.4 }
+
+	rule_2_left := { x_left(if is_not_ability_classic_2() then 72 else 50) }
+	rule_2_top := { y_top(if rule_line_2()<=2 and attack_no_g1()=2 then divider_height_1()+to_int(((divider_height_2()-divider_height_1())-43)/2) else divider_height_1()) }
+	rule_2_width := { fun_expand_size(if is_not_ability_classic_2() then 221 else 267) }
+	rule_2_height := { fun_expand_size(if is_pokemon() then if attack_no_g1()==1 then 421-divider_height_1() else if rule_line_2()<=2 and attack_no_g1()=2 then 43 else divider_height_2()-divider_height_1() else 0) }
+	rule_2_visible := { if is_pokemon() then true else false }
+	rule_2_size := { fun_expand_font(16) }
+	rule_2_font_name := { "Humanist 521 Poke G1 Rule" }
+	rule_2_symbol_font := { "poke-a-energy" }
+	rule_2_symbol_size := { fun_expand_font(24) }
+	rule_2_align := { if rule_line_2()<=1 then "middle center" else "left middle justify" }
+	rule_2_pad_left := { fun_expand_size(2) }
+	rule_2_pad_top := { fun_expand_size(5) }
+	rule_2_pad_right := { fun_expand_size(2) }
+	rule_2_pad_bottom := { fun_expand_size(2) }
+	rule_2_lh_hard := { if is_energy() then 1 else 1.4 }
+
+	rule_3_left := { x_left(if is_not_ability_classic_3() then 72 else 50) }
+	rule_3_top := { y_top(divider_height_2()) }
+	rule_3_width := { fun_expand_size(if is_not_ability_classic_3() then 221 else 267) }
+	rule_3_height := { fun_expand_size(if is_pokemon() and attack_no_g1()>=2 then 421-divider_height_2() else 0) }
+	rule_3_visible := {if is_pokemon() and attack_no_g1()>=2 then true else false }
+	rule_3_size := { fun_expand_font(16) }
+	rule_3_font_name := { "Humanist 521 Poke G1 Rule" }
+	rule_3_symbol_font := { "poke-a-energy" }
+	rule_3_symbol_size := { fun_expand_font(24) }
+	rule_3_align := { if rule_line_2()<=1 then "middle center" else "left middle justify" }
+	rule_3_pad_left := { fun_expand_size(1) }
+	rule_3_pad_top := { fun_expand_size(5) }
+	rule_3_pad_right := { fun_expand_size(2) }
+	rule_3_pad_bottom := { fun_expand_size(2) }
+	rule_3_lh_hard := { if is_energy() then 1 else 1.4 }
+############################################################## Styling fields
+styling field:
+	type: choice
+	name: card face
+	description: choose between Classic / Gym and Neo card faces
+	choice: Classic
+	choice: Gym
+styling field:
+	type: choice
+	name: full art setting
+	description: Determine if you want a full art card sets or not
+	choice: regular sized art
+	choice: full art
+	choice: popout art (for advanced users)
+	initial: regular sized art
+styling field:
+	type: choice
+	name: dual pokemon type
+	description: Choose the display method for dual pokemon
+	choice: Original Ex-Dark Version
+	choice: Original Ex-Metal Version
+	choice: New Steam Siege Version
+	initial: New Steam Siege Version
+styling field:
+	type: choice
+	name: metal background type
+	description: Choose the new or old metal background type
+	choice: Classic Wizards Background
+	choice: New Nintendo Background
+	initial: Classic Wizards Background
+styling field:
+	type: choice
+	name: fighting pokemon render
+	description: Determine how fighting pokemon are rendered
+	choice: Original Faded Background
+	choice: Purple Text
+styling field:
+	type: choice
+	name: pokemon hp color
+	description: Determine the color of the Pokemon Power Color
+	choice: Original Red
+	choice: Same as Pokemon Power
+	initial: Original Red
+styling field:
+	type: choice
+	name: pokemon frame type
+	initial: regular
+	choice: dark pokemon
+	choice: regular
+styling field:
+	type: boolean
+	name: user gym trainer pic
+	initial: no
+	description: Use a user defined gym trainer pic
+styling field:
+	type: boolean
+	name: tournament place
+	description: Add the icons for tournament placement
+	initial: no
+####### This field for development and testing remove for production: the corresponding card field can be found at the bottom.
+styling field:
+	type: boolean
+	name: use test background
+	description: Through in an image to use as a test background at layer 1
+	initial: no
+############################################################## Throughout this odd number layers are reserved for shading/covering up etc.
+card style:
+	######################## Background Layer -14
+	######################## this layer provids the background image modified slightly for dual type (changed some z-index)
+
+	######################## Some of these items are found in the extra card fields
+
+#########Background image
+	background:
+		left: { x_left(8) }
+		top: { y_top(9) }
+		width: { fun_expand_size(350) }
+		height: { fun_expand_size(495) }
+		z index: -14
+		render style: image
+		image:
+			script: if is_trainer() then "back-t-g1-trainer.png"
+				else if is_energy() then "back-e-g1-energy.png"
+				else if card.card_type=="pokemon"
+					then if card.card_color=="colorless" then	"back-p-a-colorless.png"
+					else if card.card_color=="grass" then		"back-p-a-grass.png"
+					else if card.card_color=="fire" then		"back-p-a-fire.png"
+					else if card.card_color=="water" then		"back-p-a-water.png"
+					else if card.card_color=="lightning" then	"back-p-a-lightning.png"
+					else if card.card_color=="fighting" then	"back-p-a-fighting.png"
+					else if card.card_color=="psychic" then		"back-p-a-psychic.png"
+					else if card.card_color=="dark" then		"back-p-a-dark.png"
+					else if card.card_color=="dragon" then		"back-p-a-dragon.png"
+					else if card.card_color=="metal" then		if styling.metal_background_type=="Classic Wizards Background" then "back-p-a-metal-old.png" else "back-p-a-metal.png"
+					else if card.card_color=="fairy" then		"back-p-a-fairy.png"
+					else if card.card_color=="user defined" then	"blank.png"
+					else "blank.png"
+				else if card.card_type=="dual type"
+					then masked_blend(light: if card.card_color_2=="grass" then "back-p-a-grass.png"
+						else if card.card_color_2=="fire" then "back-p-a-fire.png"
+						else if card.card_color_2=="water" then "back-p-a-water.png"
+						else if card.card_color_2=="lightning" then "back-p-a-lightning.png"
+						else if card.card_color_2=="fighting" then "back-p-a-fighting.png"
+						else if card.card_color_2=="psychic" then "back-p-a-psychic.png"
+						else if card.card_color_2=="dark" then "back-p-a-dark.png"
+						else if card.card_color_2=="metal" then if styling.metal_background_type=="Classic Wizards Background" then "back-p-a-metal-old.png" else "back-p-a-metal.png"
+						else if card.card_color_2=="dragon" then "back-p-a-dragon.png"
+						else if card.card_color_2=="fairy" then "back-p-a-fairy.png"
+						else if card.card_color_2=="colorless" then "back-p-a-colorless.png"
+						else "blank.png", dark: 
+					if card.card_color=="grass" then "back-p-a-grass.png"
+						else if card.card_color=="fire" then "back-p-a-fire.png"
+						else if card.card_color=="water" then "back-p-a-water.png"
+						else if card.card_color=="lightning" then "back-p-a-lightning.png"
+						else if card.card_color=="fighting" then "back-p-a-fighting.png"
+						else if card.card_color=="psychic" then "back-p-a-psychic.png"
+						else if card.card_color=="dark" then "back-p-a-dark.png"
+						else if card.card_color=="metal" then if styling.metal_background_type=="Classic Wizards Background" then "back-p-a-metal-old.png" else "back-p-a-metal.png"
+						else if card.card_color=="dragon" then "back-p-a-dragon.png"
+						else if card.card_color=="fairy" then "back-p-a-fairy.png"
+						else if card.card_color=="colorless" then "back-p-a-colorless.png"
+						else "blank.png", mask: 
+						if styling.dual_pokemon_type=="Original Ex-Metal Version" then "mask-p-a-split2-pokemon.png" else if styling.dual_pokemon_type=="Original Ex-Dark Version" then "mask-p-a-split3-pokemon.png" else "mask-p-a-split-pokemon.png")
+				else "blank.png"
+	background pic 1:
+		left: { x_left(8) }
+		top: { y_top(9) }
+		width: { fun_expand_size(350) }
+		height: { fun_expand_size(if is_pokemon() and card.card_color=="user defined" then 495 else 0) }
+		z index: -13
+		visible: { if is_pokemon() and card.card_color=="user defined" then "yes" else "no" }
+		mask: { if card.card_type=="dual type" then if styling.dual_pokemon_type=="Original Ex-Metal Version" then "mask-p-a-split2-pokemon-reverse.png" else if styling.dual_pokemon_type=="Original Ex-Dark Version" then "mask-p-a-split3-pokemon-reverse.png" else "mask-p-a-split-pokemon-reverse.png" else "mask-blank.png" }
+	background pic 2:
+		left: { x_left(8) }
+		top: { y_top(9) }
+		width: { fun_expand_size(350) }
+		height: { fun_expand_size(if is_pokemon() and card.card_color_2=="user defined" then 495 else 0) }
+		z index: -12
+		visible: { if is_pokemon() and card.card_color_2=="user defined" then "yes" else "no" }
+		mask: { if card.card_type=="dual type" then if styling.dual_pokemon_type=="Original Ex-Metal Version" then "mask-p-a-split2-pokemon.png" else if styling.dual_pokemon_type=="Original Ex-Dark Version" then "mask-p-a-split3-pokemon.png" else "mask-p-a-split-pokemon.png" else "mask-blank.png" }
+	######################## Frame Layer -12
+	######################## This layer provides the image framework underneath the image
+#########Images that provide the windows for the image
+	window:
+		left: { x_left(8) }
+		top: { y_top(9) }
+		width: { fun_expand_size(350) }
+		height: { fun_expand_size(495) }
+		z index: -12
+		render style: image
+		image:
+			script: if is_pokemon() then if styling.pokemon_frame_type=="dark pokemon" then "window-p-g1-pokemon-dark.png" else "window-p-g1-pokemon.png" else "blank.png"
+	######################## Image Layer -10
+	######################## This layer is for the user input image
+	card image:
+		left:
+			script: x_left(if (styling.full_art_setting=="full art") then 13
+				else if styling.full_art_setting=="popout art (for advanced users)" then 0
+				else if is_pokemon() then 46
+				else if is_trainer() then 38
+				else 15)
+		top:
+			script: y_top(if (styling.full_art_setting=="full art") then 13
+				else if styling.full_art_setting=="popout art (for advanced users)" then 0
+				else if is_pokemon() then 66
+				else if is_trainer() then 121
+				else 78)
+		width:
+			script: fun_expand_size(if (styling.full_art_setting=="full art") then 339
+				else if styling.full_art_setting=="popout art (for advanced users)" then 368
+				else if is_pokemon() then 282
+				else if is_trainer() then 294
+				else 335)
+		height:
+			script: fun_expand_size(if (styling.full_art_setting=="full art") then 486
+				else if styling.full_art_setting=="popout art (for advanced users)" then 513
+				else if is_pokemon() then 201
+				else if is_trainer() then 165
+				else 294)
+		z index: -10
+	gym leader pic:
+		left: { x_left(244) }
+		top: { y_top(425) }
+		width: { fun_expand_size(100) }
+		height: { fun_expand_size(if is_pokemon() and styling.card_face=="Gym" and styling.user_gym_trainer_pic=="yes" then 58 else 0) }
+		visible: { if is_pokemon() and styling.card_face=="Gym" and styling.user_gym_trainer_pic=="yes" then "yes" else "no" }
+		z index: -10
+	######################## Overimage Under Border Frame -8
+	######################## This layer is for items between the image and the border (aka might need covered up by the border)
+
+	########Not used for classic
+
+	######################## Border Layer -6
+	######################## This layer is for the border
+
+	border:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(368) }
+		height: { fun_expand_size(513) }
+		z index: -6
+		render style: image
+		image:
+			script: "border-yellow.png"
+
+	######################## Overborder Frame -4
+	######################## This layer is for items over the border
+
+	######################## Part of these items are found in the extra card fields
+
+#########This image provides the basic framework that overlays the border.
+	border overlay:
+		left: { x_left(8) }
+		top: { y_top(9) }
+		width: { fun_expand_size(350) }
+		height: { fun_expand_size(495) }
+		z index: -4
+		render style: image
+		mask: { if styling.card_face=="Gym" then "mask-gym.png" else "mask-blank.png" }
+		image:
+			script: if is_pokemon()
+					then if card.stage=="basic"
+						then if is_outline() then	if styling.pokemon_frame_type=="dark pokemon" then "frame-p-g1-basic-outline-dark.png" else	"frame-p-g1-basic-outline.png"
+						else if is_wt_text_2() then	if styling.pokemon_frame_type=="dark pokemon" then "frame-p-g1-basic-wt-dark.png" else		"frame-p-g1-basic-wt.png"
+						else				if styling.pokemon_frame_type=="dark pokemon" then "frame-p-g1-basic-bk-dark.png" else		"frame-p-g1-basic-bk.png"
+					else if card.stage=="stage 1" then	if styling.pokemon_frame_type=="dark pokemon" then "frame-p-g1-stage1-dark.png" else		"frame-p-g1-stage1.png"
+					else if card.stage=="stage 2" then	if styling.pokemon_frame_type=="dark pokemon" then "frame-p-g1-stage2-dark.png" else		"frame-p-g1-stage2.png"
+					else "blank.png"
+				else if is_trainer() and styling.full_art_setting=="full art" then "frame-t-g1-trainer.png"
+				else if is_energy() and styling.full_art_setting=="full art" then "frame-e-g1-energy.png"
+				else "blank.png"
+	######################## Choice layers -2
+	######################## This for special choice tabs
+
+	########Not used for classic
+
+	######################## Popout layers 0
+	######################## This layer is for the popout image
+
+
+	######### See the extra card fields and styles
+
+
+	######################## Choice layers 2
+	######################## This for choice tabs
+	card type:
+		left: { x_left(0) }
+		top: { y_top(499) }
+		width: { fun_expand_size(368) }
+		height: { fun_expand_size(15) }
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			pokemon:	blank.png
+			dual type:	blank.png
+			trainer:	blank.png
+			energy:		blank.png
+	stage:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(70) }
+		height: { if is_pokemon() then fun_expand_size(70) else 0 }
+		z index: 2
+		render style: image
+		popup style: in place
+		visible: { if is_pokemon() then "yes" else "no" }
+		choice images:
+			basic:		blank.png
+			stage 1:	blank.png
+			stage 2:	blank.png
+			restored:	blank.png
+			ex:		blank.png
+			mega:		blank.png
+			primal:		blank.png
+	trainer:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(70) }
+		height: { fun_expand_size(if is_trainer() then 70 else 0) }
+		z index: 2
+		render style: image
+		popup style: in place
+		visible: { if is_trainer() then "yes" else "no" }
+		choice images:
+			item:			blank.png
+			tool:			blank.png
+			supporter:		blank.png
+			stadium:		blank.png
+	card color:
+		left: { x_left(if card.card_type=="dual type" then 317 else 308) }
+		top: { y_top(10) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(if is_pokemon() then 45 else 0) }
+		z index: 1
+		render style: image
+		popup style: in place
+		visible: { if is_pokemon() then "yes" else "no" }
+		choice images:
+			colorless:	sym-colorless.png
+			grass:		sym-grass.png
+			fire:		sym-fire.png
+			water:		sym-water.png
+			lightning:	sym-lightning.png
+			fighting:	sym-fighting.png
+			psychic:	sym-psychic.png
+			dark:		sym-dark.png
+			dragon:		sym-dragon.png
+			metal:		sym-metal.png
+			fairy:		sym-fairy.png
+			user defined:	blank.png
+#########The second card color is used for dual type
+	card color 2:
+		left: { x_left(298) }
+		top: { y_top(10) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(if card.card_type=="dual type" then 45 else 0) }
+		z index: 2
+		render style: image
+		popup style: in place
+		visible: { if card.card_type=="dual type" then "yes" else "no" }
+		choice images:
+			colorless:	sym-colorless.png
+			grass:		sym-grass.png
+			fire:		sym-fire.png
+			water:		sym-water.png
+			lightning:	sym-lightning.png
+			fighting:	sym-fighting.png
+			psychic:	sym-psychic.png
+			dark:		sym-dark.png
+			dragon:		sym-dragon.png
+			metal:		sym-metal.png
+			fairy:		sym-fairy.png
+			user defined:	blank.png
+	######################## Overborder Frame 4
+	######################## This layer is for items needed just before the user input text.
+
+	######################## Also has materials found in the extra card fields
+	energy orb pic 1:
+		left: { x_left(if card.card_type=="dual type" then 317 else 308) }
+		top: { y_top(30) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(if is_pokemon() and card.card_color=="user defined" then 25 else 0) }
+		z index: 3
+		visible: { if is_pokemon() and card.card_color=="user defined" then "yes" else "no" }
+	energy orb pic 2:
+		left: { x_left(298) }
+		top: { y_top(30) }
+		width: { fun_expand_size(25) }
+		height: { fun_expand_size(if card.card_type=="dual type" and card.card_color_2=="user defined" then 25 else 0) }
+		z index: 3
+		visible: { if is_pokemon() and card.card_color_2=="user defined" then "yes" else "no" }
+
+	set:
+		left: { x_left(if is_pokemon() then 324 else if is_trainer() then 288 else 324) }
+		top: { y_top(if is_pokemon() then 282 else if is_trainer() then 457 else 455) }
+		width: { fun_expand_size(23) }
+		height: { fun_expand_size(23) }
+		z index: 4
+		render style: image
+		choice images:
+			common:     script: symbol_variation(symbol: set.symbol, variation: "common")
+#########This is the reminder text above the Title line for Classic Faces and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	remder 1:
+		left: { remder_1_left() }
+		top: { remder_1_top() }
+		width: { remder_1_width() }
+		height: { remder_1_height() }
+		visible: { remder_1_visible() }
+		alignment: { remder_1_align() }
+		z index: 4
+		font:
+			name: { remder_1_font() }
+			size: { remder_1_size() }
+			color: { if is_wt_text_2() then rgb(255,255,255) else rgb(0,0,0) }
+#########card number and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	card number:
+		left: { card_no_left() }
+		top: { card_no_top() }
+		width: { card_no_width() }
+		height: { card_no_height() }
+		z index: 4
+		alignment: { card_no_align() }
+		visible: { if set.visible_card_numbers=="yes" then "yes" else "no" }
+		font:
+			name: { card_no_font() }
+			weight: bold
+			size: { card_no_size() }
+		#	weight: bold
+			color: { if is_wt_text_1() then rgb(255,255,255) else rgb (0,0,0) }
+#########Text overlay that says "weakness" and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	weakoverlay:
+		left: { weak_ov_left() }
+		top: { weak_ov_top() }
+		width: { weak_ov_width() }
+		height: { weak_ov_height() }
+		z index: 4
+		visible: { if is_pokemon() then "yes" else "no" }
+		alignment: { weak_ov_align() }
+		font:
+			name: { weak_ov_font() }
+		#	weight: bold
+			size: { weak_ov_size() }
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb (0,0,0) }
+#########Text overlay that says "resistance" and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	resoverlay:
+		left: { res_ov_left() }
+		top: { res_ov_top() }
+		width: { res_ov_width() }
+		height: { res_ov_height() }
+		z index: 4
+		visible: { if is_pokemon() then "yes" else "no" }
+		alignment: { res_ov_align() }
+		font:
+			name: { res_ov_font() }
+		#	weight: bold
+			size: { res_ov_size() }
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb (0,0,0) }
+#########Text overlay that says "retreat cost" and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	retoverlay:
+		left: { ret_ov_left() }
+		top: { ret_ov_top() }
+		width: { ret_ov_width() }
+		height: { ret_ov_height() }
+		z index: 4
+		visible: { ret_ov_visible() }
+		alignment: { ret_ov_align() }
+		font:
+			name: { ret_ov_font() }
+		#	weight: bold
+			size: { ret_ov_size() }
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb (0,0,0) }
+#########Rarity Symbol
+	rarity:
+		left: { x_left(if is_energy() then 336 else 338) }
+		top: { y_top(if is_energy() then 480 else 486) }
+		height: { fun_expand_size(7) }
+		width: { fun_expand_size(7) }
+		z index: 6
+		render style: image
+		visible: { if set.visible_card_rarity=="no" then "no" else "yes" }
+		choice images:
+			common:		{ if is_outline() then "rarity-out-common.png" else if is_wt_text_1() then "rarity-wt-common.png" else "rarity-bk-common.png" }
+			uncommon:	{ if is_outline() then "rarity-out-uncommon.png" else if is_wt_text_1() then "rarity-wt-uncommon.png" else "rarity-bk-uncommon.png" }
+			rare:		{ if is_outline() then "rarity-out-rare.png" else if is_wt_text_1() then "rarity-wt-rare.png" else "rarity-bk-rare.png" }
+			extra rare:	{ if is_outline() then "rarity-out-erare.png" else if is_wt_text_1() then "rarity-wt-erare.png" else "rarity-bk-erare.png" }
+#########Card Title and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	card name:
+		left: { card_name_left() }
+		top: { card_name_top() }
+		width: { card_name_width() }
+		height: { card_name_height() }
+		z index: 6
+		alignment: { card_name_align() }
+		font:
+			name: { card_name_font_name() }
+			weight: { card_name_weight() }
+			size: { card_name_size() }
+			color: { if is_wt_text_2() then rgb(255,255,255) else rgb(0,0,0) }
+#########HP Text and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	hp:
+		left: { hp_left() }
+		top: { hp_top() }
+		width: { hp_width() }
+		height: { hp_height() }
+		z index: 6
+		alignment: { hp_align() }
+		visible: { hp_visible() }
+		font:
+			name: { hp_font_name() }
+			size: { hp_size() }
+			color: { hp_color() }
+#########Text describing where the pokemon has evolved from and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	evolution text:
+		left: { evo_left() }
+		top: { evo_top() }
+		width: { evo_width() }
+		height: { evo_height() }
+		alignment: { evo_align() }
+		z index: -1
+		visible: { evo_visible() }
+		font:
+			name: { evo_font_name() }
+			weight: { evo_weight() }
+			style: { evo_style() }
+			size: { evo_size() }
+			color: { if is_wt_text_2() then rgb(255,255,255) else rgb(0,0,0) }
+#########Image showing the evolution line of the evolved pokemon
+	evolution pic:
+		left: { x_left(34) }
+		top: { y_top(40) }
+		width: { fun_expand_size(43) }
+		height: { fun_expand_size(if is_pokemon() and (card.stage=="stage 1" or card.stage=="stage 2") then 37 else 0) }
+		z index: 6
+		visible: { if is_pokemon() and (card.stage=="stage 1" or card.stage=="stage 2") then "yes" else "no"}
+#########The text listing the pokemon statistics found below the image window
+	stats text:
+		left: { x_left(55) }
+		top: { y_top(277) }
+		width: { fun_expand_size(260) }
+		height: { fun_expand_size(if is_pokemon() and (styling.full_art_setting=="regular sized art" or styling.full_art_setting=="popout art (for advanced users)") then 16 else 0) }
+		z index: -1
+		alignment: middle center shrink-overflow
+		visible: { if is_pokemon() and (styling.full_art_setting=="regular sized art" or styling.full_art_setting=="popout art (for advanced users)") then "yes" else "no" }
+		font:
+			name: { "Humanist 521 BT" }
+			weight: { "bold" }
+			style: { "italic" }
+			size: { fun_expand_font(8.8) }
+			color: rgb(0,0,0)
+#########The text listing the pokemon statistics at the bottom left of the gym card face
+	stats text 2:
+		left: { x_left(25) }
+		top: { y_top(471) }
+		width: { fun_expand_size(100) }
+		height: { fun_expand_size(if is_pokemon() and styling.card_face=="Gym" then 10 else 0) }
+		z index: -1
+		alignment: middle left shrink-overflow
+		visible: { if is_pokemon() and styling.card_face=="Gym" then "yes" else "no" }
+		font:
+			name: { "Humanist 521 BT" }
+			weight: { "bold" }
+			style: { "italic" }
+			size: { fun_expand_font(8) }
+			color: { if is_wt_text_2() then rgb(255,255,255) else rgb(0,0,0) }
+#########Flavor Text and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	flavor text:
+		left: { flavor_left() }
+		top: { flavor_top() }
+		width: { flavor_width() }
+		height: { flavor_height() }
+		z index: 6
+		visible: { flavor_visible() }
+		alignment: { flavor_align() }
+		font:
+			name: { flavor_font_name() }
+			weight: { flavor_weight() }
+			style: { flavor_style() }
+			size: { flavor_size() }
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb (0,0,0) }
+		padding left: { flavor_pad_left() }
+		padding top: { flavor_pad_top() }
+		padding right: { flavor_pad_right() }
+		padding bottom: { flavor_pad_bottom() }
+		line height soft: { flavor_lh_soft() }
+#########The Weakness for pokemon and doubles as the top energy top marker for energy and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	weakness:
+		left: { weak_left() }
+		top: { weak_top() }
+		width: { weak_width() }
+		height: { weak_height() }
+		z index: 6
+		always symbol: true
+		visible: { weak_visible() }
+		font:
+			name: { weak_font() }
+			size: { weak_size() }
+			weight: { weak_weight() }
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb(0,0,0) }
+		symbol font:
+			name: { weak_symbol() }
+			size: { weak_symbol_size() }
+			alignment: middle left
+		alignment: 
+		padding left: { fun_expand_size(2) }
+		padding top: { fun_expand_size(5) }
+		padding right: { fun_expand_size(2) }
+		padding bottom: { fun_expand_size(2) }
+#########The resistance for pokemon and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	resistance:
+		left: { x_left(if styling.card_face=="Classic" then 174 else 183) }
+		top: { y_top(if styling.card_face=="Classic" then 425 else 419) }
+		width: { fun_expand_size(if styling.card_face=="Classic" then 62 else 50) }
+		height: { fun_expand_size(if is_pokemon() then if styling.card_face=="Gym" then 25 else 30 else 0) }
+		z index: 6
+		always symbol: true
+		visible: { resistance_visible() }
+		font:
+			name: { resistance_font() }
+			size: { resistance_size() }
+			weight: { resistance_weight() }
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb(0,0,0) }
+		symbol font:
+			name: { resistance_symbol() }
+			size: { resistance_symbol_size() }
+			alignment: middle left
+		alignment: { resistance_align() }
+		padding left: { fun_expand_size(2) }
+		padding top: { fun_expand_size(5) }
+		padding right: { fun_expand_size(2) }
+		padding bottom: { fun_expand_size(2) }
+#########The retreat cost fot pokemon uses a poke-a-energy symbol font only,
+	retreat cost:
+		left: { x_left(if styling.card_face=="Classic" then 270 else 134) }
+		top: { y_top(if styling.card_face=="Classic" then 425 else 440) }
+		width: { fun_expand_size(72) }
+		height: { fun_expand_size(if is_pokemon() then if styling.card_face=="Gym" then 25 else 30 else 0) }
+		z index: 6
+		visible: { if is_pokemon() then "yes" else "no"}
+		symbol font:
+			name: poke-a-energy
+			size: { fun_expand_font(if styling.card_face=="Classic" then if is_outline() then 18 else 19.5 else if is_outline() then 15 else 16) }
+			alignment: middle center
+		always symbol: true
+		alignment: { if styling.card_face=="Classic" then "bottom center shrink-overflow" else "bottom left shrink-overflow" }
+		padding left: { fun_expand_size(2) }
+		padding top: { fun_expand_size(5) }
+		padding right: { fun_expand_size(2) }
+		padding bottom: { fun_expand_size(2) }
+#########Illustrator name and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	illustrator:
+		left: { ill_left() }
+		top: { ill_top() }
+		width: { ill_width() }
+		height: { ill_height() }
+		z index: 6
+		alignment: { ill_align() }
+		font:
+			name: { ill_font_name() }
+			weight: { ill_weight() }
+			style: { ill_style() }
+			size: { ill_size() }
+			color: { if is_wt_text_2() then rgb(255,255,255) else rgb (0,0,0) }
+#########Copyright and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	copyright:
+		left: { copy_left() }
+		top: { copy_top() }
+		width: { copy_width() }
+		height: { copy_height() }
+		z index: 6
+		alignment: { copy_align() }
+		visible: { if set.visible_card_copyright=="no" then "no" else "yes" }
+		font:
+			name: { copy_font() }
+			size: { copy_size() }
+		#	weight: bold
+			color: {if is_wt_text_1() then rgb(255,255,255) else rgb (0,0,0)}
+	######################## Rule Text everything that follows within this layer is Attack/Rule Text on the cards.
+#########Rules text used by energy and trainers and the 4 duplicate text fields, kept separate from pokemon because of the scale down issue
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	remder 2:
+		left: { remder_2_left() }
+		top: { remder_2_top() }
+		width: { remder_2_width() }
+		height: { remder_2_height() }
+		z index: 4
+		visible: { remder_2_visible() }
+		line height soft: { remder_2_lh_soft() }
+		font:
+			name: { remder_2_font() }
+			size: { remder_2_size() }
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb(0,0,0) }
+	rule np 1:
+		left: { rule_np_1_left() }
+		top: { rule_np_1_top() }
+		width: { rule_np_1_width() }
+		height: { rule_np_1_height() }
+		z index: 6
+		visible: { rule_np_1_visible() }
+		font:
+			name: { rule_np_1_font_name() }
+			size: { rule_np_1_size() }
+			scale down to: 6
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb(0,0,0) }
+		symbol font:
+			name: { rule_np_1_symbol_name() }
+			size: { rule_np_1_symbol_size() }
+			alignment: middle center
+		alignment: { rule_np_1_align() }
+		padding left: { rule_np_1_pad_left() }
+		padding top: { rule_np_1_pad_top() }
+		padding right: { rule_np_1_pad_right() }
+		padding bottom: { rule_np_1_pad_bottom() }
+		line height hard: { rule_np_1_lh_hard() }
+		line height soft: { rule_np_1_lh_soft() }
+#########The next field lists the cost of the first attack
+	cost classic 1:
+		left: { x_left(if is_pokemon() then 24 else 35) }
+		top: { y_top(292) }
+		width: { fun_expand_size(46) }
+		height: { fun_expand_size(if is_pokemon() and is_not_ability_classic_1() then divider_height_1()-292 else 0) }
+		z index: 6
+		visible: { if is_pokemon() and is_not_ability_classic_1() then "yes" else "no" }
+		always symbol: true
+		symbol font:
+			name: poke-a-energy
+			size: { fun_expand_size(21) }
+			alignment: middle center
+		alignment: middle center
+#########This shows the 1st attacks damage for both generations and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	damage 1:
+		left: { damage_1_left() }
+		top: { damage_1_top() }
+		width: { damage_1_width() }
+		height: { damage_1_height() }
+		z index: 6
+		visible: { damage_1_visible() }
+		alignment: { damage_1_align() }
+		padding left: { damage_1_pad_left() }
+		font:
+			name: { damage_1_font_name() }
+			size: { damage_1_size() }
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb(0,0,0) }
+#########This field is the rules text for the 1st Gen 6 attack and the title and rules text for the Classic Attack and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	rule text 1:
+		left: { rule_1_left() }
+		top: { rule_1_top() }
+		width: { rule_1_width() }
+		height: { rule_1_height() }
+		z index: 6
+		visible: { rule_1_visible() }
+		font:
+			name: { rule_1_font_name() }
+			size: { rule_1_size() }
+			scale down to: 10
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb(0,0,0) }
+		symbol font:
+			name: { rule_1_symbol_font() }
+			size: { rule_1_symbol_size() }
+			alignment: middle center
+		alignment: { rule_1_align() }
+		padding left: { rule_1_pad_left() }
+		padding top: { rule_1_pad_top() }
+		padding right: { rule_1_pad_right() }
+		padding bottom: { rule_1_pad_bottom() }
+		line height hard: { rule_1_lh_hard() }
+#########The next fields lists the cost of the second attack
+	cost classic 2:
+		left: { x_left(24) }
+		top: { y_top(divider_height_1()) }
+		width: { fun_expand_size(46) }
+		height: { fun_expand_size(if is_pokemon() and is_not_ability_classic_2() then if attack_no_g1()==1 then 421-divider_height_1() else divider_height_2()-divider_height_1() else 0) }
+		z index: 6
+		visible: { if is_pokemon() and is_not_ability_classic_2() then "yes" else "no" }
+		always symbol: true
+		symbol font:
+			name: poke-a-energy
+			size: { fun_expand_size(21) }
+			alignment: middle center
+		alignment: middle center
+#########This shows the 2nd attacks damage for both generations and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	damage 2:
+		left: { damage_2_left() }
+		top: { damage_2_top() }
+		width: { damage_2_width() }
+		height: { damage_2_height() }
+		z index: 6
+		visible: { damage_2_visible() }
+		alignment: { damage_2_align() }
+		padding left: { damage_2_pad_left() }
+		font:
+			name: { damage_2_font_name() }
+			size: { damage_2_size() }
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb(0,0,0) }
+#########This field is the rules text for the 2nd Gen 6 attack and the title and rules text for the Classic Attack and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	rule text 2:
+		left: { rule_2_left() }
+		top: { rule_2_top() }
+		width: { rule_2_width() }
+		height: { rule_2_height() }
+		z index: 6
+		visible: { rule_2_visible() }
+		font:
+			name: { rule_2_font_name() }
+			size: { rule_2_size() }
+			scale down to: 10
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb(0,0,0) }
+		symbol font:
+			name: { rule_2_symbol_font() }
+			size: { rule_2_symbol_size() }
+			alignment: middle center
+		alignment: { rule_2_align() }
+		padding left: { rule_2_pad_left() }
+		padding top: { rule_2_pad_top() }
+		padding right: { rule_2_pad_right() }
+		padding bottom: { rule_2_pad_bottom() }
+		line height hard: { rule_2_lh_hard() }
+#########The next field lists the cost of the third attack
+	cost classic 3:
+		left: { x_left(24) }
+		top: { y_top(divider_height_2()) }
+		width: { fun_expand_size(46) }
+		height: { fun_expand_size(if is_pokemon() and is_not_ability_classic_3() and attack_no_g1()>=2 then 421-divider_height_2() else 0) }
+		z index: 6
+		visible: { if is_pokemon() and is_not_ability_classic_3() and attack_no_g1()>=2 then "yes" else "no" }
+		always symbol: true
+		symbol font:
+			name: poke-a-energy
+			size: { fun_expand_size(21) }
+			alignment: middle center
+		alignment: middle center
+#########This shows the 3rd attacks damage for both generations and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	damage 3:
+		left: { damage_3_left() }
+		top: { damage_3_top() }
+		width: { damage_3_width() }
+		height: { damage_3_height() }
+		z index: 6
+		visible: { damage_3_visible() }
+		alignment: { damage_3_align() }
+		padding left: { damage_3_pad_left() }
+		font:
+			name: { damage_3_font_name() }
+			size: { damage_3_size() }
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb(0,0,0) }
+#########This field is the rules text for the 3rd Gen 6 attack and the title and rules text for the Classic Attack and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	rule text 3:
+		left: { rule_3_left() }
+		top: { rule_3_top() }
+		width: { rule_3_width() }
+		height: { rule_3_height() }
+		z index: 6
+		visible: { rule_3_visible() }
+		font:
+			name: { rule_3_font_name() }
+			size: { rule_3_size() }
+			scale down to: 10
+			color: { if is_wt_text_nf() then rgb(255,255,255) else rgb(0,0,0) }
+		symbol font:
+			name: { rule_3_symbol_font() }
+			size: { rule_3_symbol_size() }
+			alignment: middle center
+		alignment: { rule_3_align() }
+		padding left: { rule_3_pad_left() }
+		padding top: { rule_3_pad_top() }
+		padding right: { rule_3_pad_right() }
+		padding bottom: { rule_3_pad_bottom() }
+		line height hard: { rule_3_lh_hard() }
+	######################## Special Frame 8
+	######################## This layer is for special items needed to overlay everything else.
+#########This is the image field to show the notification for the tournament placement
+	place:
+		left: { x_left(if is_pokemon() then 48 else if is_trainer() then 100 else 25) }
+		top: { y_top(if is_pokemon() then 245 else 462) }
+		width: { fun_expand_size(94) }
+		height: { fun_expand_size(if styling.tournament_place=="yes" then 14 else 0) }
+		visible: { if styling.tournament_place=="yes" then "yes" else "no" }
+		z index: 8
+		render style: image
+		popup style: in place
+		choice images:
+			1st:	place-1.png
+			2nd:	place-2.png
+			3rd:	place-3.png
+			4th:	place-4.png
+			5th:	place-5.png
+			6th:	place-6.png
+			7th:	place-7.png
+			8th:	place-8.png
+
+############################################################## Extra Card Fields
+############################# Non-User Input Choice Fields for Images
+extra card field:
+	type: choice
+	name: card popout
+	editable: false
+	show statistics: false
+	card list allow: false
+	save value: false
+	choice: popout
+	editable: false
+extra card field:
+	type: choice
+	name: logo overlay
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: trainer overlay
+extra card field:
+	type: choice
+	name: shade
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: shade
+extra card field:
+	type: choice
+	name: tool overlay
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: tool overlay
+extra card field:
+	type: choice
+	name: bar
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: bar
+extra card field:
+	type: choice
+	name: bar 2
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: bar
+extra card field:
+	type: choice
+	name: bar 3
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: bar
+extra card field:
+	type: choice
+	name: bar 4
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: bar
+extra card field:
+	type: choice
+	name: bar 5
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: bar
+extra card field:
+	type: choice
+	name: text shade
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: text shade
+extra card field:
+	type: choice
+	name: fight shade
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: text shade
+extra card field:
+	type: choice
+	name: gym trainer
+	show statistics: false
+	card list allow: false
+	choice: sabrina
+	choice: misty
+	choice: giovanni
+	choice: team rocket
+	choice: erika
+	choice: brock
+	choice: blaine
+	choice: lt surge
+############################# Replaced card fields for card specific uses
+
+############################# Non-User Input Text Fields-Strictly for use to outline text
+extra card field:
+	type: text
+	name: hp dup 1
+	show statistics: false
+	default: card.hp
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: hp dup 2
+	show statistics: false
+	default: card.hp
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: hp dup 3
+	show statistics: false
+	default: card.hp
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: hp dup 4
+	show statistics: false
+	default: card.hp
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: weakov dup 1
+	show statistics: false
+	default: card.weakoverlay
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: weakov dup 2
+	show statistics: false
+	default: card.weakoverlay
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: weakov dup 3
+	show statistics: false
+	default: card.weakoverlay
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: weakov dup 4
+	show statistics: false
+	default: card.weakoverlay
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: resov dup 1
+	show statistics: false
+	default: card.resoverlay
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: resov dup 2
+	show statistics: false
+	default: card.resoverlay
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: resov dup 3
+	show statistics: false
+	default: card.resoverlay
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: resov dup 4
+	show statistics: false
+	default: card.resoverlay
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: retov dup 1
+	show statistics: false
+	default: card.retoverlay
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: retov dup 2
+	show statistics: false
+	default: card.retoverlay
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: retov dup 3
+	show statistics: false
+	default: card.retoverlay
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: retov dup 4
+	show statistics: false
+	default: card.retoverlay
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: name dup 1
+	show statistics: false
+	default: card.card_name
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: name dup 2
+	show statistics: false
+	default: card.card_name
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: name dup 3
+	show statistics: false
+	default: card.card_name
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: name dup 4
+	show statistics: false
+	default: card.card_name
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: flavor dup 1
+	show statistics: false
+	default: card.flavor_text
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: flavor dup 2
+	show statistics: false
+	default: card.flavor_text
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: flavor dup 3
+	show statistics: false
+	default: card.flavor_text
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: flavor dup 4
+	show statistics: false
+	default: card.flavor_text
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: evo dup 1
+	show statistics: false
+	default: card.evolution_text
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: evo dup 2
+	show statistics: false
+	default: card.evolution_text
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: evo dup 3
+	show statistics: false
+	default: card.evolution_text
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: evo dup 4
+	show statistics: false
+	default: card.evolution_text
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: dam 1 dup 1
+	show statistics: false
+	default: card.damage_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: dam 1 dup 2
+	show statistics: false
+	default: card.damage_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: dam 1 dup 3
+	show statistics: false
+	default: card.damage_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: dam 1 dup 4
+	show statistics: false
+	default: card.damage_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: dam 2 dup 1
+	show statistics: false
+	default: card.damage_2
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: dam 2 dup 2
+	show statistics: false
+	default: card.damage_2
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: dam 2 dup 3
+	show statistics: false
+	default: card.damage_2
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: dam 2 dup 4
+	show statistics: false
+	default: card.damage_2
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: dam 3 dup 1
+	show statistics: false
+	default: card.damage_3
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: dam 3 dup 2
+	show statistics: false
+	default: card.damage_3
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: dam 3 dup 3
+	show statistics: false
+	default: card.damage_3
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: dam 3 dup 4
+	show statistics: false
+	default: card.damage_3
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rult 1 dup 1
+	show statistics: false
+	default: card.rule_text_1
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rult 1 dup 2
+	show statistics: false
+	default: card.rule_text_1
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rult 1 dup 3
+	show statistics: false
+	default: card.rule_text_1
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rult 1 dup 4
+	show statistics: false
+	default: card.rule_text_1
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rult 2 dup 1
+	show statistics: false
+	default: card.rule_text_2
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rult 2 dup 2
+	show statistics: false
+	default: card.rule_text_2
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rult 2 dup 3
+	show statistics: false
+	default: card.rule_text_2
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rult 2 dup 4
+	show statistics: false
+	default: card.rule_text_2
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rult 3 dup 1
+	show statistics: false
+	default: card.rule_text_3
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rult 3 dup 2
+	show statistics: false
+	default: card.rule_text_3
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rult 3 dup 3
+	show statistics: false
+	default: card.rule_text_3
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rult 3 dup 4
+	show statistics: false
+	default: card.rule_text_3
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rnp 1 dup 1
+	show statistics: false
+	default: card.rule_np_1
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rnp 1 dup 2
+	show statistics: false
+	default: card.rule_np_1
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rnp 1 dup 3
+	show statistics: false
+	default: card.rule_np_1
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: rnp 1 dup 4
+	show statistics: false
+	default: card.rule_np_1
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: ill dup 1
+	show statistics: false
+	default: card.illustrator
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: ill dup 2
+	show statistics: false
+	default: card.illustrator
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: ill dup 3
+	show statistics: false
+	default: card.illustrator
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: ill dup 4
+	show statistics: false
+	default: card.illustrator
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: copyr dup 1
+	show statistics: false
+	default: card.copyright
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: copyr dup 2
+	show statistics: false
+	default: card.copyright
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: copyr dup 3
+	show statistics: false
+	default: card.copyright
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: copyr dup 4
+	show statistics: false
+	default: card.copyright
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: remd 1 dup 1
+	show statistics: false
+	default: card.remder_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: remd 1 dup 2
+	show statistics: false
+	default: card.remder_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: remd 1 dup 3
+	show statistics: false
+	default: card.remder_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: remd 1 dup 4
+	show statistics: false
+	default: card.remder_1
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: remd 2 dup 1
+	show statistics: false
+	default: card.remder_2
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: remd 2 dup 2
+	show statistics: false
+	default: card.remder_2
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: remd 2 dup 3
+	show statistics: false
+	default: card.remder_2
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: remd 2 dup 4
+	show statistics: false
+	default: card.remder_2
+	multi line: true
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: cardno dup 1
+	show statistics: false
+	default: card.card_number
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: cardno dup 2
+	show statistics: false
+	default: card.card_number
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: cardno dup 3
+	show statistics: false
+	default: card.card_number
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: cardno dup 4
+	show statistics: false
+	default: card.card_number
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: weak dup 1
+	show statistics: false
+	default: card.weakness
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: weak dup 2
+	show statistics: false
+	default: card.weakness
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: weak dup 3
+	show statistics: false
+	default: card.weakness
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: weak dup 4
+	show statistics: false
+	default: card.weakness
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: resist dup 1
+	show statistics: false
+	default: card.resistance
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: resist dup 2
+	show statistics: false
+	default: card.resistance
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: resist dup 3
+	show statistics: false
+	default: card.resistance
+	card list allow: false
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: resist dup 4
+	show statistics: false
+	default: card.resistance
+	card list allow: false
+	save value: false
+	editable: false
+
+extra card style:
+	######################## Background Layer -14
+	######################## this layer provids the background image modified slightly for dual type (changed some z-index)
+######### Shading image to make text visible for metal background and dual type
+	fight shade:
+		left: { x_left(8) }
+		top: { y_top(9) }
+		width: { fun_expand_size(350) }
+		height: { fun_expand_size(495) }
+		z index: -13
+		mask:
+			script: if card.card_type=="dual type" and styling.fighting_pokemon_render=="Original Faded Background" then if card.card_color=="fighting" then if card.card_color_2=="fighting" then "mask-blank.png"
+						else if styling.dual_pokemon_type=="Original Ex-Metal Version" then "mask-p-a-split2-pokemon-reverse.png" else if styling.dual_pokemon_type=="Original Ex-Dark Version" then "mask-p-a-split3-pokemon-reverse.png" else "mask-p-a-split-pokemon-reverse.png"
+					else if card.card_color_2=="fighting" then if styling.dual_pokemon_type=="Original Ex-Metal Version" then "mask-p-a-split2-pokemon.png" else if styling.dual_pokemon_type=="Original Ex-Dark Version" then "mask-p-a-split3-pokemon.png" else "mask-p-a-split-pokemon.png"
+				 	else "mask-blank.png"
+		render style: image
+		image:
+			script: if is_pokemon() and (card.card_color=="fighting" or card.card_color_2=="fighting") and styling.fighting_pokemon_render=="Original Faded Background" then "fade-fighting.png"
+				else "blank.png"
+	text shade:
+		left: { x_left(8) }
+		top: { y_top(9) }
+		width: { fun_expand_size(350) }
+		height: { fun_expand_size(495) }
+		z index: -13
+		mask:
+			script: if card.card_type=="dual type" then if (card.card_color=="metal" and styling.metal_background_type=="New Nintendo Background") or card.card_color=="dark" or card.card_color=="dragon" then if (card.card_color_2=="metal" and styling.metal_background_type=="New Nintendo Background") or card.card_color_2=="dark" or card.card_color_2=="dragon" then "mask-blank.png"
+						else if styling.dual_pokemon_type=="Original Ex-Metal Version" then "mask-p-a-split2-pokemon-reverse.png" else if styling.dual_pokemon_type=="Original Ex-Dark Version" then "mask-p-a-split3-pokemon-reverse.png" else "mask-p-a-split-pokemon-reverse.png"
+					else if (card.card_color_2=="metal" and styling.metal_background_type=="New Nintendo Background") or card.card_color_2=="dark" or card.card_color_2=="dragon" then if styling.dual_pokemon_type=="Original Ex-Metal Version" then "mask-p-a-split2-pokemon.png" else if styling.dual_pokemon_type=="Original Ex-Dark Version" then "mask-p-a-split3-pokemon.png" else "mask-p-a-split-pokemon.png"
+					else "mask-blank.png"
+		render style: image
+		image:
+			script: if card.card_type=="pokemon" and card.card_color=="metal" and styling.metal_background_type=="New Nintendo Background" then "fade-classic.png"
+				else if card.card_type=="dual type" and ((card.card_color=="metal" and styling.metal_background_type=="New Nintendo Background") or card.card_color=="dark" or card.card_color=="dragon" or (card.card_color_2=="metal" and styling.metal_background_type=="New Nintendo Background") or card.card_color_2=="dark" or card.card_color_2=="dragon") then "fade-classic.png"
+				else "blank.png"
+	gym trainer:
+		left: { x_left(244) }
+		top: { y_top(425) }
+		width: { fun_expand_size(100) }
+		height: { fun_expand_size(if is_pokemon() and styling.card_face=="Gym" and styling.user_gym_trainer_pic=="no" then 58 else 0) }
+		visible: { if is_pokemon() and styling.card_face=="Gym" and styling.user_gym_trainer_pic=="no" then "yes" else "no" }
+		render style: image
+		popup style: in place
+		z index: -10
+		choice images:
+			sabrina:	gym-icon-sabrina.png
+			misty:		gym-icon-misty.png
+			koga:		gym-icon-koga.png
+			giovanni:	gym-icon-giovanni.png
+			team rocket:	gym-icon-rocket.png
+			erika:		gym-icon-erika.png
+			brock:		gym-icon-brock.png
+			blaine:		gym-icon-blaine.png
+			lt surge:	gym-icon-ltsurge.png
+	######################## Popout layers 0
+	######################## This layer is for the popout image
+	card popout:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(368) }
+		height: { fun_expand_size(if styling.full_art_setting=="popout art (for advanced users)" then 513 else 0) }
+		z index: 0
+		render style: image
+		mask:
+			script: if is_energy() then "mask-full-e-g1.png"
+				else if is_trainer() then "mask-full-t-g1.png"
+				else if is_pokemon()
+					then if card.stage=="basic" then "mask-full-p-g1.png"
+					else "mask-full-p-g1-evolved.png"
+				else "mask-blank.png"
+		visible: { if styling.full_art_setting=="popout art (for advanced users)" then "yes" else "no" }
+		image:
+			script: if styling.full_art_setting=="popout art (for advanced users)" then card.card_image else "blank.png"
+	######################## Overborder Frame 4
+	######################## This layer is for items needed just before the user input text.
+#########These are the 3 bars used for various things
+	bar:
+		left: { x_left(if is_trainer() then 34 else 25) }
+		top: { y_top(if is_pokemon() then 420 else if is_energy() then 400 else 0) }
+		width: { fun_expand_size(319) }
+		height: { fun_expand_size(if is_pokemon() or is_energy() then 2 else 0) }
+		z index: 4
+		visible: { if is_pokemon() or is_energy() then "yes" else "no" }
+		render style: image
+		image: { if is_outline() then "bar-outline.png" else if is_wt_text_nf() then "bar-wt.png" else "bar-bk.png" }
+	bar 2:
+		left: { x_left(27) }
+		top: { y_top(divider_height_1()-1) }
+		width: { fun_expand_size(315) }
+		height: { fun_expand_size(if is_pokemon() and attack_no_g1()>=2 then 2 else 0) }
+		z index: 4
+		visible: { if is_pokemon() and attack_no_g1()>=2 then "yes" else "no" }
+		render style: image
+		image: { if is_outline() then "bar-outline.png" else if is_wt_text_nf() then "bar-wt.png" else "bar-bk.png" }
+	bar 3:
+		left: { x_left(27) }
+		top: { y_top(divider_height_2()-1) }
+		width: { fun_expand_size(315) }
+		height: { fun_expand_size(if is_pokemon() and attack_no_g1()==3 then 2 else 0) }
+		z index: 4
+		visible: { if is_pokemon() and attack_no_g1()==3 then "yes" else "no" }
+		render style: image
+		image: { if is_outline() then "bar-outline.png" else if is_wt_text_nf() then "bar-wt.png" else "bar-bk.png" }
+	bar 4:
+		left: { x_left(27) }
+		top: { y_top(444) }
+		width: { fun_expand_size(196) }
+		height: { fun_expand_size(if is_pokemon() and styling.card_face=="Gym" then 2 else 0) }
+		z index: 4
+		visible: { if is_pokemon() and styling.card_face=="Gym" then "yes" else "no" }
+		render style: image
+		image: { if is_outline() then "bar-outline.png" else if is_wt_text_nf() then "bar-wt.png" else "bar-bk.png" }
+	bar 5:
+		left: { x_left(27) }
+		top: { y_top(464) }
+		width: { fun_expand_size(196) }
+		height: { fun_expand_size(if is_pokemon() and styling.card_face=="Gym" then 2 else 0) }
+		z index: 4
+		visible: { if is_pokemon() and styling.card_face=="Gym" then "yes" else "no" }
+		render style: image
+		image: { if is_outline() then "bar-outline.png" else if is_wt_text_nf() then "bar-wt.png" else "bar-bk.png" }
+#####################################Everything after this is duplicate text fields used strictly for the purpose of creating outline text
+#########This is the reminder text above the Title line for Classic Faces and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	remd 1 dup 1:
+		left: { remder_1_left() }
+		top: { remder_1_top() }
+		width: { remder_1_width() }
+		height: { remder_1_height() }
+		visible: { if remder_1_visible() and is_outline() then "yes" else "no" }
+		alignment: { remder_1_align() }
+		z index: 3
+		font:
+			name: { remder_1_font() }
+			size: { remder_1_size() }
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+	remd 1 dup 2:
+		left: { remder_1_left() }
+		top: { remder_1_top() }
+		width: { remder_1_width() }
+		height: { remder_1_height() }
+		visible: { if remder_1_visible() and is_outline() then "yes" else "no" }
+		alignment: { remder_1_align() }
+		z index: 3
+		font:
+			name: { remder_1_font() }
+			size: { remder_1_size() }
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	remd 1 dup 3:
+		left: { remder_1_left() }
+		top: { remder_1_top() }
+		width: { remder_1_width() }
+		height: { remder_1_height() }
+		visible: { if remder_1_visible() and is_outline() then "yes" else "no" }
+		alignment: { remder_1_align() }
+		z index: 3
+		font:
+			name: { remder_1_font() }
+			size: { remder_1_size() }
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	remd 1 dup 4:
+		left: { remder_1_left() }
+		top: { remder_1_top() }
+		width: { remder_1_width() }
+		height: { remder_1_height() }
+		visible: { if remder_1_visible() and is_outline() then "yes" else "no" }
+		alignment: { remder_1_align() }
+		z index: 3
+		font:
+			name: { remder_1_font() }
+			size: { remder_1_size() }
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+	remd 2 dup 1:
+		left: { remder_2_left() }
+		top: { remder_2_top() }
+		width: { remder_2_width() }
+		height: { remder_2_height() }
+		z index: 3
+		visible: { if remder_2_visible() and is_outline() then "yes" else "no" }
+		line height soft: { remder_2_lh_soft() }
+		font:
+			name: { remder_2_font() }
+			size: { remder_2_size() }
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+	remd 2 dup 2:
+		left: { remder_2_left() }
+		top: { remder_2_top() }
+		width: { remder_2_width() }
+		height: { remder_2_height() }
+		z index: 3
+		visible: { if remder_2_visible() and is_outline() then "yes" else "no" }
+		line height soft: { remder_2_lh_soft() }
+		font:
+			name: { remder_2_font() }
+			size: { remder_2_size() }
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	remd 2 dup 3:
+		left: { remder_2_left() }
+		top: { remder_2_top() }
+		width: { remder_2_width() }
+		height: { remder_2_height() }
+		z index: 3
+		visible: { if remder_2_visible() and is_outline() then "yes" else "no" }
+		line height soft: { remder_2_lh_soft() }
+		font:
+			name: { remder_2_font() }
+			size: { remder_2_size() }
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	remd 2 dup 4:
+		left: { remder_2_left() }
+		top: { remder_2_top() }
+		width: { remder_2_width() }
+		height: { remder_2_height() }
+		z index: 3
+		visible: { if remder_2_visible() and is_outline() then "yes" else "no" }
+		line height soft: { remder_2_lh_soft() }
+		font:
+			name: { remder_2_font() }
+			size: { remder_2_size() }
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+#########card number and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	cardno dup 1:
+		left: { card_no_left() }
+		top: { card_no_top() }
+		width: { card_no_width() }
+		height: { card_no_height() }
+		z index: 3
+		alignment: { card_no_align() }
+		visible: { if is_outline() and set.visible_card_numbers=="yes" then "yes" else "no" }
+		font:
+			name: { card_no_font() }
+			size: { card_no_size() }
+		#	weight: bold
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+	cardno dup 2:
+		left: { card_no_left() }
+		top: { card_no_top() }
+		width: { card_no_width() }
+		height: { card_no_height() }
+		z index: 3
+		alignment: { card_no_align() }
+		visible: { if is_outline() and set.visible_card_numbers=="yes" then "yes" else "no" }
+		font:
+			name: { card_no_font() }
+			size: { card_no_size() }
+		#	weight: bold
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	cardno dup 3:
+		left: { card_no_left() }
+		top: { card_no_top() }
+		width: { card_no_width() }
+		height: { card_no_height() }
+		z index: 3
+		alignment: { card_no_align() }
+		visible: { if is_outline() and set.visible_card_numbers=="yes" then "yes" else "no" }
+		font:
+			name: { card_no_font() }
+			size: { card_no_size() }
+		#	weight: bold
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	cardno dup 4:
+		left: { card_no_left() }
+		top: { card_no_top() }
+		width: { card_no_width() }
+		height: { card_no_height() }
+		z index: 3
+		alignment: { card_no_align() }
+		visible: { if is_outline() and set.visible_card_numbers=="yes" then "yes" else "no" }
+		font:
+			name: { card_no_font() }
+			size: { card_no_size() }
+		#	weight: bold
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+#########Text overlay that says "weakness" and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	weakov dup 1:
+		left: { weak_ov_left() }
+		top: { weak_ov_top() }
+		width: { weak_ov_width() }
+		height: { weak_ov_height() }
+		z index: 3
+		visible: { if is_pokemon() and is_outline() then "yes" else "no" }
+		alignment: { weak_ov_align() }
+		font:
+			name: { weak_ov_font() }
+		#	weight: bold
+			size: { weak_ov_size() }
+			color: rgb (255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+	weakov dup 2:
+		left: { weak_ov_left() }
+		top: { weak_ov_top() }
+		width: { weak_ov_width() }
+		height: { weak_ov_height() }
+		z index: 3
+		visible: { if is_pokemon() and is_outline() then "yes" else "no" }
+		alignment: { weak_ov_align() }
+		font:
+			name: { weak_ov_font() }
+		#	weight: bold
+			size: { weak_ov_size() }
+			color: rgb (255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	weakov dup 3:
+		left: { weak_ov_left() }
+		top: { weak_ov_top() }
+		width: { weak_ov_width() }
+		height: { weak_ov_height() }
+		z index: 3
+		visible: { if is_pokemon() and is_outline() then "yes" else "no" }
+		alignment: { weak_ov_align() }
+		font:
+			name: { weak_ov_font() }
+		#	weight: bold
+			size: { weak_ov_size() }
+			color: rgb (255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	weakov dup 4:
+		left: { weak_ov_left() }
+		top: { weak_ov_top() }
+		width: { weak_ov_width() }
+		height: { weak_ov_height() }
+		z index: 3
+		visible: { if is_pokemon() and is_outline() then "yes" else "no" }
+		alignment: { weak_ov_align() }
+		font:
+			name: { weak_ov_font() }
+		#	weight: bold
+			size: { weak_ov_size() }
+			color: rgb (255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+#########Text overlay that says "resistance" and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	resov dup 1:
+		left: { res_ov_left() }
+		top: { res_ov_top() }
+		width: { res_ov_width() }
+		height: { res_ov_height() }
+		z index: 3
+		visible: { if is_pokemon() and is_outline() then "yes" else "no" }
+		alignment: { res_ov_align() }
+		font:
+			name: { res_ov_font() }
+		#	weight: bold
+			size: { res_ov_size() }
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+	resov dup 2:
+		left: { res_ov_left() }
+		top: { res_ov_top() }
+		width: { res_ov_width() }
+		height: { res_ov_height() }
+		z index: 3
+		visible: { if is_pokemon() and is_outline() then "yes" else "no" }
+		alignment: { res_ov_align() }
+		font:
+			name: { res_ov_font() }
+		#	weight: bold
+			size: { res_ov_size() }
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	resov dup 3:
+		left: { res_ov_left() }
+		top: { res_ov_top() }
+		width: { res_ov_width() }
+		height: { res_ov_height() }
+		z index: 3
+		visible: { if is_pokemon() and is_outline() then "yes" else "no" }
+		alignment: { res_ov_align() }
+		font:
+			name: { res_ov_font() }
+		#	weight: bold
+			size: { res_ov_size() }
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	resov dup 4:
+		left: { res_ov_left() }
+		top: { res_ov_top() }
+		width: { res_ov_width() }
+		height: { res_ov_height() }
+		z index: 3
+		visible: { if is_pokemon() and is_outline() then "yes" else "no" }
+		alignment: { res_ov_align() }
+		font:
+			name: { res_ov_font() }
+		#	weight: bold
+			size: { res_ov_size() }
+			color: rgb (0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+#########Text overlay that says "retreat cost" and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	retov dup 1:
+		left: { ret_ov_left() }
+		top: { ret_ov_top() }
+		width: { ret_ov_width() }
+		height: { ret_ov_height() }
+		z index: 3
+		visible: { if ret_ov_visible() and is_outline() then "yes" else "no" }
+		alignment: { ret_ov_align() }
+		font:
+			name: { ret_ov_font() }
+		#	weight: bold
+			size: { ret_ov_size() }
+			color: rgb (0,0,0)}
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+	retov dup 2:
+		left: { ret_ov_left() }
+		top: { ret_ov_top() }
+		width: { ret_ov_width() }
+		height: { ret_ov_height() }
+		z index: 3
+		visible: { if ret_ov_visible() and is_outline() then "yes" else "no" }
+		alignment: { ret_ov_align() }
+		font:
+			name: { ret_ov_font() }
+		#	weight: bold
+			size: { ret_ov_size() }
+			color: rgb (0,0,0)}
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	retov dup 3:
+		left: { ret_ov_left() }
+		top: { ret_ov_top() }
+		width: { ret_ov_width() }
+		height: { ret_ov_height() }
+		z index: 3
+		visible: { if ret_ov_visible() and is_outline() then "yes" else "no" }
+		alignment: { ret_ov_align() }
+		font:
+			name: { ret_ov_font() }
+		#	weight: bold
+			size: { ret_ov_size() }
+			color: rgb (0,0,0)}
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	retov dup 4:
+		left: { ret_ov_left() }
+		top: { ret_ov_top() }
+		width: { ret_ov_width() }
+		height: { ret_ov_height() }
+		z index: 3
+		visible: { if ret_ov_visible() and is_outline() then "yes" else "no" }
+		alignment: { ret_ov_align() }
+		font:
+			name: { ret_ov_font() }
+		#	weight: bold
+			size: { ret_ov_size() }
+			color: rgb (0,0,0)}
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+#########Card Title and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	name dup 1:
+		left: { card_name_left() }
+		top: { card_name_top() }
+		width: { card_name_width() }
+		height: { card_name_height() }
+		z index: 5
+		alignment: { card_name_align() }
+		visible: { if is_outline() then "yes" else "no" }
+		font:
+			name: { card_name_font_name() }
+			weight: { card_name_weight() }
+			size: { card_name_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+	name dup 2:
+		left: { card_name_left() }
+		top: { card_name_top() }
+		width: { card_name_width() }
+		height: { card_name_height() }
+		z index: 5
+		alignment: { card_name_align() }
+		visible: { if is_outline() then "yes" else "no" }
+		font:
+			name: { card_name_font_name() }
+			weight: { card_name_weight() }
+			size: { card_name_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	name dup 3:
+		left: { card_name_left() }
+		top: { card_name_top() }
+		width: { card_name_width() }
+		height: { card_name_height() }
+		z index: 5
+		alignment: { card_name_align() }
+		visible: { if is_outline() then "yes" else "no" }
+		font:
+			name: { card_name_font_name() }
+			weight: { card_name_weight() }
+			size: { card_name_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	name dup 4:
+		left: { card_name_left() }
+		top: { card_name_top() }
+		width: { card_name_width() }
+		height: { card_name_height() }
+		z index: 5
+		alignment: { card_name_align() }
+		visible: { if is_outline() then "yes" else "no" }
+		font:
+			name: { card_name_font_name() }
+			weight: { card_name_weight() }
+			size: { card_name_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+#########HP Text and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	hp dup 1:
+		left: { hp_left() }
+		top: { hp_top() }
+		width: { hp_width() }
+		height: { hp_height() }
+		z index: 5
+		alignment: { hp_align() }
+		visible: { if hp_visible() and is_outline() then "yes" else "no" }
+		font:
+			name: { hp_font_name() }
+			size: { hp_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+	hp dup 2:
+		left: { hp_left() }
+		top: { hp_top() }
+		width: { hp_width() }
+		height: { hp_height() }
+		z index: 5
+		alignment: { hp_align() }
+		visible: { if hp_visible() and is_outline() then "yes" else "no" }
+		font:
+			name: { hp_font_name() }
+			size: { hp_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	hp dup 3:
+		left: { hp_left() }
+		top: { hp_top() }
+		width: { hp_width() }
+		height: { hp_height() }
+		z index: 5
+		alignment: { hp_align() }
+		visible: { if hp_visible() and is_outline() then "yes" else "no" }
+		font:
+			name: { hp_font_name() }
+			size: { hp_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	hp dup 4:
+		left: { hp_left() }
+		top: { hp_top() }
+		width: { hp_width() }
+		height: { hp_height() }
+		z index: 5
+		alignment: { hp_align() }
+		visible: { if hp_visible() and is_outline() then "yes" else "no" }
+		font:
+			name: { hp_font_name() }
+			size: { hp_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+#########Text describing where the pokemon has evolved from and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	evo dup 1:
+		left: { evo_left() }
+		top: { evo_top() }
+		width: { evo_width() }
+		height: { evo_height() }
+		alignment: { evo_align() }
+		z index: 5
+		visible: { if evo_visible() and is_outline() then "yes" else "no" }
+		font:
+			name: { evo_font_name() }
+			weight: { evo_weight() }
+			style: { evo_style() }
+			size: { evo_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+	evo dup 2:
+		left: { evo_left() }
+		top: { evo_top() }
+		width: { evo_width() }
+		height: { evo_height() }
+		alignment: { evo_align() }
+		z index: 5
+		visible: { if evo_visible() and is_outline() then "yes" else "no" }
+		font:
+			name: { evo_font_name() }
+			weight: { evo_weight() }
+			style: { evo_style() }
+			size: { evo_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	evo dup 3:
+		left: { evo_left() }
+		top: { evo_top() }
+		width: { evo_width() }
+		height: { evo_height() }
+		alignment: { evo_align() }
+		z index: 5
+		visible: { if evo_visible() and is_outline() then "yes" else "no" }
+		font:
+			name: { evo_font_name() }
+			weight: { evo_weight() }
+			style: { evo_style() }
+			size: { evo_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	evo dup 4:
+		left: { evo_left() }
+		top: { evo_top() }
+		width: { evo_width() }
+		height: { evo_height() }
+		alignment: { evo_align() }
+		z index: 5
+		visible: { if evo_visible() and is_outline() then "yes" else "no" }
+		font:
+			name: { evo_font_name() }
+			weight: { evo_weight() }
+			style: { evo_style() }
+			size: { evo_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+#########The Weakness for pokemon and doubles as the top energy top marker for energy and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	weak dup 1:
+		left: { weak_left() }
+		top: { weak_top() }
+		width: { weak_width() }
+		height: { weak_height() }
+		z index: 5
+		always symbol: true
+		visible: { if is_outline() and weak_visible() then "yes" else "no" }
+		font:
+			name: { weak_font() }
+			size: { weak_size() }
+			weight: { weak_weight() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+		symbol font:
+			name: { weak_symbol() }
+			size: { weak_symbol_size() }
+			alignment: middle left
+		alignment: 
+		padding left: { fun_expand_size(2) }
+		padding top: { fun_expand_size(5) }
+		padding right: { fun_expand_size(2) }
+		padding bottom: { fun_expand_size(2) }
+	weak dup 2:
+		left: { weak_left() }
+		top: { weak_top() }
+		width: { weak_width() }
+		height: { weak_height() }
+		z index: 5
+		always symbol: true
+		visible: { if is_outline() and weak_visible() then "yes" else "no" }
+		font:
+			name: { weak_font() }
+			size: { weak_size() }
+			weight: { weak_weight() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+		symbol font:
+			name: { weak_symbol() }
+			size: { weak_symbol_size() }
+			alignment: middle left
+		alignment: 
+		padding left: { fun_expand_size(2) }
+		padding top: { fun_expand_size(5) }
+		padding right: { fun_expand_size(2) }
+		padding bottom: { fun_expand_size(2) }
+	weak dup 3:
+		left: { weak_left() }
+		top: { weak_top() }
+		width: { weak_width() }
+		height: { weak_height() }
+		z index: 5
+		always symbol: true
+		visible: { if is_outline() and weak_visible() then "yes" else "no" }
+		font:
+			name: { weak_font() }
+			size: { weak_size() }
+			weight: { weak_weight() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+		symbol font:
+			name: { weak_symbol() }
+			size: { weak_symbol_size() }
+			alignment: middle left
+		alignment: 
+		padding left: { fun_expand_size(2) }
+		padding top: { fun_expand_size(5) }
+		padding right: { fun_expand_size(2) }
+		padding bottom: { fun_expand_size(2) }
+	weak dup 4:
+		left: { weak_left() }
+		top: { weak_top() }
+		width: { weak_width() }
+		height: { weak_height() }
+		z index: 5
+		always symbol: true
+		visible: { if is_outline() and weak_visible() then "yes" else "no" }
+		font:
+			name: { weak_font() }
+			size: { weak_size() }
+			weight: { weak_weight() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+		symbol font:
+			name: { weak_symbol() }
+			size: { weak_symbol_size() }
+			alignment: middle left
+		alignment: 
+		padding left: { fun_expand_size(2) }
+		padding top: { fun_expand_size(5) }
+		padding right: { fun_expand_size(2) }
+		padding bottom: { fun_expand_size(2) }
+#########The resistance for pokemon and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	resist dup 1:
+		left: { x_left(if styling.card_face=="Classic" then 174 else 183) }
+		top: { y_top(if styling.card_face=="Classic" then 425 else 419) }
+		width: { fun_expand_size(if styling.card_face=="Classic" then 62 else 50) }
+		height: { fun_expand_size(if is_pokemon() then if styling.card_face=="Gym" then 25 else 30 else 0) }
+		z index: 5
+		always symbol: true
+		visible: { if is_outline() and resistance_visible() then "yes" else "no" }
+		font:
+			name: { resistance_font() }
+			size: { resistance_size() }
+			weight: { resistance_weight() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+		symbol font:
+			name: { resistance_symbol() }
+			size: { resistance_symbol_size() }
+			alignment: middle left
+		alignment: { resistance_align() }
+		padding left: { fun_expand_size(2) }
+		padding top: { fun_expand_size(5) }
+		padding right: { fun_expand_size(2) }
+		padding bottom: { fun_expand_size(2) }
+	resist dup 2:
+		left: { x_left(if styling.card_face=="Classic" then 174 else 183) }
+		top: { y_top(if styling.card_face=="Classic" then 425 else 419) }
+		width: { fun_expand_size(if styling.card_face=="Classic" then 62 else 50) }
+		height: { fun_expand_size(if is_pokemon() then if styling.card_face=="Gym" then 25 else 30 else 0) }
+		z index: 5
+		always symbol: true
+		visible: { if is_outline() and resistance_visible() then "yes" else "no" }
+		font:
+			name: { resistance_font() }
+			size: { resistance_size() }
+			weight: { resistance_weight() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+		symbol font:
+			name: { resistance_symbol() }
+			size: { resistance_symbol_size() }
+			alignment: middle left
+		alignment: { resistance_align() }
+		padding left: { fun_expand_size(2) }
+		padding top: { fun_expand_size(5) }
+		padding right: { fun_expand_size(2) }
+		padding bottom: { fun_expand_size(2) }
+	resist dup 3:
+		left: { x_left(if styling.card_face=="Classic" then 174 else 183) }
+		top: { y_top(if styling.card_face=="Classic" then 425 else 419) }
+		width: { fun_expand_size(if styling.card_face=="Classic" then 62 else 50) }
+		height: { fun_expand_size(if is_pokemon() then if styling.card_face=="Gym" then 25 else 30 else 0) }
+		z index: 5
+		always symbol: true
+		visible: { if is_outline() and resistance_visible() then "yes" else "no" }
+		font:
+			name: { resistance_font() }
+			size: { resistance_size() }
+			weight: { resistance_weight() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+		symbol font:
+			name: { resistance_symbol() }
+			size: { resistance_symbol_size() }
+			alignment: middle left
+		alignment: { resistance_align() }
+		padding left: { fun_expand_size(2) }
+		padding top: { fun_expand_size(5) }
+		padding right: { fun_expand_size(2) }
+		padding bottom: { fun_expand_size(2) }
+	resist dup 4:
+		left: { x_left(if styling.card_face=="Classic" then 174 else 183) }
+		top: { y_top(if styling.card_face=="Classic" then 425 else 419) }
+		width: { fun_expand_size(if styling.card_face=="Classic" then 62 else 50) }
+		height: { fun_expand_size(if is_pokemon() then if styling.card_face=="Gym" then 25 else 30 else 0) }
+		z index: 5
+		always symbol: true
+		visible: { if is_outline() and resistance_visible() then "yes" else "no" }
+		font:
+			name: { resistance_font() }
+			size: { resistance_size() }
+			weight: { resistance_weight() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+		symbol font:
+			name: { resistance_symbol() }
+			size: { resistance_symbol_size() }
+			alignment: middle left
+		alignment: { resistance_align() }
+		padding left: { fun_expand_size(2) }
+		padding top: { fun_expand_size(5) }
+		padding right: { fun_expand_size(2) }
+		padding bottom: { fun_expand_size(2) }
+#########Flavor Text and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	flavor dup 1:
+		left: { flavor_left() }
+		top: { flavor_top() }
+		width: { flavor_width() }
+		height: { flavor_height() }
+		z index: 5
+		visible: { if flavor_visible() and is_outline() then "yes" else "no" }
+		alignment: { flavor_align() }
+		font:
+			name: { flavor_font_name() }
+			weight: { flavor_weight() }
+			style: { flavor_style() }
+			size: { flavor_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+		padding left: { flavor_pad_left() }
+		padding top: { flavor_pad_top() }
+		padding right: { flavor_pad_right() }
+		padding bottom: { flavor_pad_bottom() }
+		line height soft: { flavor_lh_soft() }
+	flavor dup 2:
+		left: { flavor_left() }
+		top: { flavor_top() }
+		width: { flavor_width() }
+		height: { flavor_height() }
+		z index: 5
+		visible: { if flavor_visible() and is_outline() then "yes" else "no" }
+		alignment: { flavor_align() }
+		font:
+			name: { flavor_font_name() }
+			weight: { flavor_weight() }
+			style: { flavor_style() }
+			size: { flavor_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+		padding left: { flavor_pad_left() }
+		padding top: { flavor_pad_top() }
+		padding right: { flavor_pad_right() }
+		padding bottom: { flavor_pad_bottom() }
+		line height soft: { flavor_lh_soft() }
+	flavor dup 3:
+		left: { flavor_left() }
+		top: { flavor_top() }
+		width: { flavor_width() }
+		height: { flavor_height() }
+		z index: 5
+		visible: { if flavor_visible() and is_outline() then "yes" else "no" }
+		alignment: { flavor_align() }
+		font:
+			name: { flavor_font_name() }
+			weight: { flavor_weight() }
+			style: { flavor_style() }
+			size: { flavor_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+		padding left: { flavor_pad_left() }
+		padding top: { flavor_pad_top() }
+		padding right: { flavor_pad_right() }
+		padding bottom: { flavor_pad_bottom() }
+		line height soft: { flavor_lh_soft() }
+	flavor dup 4:
+		left: { flavor_left() }
+		top: { flavor_top() }
+		width: { flavor_width() }
+		height: { flavor_height() }
+		z index: 5
+		visible: { if flavor_visible() and is_outline() then "yes" else "no" }
+		alignment: { flavor_align() }
+		font:
+			name: { flavor_font_name() }
+			weight: { flavor_weight() }
+			style: { flavor_style() }
+			size: { flavor_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+		padding left: { flavor_pad_left() }
+		padding top: { flavor_pad_top() }
+		padding right: { flavor_pad_right() }
+		padding bottom: { flavor_pad_bottom() }
+		line height soft: { flavor_lh_soft() }
+#########Illustrator name and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	ill dup 1:
+		left: { ill_left() }
+		top: { ill_top() }
+		width: { ill_width() }
+		height: { ill_height() }
+		z index: 5
+		alignment: { ill_align() }
+		visible: { if is_outline() then "yes" else "no" }
+		font:
+			name: { ill_font_name() }
+			weight: { ill_weight() }
+			style: { ill_style() }
+			size: { ill_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+	ill dup 2:
+		left: { ill_left() }
+		top: { ill_top() }
+		width: { ill_width() }
+		height: { ill_height() }
+		z index: 5
+		alignment: { ill_align() }
+		visible: { if is_outline() then "yes" else "no" }
+		font:
+			name: { ill_font_name() }
+			weight: { ill_weight() }
+			style: { ill_style() }
+			size: { ill_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	ill dup 3:
+		left: { ill_left() }
+		top: { ill_top() }
+		width: { ill_width() }
+		height: { ill_height() }
+		z index: 5
+		alignment: { ill_align() }
+		visible: { if is_outline() then "yes" else "no" }
+		font:
+			name: { ill_font_name() }
+			weight: { ill_weight() }
+			style: { ill_style() }
+			size: { ill_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	ill dup 4:
+		left: { ill_left() }
+		top: { ill_top() }
+		width: { ill_width() }
+		height: { ill_height() }
+		z index: 5
+		alignment: { ill_align() }
+		visible: { if is_outline() then "yes" else "no" }
+		font:
+			name: { ill_font_name() }
+			weight: { ill_weight() }
+			style: { ill_style() }
+			size: { ill_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+#########Copyright and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	copyr dup 1:
+		left: { copy_left() }
+		top: { copy_top() }
+		width: { copy_width() }
+		height: { copy_height() }
+		z index: 5
+		alignment: { copy_align() }
+		visible: { if is_outline() and set.visible_card_copyright=="yes" then "yes" else "no" }
+		font:
+			name: { copy_font() }
+			size: { copy_size() }
+		#	weight: bold
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+	copyr dup 2:
+		left: { copy_left() }
+		top: { copy_top() }
+		width: { copy_width() }
+		height: { copy_height() }
+		z index: 5
+		alignment: { copy_align() }
+		visible: { if is_outline() and set.visible_card_copyright=="yes" then "yes" else "no" }
+		font:
+			name: { copy_font() }
+			size: { copy_size() }
+		#	weight: bold
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	copyr dup 3:
+		left: { copy_left() }
+		top: { copy_top() }
+		width: { copy_width() }
+		height: { copy_height() }
+		z index: 5
+		alignment: { copy_align() }
+		visible: { if is_outline() and set.visible_card_copyright=="yes" then "yes" else "no" }
+		font:
+			name: { copy_font() }
+			size: { copy_size() }
+		#	weight: bold
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	copyr dup 4:
+		left: { copy_left() }
+		top: { copy_top() }
+		width: { copy_width() }
+		height: { copy_height() }
+		z index: 5
+		alignment: { copy_align() }
+		visible: { if is_outline() and set.visible_card_copyright=="yes" then "yes" else "no" }
+		font:
+			name: { copy_font() }
+			size: { copy_size() }
+		#	weight: bold
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+#########Rules text used by energy and trainers and the 4 duplicate text fields, kept separate from pokemon because of the scale down issue
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	rnp 1 dup 1:
+		left: { rule_np_1_left() }
+		top: { rule_np_1_top() }
+		width: { rule_np_1_width() }
+		height: { rule_np_1_height() }
+		z index: 5
+		visible: { if is_outline() and rule_np_1_visible() then "yes" else "no" }
+		font:
+			name: { rule_np_1_font_name() }
+			size: { rule_np_1_size() }
+			scale down to: 6
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+		symbol font:
+			name: { rule_np_1_symbol_name() }
+			size: { rule_np_1_symbol_size() }
+			alignment: middle center
+		alignment: { rule_np_1_align() }
+		padding left: { rule_np_1_pad_left() }
+		padding top: { rule_np_1_pad_top() }
+		padding right: { rule_np_1_pad_right() }
+		padding bottom: { rule_np_1_pad_bottom() }
+		line height hard: { rule_np_1_lh_hard() }
+		line height soft: { rule_np_1_lh_soft() }
+	rnp 1 dup 2:
+		left: { rule_np_1_left() }
+		top: { rule_np_1_top() }
+		width: { rule_np_1_width() }
+		height: { rule_np_1_height() }
+		z index: 5
+		visible: { if is_outline() and rule_np_1_visible() then "yes" else "no" }
+		font:
+			name: { rule_np_1_font_name() }
+			size: { rule_np_1_size() }
+			scale down to: 6
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+		symbol font:
+			name: { rule_np_1_symbol_name() }
+			size: { rule_np_1_symbol_size() }
+			alignment: middle center
+		alignment: { rule_np_1_align() }
+		padding left: { rule_np_1_pad_left() }
+		padding top: { rule_np_1_pad_top() }
+		padding right: { rule_np_1_pad_right() }
+		padding bottom: { rule_np_1_pad_bottom() }
+		line height hard: { rule_np_1_lh_hard() }
+		line height soft: { rule_np_1_lh_soft() }
+	rnp 1 dup 3:
+		left: { rule_np_1_left() }
+		top: { rule_np_1_top() }
+		width: { rule_np_1_width() }
+		height: { rule_np_1_height() }
+		z index: 5
+		visible: { if is_outline() and rule_np_1_visible() then "yes" else "no" }
+		font:
+			name: { rule_np_1_font_name() }
+			size: { rule_np_1_size() }
+			scale down to: 6
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+		symbol font:
+			name: { rule_np_1_symbol_name() }
+			size: { rule_np_1_symbol_size() }
+			alignment: middle center
+		alignment: { rule_np_1_align() }
+		padding left: { rule_np_1_pad_left() }
+		padding top: { rule_np_1_pad_top() }
+		padding right: { rule_np_1_pad_right() }
+		padding bottom: { rule_np_1_pad_bottom() }
+		line height hard: { rule_np_1_lh_hard() }
+		line height soft: { rule_np_1_lh_soft() }
+	rnp 1 dup 4:
+		left: { rule_np_1_left() }
+		top: { rule_np_1_top() }
+		width: { rule_np_1_width() }
+		height: { rule_np_1_height() }
+		z index: 5
+		visible: { if is_outline() and rule_np_1_visible() then "yes" else "no" }
+		font:
+			name: { rule_np_1_font_name() }
+			size: { rule_np_1_size() }
+			scale down to: 6
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+		symbol font:
+			name: { rule_np_1_symbol_name() }
+			size: { rule_np_1_symbol_size() }
+			alignment: middle center
+		alignment: { rule_np_1_align() }
+		padding left: { rule_np_1_pad_left() }
+		padding top: { rule_np_1_pad_top() }
+		padding right: { rule_np_1_pad_right() }
+		padding bottom: { rule_np_1_pad_bottom() }
+		line height hard: { rule_np_1_lh_hard() }
+		line height soft: { rule_np_1_lh_soft() }
+#########This shows the 1st attacks damage for both generations and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	dam 1 dup 1:
+		left: { damage_1_left() }
+		top: { damage_1_top() }
+		width: { damage_1_width() }
+		height: { damage_1_height() }
+		z index: 5
+		visible: { if is_outline() and damage_1_visible() then "yes" else "no" }
+		alignment: { damage_1_align() }
+		padding left: { damage_1_pad_left() }
+		font:
+			name: { damage_1_font_name() }
+			size: { damage_1_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+	dam 1 dup 2:
+		left: { damage_1_left() }
+		top: { damage_1_top() }
+		width: { damage_1_width() }
+		height: { damage_1_height() }
+		z index: 5
+		visible: { if is_outline() and damage_1_visible() then "yes" else "no" }
+		alignment: { damage_1_align() }
+		padding left: { damage_1_pad_left() }
+		font:
+			name: { damage_1_font_name() }
+			size: { damage_1_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	dam 1 dup 3:
+		left: { damage_1_left() }
+		top: { damage_1_top() }
+		width: { damage_1_width() }
+		height: { damage_1_height() }
+		z index: 5
+		visible: { if is_outline() and damage_1_visible() then "yes" else "no" }
+		alignment: { damage_1_align() }
+		padding left: { damage_1_pad_left() }
+		font:
+			name: { damage_1_font_name() }
+			size: { damage_1_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	dam 1 dup 4:
+		left: { damage_1_left() }
+		top: { damage_1_top() }
+		width: { damage_1_width() }
+		height: { damage_1_height() }
+		z index: 5
+		visible: { if is_outline() and damage_1_visible() then "yes" else "no" }
+		alignment: { damage_1_align() }
+		padding left: { damage_1_pad_left() }
+		font:
+			name: { damage_1_font_name() }
+			size: { damage_1_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+#########This field is the rules text for the 1st Gen 6 attack and the title and rules text for the Classic Attack and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	rult 1 dup 1:
+		left: { rule_1_left() }
+		top: { rule_1_top() }
+		width: { rule_1_width() }
+		height: { rule_1_height() }
+		z index: 5
+		visible: { if is_outline() and rule_1_visible() then "yes" else "no" }
+		font:
+			name: { rule_1_font_name() }
+			size: { rule_1_size() }
+			scale down to: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+		symbol font:
+			name: { rule_1_symbol_font() }
+			size: { rule_1_symbol_size() }
+			alignment: middle center
+		alignment: { rule_1_align() }
+		padding left: { rule_1_pad_left() }
+		padding top: { rule_1_pad_top() }
+		padding right: { rule_1_pad_right() }
+		padding bottom: { rule_1_pad_bottom() }
+		line height hard: { rule_1_lh_hard() }
+	rult 1 dup 2:
+		left: { rule_1_left() }
+		top: { rule_1_top() }
+		width: { rule_1_width() }
+		height: { rule_1_height() }
+		z index: 5
+		visible: { if is_outline() and rule_1_visible() then "yes" else "no" }
+		font:
+			name: { rule_1_font_name() }
+			size: { rule_1_size() }
+			scale down to: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+		symbol font:
+			name: { rule_1_symbol_font() }
+			size: { rule_1_symbol_size() }
+			alignment: middle center
+		alignment: { rule_1_align() }
+		padding left: { rule_1_pad_left() }
+		padding top: { rule_1_pad_top() }
+		padding right: { rule_1_pad_right() }
+		padding bottom: { rule_1_pad_bottom() }
+		line height hard: { rule_1_lh_hard() }
+	rult 1 dup 3:
+		left: { rule_1_left() }
+		top: { rule_1_top() }
+		width: { rule_1_width() }
+		height: { rule_1_height() }
+		z index: 5
+		visible: { if is_outline() and rule_1_visible() then "yes" else "no" }
+		font:
+			name: { rule_1_font_name() }
+			size: { rule_1_size() }
+			scale down to: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+		symbol font:
+			name: { rule_1_symbol_font() }
+			size: { rule_1_symbol_size() }
+			alignment: middle center
+		alignment: { rule_1_align() }
+		padding left: { rule_1_pad_left() }
+		padding top: { rule_1_pad_top() }
+		padding right: { rule_1_pad_right() }
+		padding bottom: { rule_1_pad_bottom() }
+		line height hard: { rule_1_lh_hard() }
+	rult 1 dup 4:
+		left: { rule_1_left() }
+		top: { rule_1_top() }
+		width: { rule_1_width() }
+		height: { rule_1_height() }
+		z index: 5
+		visible: { if is_outline() and rule_1_visible() then "yes" else "no" }
+		font:
+			name: { rule_1_font_name() }
+			size: { rule_1_size() }
+			scale down to: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+		symbol font:
+			name: { rule_1_symbol_font() }
+			size: { rule_1_symbol_size() }
+			alignment: middle center
+		alignment: { rule_1_align() }
+		padding left: { rule_1_pad_left() }
+		padding top: { rule_1_pad_top() }
+		padding right: { rule_1_pad_right() }
+		padding bottom: { rule_1_pad_bottom() }
+		line height hard: { rule_1_lh_hard() }
+#########This shows the 2nd attacks damage for both generations and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	dam 2 dup 1:
+		left: { damage_2_left() }
+		top: { damage_2_top() }
+		width: { damage_2_width() }
+		height: { damage_2_height() }
+		z index: 5
+		visible: { if is_outline() and damage_2_visible() then "yes" else "no" }
+		alignment: { damage_2_align() }
+		padding left: { damage_2_pad_left() }
+		font:
+			name: { damage_2_font_name() }
+			size: { damage_2_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+	dam 2 dup 2:
+		left: { damage_2_left() }
+		top: { damage_2_top() }
+		width: { damage_2_width() }
+		height: { damage_2_height() }
+		z index: 5
+		visible: { if is_outline() and damage_2_visible() then "yes" else "no" }
+		alignment: { damage_2_align() }
+		padding left: { damage_2_pad_left() }
+		font:
+			name: { damage_2_font_name() }
+			size: { damage_2_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	dam 2 dup 3:
+		left: { damage_2_left() }
+		top: { damage_2_top() }
+		width: { damage_2_width() }
+		height: { damage_2_height() }
+		z index: 5
+		visible: { if is_outline() and damage_2_visible() then "yes" else "no" }
+		alignment: { damage_2_align() }
+		padding left: { damage_2_pad_left() }
+		font:
+			name: { damage_2_font_name() }
+			size: { damage_2_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	dam 2 dup 4:
+		left: { damage_2_left() }
+		top: { damage_2_top() }
+		width: { damage_2_width() }
+		height: { damage_2_height() }
+		z index: 5
+		visible: { if is_outline() and damage_2_visible() then "yes" else "no" }
+		alignment: { damage_2_align() }
+		padding left: { damage_2_pad_left() }
+		font:
+			name: { damage_2_font_name() }
+			size: { damage_2_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+#########This field is the rules text for the 2nd Gen 6 attack and the title and rules text for the Classic Attack and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	rult 2 dup 1:
+		left: { rule_2_left() }
+		top: { rule_2_top() }
+		width: { rule_2_width() }
+		height: { rule_2_height() }
+		z index: 5
+		visible: { if is_outline() and rule_2_visible() then "yes" else "no" }
+		font:
+			name: { rule_1_font_name() }
+			size: { rule_2_size() }
+			scale down to: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+		symbol font:
+			name: { rule_2_symbol_font() }
+			size: { rule_2_symbol_size() }
+			alignment: middle center
+		alignment: { rule_2_align() }
+		padding left: { rule_2_pad_left() }
+		padding top: { rule_2_pad_top() }
+		padding right: { rule_2_pad_right() }
+		padding bottom: { rule_2_pad_bottom() }
+		line height hard: { rule_2_lh_hard() }
+	rult 2 dup 2:
+		left: { rule_2_left() }
+		top: { rule_2_top() }
+		width: { rule_2_width() }
+		height: { rule_2_height() }
+		z index: 5
+		visible: { if is_outline() and rule_2_visible() then "yes" else "no" }
+		font:
+			name: { rule_1_font_name() }
+			size: { rule_2_size() }
+			scale down to: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+		symbol font:
+			name: { rule_2_symbol_font() }
+			size: { rule_2_symbol_size() }
+			alignment: middle center
+		alignment: { rule_2_align() }
+		padding left: { rule_2_pad_left() }
+		padding top: { rule_2_pad_top() }
+		padding right: { rule_2_pad_right() }
+		padding bottom: { rule_2_pad_bottom() }
+		line height hard: { rule_2_lh_hard() }
+	rult 2 dup 3:
+		left: { rule_2_left() }
+		top: { rule_2_top() }
+		width: { rule_2_width() }
+		height: { rule_2_height() }
+		z index: 5
+		visible: { if is_outline() and rule_2_visible() then "yes" else "no" }
+		font:
+			name: { rule_1_font_name() }
+			size: { rule_2_size() }
+			scale down to: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+		symbol font:
+			name: { rule_2_symbol_font() }
+			size: { rule_2_symbol_size() }
+			alignment: middle center
+		alignment: { rule_2_align() }
+		padding left: { rule_2_pad_left() }
+		padding top: { rule_2_pad_top() }
+		padding right: { rule_2_pad_right() }
+		padding bottom: { rule_2_pad_bottom() }
+		line height hard: { rule_2_lh_hard() }
+	rult 2 dup 4:
+		left: { rule_2_left() }
+		top: { rule_2_top() }
+		width: { rule_2_width() }
+		height: { rule_2_height() }
+		z index: 5
+		visible: { if is_outline() and rule_2_visible() then "yes" else "no" }
+		font:
+			name: { rule_1_font_name() }
+			size: { rule_2_size() }
+			scale down to: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+		symbol font:
+			name: { rule_2_symbol_font() }
+			size: { rule_2_symbol_size() }
+			alignment: middle center
+		alignment: { rule_2_align() }
+		padding left: { rule_2_pad_left() }
+		padding top: { rule_2_pad_top() }
+		padding right: { rule_2_pad_right() }
+		padding bottom: { rule_2_pad_bottom() }
+		line height hard: { rule_2_lh_hard() }
+#########This shows the 3rd attacks damage for both generations and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	dam 3 dup 1:
+		left: { damage_3_left() }
+		top: { damage_3_top() }
+		width: { damage_3_width() }
+		height: { damage_3_height() }
+		z index: 5
+		visible: { if is_outline() and damage_3_visible() then "yes" else "no" }
+		alignment: { damage_3_align() }
+		padding left: { damage_3_pad_left() }
+		font:
+			name: { damage_3_font_name() }
+			size: { damage_3_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+	dam 3 dup 2:
+		left: { damage_3_left() }
+		top: { damage_3_top() }
+		width: { damage_3_width() }
+		height: { damage_3_height() }
+		z index: 5
+		visible: { if is_outline() and damage_3_visible() then "yes" else "no" }
+		alignment: { damage_3_align() }
+		padding left: { damage_3_pad_left() }
+		font:
+			name: { damage_3_font_name() }
+			size: { damage_3_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+	dam 3 dup 3:
+		left: { damage_3_left() }
+		top: { damage_3_top() }
+		width: { damage_3_width() }
+		height: { damage_3_height() }
+		z index: 5
+		visible: { if is_outline() and damage_3_visible() then "yes" else "no" }
+		alignment: { damage_3_align() }
+		padding left: { damage_3_pad_left() }
+		font:
+			name: { damage_3_font_name() }
+			size: { damage_3_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+	dam 3 dup 4:
+		left: { damage_3_left() }
+		top: { damage_3_top() }
+		width: { damage_3_width() }
+		height: { damage_3_height() }
+		z index: 5
+		visible: { if is_outline() and damage_3_visible() then "yes" else "no" }
+		alignment: { damage_3_align() }
+		padding left: { damage_3_pad_left() }
+		font:
+			name: { damage_3_font_name() }
+			size: { damage_3_size() }
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+#########This field is the rules text for the 3rd Gen 6 attack and the title and rules text for the Classic Attack and the 4 duplicate text fields
+######### Do not change any values found in field specific function/variables these are used to keep the four duplicat text fields the same, the four duplicate fields are found in the extra card fields
+	rult 3 dup 1:
+		left: { rule_3_left() }
+		top: { rule_3_top() }
+		width: { rule_3_width() }
+		height: { rule_3_height() }
+		z index: 5
+		visible: { if is_outline() and rule_3_visible() then "yes" else "no" }
+		font:
+			name: { rule_1_font_name() }
+			size: { rule_3_size() }
+			scale down to: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+		symbol font:
+			name: { rule_3_symbol_font() }
+			size: { rule_3_symbol_size() }
+			alignment: middle center
+		alignment: { rule_3_align() }
+		padding left: { rule_3_pad_left() }
+		padding top: { rule_3_pad_top() }
+		padding right: { rule_3_pad_right() }
+		padding bottom: { rule_3_pad_bottom() }
+		line height hard: { rule_3_lh_hard() }
+	rult 3 dup 2:
+		left: { rule_3_left() }
+		top: { rule_3_top() }
+		width: { rule_3_width() }
+		height: { rule_3_height() }
+		z index: 5
+		visible: { if is_outline() and rule_3_visible() then "yes" else "no" }
+		font:
+			name: { rule_1_font_name() }
+			size: { rule_3_size() }
+			scale down to: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+		symbol font:
+			name: { rule_3_symbol_font() }
+			size: { rule_3_symbol_size() }
+			alignment: middle center
+		alignment: { rule_3_align() }
+		padding left: { rule_3_pad_left() }
+		padding top: { rule_3_pad_top() }
+		padding right: { rule_3_pad_right() }
+		padding bottom: { rule_3_pad_bottom() }
+		line height hard: { rule_3_lh_hard() }
+	rult 3 dup 3:
+		left: { rule_3_left() }
+		top: { rule_3_top() }
+		width: { rule_3_width() }
+		height: { rule_3_height() }
+		z index: 5
+		visible: { if is_outline() and rule_3_visible() then "yes" else "no" }
+		font:
+			name: { rule_1_font_name() }
+			size: { rule_3_size() }
+			scale down to: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+		symbol font:
+			name: { rule_3_symbol_font() }
+			size: { rule_3_symbol_size() }
+			alignment: middle center
+		alignment: { rule_3_align() }
+		padding left: { rule_3_pad_left() }
+		padding top: { rule_3_pad_top() }
+		padding right: { rule_3_pad_right() }
+		padding bottom: { rule_3_pad_bottom() }
+		line height hard: { rule_3_lh_hard() }
+	rult 3 dup 4:
+		left: { rule_3_left() }
+		top: { rule_3_top() }
+		width: { rule_3_width() }
+		height: { rule_3_height() }
+		z index: 5
+		visible: { if is_outline() and rule_3_visible() then "yes" else "no" }
+		font:
+			name: { rule_1_font_name() }
+			size: { rule_3_size() }
+			scale down to: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+		symbol font:
+			name: { rule_3_symbol_font() }
+			size: { rule_3_symbol_size() }
+			alignment: middle center
+		alignment: { rule_3_align() }
+		padding left: { rule_3_pad_left() }
+		padding top: { rule_3_pad_top() }
+		padding right: { rule_3_pad_right() }
+		padding bottom: { rule_3_pad_bottom() }
+		line height hard: { rule_3_lh_hard() }
+
+### Change till only reflects actual card color of pokemon
+extra card field:
+	type: choice
+	name: testing
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: Yes
+
+extra card style:
+####### This field for development and testing remove for production: the corresponding styling field can be in that section
+	testing:
+		left: { x_left(8) }
+		top: { y_top(9) }
+		width: { fun_expand_size(350) }
+		height: { fun_expand_size(495) }
+		z index: -13
+		render style: image
+		visible: { if styling.use_test_background=="yes" then "yes" else "no" }
+		choice images:
+			Yes:	!test-image.jpg
+
+styling style:
+	dual pokemon type:
+		render style: both
+		choice images:
+			Original Ex-Metal Version:	symbol-dual-exm.png
+			Original Ex-Dark Version:	symbol-dual-exd.png
+			New Steam Siege Version:	symbol-dual-ss.png
+	metal background type:
+		render style: both
+		choice images:
+			Classic Wizards Background:	symbol-metal-old.png
+			New Nintendo Background:	symbol-metal-new.png
+	card face:
+		render style: both
+		choice images:
+			Classic:	sym-face-classic.png
+			Gym:		sym-face-gym.png

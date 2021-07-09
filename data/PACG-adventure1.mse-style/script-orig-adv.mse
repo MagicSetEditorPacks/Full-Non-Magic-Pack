@@ -1,0 +1,172 @@
+# Card TYPE and SIDE qualifiers
+# use != "Back" as default / initial is "Front" and sometimes registers as ""
+
+isAPFront :=	{ styling.card_side != "Back" and card.type == "ADVENTURE PATH" }
+isAPBack :=		{ styling.card_side == "Back" and card.type == "ADVENTURE PATH" }
+
+isAdvFront :=	{ styling.card_side != "Back" and card.type == "ADVENTURE" }
+isAdvBack :=	{ styling.card_side == "Back" and card.type == "ADVENTURE" }
+
+isLocFront :=	{ styling.card_side != "Back" and card.type == "LOCATION" }
+isLocBack :=	{ styling.card_side == "Back" and card.type == "LOCATION" }
+
+isScenFront :=	{ styling.card_side != "Back" and card.type == "SCENARIO" }
+isScenBack :=	{ styling.card_side == "Back" and card.type == "SCENARIO" }
+
+# Flavour Text
+advFlavourTextT :=	{
+	if split_text(match: " ",card.type)[0] == "ADVENTURE" then 275 
+	else if card.type == "LOCATION" then 339
+	else 380 + if card.anchored != "" then anchoredH() - 4
+}
+
+advFlavourTextH := {
+	if styling.card_side != "Back" then 0
+	else if split_text(match: " ",card.type)[0] == "ADVENTURE" then 224 
+	else if card.type == "LOCATION" then 166
+	else 120 - if card.anchored != "" then anchoredH() - 4
+}
+
+#Adventure Border Mask
+getAdvBorderMask := {
+		"/PACG-common.mse-include/res-orig/border" + to_lower(input) + "_mask" + typeMaskA[ to_title(card.type) + to_title(styling.card_side) ] + ".png"
+	}
+
+typeMaskA := [
+	AdventureFront:			"1a"
+	AdventureBack:			"5"
+	Adventure_PathFront:	"1a"
+	Adventure_PathBack:		"5"
+	ScenarioFront:			"2a"
+	ScenarioBack:			"4a"
+	LocationFront:			"3"
+	LocationBack:			"3"
+]
+
+# Scenario Table Constants
+playerW := 48
+locationW := 116
+locationH := 14
+
+scenarioTop := {
+	Height - 72 - ((6 - input) * (scenarioH + 2))
+}
+
+scenarioH := 20
+
+scenarioTblH := {
+	(scenarioH + 2) * (1 + 
+	if card.scenario_5 != "" then 5
+	else if card.scenario_4 != "" then 4
+	else if card.scenario_3 != "" then 3
+	else if card.scenario_2 != "" then 2
+	else 1)
+}
+
+anchoredT :=	{ playerTblTop(row: 1) + (5 * (locationH + 1) ) + 1 }
+anchoredL :=	{ playerTblLeft(col: 1) }
+anchoredH :=	{ locationH - 2 }
+anchoredW :=	{ Width - (2 * anchoredL()) }
+
+playerTblTop := {
+	297 + ( (locationH + 1) * (row - 1))
+}
+
+playerTblLeft := {
+	if col == 1 then 16
+	else if col == 2 then 65
+	else if col == 3 then Width - 181
+	else Width - 132
+}
+
+villainH := 11
+villainTblT := {
+	264
+	- (if card.henchmen_2 != "" then villainH + 2)
+	- (if card.henchmen_3 != "" then villainH + 2)
+	- (if card.henchmen_4 != "" then villainH + 2)
+}
+
+villainTblH := {
+	2 + (3 * (villainH + 2)) 
+	+ (if card.henchmen_2 != "" then villainH + 2)
+	+ (if card.henchmen_3 != "" then villainH + 2)
+	+ (if card.henchmen_4 != "" then villainH + 2)
+}
+
+henchmenT := 	{ villainTblT() + 2 + ((input + 1) * (villainH + 2)) }
+
+#Location Scripts
+
+deckH := 13
+deckW1 := 64
+deckW2 := 46
+deckCellL := 232
+deckTblH := {
+	1+ ((deckH + 2) * 9)
+}
+
+deckCellT := {
+	if input = 0 then 179
+	else  180 + (input * (deckH + 2))
+}
+
+locH := 16
+
+atlVisible := {
+	( isLocFront() )
+	or (card.type=="LOCATION" and card.closed_rules == "AT THIS LOCATION")
+}
+
+atlTblH := {
+	if styling.card_side == "Back" then 86
+	else 176 - wpcTblH() - wcTblH()
+}
+
+atlTblT := {
+	if styling.card_side == "Front" then 331
+	else 426
+}
+
+wcTblH := {
+	27 + 16
+}
+
+wpcVisible := {
+	( isLocFront() )
+	or (card.type=="LOCATION" and card.closed_rules == "WHEN PERMANENTLY CLOSED")
+}
+
+wpcTblT := {
+	if styling.card_side == "Front" then atlTblT() + atlTblH() + 27 + 16 - 2
+	else 426
+}
+
+wpcTblH := {
+	if styling.card_side == "Back" then 86
+	else if (card_style.atl.content_lines > 2 and card_style.wpc.content_lines <= 1) then 27 + 16
+	else ((176 - (locH * 3) - 27) / 2) + 16
+}
+
+# ADVENTURE PATH
+
+advTblT :=	{ 266 }
+advTblH :=  { (advCellH + 2) * 4 }
+
+advCellH := 14
+advCellT := { advTblT() + (row * (advCellH + 2)) }
+
+advCellL := {
+	if col == 1 then 18
+	else if col == 2 then 20 + advCellW(col: 1)
+	else if col == 3 then (Width / 2) + 1
+	else if col == 4 then (Width / 2) + 3 + advCellW(col: 3)
+}
+
+advCellW :=	{
+	if (col mod 2) == 1 then 32
+	else (Width / 2) - 18 - 35
+}
+
+duringTblT :=	{ advTblT() + advTblH() + 8 }
+duringTblH :=	{ Height - 70 - (advTblT() + advTblH()) -16  }

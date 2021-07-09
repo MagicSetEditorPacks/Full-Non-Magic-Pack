@@ -1,0 +1,356 @@
+mse version: 0.3.9
+game: yugioh
+short name: Standard HQ
+full name: by UnknownArt
+installer group: Yugioh/Standard HQ
+icon: styleicon.png
+position hint: 02
+
+version: 1.0
+depends on:
+	package: yugioh.mse-game
+	version: 2009-08-08
+depends on:
+	package: yugioh-standard-HQ-levels.mse-symbol-font
+	version: 1.0
+depends on:
+	package: yugioh-text-replacements.mse-symbol-font
+	version: 2008-01-04
+
+card width: 686
+card height: 1000
+card dpi: 300
+
+############################################################## Acknowledgement
+
+########## Scripted by UnknownArt : http://magicseteditor.sourceforge.net/user/19719
+
+############################################################## Extra style
+styling field:
+	type: choice
+	name: rules alignment
+	description: Should the rules text be justified? WARNING: Justification is not perfect.
+	initial: justified
+	choice: not justified
+	choice: justified
+styling field:
+	type: choice
+	name: text color
+	description: What color do you want for the card text(s)?
+	initial: black
+	choice: white
+	choice: black
+styling field:
+	type: boolean
+	name: full art
+	initial: no
+############################################################## Card fields
+card style:
+##################################### card type and foil
+	card type:
+		left: 0
+		top: 0
+		width: 686
+		height: 1000
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			normal monster: card-normal.jpg
+			effect monster: card-effect.jpg
+			ritual monster: card-ritual.jpg
+			synchro monster: card-synchro.jpg
+			dark synchro monster: card-dsynchro.jpg
+			fusion monster: card-fusion.jpg
+			xyz monster: card-xyz.jpg
+			token monster: card-unknown.jpg
+			obelisk: card-unknown.jpg
+			slifer: card-unknown.jpg
+			ra: card-unknown.jpg
+			legendary dragons: card-unknown.jpg
+			spell card: card-spell.jpg
+			trap card: card-trap.jpg
+	foils:
+		left: { if card.rarity=="parallel rare" or card.rarity=="gold tech" then 0 else 93 }
+		top: { if card.rarity=="parallel rare" or card.rarity=="gold tech" then 0 else 202 }
+		width: { if card.rarity=="parallel rare" or card.rarity=="gold tech" then 686 else 501 }
+		height: { if card.rarity=="parallel rare" or card.rarity=="gold tech" then 1000 else 504 }
+
+		z index: 5
+		render style: image
+		popup style: in place
+		image:
+			script:	if card.rarity=="super rare" then "foil-super.png" else
+				if card.rarity=="ultra rare" then "foil-super.png" else
+				if card.rarity=="secret rare" then "foil-secret.png" else
+				if card.rarity=="ultimate rare" then "foil-super.png" else
+				if card.rarity=="parallel rare" then "foil-parallel.png" else
+				if card.rarity=="gold tech" then "foil-goldtech.png" else
+				if card.rarity=="promo" then "foil-super.png"
+				else "blank2.png"
+##################################### Name / Attribute / Level-Rank
+	name:
+		left: 54
+		top : 40
+		width: 507
+		height: 72
+		alignment: middle shrink-overflow
+		padding bottom: 0
+		z index: 2
+		font:
+			shadow color: 
+				script: if card.rarity=="rare" then rgb(0,0,0)
+				else if card.rarity=="secret rare" then "transparent"
+				else if card.rarity=="promo" then rgb(0,0,0)
+				else if card.rarity=="ultra rare" then rgb(76,64,0)
+				else if card.rarity=="ultimate rare" then rgb(255,198,0)
+				else if card.rarity=="ultimate rare no foil" then rgb(255,198,0)
+				else if card.rarity=="parallel rare" then rgb(76,64,0)
+				else if card.rarity=="gold tech" then rgb(76,64,0)
+				else if card.rarity=="super rare" then rgb(218,218,218)
+				else if card.card_type=="dark synchro monster" then rgb(0,0,0)
+				else if card.card_type=="xyz monster" then rgb(0,0,0)
+				else if is_nmonster() then rgb(0,0,0)
+				else "transparent"
+
+
+			shadow displacement x: 1
+			shadow displacement y: 1
+
+			name: MatrixRegularSmallCaps
+			size: 44
+			color:
+				script: if card.rarity=="rare" then rgb(230,230,230)
+				else if card.rarity=="secret rare" then rgb(230,230,230)
+				else if card.rarity=="promo" then rgb(230,230,230)
+				else if card.rarity=="ultra rare" then rgb(216,199,53)
+				else if card.rarity=="ultimate rare" then rgb(60,0,0)
+				else if card.rarity=="parallel rare" then rgb(216,199,53)
+				else if card.rarity=="gold tech" then rgb(216,199,53)
+				else if card.card_type=="dark synchro monster" then rgb(255,255,255)
+				else if card.card_type=="xyz monster" then rgb(255,255,255)
+				else if is_nmonster() then rgb(255,255,255)
+				else rgb(0,0,0)
+	attribute:
+		left: 567
+		top : 42
+		width: 68
+		height: 70
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			dark: a-dark.png
+			divine: a-divine.png
+			earth: a-earth.png
+			fire: a-fire.png
+			light: a-light.png
+			water: a-water.png
+			wind: a-wind.png
+	level:
+		left: { if is_nmonster() then 64 else 65 }
+		top : 127
+		width: {if is_nmonster() then 527 else 543 }
+		height: 54
+		z index: 2
+		alignment: { if card.card_type=="dark synchro monster" or card.card_type=="xyz monster" then "middle left" else "middle right" }
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix
+			size: 34
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-standard-HQ-levels
+			alignment: middle center
+			size: { if is_monster() then 20.5 else 18 }
+			scale down to: 4
+##################################### Card picture image
+	image:
+		left: { if styling.full_art=="yes" then 0 else 93 }
+		top: { if styling.full_art=="yes" then 0 else 202 }
+		width: { if styling.full_art=="yes" then 686 else 501 }
+		height: { if styling.full_art=="yes" then 1000 else 504 }
+		mask: { if styling.full_art=="yes" then "mask-full.png" else "" }
+		z index: 1
+##################################### monster type
+	monster type:
+		left: 67
+		top : 762
+		width: { card_style.monster_type.content_width + 6 }
+		height: 18
+		alignment: middle left
+		z index: 2
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix
+			size: 24
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 3.5
+		visible: { if is_nmonster() then false else true }
+##################################### number (MSE-EN001) and Card Edition (1st. Edition)
+	number:
+		left: 487
+		top : 720
+		width: 125
+		height: 21
+		z index: 2
+		alignment: top right
+		font:
+			name: Palatino Linotype
+			size: 15
+			color: { if card.card_type=="dark synchro monster" or card.card_type=="xyz monster" then rgb(255,255,255) else if styling.text_color=="white" then rgb(255,255,255) else rgb(0,0,0) }
+	edition:
+		left: 79
+		top: 720
+		width: 207
+		height: 21
+		z index: 2
+		alignment: top left
+		font:
+			name: { if card.edition=="DUEL TERMINAL" then "BankGothic Md BT" else "Palatino Linotype Bold" }
+			size: { if card.edition=="DUEL TERMINAL" then "20" else "15" }
+			color: { if card.card_type=="dark synchro monster" or card.card_type=="xyz monster" then rgb(255,255,255) else if styling.text_color=="white" then rgb(255,255,255) else rgb(0,0,0) }
+##################################### Text box / Flavor text
+	rule text:
+		left: { if is_nmonster() then 53 else 56 }
+		top : { if is_nmonster() then 756 else 784 }
+		width: { if is_nmonster() then 576 else 571 }
+		height: { if is_nmonster() then 188 else 127 }
+		font:
+			name: Matrix-Book
+			size: 21
+			scale down to: 8
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 3.5
+		alignment: { if styling.rules_alignment=="justified" then "top left justify" else "top left" }
+		z index: 3
+		padding left: 1
+		padding top: 2
+		padding right: 0
+		padding bottom: 0
+		line height hard: 1.0
+		line height line: 1.0
+		line height soft: 0.9
+		line height hard max: 1.1
+		line height line max: 1.1
+##################################### ATK / DEF
+	attack:
+		left: 425
+		top: 919
+		width: 61
+		height: 19
+		z index: 2
+		alignment: right middle
+		visible: { if is_nmonster() then false else true }
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix-Bold
+			size: 24
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 6
+	defense:
+		left: 567
+		top: 919
+		width: 61
+		height: 19
+		z index: 2
+		alignment: right middle
+		visible: { if is_nmonster() then false else true }
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix-Bold
+			size: 24
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 6
+##################################### card serial / corner foil / copyright text
+	gamecode:
+		left: 19
+		top : 962
+		width: 83
+		height: 18
+		alignment: middle left
+		z index: 2
+		font:
+			name: Palatino Linotype
+			size: 17
+			color: { if card.card_type=="dark synchro monster" or card.card_type=="xyz monster" then rgb(255,255,255) else if styling.text_color=="white" then rgb(255,255,255) else rgb(0,0,0) }
+	rarity:
+		left: 633
+		top : 947
+		width: 37
+		height: 37
+		z index: 3
+		render style: image
+		popup style: in place
+		choice images:
+			common: blank2.png
+			rare: blank2.png
+			super rare: blank2.png
+			ultra rare: blank2.png
+			secret rare: blank2.png
+			ultimate rare: blank2.png
+			parallel rare: blank2.png
+			gold tech: blank2.png
+			promo: blank2.png
+	corner foil:
+		left: 633
+		top : 947
+		width: 37
+		height: 37
+		z index: 2
+		render style: image list
+		choice images:
+			stamp: { if card.edition!="" then "foil-gold.png" else "foil-silver.png" }
+	copyright:
+		left: 378
+		top : 962
+		width: 253
+		height: 18
+		z index: 4
+		alignment: middle right
+		font:
+			name: Palatino Linotype
+			size: 14
+			color: { if card.card_type=="dark synchro monster" or card.card_type=="xyz monster" then rgb(255,255,255) else if styling.text_color=="white" then rgb(255,255,255) else rgb(0,0,0) }
+############################################extra card field:
+extra card field:
+	type: choice
+	name: leftbracket
+	choice: lbracket
+	editable: false
+extra card field:
+	type: choice
+	name: rightbracket
+	choice: rbracket
+	editable: false
+extra card style:
+	leftbracket:
+		left: { if is_nmonster() then (579 - card_style.level.content_width) else 57 }
+		top : { if is_nmonster() then 140 else 759 }
+		width: { if is_nmonster() then 10 else 8 }
+		height: { if is_nmonster() then 31 else 24 }
+		z index: 2
+		render style: image list
+		choice images:
+			lbracket: /yugioh-standard-HQ-levels.mse-symbol-font/leftbracket.png
+	rightbracket:
+		left: { if is_nmonster() then 595 else (card_style.monster_type.content_width + 70) }
+		top : { if is_nmonster() then 140 else 759 }
+		width: { if is_nmonster() then 10 else 8 }
+		height: { if is_nmonster() then 31 else 24 }
+		z index: 2
+		render style: image list
+		choice images:
+			rbracket: /yugioh-standard-HQ-levels.mse-symbol-font/rightbracket.png

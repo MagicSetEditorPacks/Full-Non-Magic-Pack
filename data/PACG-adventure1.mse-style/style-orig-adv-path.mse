@@ -1,0 +1,271 @@
+# ADVENTURE PATH styles
+
+# Adventure List
+card_style:
+	adventure_1:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 1) }
+		left:				{ advCellL(col: 2) }
+		width:				{ advCellW(col: 2) }
+		height:				{ if isAPFront() then advCellH  }
+		alignment: 			left middle shrink-overflow
+		padding_left:		2
+		padding_right:		2
+		z_index:			52
+		font:
+			name:				Dax-regular
+			size:				9
+			color:				{ getMidColour() }
+	adventure_2:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 2) }
+		left:				{ advCellL(col: 2) }
+		width:				{ advCellW(col: 2) }
+		height:				{ if isAPFront() then advCellH  }
+		alignment: 			left middle shrink-overflow
+		padding_left:		2
+		padding_right:		2
+		z_index:			52
+		font:
+			name:				Dax-regular
+			size:				9
+			color:				{ getMidColour() }
+	adventure_3:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 3) }
+		left:				{ advCellL(col: 2) }
+		width:				{ advCellW(col: 2) }
+		height:				{ if isAPFront() then advCellH  }
+		alignment: 			left middle shrink-overflow
+		padding_left:		2
+		padding_right:		2
+		z_index:			52
+		font:
+			name:				Dax-regular
+			size:				9
+			color:				{ getMidColour() }
+	adventure_4:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 1) }
+		left:				{ advCellL(col: 4) }
+		width:				{ advCellW(col: 4) }
+		height:				{ if isAPFront() then advCellH  }
+		alignment: 			left middle shrink-overflow
+		padding_left:		2
+		padding_right:		2
+		z_index:			52
+		font:
+			name:				Dax-regular
+			size:				9
+			color:				{ getMidColour() }
+	adventure_5:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 2) }
+		left:				{ advCellL(col: 4) }
+		width:				{ advCellW(col: 4) }
+		height:				{ if isAPFront() then advCellH  }
+		alignment: 			left middle shrink-overflow
+		padding_left:		2
+		padding_right:		2
+		z_index:			52
+		font:
+			name:				Dax-regular
+			size:				9
+			color:				{ getMidColour() }
+	adventure_6:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 3) }
+		left:				{ advCellL(col: 4) }
+		width:				{ advCellW(col: 4) }
+		height:				{ if isAPFront() then advCellH  }
+		alignment: 			left middle shrink-overflow
+		padding_left:		2
+		padding_right:		2
+		z_index:			52
+		font:
+			name:				Dax-regular
+			size:				9
+			color:				{ getMidColour() }
+	
+	during:
+		visible:			{ isAPFront() }
+		top:				{ duringTblT() + 22 }
+		left:				{ 26 }
+		width:				{ Width - 52 }
+		height:				{ if isAPFront() then duringTblH() - 28 }
+		alignment: 			left middle
+		line_height_soft_max:	2
+		z_index: 			52
+		font:
+			name:				Dax-regular
+			size:				11
+			scale_down_to: 		8
+
+extra_card_style:
+	adventure_table:
+		visible:			{ isAPFront() }
+		top:				{ advTblT() }
+		left:				{ 16 }
+		width:				{ Width - 32 }
+		height:				{ advTblH() }
+		z_index:			50
+	adventure_header:
+		visible:			{ isAPFront() }
+		top:				{ advTblT() }
+		left:				{ 16 }
+		width:				{ Width - 32 }
+		height:				{ advCellH + 2 }
+		z_index:			50
+		padding_left:		6
+		alignment:			left middle
+		font:
+			name:				Dax
+			weight:				bold
+			size:				10
+			color:				rgb(255,255,255)
+# info
+	adventure_cell_a1:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 1) + 2 }
+		left:				{ advCellL(col: 1) + 2 }
+		width:				{ advCellW(col: 1) - 4 }
+		height:				{ advCellH - 4  }
+		padding_left:		4
+		alignment:			center middle
+		font:
+			name:				Dax-regular
+			size:				9
+			color:				{ getMidColour() }
+		z_index:			51
+	adventure_cell_a2:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 2) + 2 }
+		left:				{ advCellL(col: 1) + 2 }
+		width:				{ advCellW(col: 1) - 4 }
+		height:				{ advCellH - 4  }
+		padding_left:		4
+		alignment:			center middle
+		font:
+			name:				Dax-regular
+			size:				9
+			color:				{ getMidColour() }
+		z_index:			51
+	adventure_cell_a3:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 3) + 2 }
+		left:				{ advCellL(col: 1) + 2 }
+		width:				{ advCellW(col: 1) - 4 }
+		height:				{ advCellH - 4  }
+		padding_left:		4
+		alignment:			center middle
+		font:
+			name:				Dax-regular
+			size:				9
+			color:				{ getMidColour() }
+		z_index:			51
+	adventure_cell_a4:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 1) + 2 }
+		left:				{ advCellL(col: 3) + 2 }
+		width:				{ advCellW(col: 1) - 4 }
+		height:				{ advCellH - 4  }
+		padding_left:		4
+		alignment:			center middle
+		font:
+			name:				Dax-regular
+			size:				9
+			color:				{ getMidColour() }
+		z_index:			51
+	adventure_cell_a5:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 2) + 2 }
+		left:				{ advCellL(col: 3) + 2 }
+		width:				{ advCellW(col: 1) - 4 }
+		height:				{ advCellH - 4  }
+		padding_left:		4
+		alignment:			center middle
+		font:
+			name:				Dax-regular
+			size:				9
+			color:				{ getMidColour() }
+		z_index:			51
+	adventure_cell_a6:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 3) + 2 }
+		left:				{ advCellL(col: 3) + 2 }
+		width:				{ advCellW(col: 1) - 4 }
+		height:				{ advCellH - 4  }
+		padding_left:		4
+		alignment:			center middle
+		font:
+			name:				Dax-regular
+			size:				9
+			color:				{ getMidColour() }
+		z_index:			51
+# color
+	adventure_cell_b1:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 1) }
+		left:				{ advCellL(col: 2) }
+		width:				{ advCellW(col: 2) }
+		height:				{ advCellH  }
+		z_index:			51
+	adventure_cell_b2:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 2) }
+		left:				{ advCellL(col: 2) }
+		width:				{ advCellW(col: 2) }
+		height:				{ advCellH  }
+		z_index:			51
+	adventure_cell_b3:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 3) }
+		left:				{ advCellL(col: 2) }
+		width:				{ advCellW(col: 2) }
+		height:				{ advCellH  }
+		z_index:			51
+	adventure_cell_b4:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 1) }
+		left:				{ advCellL(col: 4) }
+		width:				{ advCellW(col: 2) }
+		height:				{ advCellH  }
+		z_index:			51
+	adventure_cell_b5:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 2) }
+		left:				{ advCellL(col: 4) }
+		width:				{ advCellW(col: 2) }
+		height:				{ advCellH  }
+		z_index:			51
+	adventure_cell_b6:
+		visible:			{ isAPFront() }
+		top:				{ advCellT(row: 3) }
+		left:				{ advCellL(col: 4) }
+		width:				{ advCellW(col: 2) }
+		height:				{ advCellH  }
+		z_index:			51
+
+#info
+	during_table:
+		visible:			{ isAPFront() }
+		top:				{ duringTblT() + 2 }
+		left:				18
+		width:				{ Width - 36 }
+		height:				{ duringTblH() - 4 }
+		background_color:	rgb(0,0,0)
+		z_index:			50
+		padding_left:		6
+		padding_top:		0
+		font:
+			name:				Dax
+			size:				10
+			color:				rgb(255,255,255)
+	during_cell:
+		visible:			{ isAPFront() }
+		top:				{ duringTblT() + 18 }
+		left:				18
+		width:				{ Width - 36 }
+		height:				{ duringTblH() - 20 }
+		z_index:			51
+		

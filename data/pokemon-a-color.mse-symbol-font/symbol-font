@@ -1,0 +1,74 @@
+mse version: 2.0.0
+version: 2018-07-14
+short name: normal
+position hint: 001
+icon: colorless.png
+# Symbol font for energy
+
+image font size: 53
+horizontal space: 1
+vertical space: 2
+#Used symbols CDFGLMOPRWY
+symbol:
+	code: C
+	image: colorless.png
+	image font size: 53
+symbol:
+	code: D
+	image: dark.png
+	image font size: 53
+symbol:
+	code: L
+	image: lightning.png
+	image font size: 53
+symbol:
+	code: F
+	image: fighting.png
+	image font size: 53
+symbol:
+	code: R
+	image: fire.png
+	image font size: 53
+symbol:
+	code: G
+	image: grass.png
+	image font size: 53
+symbol:
+	code: M
+	image: metal.png
+	image font size: 53
+symbol:
+	code: P
+	image: psychic.png
+	image font size: 53
+symbol:
+	code: W
+	image: water.png
+	image font size: 53
+symbol:
+	code: O
+	image: dragon.png
+	image font size: 53
+symbol:
+	code: Y
+	image: fairy.png
+	image font size: 53
+symbol:
+	code: B
+	image: fairy.png
+	image font size: 53
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: B
+	item: C
+	item: D
+	item: L
+	item: F
+	item: R
+	item: G
+	item: M
+	item: P
+	item: W
+	item: O
+	item: Y

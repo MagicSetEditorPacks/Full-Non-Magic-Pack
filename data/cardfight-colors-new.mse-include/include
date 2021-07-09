@@ -1,0 +1,6 @@
+mse version: 0.3.9
+full name: Cardfight!! Vanguard, New Colors
+version: 2018-02-15
+installer group: cardfight/includes/new colors
+
+# This file doesn't do anything, other files in this directory can be included

@@ -1,0 +1,267 @@
+﻿mse version: 2.0.0
+full name: Fluxx
+icon: card-back.png
+version: 8.0.0
+position hint: 08
+installer group: fluxx/game files/
+
+depends on:
+	package: fluxx-keeper-types.mse-include
+	version: 8.0.0
+depends on:
+	package: fluxx-bar-icons.mse-include
+	version: 1.0.0
+
+############################################################## Functions & filters
+
+# General functions
+init script:
+	#Scripts to check for card types
+	is_new_rule := { card.type == "new rule" }
+	is_action := { card.type == "action" }
+	is_goal := { card.type == "goal" or card.type == "ungoal" }
+	is_keeper := { card.type == "keeper" }
+	is_creeper := { card.type == "creeper" }
+	is_kreeper := { is_keeper() or is_creeper() }
+	is_meta := { card.type == "meta rule" }
+	is_surprise := { card.type == "surprise" }
+	is_spell := { is_action() or is_surprise() }
+
+	#Check if card can have warning text
+	warning_capable := { is_new_rule() or is_action() or is_meta() }
+
+	# Index for sorting, New Rules are first
+	sort_index := {
+		if is_meta() then                  "A"
+		else if is_action() then           "B"
+		else if is_creeper() then          "C"
+		else if card.type == "goal" then   "D"
+		else if is_keeper() then           "E"
+		else if is_new_rule() then         "F"
+		else if is_surprise() then         "G"
+		else if card.type == "ungoal" then "H"
+		else                               "Z"
+	};
+
+	# Function to remove articles from names before sorting
+	short_name := replace@(match:"^(A |AN |An |THE |The )", replace: "" )
+
+	#character filter for name lines
+	name_filter :=
+		replace_rule(
+			match: "AE",
+			replace: "Æ")
+
+	#character filter for copyright line
+	copyright_filter :=
+		# step 1 : trademark symbol
+		replace_rule(
+			match: "TM",
+			replace: "™") +
+		# step 2 : copyright symbol
+		replace_rule(
+			match: "CR|\\(C\\)",
+			replace: "©")
+
+	#name text filter
+	#- makes all text uppercase
+	name_text_filter := to_upper + { input }
+
+	#Spellchecker
+	spellcheck := {
+		if set.mark_errors then
+			check_spelling(
+				language: "en_US"
+			)
+		else input
+	};
+
+	#list creation functions
+	create_list :=
+		replace_rule(match: "\\*", replace: "•") +
+		curly_quotes
+
+############################################################## Set fields
+
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: text
+	name: artist
+set field:
+	type: text
+	name: copyright
+	script: copyright_filter(value)
+set field:
+	type: info
+	name: Defaults and Automation
+set field:
+	type: boolean
+	name: mark errors
+	description: Marks errors on cards, for example wording and spelling errors, non unique card names, etc.
+
+############################# Default style
+
+default set style:
+	title:
+		padding left: 2
+		font:
+			size: 16
+
+############################################################## Card fields
+
+card field:
+	type: choice
+	name: type
+	choice: new rule
+	choice: action
+	choice: goal
+	choice: ungoal
+	choice: keeper
+	choice: creeper
+	choice: meta rule
+	choice: surprise
+	card list visible: true
+	card list column: 2
+	choice colors:
+		new rule: rgb(255,233,39)
+		action: rgb(79,158,215)
+		goal: rgb(255,91,154)
+		keeper: rgb(187,214,53)
+		creeper: rgb(65,65,65)
+		ungoal: rgb(237,20,91)
+		meta rule: rgb(255,102,0)
+		surprise: rgb(58,55,149)
+	choice colors cardlist:
+		new rule: rgb(255,233,39)
+		action: rgb(79,158,215)
+		goal: rgb(255,91,154)
+		keeper: rgb(187,214,53)
+		creeper: rgb(65,65,65)
+		ungoal: rgb(237,20,91)
+		meta rule: rgb(255,102,0)
+		surprise: rgb(58,55,149)
+	icon: stats/type.png
+	description: The background and type of the card
+card field:
+	type: text
+	name: name
+	script: name_text_filter(name_filter(value))
+	identifying: true
+	show statistics: false
+	card list visible: true
+	card list column: 1
+	card list width: 150
+	description: The name of the card
+card field:
+	type: text
+	name: name 2
+	script: name_filter(value)
+	multi line: true
+	show statistics: false
+	description: The alternate name of the card
+card field:
+	type: image
+	name: image
+	show statistics: false
+	description: Illustration
+card field:
+	type: image
+	name: image 2
+	show statistics: false
+	description: Additional illustration for goals
+card field:
+	type: text
+	name: rule text
+	show statistics: false
+	multi line: true
+	script: spellcheck(create_list(value))
+	description: The rule text of this card
+card field:
+	type: text
+	name: rule text 2
+	show statistics: false
+	script: spellcheck(value)
+	description: The (additional) rule text of this card
+card field:
+	type: choice
+	name: keeper type
+	include file: /fluxx-keeper-types.mse-include/keeper-type-names
+	icon: stats/keeper-type.png
+	show statistics: false
+	description: An icon for next to the name that marks a Keeper as a possible weapon, food, ect.
+card field:
+	type: choice
+	name: warning box
+	show statistics: false
+	editable: false
+	choice: default
+card field:
+	type: text
+	name: warning text
+	show statistics: false
+	multi line: true
+	script: spellcheck(value)
+	description: Field for legal warning text. (Such as drug & alcohol use)
+card field:
+	type: choice
+	name: bar icon1
+	include file: /fluxx-bar-icons.mse-include/bar-icon-names
+	show statistics: false
+	description: An icon on the name bar which may be refered to by the rules
+card field:
+	type: choice
+	name: bar icon2
+	include file: /fluxx-bar-icons.mse-include/bar-icon-names
+	show statistics: false
+	description: An icon on the name bar which may be refered to by the rules
+card field:
+	type: choice
+	name: bar icon3
+	include file: /fluxx-bar-icons.mse-include/bar-icon-names
+	show statistics: false
+	description: An icon on the name bar which may be refered to by the rules
+
+############################# Card sorting / numbering
+card field:
+	type: text
+	name: card number
+	save value: false
+	script:
+		position(
+			of: card
+			in: set
+			order_by: { sort_index() + short_name(card.name) + short_name(card.name_2) }
+			) + 1
+		+ "/" +
+		number_of_items(in: set)
+	card list visible: true
+	card list column: 3
+	card list width: 50
+	card list name: #
+	card list alignment: right
+	editable: false
+	show statistics: false
+
+############################################################## Statistics categories
+
+statistics dimension:
+	name: keeper type
+	position hint: 1
+	script:
+		if is_keeper() then card.keeper_type
+	icon: stats/keeper-type.png
+
+############################################################## Keywords
+
+############################# Keyword rules
+
+has keywords: false

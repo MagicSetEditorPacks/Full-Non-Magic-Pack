@@ -1,0 +1,885 @@
+﻿mse version: 0.3.8
+full name: Anachronism
+short name: Anachronism
+installer group: anachronism/game files
+icon: card-back.png
+position hint: 12
+
+version: 2009-11-18
+
+#Coded by Art_Freak, Images by Tri-King Games and Asst. Prof. Christopher Heard of Pepperdine University
+############################################################## Functions & filters
+## Copied and Pasted from yugioh.mse-game, with a few modifications
+# General functions
+init script:
+	# the rule text filter
+	#  - makes text in parentheses italic
+	text_filter := 
+		# step 1 : remove all automatic tags
+		tag_remove_rule(tag: "<sym-auto>") +
+		# step 2 : expand shortcut words ~ and CARDNAME
+		replace_rule(
+			match: "~|~THIS~|CARDNAME",
+			in_context: "(^|[[:space:]]|\\()<match>", # TODO: Allow any punctuation before
+			replace: "<atom-cardname></atom-cardname>"
+			) +
+		# step 3 : fill in the cardname atom field
+		tag_contents_rule(
+			tag: "<atom-cardname>",
+			contents: { if card.name=="" then "CARDNAME" else card.name }
+			);
+	
+	type_over_list := replace_rule(match:" ?/", replace:"")
+	
+	culture_filter :=
+		tag_remove_rule(tag: "<word-list-") +
+		type_over_list +
+		{ "<word-list-culture>{input}</word-list-culture>" }
+	
+	space_to_wltags := replace_rule(match:"( +|<soft> </soft>)",
+	                                replace:{"</word-list-{list_type}>{_1}<word-list-{list_type}>"})
+		
+	type_filter :=
+		tag_remove_rule(tag: "<word-list-") +
+		type_over_list +
+		{ "<word-list-type>{input}</word-list-type>" }
+	
+	subtype_filter :=
+		tag_remove_rule(tag: "<word-list-") +
+		type_over_list +
+		{ "<word-list-subtype>{input}</word-list-subtype>" }
+	
+	replacement_filter :=
+		# step 1: dot separator
+		replace_rule(
+			match: "::|`",
+			replace: "•");
+	copyright_filter :=
+		# step 1 : copyright symbol
+		replace_rule(
+			match: " CR |\\(C\\)",
+			replace: "©");
+	
+	# the flavor text filter
+	flavor_text_filter :=
+		# step 1 : remove italic tags
+		tag_remove_rule(tag: "<i-flavor>") +
+		# step 2 : surround by <i> tags
+		{ "<i-flavor>" + input + "</i-flavor>" };
+	
+	# Only pass numbers
+	only_numbers := filter_rule(match: "[0-9]")
+	
+	############### Type of card
+	
+	is_warrior := {
+		contains(card.card_type, match: "warrior")
+	}
+	is_inspiration := {
+		contains(card.card_type, match: "inspiration")
+	}
+	is_war_or_insp := {
+		contains(card.card_type, match: "warrior") or
+		contains(card.card_type, match: "inspiration")
+	}
+	is_weapon := {
+		contains(card.card_type, match: "weapon")
+	}
+	is_war_or_weapon := {
+		contains(card.card_type, match: "warrior") or
+		contains(card.card_type, match: "weapon")
+	}
+	is_nwarrior := {
+		contains(card.card_type, match: "armor") or
+		contains(card.card_type, match: "inspiration") or
+		contains(card.card_type, match: "special") or
+		contains(card.card_type, match: "weapon")
+	}
+	
+	def_card := {
+		if contains(card.type, match: "African Kingdoms") and contains(card.type, match: "Armor") then "african kingdoms armor" else
+		if contains(card.type, match: "American Frontiersman") and contains(card.type, match: "Armor") then "american frontiersman armor" else
+		if contains(card.type, match: "Aztec") and contains(card.type, match: "Armor") then "aztec armor" else
+		if contains(card.type, match: "Briton") and contains(card.type, match: "Armor") then "briton armor" else
+		if contains(card.type, match: "Carthaginian") and contains(card.type, match: "Armor") then "carthaginian armor" else
+		if contains(card.type, match: "Chinese") and contains(card.type, match: "Armor") then "chinese armor" else
+		if contains(card.type, match: "Egyptian") and contains(card.type, match: "Armor") then "egyptian armor" else
+		if contains(card.type, match: "French") and contains(card.type, match: "Armor") then "french armor" else
+		if contains(card.type, match: "Germanic") and contains(card.type, match: "Armor") then "germanic armor" else
+		if contains(card.type, match: "Greek") and contains(card.type, match: "Armor") then "greek armor" else
+		if contains(card.type, match: "Irish") and contains(card.type, match: "Armor") then "irish armor" else
+		if contains(card.type, match: "Italian") and contains(card.type, match: "Armor") then "italian armor" else
+		if contains(card.type, match: "Japanese") and contains(card.type, match: "Armor") then "japanese armor" else
+		if contains(card.type, match: "Korean") and contains(card.type, match: "Armor") then "korean armor" else
+		if contains(card.type, match: "Maori") and contains(card.type, match: "Armor") then "maori armor" else
+		if contains(card.type, match: "Mongol") and contains(card.type, match: "Armor") then "mongol armor" else
+		if contains(card.type, match: "Native American") and contains(card.type, match: "Armor") then "native american armor" else
+		if contains(card.type, match: "Norse") and contains(card.type, match: "Armor") then "norse armor" else
+		if contains(card.type, match: "Persian") and contains(card.type, match: "Armor") then "persian armor" else
+		if contains(card.type, match: "Pirate") and contains(card.type, match: "Armor") then "pirate armor" else
+		if contains(card.type, match: "Roman") and contains(card.type, match: "Armor") then "roman armor" else
+		if contains(card.type, match: "Romanian") and contains(card.type, match: "Armor") then "romanian armor" else
+		if contains(card.type, match: "Russian") and contains(card.type, match: "Armor") then "russian armor" else
+		if contains(card.type, match: "Saracen") and contains(card.type, match: "Armor") then "saracen armor" else
+		if contains(card.type, match: "Scottish") and contains(card.type, match: "Armor") then "scottish armor" else
+		if contains(card.type, match: "Spanish") and contains(card.type, match: "Armor") then "spanish armor" else
+		if contains(card.type, match: "Tribes of Israel") and contains(card.type, match: "Armor") then "tribes of israel armor" else
+		if contains(card.type, match: "Trojan") and contains(card.type, match: "Armor") then "trojan armor" else
+		if contains(card.type, match: "Turkish") and contains(card.type, match: "Armor") then "turkish armor" else
+		if contains(card.type, match: "African Kingdoms") and contains(card.type, match: "Inspiration") then "african kingdoms inspiration" else
+		if contains(card.type, match: "American Frontiersman") and contains(card.type, match: "Inspiration") then "american frontiersman inspiration" else
+		if contains(card.type, match: "Aztec") and contains(card.type, match: "Inspiration") then "aztec inspiration" else
+		if contains(card.type, match: "Briton") and contains(card.type, match: "Inspiration") then "briton inspiration" else
+		if contains(card.type, match: "Carthaginian") and contains(card.type, match: "Inspiration") then "carthaginian inspiration" else
+		if contains(card.type, match: "Chinese") and contains(card.type, match: "Inspiration") then "chinese inspiration" else
+		if contains(card.type, match: "Egyptian") and contains(card.type, match: "Inspiration") then "egyptian inspiration" else
+		if contains(card.type, match: "French") and contains(card.type, match: "Inspiration") then "french inspiration" else
+		if contains(card.type, match: "Germanic") and contains(card.type, match: "Inspiration") then "germanic inspiration" else
+		if contains(card.type, match: "Greek") and contains(card.type, match: "Inspiration") then "greek inspiration" else
+		if contains(card.type, match: "Irish") and contains(card.type, match: "Inspiration") then "irish inspiration" else
+		if contains(card.type, match: "Italian") and contains(card.type, match: "Inspiration") then "italian inspiration" else
+		if contains(card.type, match: "Japanese") and contains(card.type, match: "Inspiration") then "japanese inspiration" else
+		if contains(card.type, match: "Korean") and contains(card.type, match: "Inspiration") then "korean inspiration" else
+		if contains(card.type, match: "Maori") and contains(card.type, match: "Inspiration") then "maori inspiration" else
+		if contains(card.type, match: "Mongol") and contains(card.type, match: "Inspiration") then "mongol inspiration" else
+		if contains(card.type, match: "Native American") and contains(card.type, match: "Inspiration") then "native american inspiration" else
+		if contains(card.type, match: "Norse") and contains(card.type, match: "Inspiration") then "norse inspiration" else
+		if contains(card.type, match: "Persian") and contains(card.type, match: "Inspiration") then "persian inspiration" else
+		if contains(card.type, match: "Pirate") and contains(card.type, match: "Inspiration") then "pirate inspiration" else
+		if contains(card.type, match: "Roman") and contains(card.type, match: "Inspiration") then "roman inspiration" else
+		if contains(card.type, match: "Romanian") and contains(card.type, match: "Inspiration") then "romanian inspiration" else
+		if contains(card.type, match: "Russian") and contains(card.type, match: "Inspiration") then "russian inspiration" else
+		if contains(card.type, match: "Saracen") and contains(card.type, match: "Inspiration") then "saracen inspiration" else
+		if contains(card.type, match: "Scottish") and contains(card.type, match: "Inspiration") then "scottish inspiration" else
+		if contains(card.type, match: "Spanish") and contains(card.type, match: "Inspiration") then "spanish inspiration" else
+		if contains(card.type, match: "Tribes of Israel") and contains(card.type, match: "Inspiration") then "tribes of israel inspiration" else
+		if contains(card.type, match: "Trojan") and contains(card.type, match: "Inspiration") then "trojan inspiration" else
+		if contains(card.type, match: "Turkish") and contains(card.type, match: "Inspiration") then "turkish inspiration" else
+		if contains(card.type, match: "African Kingdoms") and contains(card.type, match: "Special") then "african kingdoms special" else
+		if contains(card.type, match: "American Frontiersman") and contains(card.type, match: "Special") then "american frontiersman special" else
+		if contains(card.type, match: "Aztec") and contains(card.type, match: "Special") then "aztec special" else
+		if contains(card.type, match: "Briton") and contains(card.type, match: "Special") then "briton special" else
+		if contains(card.type, match: "Carthaginian") and contains(card.type, match: "Special") then "carthaginian special" else
+		if contains(card.type, match: "Chinese") and contains(card.type, match: "Special") then "chinese special" else
+		if contains(card.type, match: "Egyptian") and contains(card.type, match: "Special") then "egyptian special" else
+		if contains(card.type, match: "French") and contains(card.type, match: "Special") then "french special" else
+		if contains(card.type, match: "Germanic") and contains(card.type, match: "Special") then "germanic special" else
+		if contains(card.type, match: "Greek") and contains(card.type, match: "Special") then "greek special" else
+		if contains(card.type, match: "Irish") and contains(card.type, match: "Special") then "irish special" else
+		if contains(card.type, match: "Italian") and contains(card.type, match: "Special") then "italian special" else
+		if contains(card.type, match: "Japanese") and contains(card.type, match: "Special") then "japanese special" else
+		if contains(card.type, match: "Korean") and contains(card.type, match: "Special") then "korean special" else
+		if contains(card.type, match: "Maori") and contains(card.type, match: "Special") then "maori special" else
+		if contains(card.type, match: "Mongol") and contains(card.type, match: "Special") then "mongol special" else
+		if contains(card.type, match: "Native American") and contains(card.type, match: "Special") then "native american special" else
+		if contains(card.type, match: "Norse") and contains(card.type, match: "Special") then "norse special" else
+		if contains(card.type, match: "Persian") and contains(card.type, match: "Special") then "persian special" else
+		if contains(card.type, match: "Pirate") and contains(card.type, match: "Special") then "pirate special" else
+		if contains(card.type, match: "Roman") and contains(card.type, match: "Special") then "roman special" else
+		if contains(card.type, match: "Romanian") and contains(card.type, match: "Special") then "romanian special" else
+		if contains(card.type, match: "Russian") and contains(card.type, match: "Special") then "russian special" else
+		if contains(card.type, match: "Saracen") and contains(card.type, match: "Special") then "saracen special" else
+		if contains(card.type, match: "Scottish") and contains(card.type, match: "Special") then "scottish special" else
+		if contains(card.type, match: "Spanish") and contains(card.type, match: "Special") then "spanish special" else
+		if contains(card.type, match: "Tribes of Israel") and contains(card.type, match: "Special") then "tribes of israel special" else
+		if contains(card.type, match: "Trojan") and contains(card.type, match: "Special") then "trojan special" else
+		if contains(card.type, match: "Turkish") and contains(card.type, match: "Special") then "turkish special" else
+		if contains(card.type, match: "African Kingdoms") and contains(card.type, match: "Warrior") then "african kingdoms warrior" else
+		if contains(card.type, match: "American Frontiersman") and contains(card.type, match: "Warrior") then "american frontiersman warrior" else
+		if contains(card.type, match: "Aztec") and contains(card.type, match: "Warrior") then "aztec warrior" else
+		if contains(card.type, match: "Briton") and contains(card.type, match: "Warrior") then "briton warrior" else
+		if contains(card.type, match: "Carthaginian") and contains(card.type, match: "Warrior") then "carthaginian warrior" else
+		if contains(card.type, match: "Chinese") and contains(card.type, match: "Warrior") then "chinese warrior" else
+		if contains(card.type, match: "Egyptian") and contains(card.type, match: "Warrior") then "egyptian warrior" else
+		if contains(card.type, match: "French") and contains(card.type, match: "Warrior") then "french warrior" else
+		if contains(card.type, match: "Germanic") and contains(card.type, match: "Warrior") then "germanic warrior" else
+		if contains(card.type, match: "Greek") and contains(card.type, match: "Warrior") then "greek warrior" else
+		if contains(card.type, match: "Irish") and contains(card.type, match: "Warrior") then "irish warrior" else
+		if contains(card.type, match: "Italian") and contains(card.type, match: "Warrior") then "italian warrior" else
+		if contains(card.type, match: "Japanese") and contains(card.type, match: "Warrior") then "japanese warrior" else
+		if contains(card.type, match: "Korean") and contains(card.type, match: "Warrior") then "korean warrior" else
+		if contains(card.type, match: "Maori") and contains(card.type, match: "Warrior") then "maori warrior" else
+		if contains(card.type, match: "Mongol") and contains(card.type, match: "Warrior") then "mongol warrior" else
+		if contains(card.type, match: "Native American") and contains(card.type, match: "Warrior") then "native american warrior" else
+		if contains(card.type, match: "Norse") and contains(card.type, match: "Warrior") then "norse warrior" else
+		if contains(card.type, match: "Persian") and contains(card.type, match: "Warrior") then "persian warrior" else
+		if contains(card.type, match: "Pirate") and contains(card.type, match: "Warrior") then "pirate warrior" else
+		if contains(card.type, match: "Roman") and contains(card.type, match: "Warrior") then "roman warrior" else
+		if contains(card.type, match: "Romanian") and contains(card.type, match: "Warrior") then "romanian warrior" else
+		if contains(card.type, match: "Russian") and contains(card.type, match: "Warrior") then "russian warrior" else
+		if contains(card.type, match: "Saracen") and contains(card.type, match: "Warrior") then "saracen warrior" else
+		if contains(card.type, match: "Scottish") and contains(card.type, match: "Warrior") then "scottish warrior" else
+		if contains(card.type, match: "Spanish") and contains(card.type, match: "Warrior") then "spanish warrior" else
+		if contains(card.type, match: "Tribes of Israel") and contains(card.type, match: "Warrior") then "tribes of israel warrior" else
+		if contains(card.type, match: "Trojan") and contains(card.type, match: "Warrior") then "trojan warrior" else
+		if contains(card.type, match: "Turkish") and contains(card.type, match: "Warrior") then "turkish warrior" else
+		if contains(card.type, match: "African Kingdoms") and contains(card.type, match: "Weapon") then "african kingdoms weapon" else
+		if contains(card.type, match: "American Frontiersman") and contains(card.type, match: "Weapon") then "american frontiersman weapon" else
+		if contains(card.type, match: "Aztec") and contains(card.type, match: "Weapon") then "aztec weapon" else
+		if contains(card.type, match: "Briton") and contains(card.type, match: "Weapon") then "briton weapon" else
+		if contains(card.type, match: "Carthaginian") and contains(card.type, match: "Weapon") then "carthaginian weapon" else
+		if contains(card.type, match: "Chinese") and contains(card.type, match: "Weapon") then "chinese weapon" else
+		if contains(card.type, match: "Egyptian") and contains(card.type, match: "Weapon") then "egyptian weapon" else
+		if contains(card.type, match: "French") and contains(card.type, match: "Weapon") then "french weapon" else
+		if contains(card.type, match: "Germanic") and contains(card.type, match: "Weapon") then "germanic weapon" else
+		if contains(card.type, match: "Greek") and contains(card.type, match: "Weapon") then "greek weapon" else
+		if contains(card.type, match: "Irish") and contains(card.type, match: "Weapon") then "irish weapon" else
+		if contains(card.type, match: "Italian") and contains(card.type, match: "Weapon") then "italian weapon" else
+		if contains(card.type, match: "Japanese") and contains(card.type, match: "Weapon") then "japanese weapon" else
+		if contains(card.type, match: "Korean") and contains(card.type, match: "Weapon") then "korean weapon" else
+		if contains(card.type, match: "Maori") and contains(card.type, match: "Weapon") then "maori weapon" else
+		if contains(card.type, match: "Mongol") and contains(card.type, match: "Weapon") then "mongol weapon" else
+		if contains(card.type, match: "Native American") and contains(card.type, match: "Weapon") then "native american weapon" else
+		if contains(card.type, match: "Norse") and contains(card.type, match: "Weapon") then "norse weapon" else
+		if contains(card.type, match: "Persian") and contains(card.type, match: "Weapon") then "persian weapon" else
+		if contains(card.type, match: "Pirate") and contains(card.type, match: "Weapon") then "pirate weapon" else
+		if contains(card.type, match: "Roman") and contains(card.type, match: "Weapon") then "roman weapon" else
+		if contains(card.type, match: "Romanian") and contains(card.type, match: "Weapon") then "romanian weapon" else
+		if contains(card.type, match: "Russian") and contains(card.type, match: "Weapon") then "russian weapon" else
+		if contains(card.type, match: "Saracen") and contains(card.type, match: "Weapon") then "saracen weapon" else
+		if contains(card.type, match: "Scottish") and contains(card.type, match: "Weapon") then "scottish weapon" else
+		if contains(card.type, match: "Spanish") and contains(card.type, match: "Weapon") then "spanish weapon" else
+		if contains(card.type, match: "Tribes of Israel") and contains(card.type, match: "Weapon") then "tribes of israel weapon" else
+		if contains(card.type, match: "Trojan") and contains(card.type, match: "Weapon") then "trojan weapon" else
+		if contains(card.type, match: "Turkish") and contains(card.type, match: "Weapon") then "turkish weapon" else card.card_type
+	}
+	
+############################################################## Set fields
+
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+	description: This information will not appear on the card.
+set field:
+	type: text
+	name: description
+	multi line: true
+	description: This information will not appear on the card.
+set field:
+	type: text
+	name: series
+	description: This set's Series number
+set field:
+	type: text
+	name: artist
+	description: Editing this will set 1 artist for all the cards.
+set field:
+	type: text
+	name: copyright
+	description: Copyright information. This will not appear on the card.
+
+
+############################# Default style
+
+default set style:
+	title:
+		padding left: 2
+		font:
+			size: 16
+
+############################################################## Card fields
+
+############################# Background stuff
+card field:
+	type: choice
+	name: card type
+	choice:
+		name: african kingdoms
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: american frontiersman
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: aztec
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: briton
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: carthaginian
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: chinese
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: egyptian
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: french
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: germanic
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: greek
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: irish
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: italian
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: japanese
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: korean
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: maori
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: mongol
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: native american
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: norse
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: persian
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: pirate
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: roman
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: romanian
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: russian
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: saracen
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: scottish
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: spanish
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: tribes of israel
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: trojan
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice:
+		name: turkish
+		choice: warrior
+		choice: inspiration
+		choice: weapon
+		choice: armor
+		choice: special
+	choice colors cardlist:
+		african kingdoms:	rgb(0,0,0)
+		american pioneer:	rgb(0,0,0)
+		aztec:			rgb(0,0,0)
+		briton:			rgb(0,0,0)
+		carthaginian:		rgb(0,0,0)
+		chinese:		rgb(0,0,0)
+		egypitan:		rgb(0,0,0)
+		french:			rgb(0,0,0)
+		germanic:		rgb(0,0,0)
+		greek:			rgb(0,0,0)
+		irish:			rgb(0,0,0)
+		italian:		rgb(0,0,0)
+		japanese:		rgb(0,0,0)
+		korean:			rgb(0,0,0)
+		maori:			rgb(0,0,0)
+		mongol:			rgb(0,0,0)
+		native american:	rgb(0,0,0)
+		norse:			rgb(0,0,0)
+		persian:		rgb(0,0,0)
+		pirate:			rgb(0,0,0)
+		roman:			rgb(0,0,0)
+		romanian:		rgb(0,0,0)
+		russian:		rgb(0,0,0)
+		saracen:		rgb(0,0,0)
+		scottish:		rgb(0,0,0)
+		spanish:		rgb(0,0,0)
+		tribes of israel:	rgb(0,0,0)
+		trojan:			rgb(0,0,0)
+		turkish:		rgb(0,0,0)
+	default: def_card(value)
+	card list visible: true
+	card list column: 2
+card field:
+	type: choice
+	name: cultured pirate
+	choice: pihybrid
+	choice: piwhybrid
+	editable: false
+card field:
+	type: choice
+	name: foil
+	choice: foil
+	save value: false
+	editable: false
+card field:
+	type: choice
+	name: long range
+	choice: lrangeweapon
+	editable: false
+
+############################# Name line
+card field:
+	type: text
+	name: name
+	identifying: true
+	script: to_upper(value)
+	show statistics: false
+	card list visible: true
+	card list column: 1
+card field:
+	type: choice
+	name: element
+	choice: none
+	choice: aether
+	choice: earth
+	choice: fire
+	choice: metal
+	choice: water
+	choice: wind
+	choice: wood
+	card list visible: true
+	card list column: 3
+card field:
+	type: text
+	name: cost
+	identifying: true
+	script: only_numbers(value)
+	show statistics: false
+	card list visible: true
+	card list column: 4
+card field:
+	type: text
+	name: weapon damage
+	identifying: true
+	script: only_numbers(value)
+	show statistics: false
+	card list visible: true
+	card list column: 5
+
+############################# Range
+card field:
+	type: text
+	name: top left
+	identifying: true
+	show statistics: false
+card field:
+	type: text
+	name: top center
+	identifying: true
+	show statistics: false
+card field:
+	type: text
+	name: top right
+	identifying: true
+	show statistics: false
+card field:
+	type: text
+	name: middle1 left
+	identifying: true
+	show statistics: false
+card field:
+	type: text
+	name: middle1 center
+	identifying: true
+	show statistics: false
+card field:
+	type: text
+	name: middle1 right
+	identifying: true
+	show statistics: false
+card field:
+	type: text
+	name: middle2 left
+	identifying: true
+	show statistics: false
+card field:
+	type: text
+	name: middle2 center
+	identifying: true
+	show statistics: false
+card field:
+	type: text
+	name: middle2 right
+	identifying: true
+	show statistics: false
+card field:
+	type: text
+	name: bottom left
+	identifying: true
+	show statistics: false
+card field:
+	type: text
+	name: bottom center
+	identifying: true
+	show statistics: false
+card field:
+	type: text
+	name: bottom right
+	identifying: true
+	show statistics: false
+
+############################# Image
+card field:
+	type: image
+	name: image
+	show statistics: false
+
+############################# Card type
+card field:
+	type: text
+	name: type 1
+	script: replacement_filter(culture_filter(value))
+card field:
+	type: text
+	name: type 2
+	script: replacement_filter(type_filter(value))
+card field:
+	type: text
+	name: type 3
+	script: replacement_filter(subtype_filter(value))
+card field:
+	type: text
+	name: type
+	script:
+		# Either just monster, monster / type1
+		combined_editor(
+			field1: card.type_1,
+			separator1: " • ",
+			field2: card.type_2,
+			separator2: " • ",
+			field3: card.type_3,
+			soft_before_empty: true,
+			hide_when_empty: true
+		)
+	identifying: true
+	show statistics: false
+	card list column: 6
+############################# Text box
+card field:
+	type: text
+	name: rule text
+	show statistics: false
+	multi line: true
+	script: text_filter(value)
+card field:
+	type: text
+	name: flavor text
+	show statistics: false
+	multi line: true
+#card field:
+#	type: choice
+#	name: watermark
+#	include file: anachronism-common.mse-include/watermark-names
+#	editable: false
+#	description: The Watermark for this set.
+
+############################# Attributes
+card field:
+	type: text
+	name: life
+	save value: true
+	script: only_numbers(value)
+	card list visible: true
+	card list column: 7
+	card list width: 33
+	card list name: Life
+card field:
+	type: text
+	name: speed
+	save value: true
+	script: only_numbers(value)
+	card list visible: true
+	card list column: 8
+	card list width: 33
+	card list name: SPD
+card field:
+	type: text
+	name: experience
+	save value: true
+	script: only_numbers(value)
+	card list visible: true
+	card list column: 9
+	card list width: 33
+	card list name: EXP
+card field:
+	type: text
+	name: damage
+	save value: true
+	script: only_numbers(value)
+	card list visible: true
+	card list column: 10
+	card list width: 33
+	card list name: DMG
+
+############################# Copyright stuff
+card field:
+	type: text
+	name: number
+	script:
+		position(
+			of: card
+			in: set
+			order_by: { card.card_type + card.type + card.name }
+			) + 1
+		+ "/" +
+		number_of_items(in: set)
+	card list visible: true
+	card list column: 11
+	card list width: 55
+	card list name: #
+	editable: false
+	show statistics: false
+card field:
+	type: text
+	name: series
+	default: set.series
+	show statistics: false
+card field:
+	type: text
+	name: illustrator
+	default: set.artist
+	editable: false
+	show statistics: false
+card field:
+	type: text
+	name: cright
+	default: set.copyright
+	editable: false
+	show statistics: false
+card field:
+	type: text
+	name: legal line
+	save value: false
+	show statistics: false
+	script:
+		copyright_filter(combined_editor(field1: card.illustrator, separator: " • ", field2: card.cright))
+
+
+############################################################## Word lists
+
+word list:
+	name: culture
+	word: African Kingdoms
+	word: American Frontiersman
+	word: Aztec
+	word: Briton
+	word: Carthaginian
+	word: Chinese
+	word: Egyptian
+	word: French
+	word: Germanic
+	word: Greek
+	word: Irish
+	word: Italian
+	word: Japanese
+	word: Korean
+	word: Maori
+	word: Mongol
+	word: Native American
+	word: Norse
+	word: Persian
+	word: Pirate
+	word: Roman
+	word: Romanian
+	word: Russian
+	word: Saracen
+	word: Scottish
+	word: Spanish
+	word: Tribes of Israel
+	word: Trojan
+	word: Turkish
+word list:
+	name: type
+	word: Armor
+	word: Inspiration
+	word: Special
+	word: Warrior
+	word: Weapon
+word list:
+	name: subtype
+	word: 
+		name: Armor
+		word: Ability
+		word: Arm
+		word: Arms
+		word: Cavalry
+		word: Code
+		word: Head
+		word: Item
+		word: Leg
+		word: Legs
+		word: Location
+		word: Shield
+		word: Tome
+		word: Torso
+	word: 
+		name: Inspiration
+		word: Ally
+		word: Allies
+		word: Code
+		word: Deity
+		word: Emblem
+		word: Fate
+		word: Female
+		word: Location
+		word: Male
+		word: Mystic
+		word: Philosophy
+		word: Quest
+	word: 
+		name: Special
+		word: Ability
+		word: Ally
+		word: Allies
+		word: Axe
+		word: Bludgeon
+		word: Cavalry
+		word: Code
+		word: Head
+		word: Ideal
+		word: Item
+		word: Knife
+		word: Location
+		word: Mystic
+		word: Polearm
+		word: Ranged
+		word: Sword
+		word: Title
+		word: Tome
+	word: 
+		name: Warrior
+		word: Female
+		word: Male
+	word: 
+		name: Weapon
+		word: Axe
+		word: Bludgeon
+		word: Knife
+		word: Polearm
+		word: Ranged
+		word: Sword
+
+

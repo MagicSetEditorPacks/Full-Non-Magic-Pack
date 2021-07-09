@@ -1,0 +1,295 @@
+mse version: 0.3.8
+version: 2018-02-02
+short name:  Cardfight
+full name: Cardfight!! Vanguard symbols
+position hint: 1
+installer group: cardfight/symbols fonts/new symbol font
+
+image font size: 125
+horizontal space: 1
+
+symbol:
+	code: C
+	image: counterblast.png
+	image font size: 24
+symbol:
+	code: Q
+	image: soulblast.png
+	image font size: 24
+symbol:
+	code: W
+	image: soulcharge.png
+	draw text: 0
+	image font size: 24
+symbol:
+	code: S
+	image: stand.png
+	image font size: 101
+symbol:
+	code: E
+	image: rest.png
+	image font size: 101
+symbol:
+	code: P
+	image: power.png
+	image font size: 101
+symbol:
+	code: D
+	image: shield.png
+	image font size: 101
+symbol:
+	code: A
+	image: critical.png
+	image font size: 101
+symbol:
+	code: G
+	image: guardian.png
+	image font size: 143
+symbol:
+	code: R
+	image: rearguard.png
+	image font size: 142
+symbol:
+	code: V
+	image: vanguard.png
+	image font size: 142
+symbol:
+	code: B
+	image: boost.png
+	image font size: 30
+symbol:
+	code: I
+	image: intercept.png
+	image font size: 30
+symbol:
+	code: T
+	image: twindrive.png
+	image font size: 30
+symbol:
+	code: U
+	image: tridrive.png
+	image font size: 30
+symbol:
+	code: H
+	image: heal.png
+	image font size: 48
+symbol:
+	code: J
+	image: standtrigger.png
+	image font size: 48
+symbol:
+	code: K
+	image: crittrigger.png
+	image font size: 48
+symbol:
+	code: L
+	image: draw.png
+	image font size: 48
+symbol:
+	code: act
+	image: act.png
+	image font size: 65
+symbol:
+	code: auto
+	image: auto.png
+	image font size: 65
+symbol:
+	code: cont
+	image: cont.png
+	image font size: 65
+symbol:
+	code: lb4
+	image: lb4.png
+	image font size: 21
+symbol:
+	code: lb5
+	image: lb5.png
+	image font size: 21
+symbol:
+	code: gb1
+	image: gb1.png
+	image font size: 122
+symbol:
+	code: gb2
+	image: gb2.png
+	image font size: 122
+symbol:
+	code: gb3
+	image: gb3.png
+	image font size: 38
+symbol:
+	code: gb8
+	image: gb8.png
+	image font size: 38
+symbol:
+	code: stride
+	image: stride.png
+	image font size: 23
+symbol:
+	code: gguardian
+	image: gguardian.png
+	image font size: 24
+symbol: 
+	code: legion
+	image: legion.png
+	image font size: 22
+symbol:
+	code: leg18
+	image: legion18.png
+	image font size: 20
+symbol:
+	code: leg19
+	image: legion19.png
+	image font size: 20
+symbol:
+	code: leg20
+	image: legion20.png
+	image font size: 20
+symbol:
+	code: leg21
+	image: legion21.png
+	image font size: 20
+symbol:
+	code: leg22
+	image: legion22.png
+	image font size: 20
+symbol:
+	code: leg23
+	image: legion23.png
+	image font size: 20
+symbol:
+	code: leg24
+	image: legion24.png
+	image font size: 20
+symbol:
+	code: N
+	image: left_bracket.png
+	image font size: 58
+symbol:
+	code: M
+	image: right_bracket.png
+	image font size: 58
+symbol:
+	code: /
+	image: separator.png
+	image font size: 54
+symbol:
+	code: ,
+	image: separator.png
+	image font size: 54
+symbol:
+	code: <
+	image: left_quota.png
+	image font size: 27
+symbol:
+	code: >
+	image: right_quota.png
+	image font size: 27
+#symbol:
+#	code: _
+#	image: blank.png
+#	image font size: 58
+################################## New symbols 2018-02-XX
+symbol:
+	code: F
+	image: countercharge.png
+	image font size: 18
+symbol:
+	code: O
+	image: _onceperturn.png
+	image font size: 20
+symbol:
+	code: gb4
+	image: _gb4.png
+	image font size: 122
+symbol:
+	code: gb5
+	image: _gb5.png
+	image font size: 122
+symbol:
+	code: ultimate
+	image: ult_stride.png
+	image font size: 19
+################################## Mana circle symbols
+symbol:
+	image: mana_circle.png
+	image font size: 144
+	code: [0-9]+(?!/[XYZ])|.
+	regex: yes
+	draw text: 0
+	text margin left:   .2
+	text margin right:  .2
+	text margin top:    -.20
+	text margin bottom: -.14
+	text font:
+		name: Vera Humana 95 Bold
+		size: 0.75
+		color: rgb(0,0,0)
+		max stretch: 0.57
+
+################################## Symbol menu
+insert symbol menu:
+	item: C
+	item: Q
+	item: W
+	item: F
+	item:
+		type: custom
+		name: number
+	item: S
+	item: E
+	item: P
+	item: D
+	item: A
+	item: G
+	item: R
+	item: V
+	item: act
+	item: auto
+	item: cont
+	item: O
+	item:
+		name: skills
+		item: B
+		item: I
+		item: T
+		item: U
+	item:
+		name: triggers
+		item: H
+		item: J
+		item: K
+		item: L
+	item:
+		name: special
+		item: lb4
+		item: lb5
+		item: stride
+		item: ultimate
+		item: gguardian
+		item:
+			name: generation break
+			item: gb1
+			item: gb2
+			item: gb3
+			item: gb4
+			item: gb5
+			item: gb8
+		item:
+			name: legion
+			item: legion
+			item: leg18
+			item: leg19
+			item: leg20
+			item: leg21
+			item: leg22
+			item: leg23
+			item: leg24
+	item:
+		name: symbols
+		item: N
+		item: M
+		item: /
+		item: ,
+		item: <
+		item: >

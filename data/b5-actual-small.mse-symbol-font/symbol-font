@@ -1,0 +1,67 @@
+﻿mse version: 0.3.7
+version: 2008-08-14
+short name: normal
+installer group: Babylon 5/Symbol Fonts/Actual
+position hint: 001
+icon: ability_1.png
+# Symbol font in the normal, flat, style, used for text boxes and on old style cards
+# Note:
+#  Define  mana_t := {"new|old|older"} in the init script of the style
+#
+# So for example: 
+#
+#init script:
+#	mana_t := {"new"}
+image font size: 135
+horizontal space: -3
+symbol:
+	code: 0
+	image: ability_0.png
+symbol:
+	code: 1
+	image: ability_1.png
+symbol:
+	code: 2
+	image: ability_2.png
+symbol:
+	code: 3
+	image: ability_3.png
+symbol:
+	code: 4
+	image: ability_4.png
+symbol:
+	code: 5
+	image: ability_5.png
+symbol:
+	code: 6
+	image: ability_6.png
+symbol:
+	code: 7
+	image: ability_7.png
+symbol:
+	code: 8
+	image: ability_8.png
+symbol:
+	code: 9
+	image: ability_9.png
+symbol: 
+	code: *
+	image: ability_star.png
+symbol:
+	code: X
+	image: ability_X.png
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: 0
+	item: 1
+	item: 2
+	item: 3
+	item: 4
+	item: 5
+	item: 6
+	item: 7
+	item: 8
+	item: 9
+	item: *
+	item: X

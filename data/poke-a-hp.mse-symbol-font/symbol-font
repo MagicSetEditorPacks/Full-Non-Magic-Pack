@@ -1,0 +1,23 @@
+mse version: 0.3.8
+version: 2016-08-01
+short name: normal
+position hint: 002
+icon: hp.png
+# Symbol font for energy
+
+image font size: 135
+horizontal space: 1
+vertical space: 1
+symbol:
+	code: EX
+	image: { if is_outline() then "EX-outline.png" else "EX.png" }
+	image font size: 145
+symbol:
+	code: M
+	image: { if is_outline() then "M-outline.png" else if is_wt_text_2() then "M-wt.png" else "M-bk.png" }
+	image font size: 280
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: EX
+	item: M

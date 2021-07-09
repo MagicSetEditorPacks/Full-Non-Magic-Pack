@@ -1,0 +1,871 @@
+﻿mse version: 0.3.8
+short name: Hecatomb
+full name: Hecatomb
+installer group: hecatomb/game files
+icon: cardback.png
+position hint: 14
+
+version: 2009-01-15
+
+############################################################## Functions & filters
+
+# General functions
+init script:
+	
+	############################################################## Sorting mana symbols
+	# correctly sort a mana symbol (no guild mana)
+	mana_sort       := sort_rule(order: "G")
+	# A mana cost can contain both normal and guild mana
+	mana_filter := to_upper + {
+		mana_sort()
+	}
+	# Like mana filter, only also allow tap symbols:
+	mana_filter_t := replace_rule(               # Remove [] used for forcing mana symbols
+				match: "[\\[\\]]",
+				replace: ""
+			) + { mana_filter() }
+	
+	############################################################## Determine card color
+	card_type := {
+		if contains(card.type, match:"MINION") then "minion"
+		else if contains(card.type, match:"FATE") then "fate"
+		else if contains(card.type, match:"GOD") then "god"
+		else if contains(card.type, match:"RELIC") then "relic"
+		else "fate"
+	}
+	color_filter  := sort_rule(order: "<UBRG>")
+	mana_to_color := {
+		count  := number_of_items(in: colors)
+		if count == 0 then rgb(0,0,0)
+		else if count == 1 then (
+			if contains(card.casting_cost, match:"U") then "deceit"
+			else if contains(card.casting_cost, match:"B") then "corruption"
+			else if contains(card.casting_cost, match:"R") then "destruction"
+			else if contains(card.casting_cost, match:"G") then "greed"
+			else "none"
+			)
+		else if count > 1 then "gold"
+		else rgb(0,0,0)
+	}
+	card_doom := mana_to_color(colors: color_filter(card.casting_cost))
+	############################################################## Card number
+	sort_name :=
+		replace_rule (match: "^(The|An?) ", replace: "") +
+		to_lower
+	
+	set_filter := {
+		if card.rarity != "promo" then { card.rarity != "promo" }
+		else { card.rarity == "promo" }
+	}
+	card_number := {
+		position (
+			of: card
+			in: set
+			order_by: { sort_name(card.name) }
+			filter: set_filter()
+		) + 1
+	}
+	card_count := {
+		number_of_items(in: set, filter: set_filter())
+	}
+	############################################################## Utilities for keywords
+	############################################################## The text box
+	# Filters for the text box
+	# context in which mana symbols are found
+	mana_context :=
+		"(?ix)				# case insensitive, ignore whitespace
+		 (^|[[:space:]\"(“'])		# start of a word
+		 (  <match>:			# G: something
+		 |  <match>,			# G, tap: something
+		 |  <match>[ ]can[ ]be[ ]pay
+		 |  (pays?|additional|costs?|the	# pay X. creatures cost 1 less. pay an additional G.
+		    |adds?|pay(ed)?[ ](with|using)
+		    )
+		    ([ ]either)?			 # pay either X or Y
+		    ([ ]<sym[^>]*>[XYZUBRG0-9]+</sym[^>]*>,)* # pay X, Y or Z
+		    ([ ]<sym[^>]*>[XYZUBRG0-9]+</sym[^>]*>[ ](and|or|and/or))* # pay X or Y
+		    [ ]<match> 
+		    ([,.)]|$				# (end of word)
+		    |[ ][^ .,]*$			# still typing...
+		    |[ ]( or | and | in | less | more | to ) # or next word is ...
+		    )
+		    )
+		 |  <param-mana><match></param-mana>		# keyword argument that is declared as mana
+		 |  <param-cost>[ ]*<match></param-cost>		# keyword argument that is declared as cost
+		 |  <param-cost><match>,		# keyword argument that is declared as cost
+		 ";
+	# the rule text filter
+	#  - adds mana symbols
+	#  - makes text in parentheses italic
+	text_filter :=
+		# step 1 : remove all automatic tags
+		tag_remove_rule(tag: "<sym-auto>") +
+		tag_remove_rule(tag: "<i-auto>") +
+		tag_remove_rule(tag: "<b-auto>") +
+		tag_remove_rule(tag: "<color") +
+		# step 2 : reminder text for keywords
+		expand_keywords@(
+			condition: {
+				correct_case
+			}
+			default_expand: {
+				chosen(choice:if correct_case then mode else "lower case", set.automatic_bold_keywords)
+			},
+			combine: {
+				if expand then "<b-auto>{keyword}</b-auto>"
+			}) +
+		# step 2c : remove duplicate reminder text
+		replace_rule(
+			match: "(<atom-reminder-[^>]*>[^)]+[)]</atom-reminder-[^>]*>)([^\n]+)\\1"
+			replace: "\\2\\1"
+			) +
+		# step 3a : expand shortcut words ~ and CARDNAME
+		replace_rule(
+			match: "~|~THIS~|CARDNAME",
+			in_context: "(^|[[:space:]]|\\()<match>", # TODO: Allow any punctuation before
+			replace: "<atom-cardname></atom-cardname>"
+			) +
+		# step 3c : fill in atom fields
+		tag_contents_rule(
+			tag: "<atom-cardname>",
+			contents: { if card_name=="" then "CARDNAME" else card_name }
+			) +
+		# step 4 : yellow triggered abilities; color tag commit is 831.
+		replace_rule(
+			match: "«",
+			replace: "<color:rgb(185,196,100)>«"
+			) +
+		replace_rule(
+			match: "»",
+			replace: "»<color:rgb(185,195,212)>"
+			) +
+		# step 8 : automatic capitalization
+		replace_rule(
+			match: "[a-z]",
+			in_context: "[(](<param-[a-z]*>)?<match>[^)]|[ ]*: <param-cost><match>|—<match>| — <match>",
+			replace: to_upper) +
+		curly_quotes
+	
+	cost_filter :=
+		# step 1 : remove all automatic tags
+		tag_remove_rule(tag: "<sym-auto>") +
+		tag_remove_rule(tag: "<SYM>") +
+		# step 2 : reminder text for keywords
+		replace_rule(
+			match: "U",
+			replace: {"<sym>U</sym>"} ) +
+		replace_rule(
+			match: "B",
+			replace: {"<sym>B</sym>"} ) +
+		replace_rule(
+			match: "R",
+			replace: {"<sym>R</sym>"} ) +
+		replace_rule(
+			match: "G",
+			replace: {"<sym>G</sym>"} )
+
+	############################################################## Other boxes
+	
+	# the flavor text filter
+	#  - makes all text italic
+	flavor_text_filter :=
+		# step 1 : remove italic tags
+		tag_remove_rule(tag: "<i-flavor>")   +
+		# step 2 : surround by <i> tags
+		{ "<i-flavor>" + input + "</i-flavor>" } +
+		# curly quotes
+		curly_quotes
+	
+	type_over_type := replace@(match:" ?-$", replace:"")
+	
+	super_type_filter :=
+		remove_tag@(tag: "<word-list-") +
+		to_upper +
+		type_over_type +
+		{ "<word-list-type>{input}</word-list-type>" }
+	
+	is_minion    := match@(match: "(?i)MINION")
+	is_fate       := match@(match: "(?i)FATE")
+	is_god       := match@(match: "(?i)GOD")
+	is_relic       := match@(match: "(?i)RELIC")
+	only_first     := replace@(match:" .*", replace:"")
+	
+	sub_type_filter :=
+		remove_tag@(tag: "<word-list-") +
+		to_upper +
+		replace@(match: " </soft>$", replace: "") + # remove trailing soft space
+		remove_tag@(tag: "<soft") +
+		{ list_type := if      is_minion(type)    then "minion"
+		               else if is_fate(type)       then "fate"
+		               else if is_god(type)       then "god"
+		               else if is_relic(type)     then "relic"
+		               else "null"
+		"<word-list-{list_type}>{input}</word-list-{list_type}>" }
+	
+	all_races := {
+		for each card in set do
+			if is_minion(card.super_type) then
+				"," + only_first(to_text(card.sub_type))
+	}
+	
+	all_fates := {
+		for each card in set do
+			if is_fate(card.super_type) then
+				"," + only_first(to_text(card.sub_type))
+	}
+	
+	all_gods := {
+		for each card in set do
+			if is_god(card.super_type) then
+				"," + only_first(to_text(card.sub_type))
+	}
+	
+	all_relics := {
+		for each card in set do
+			if is_relic(card.super_type) then
+				"," + only_first(to_text(card.sub_type))
+	}
+	
+	color_to_doom := {
+		if value == "deceit" then "deceit"
+		else if value == "corruption" then "corruption"
+		else if value == "destruction" then "destruction"
+		else if value == "greed" then "greed"
+		else if value == "spawn" then "spawn"
+		else if value == "none" then "none"
+		else "custom"
+	}
+############################################################## Set fields
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+	identifying: true
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: text
+	name: card designer
+set field:
+	type: text
+	name: artist
+set field:
+	type: text
+	name: copyright
+set field:
+	type: text
+	name: code
+set field:
+	type: info
+	name: Defaults and Automation
+set field:
+	type: color
+	name: border color
+	description: The default border color for cards
+	choice:
+		name: black
+		color: rgb(0,0,0)
+set field:
+	type: boolean
+	name: automatic card numbers
+	description: Should card numbers be shown on the cards?
+set field:
+	type: multiple choice
+	name: automatic bold keywords
+	choice: official
+	choice: custom
+	initial: official, custom
+	description: For which kinds of keywords should automatic bolding take place?
+############################# Default style
+############################################################## Card fields
+############################# Automatic fields
+############################# Background stuff
+card field:
+	type: color
+	name: border
+	default: set.border_color
+	choice:
+		name: black
+		color: rgb(0,0,0)
+	show statistics: false
+	description: The border of the card; can be any solid color.
+card field:
+	type: color
+	name: doom
+	choice:
+		name: none
+		color: rgb(255,255,255)
+	choice:
+		name: deceit
+		color: rgb(62,105,171)
+	choice:
+		name: corruption
+		color: rgb(63,89,106)
+	choice:
+		name: destruction
+		color: rgb(172,55,9)
+	choice:
+		name: greed
+		color: rgb(86,137,21)
+	choice:
+		name: multialignment
+		color: rgb(200,180,0)
+	description: The frame of the card, used to indicate card color.
+############################# Name line
+card field:
+	type: text
+	name: name
+	identifying: true
+	show statistics: false
+	card list visible: true
+	card list column: 1
+	card list alignment: left
+	card list width: 100
+	card list name: Name
+	description: The name of the card
+card field:
+	type: text
+	name: title
+	show statistics: false
+	description: The title of the card; for use with gods
+card field:
+	type: text
+	name: casting cost
+	icon: stats/casting_cost.png
+	position hint: 1
+	card list visible: true
+	card list column: 2
+	card list alignment: right
+	card list width: 50
+	card list name: CC
+	script: cost_filter(to_upper(value))
+	description: The casting cost of the card
+############################# Image
+card field:
+	type: image
+	name: image
+	show statistics: false
+	description: The image of the card
+############################# Card type
+card field:
+	type: text
+	name: super type
+	icon: stats/card_type.png
+	position hint: 30
+	script: super_type_filter(value)
+	editable: false
+card field:
+	type: text
+	name: sub type
+	icon: stats/creature_type.png
+	position hint: 31
+	script: sub_type_filter(value, type:card.super_type)
+	editable: false
+card field:
+	type: text
+	name: type
+	show statistics: false
+	save value: false
+	script:
+		# Either just supertype, or subtype - supertype
+		combined_editor(
+			field1: card.super_type,
+			separator: " | ",
+			field2: card.sub_type,
+			soft_before_empty: true,
+			hide_when_empty:   true,
+			type_over1: "|",
+			type_over2: " |"
+		)
+	card list visible: true
+	card list column:4
+	description: The type of this card, type - to go the sub type
+card field:
+	type: choice
+	name: rarity
+	icon: stats/rarity.png
+	position hint: 100
+	choice: common
+	choice: uncommon
+	choice: rare
+	choice: promo
+	initial: common
+	card list visible: true
+	card list column: 6
+	description: The rarity of the card, to edit the symbol switch to the 'set info' tab
+	choice colors:
+		common:     rgb(33,33,33)
+		uncommon:   rgb(224,224,224)
+		rare:       rgb(255,207,52)
+		promo:       rgb(255,207,52)
+############################# Text box
+# 'space' field necessary to be able to "click into" rules text in combined textbox
+card field:
+	type: text
+	name: space
+	script: " "
+	save value: false
+	show statistics: false
+card field:
+	type: text
+	name: rule text 1
+	script: text_filter(input: value, card_name: card.name)
+	show statistics: false
+	multi line: true
+	default: card.space
+	description: The rules text for the card
+card field:
+	type: text
+	name: rule text 2
+	script: text_filter(input: value, card_name: card.name)
+	show statistics: false
+	multi line: true
+	description: The second rules text for the card
+card field:
+	type: text
+	name: flavor text
+	script: flavor_text_filter(value)
+	show statistics: false
+	multi line: true
+	description: The flavor text for the card
+card field:
+	type: text
+	name: trigger text
+	multi line: true
+	save value: false
+	show statistics: false
+	script:
+		combined_editor(field1: card.rule_text_1, separator: "<line>\n</line>", field2: card.flavor_text)
+	description: The rules and flavor text for the card; use up and down arrows to switch
+card field:
+	type: color
+	name: trigger
+	choice:
+		name: none
+		color: rgb(0,0,0)
+	choice:
+		name: deceit
+		color: rgb(62,105,171)
+	choice:
+		name: corruption
+		color: rgb(63,89,106)
+	choice:
+		name: destruction
+		color: rgb(172,55,9)
+	choice:
+		name: greed
+		color: rgb(86,137,21)
+	choice:
+		name: spawn
+		color: rgb(119,38,57)
+	choice:
+		name: multialignment
+		color: rgb(200,180,0)
+	description: The color of the triggered ability.
+############################# PT
+card field:
+	type: text
+	name: strength
+	icon: stats/power.png
+	position hint: 4
+	description: The strength of a minion
+############################# Card sorting / numbering
+card field:
+	type: text
+	name: card number
+	save value: false
+	script:
+		if card.rarity != "promo" then card_number() + "/" + card_count()
+		else "P" + card_number()
+	card list visible: true
+	card list column: 10
+	card list width: 50
+	card list name: #
+	card list alignment: right
+	editable: false
+	show statistics: false
+############################# Copyright stuff
+card field:
+	type: text
+	name: designer
+	icon: stats/illustrator.png
+	position hint: 211
+	script: to_upper(value)
+	editable: false
+	default: set.card_designer
+	description: Designer of this card, the default value can be changed on the 'set info' tab
+card field:
+	type: text
+	name: illustrator
+	icon: stats/illustrator.png
+	position hint: 210
+	default: set.artist
+	script: to_upper(value)
+	editable: false
+	description: Illustrator of this card, the default value can be changed on the 'set info' tab
+card field:
+	type: text
+	name: artist credit
+	script: 
+		combined_editor(
+			field1: card.designer,
+			separator: "ILLUS. ",
+			field2: card.illustrator,
+			soft_before_empty: false,
+			hide_when_empty:   false
+		)
+	show statistics: false
+	save value: false
+	description: Illustrator of this card. Backspace to the beginning to give the Designer of the card. The default values can be changed on the 'set info' tab
+card field:
+	type: text
+	name: copyright
+	default: set.copyright
+	show statistics: false
+	script: to_upper(value)
+	description: Copyrights for this card.
+card field:
+	type: text
+	name: code
+	default: set.code
+	show statistics: false
+	script: to_upper(value)
+	description: The set code for this card.
+############################################################## Card list
+card list color script:
+	input := card.doom
+	if input == "deceit"  then rgb(62,105,171)
+	else if input == "corruption" then rgb(63,89,106)
+	else if input == "destruction"   then rgb(172,55,9)
+	else if input == "greed" then rgb(86,137,21)
+	else rgb(0,0,0)
+############################################################## Statistics categories
+#statistics dimension:
+#	name: doom
+#	position hint: 0
+#	script: color_to_doom(card.doom)
+#	icon: stats/card_color.png
+#	colors:
+#		deceit: rgb(62,105,171)
+#		corruption: rgb(63,89,106)
+#		destruction: rgb(172,55,9)
+#		greed: rgb(86,137,21)
+#		custom: rgb(0,0,0)
+#	group: deceit
+#	group: corruption
+#	group: destruction
+#	group: greed
+#	group: custom
+#statistics dimension:
+#	name: doom
+#	position hint: 0
+#	script: card.doom
+#	icon: stats/card_color.png
+#statistics dimension:
+#	name: trigger
+#	position hint: 0
+#	script: color_to_doom(card.trigger)
+#	icon: stats/card_color.png
+#	colors:
+#		none: rgb(0,0,0)
+#		deceit: rgb(62,105,171)
+#		corruption: rgb(63,89,106)
+#		destruction: rgb(172,55,9)
+#		greed: rgb(86,137,21)
+#		spawn: rgb(119,38,57)
+#		custom: rgb(0,0,0)
+#	group: none
+#	group: deceit
+#	group: corruption
+#	group: destruction
+#	group: greed
+#	group: spawn
+#	group: custom
+statistics dimension:
+	name: keywords
+	position hint: 1000
+	script: keyword_usage(unique:true)
+	show empty: false
+	split list: true
+	icon: stats/keywords.png
+############################################################## Magic word lists
+word list:
+	name: type
+	word:
+		name: COMBAT 
+		is prefix: true
+		line below: true
+	word: MINION
+	word: RELIC MINION
+	word: RELIC
+	word: FATE
+	word: GOD
+word list:
+	name: minion
+	word:
+		script: all_races()
+		line below: true
+	word: AGENT
+	word: ALIEN
+	word: ANCIENT
+	word: ANIMATE
+	word: ANUBIAN
+	word: AZTECAL
+	word: BEAST
+	word: CHUPACABRA
+	word: CULTIST
+	word: DEMON
+	word: DOG
+	word: DRAGON
+	word: EYEBALL
+	word: FISH
+	word: FLESHLING
+	word: GARGOYLE
+	word: GIANT
+	word: GRAY
+	word: HORSEMAN
+	word: HUSKER
+	word: INSECTOID
+	word: MUTANT
+	word: OCTOPUS
+	word: OUTSIDER
+	word: PSYCHOSIS
+	word: REAPER
+	word: SHAPESHIFTER
+	word: SLIME
+	word: SPIRIT
+	word: UNDEAD
+	word: VAMPIRE
+	word: VERMIN
+	word: WOMBAT
+word list:
+	name: fate
+	word:
+		script: all_fates()
+		line below: true
+	word: CONSPIRACY
+	word: CURSE
+	word: INVOCATION
+	word: MISHAP
+	word: TACTIC
+word list:
+	name: god
+	word:
+		script: all_gods()
+		line below: true
+word list:
+	name: relic
+	word:
+		script: all_relics()
+		line below: true
+word list:
+	name: null
+############################################################## Auto replace
+auto replace:
+	match: (C)
+	replace: ©
+auto replace:
+	match: CR
+	replace: ©
+auto replace:
+	match: AE
+	replace: Æ
+	whole word: false
+auto replace:
+	match: TM
+	replace: ™
+	whole word: false
+auto replace:
+	match: >>
+	replace: »
+	whole word: false
+auto replace:
+	match: 
+	replace: «
+	whole word: false
+auto replace:
+	match: --
+	replace: —
+auto replace:
+	# note the spaces
+	match:
+		 - 
+	replace:
+		 — 
+############################################################## Add multiple cards
+############################################################## Card pack items
+pack type:
+	name: common
+	filter: card.rarity == "common"
+pack type:
+	name: uncommon
+	filter: card.rarity == "uncommon"
+pack type:
+	name: rare
+	filter: card.rarity == "rare"
+############################################################## Card packs
+pack type:
+	name: tournament pack
+	item:
+		name: rare
+		amount: 2
+	item:
+		name: uncommon
+		amount: 10
+	item:
+		name: common
+		amount: 28
+pack type:
+	name: booster pack
+	item:
+		name: rare
+		amount: 1
+	item:
+		name: uncommon
+		amount: 3
+	item:
+		name: common
+		amount: 9
+pack type:
+	name: additional common
+	item:
+		name: common
+pack type:
+	name: additional uncommon
+	item:
+		name: uncommon
+pack type:
+	name: additional rare
+	item:
+		name: rare
+############################################################## Keywords
+############################# Keyword rules
+
+has keywords: true
+
+#keyword match script: name_filter(value)
+#keyword preview: <b>{keyword}</b>
+
+keyword mode:
+	name: official
+	description: Actual WotC created keywords.
+keyword mode:
+	is default: true
+	name: custom
+	description: Custom keywords.
+
+keyword parameter type:
+	name: number
+	match: [XYZ0-9]+
+	refer script:
+		name: normal
+		description: (1,2,3)
+		script: \{{input}\}
+keyword parameter type:
+	name: action
+	match: [^(:\n]+
+	separator after is: [.]
+keyword parameter type:
+	name: name
+	match: [^(.:;\n—]+
+	refer script:
+		name: normal
+		description: No changes made.
+		script: \{{input}\}
+
+############################# All Hecatomb keywords
+# By Pichoro
+keyword:
+	keyword: Evader
+	match: <atom-param>name</atom-param> Evader.
+	mode: official
+	rules: An abomination with Evader can't be blocked by abominations of the given doom.
+keyword:
+	keyword: Fanatic
+	match: Fanatic.
+	mode: official
+	rules: An abomination with Fanatic can attack even if its controller played a minion on it this turn. They still can't attack if tapped.
+keyword:
+	keyword: Follower
+	match: Follower
+	mode: official
+	rules: Follower abilities are active only while you control a god.
+keyword:
+	keyword: Follower of
+	match: Follower of <atom-param>name</atom-param>
+	mode: official
+	rules: A special kind of Follower ability that is only active while you control the given god.
+keyword:
+	keyword: Guardian
+	match: Guardian.
+	mode: official
+	rules: Abominations with Guardian can't attack.
+keyword:
+	keyword: Host
+	match: Host.
+	mode: official
+	rules: Minions with Host can only be played as new abominations.
+keyword:
+	keyword: Hunter
+	match: Hunter.
+	mode: official
+	rules: When an abomination with Hunter attacks, its controller may choose an enemy abomination, untap that abomination, and force it to block the attacking abomination.
+keyword:
+	keyword: Immortal
+	match: Immortal.
+	mode: official
+	rules: When an enemy destroys a minion in an immortal abomination, that abomination's controller may sacrifice a mana card instead.
+keyword:
+	keyword: Martyr
+	match: Martyr.
+	mode: official
+	rules: When a minion with Martyr is destroyed, it becomes a mana card instead of going to the graveyard.
+keyword:
+	keyword: Nemesis
+	match: <atom-param>name</atom-param> Nemesis.
+	mode: official
+	rules: An abomination with Nemesis and the minions in the abomination cannot be targeted by abilities of the given doom.
+keyword:
+	keyword: Parasite
+	match: Parasite.
+	mode: official
+	rules: Minions cannot be played on top of an abomination with Parasite.
+keyword:
+	keyword: Rager +X
+	match: Rager +<atom-param>number</atom-param>.
+	mode: official
+	rules: An abomination with Rager gets +X strength while attacking.
+keyword:
+	keyword: Reaper +X
+	match: Reaper +<atom-param>number</atom-param>.
+	mode: official
+	rules: An abomination with Reaper reaps +X extra souls when it reaps.
+keyword:
+	keyword: Regenerator
+	match: Regenerator.
+	mode: official
+	rules: A minion with the Regenerator ability goes to its owner's hand when it would be destroyed.
+keyword:
+	keyword: Ripper
+	match: Ripper.
+	mode: official
+	rules: When an abomination with Ripper deals damage, the abomination's controller may distribute that damage however they like among the blocker's minions.
+keyword:
+	keyword: Soulbound
+	match: <atom-param>name</atom-param> Soulbound.
+	mode: official
+	rules: When a minion with Soulbound would be destroyed by combat damage, you may instead stitch it onto another of your abominations that has a top minion of the given doom.
+keyword:
+	keyword: Soul Eater
+	match: Soul Eater.
+	mode: official
+	rules: While attacking, the abomination's controller gains 1 soul for each minion the abomination destroys with its combat damage.
+keyword:
+	keyword: Survivor +X
+	match: Survivor +<atom-param>number</atom-param>.
+	mode: official
+	rules: When an abomination with Survivor blocks or is blocked, it ignores the first X damage dealt to its top minion.

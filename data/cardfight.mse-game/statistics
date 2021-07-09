@@ -1,0 +1,46 @@
+############################## Statistics ##############################
+
+############################################################## Statistics dimensions
+
+statistics dimension:
+	name: skill
+	position hint: 3
+	icon: stats/pt.png
+	description: The card's skill
+	script:
+		if card.shape == "guardian" then "None"
+		else to_title(card.skill)
+
+statistics dimension:
+	name: subtype
+	position hint: 5
+	icon: stats/card_subtype.png
+	description: More specific card type selection
+	script:
+		if card.shieldtype == "sentinel" then "Sentinel"
+		else if card.shape == "guardian" then "G Guardian"
+		else if is_special() then "Special"
+		else to_title(card.type)
+		
+statistics dimension:
+	name: legion balance
+	position hint: 999
+	icon: stats/legion.png
+	description: Balance Legion vs. Not Legion
+	script:
+		if card.shape == "legion" then "Legion"
+		else "Not Legion"
+
+statistics dimension:
+	name: keywords
+	position hint: 1000
+	script: keyword_usage(unique:true)
+	show empty: false
+	split list: true
+	icon: stats/keywords.png
+
+statistics dimension:
+	name: style
+	position hint: 1001
+	script: stylesheet.short_name
+	icon: stats/stylesheet.png

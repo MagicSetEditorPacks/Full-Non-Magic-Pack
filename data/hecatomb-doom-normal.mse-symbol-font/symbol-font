@@ -1,0 +1,28 @@
+﻿mse version: 0.3.6
+version: 2008-07-09
+short name: normal dooms
+installer group: hecatomb/doom symbols/normal
+position hint: 001
+icon: greed.png
+
+image font size: 46
+horizontal space: 1.2
+symbol:
+	code: U
+	image: deceit.png
+symbol:
+	code: B
+	image: corruption.png
+symbol:
+	code: R
+	image: destruction.png
+symbol:
+	code: G
+	image: greed.png
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: U
+	item: B
+	item: R
+	item: G

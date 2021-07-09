@@ -1,0 +1,661 @@
+mse version: 2.0.0
+game: l5r
+full name: Old
+short name: Standard
+installer group: Legend of the Five Rings/Standard
+icon: icon.png
+position hint: 001
+
+version: 2014-01-11
+depends on:
+	package: l5r.mse-game
+	version: 2009-05-20
+
+card background: black
+card width: 324
+card height: 454
+card dpi: 131.24999998359377
+
+#By: MysticHobo
+#Fonts used:
+#L5RTitles
+#Concorde Nova
+#Concorde Nova SC
+############################################################ Style Scripts
+init script:
+	
+	is_action := { contains(card.background, match: "Action") }
+	is_kiho := { contains(card.background, match: "Kiho") }
+	is_spell := { contains(card.background, match: "Spell") }
+	is_ring := { contains(card.background, match: "Ring") }
+	is_ancestor := { contains(card.background, match: "Ancestor") }
+	is_follower := { contains(card.background, match: "Follower") }
+	is_personality := { contains(card.background, match: "Personality") }
+	is_stronghold := { contains(card.background, match: "Stronghold") }
+	is_sensei := { contains(card.background, match: "Sensei") }
+	is_wind := { contains(card.background, match: "Wind") }
+	is_event := { contains(card.background, match: "Event") or contains(card.background, match: "Celestial") }
+	is_item := { contains(card.background, match: "Item") }
+	is_holding := { contains(card.background, match: "Holding") }
+	is_region := { contains(card.background, match: "Region") }
+	
+	is_fate := { is_action() or is_kiho() or is_spell() or is_ring() }
+	is_dynasty := { is_event() or is_item() or is_holding() or is_region() }
+	
+	card_shape := { "old" }
+	
+############################################################## Extra Style Options
+styling field:
+	type: boolean
+	name: foil
+	description: Should the cards be foiled?
+	initial: no
+############################################################ Card Fields
+card style:
+	background:
+		left: 0
+		top: 0
+		width: 324
+		height: 454
+		z index: -1
+		render style: image
+		popup style: in place
+		choice images:
+			Action: action.png
+			Ancestor: ancestor.png
+			Celestial: event.png
+			Event: event.png
+			Follower: follower.png
+			Holding: holding.png
+			Item: item.png
+			Kiho: kiho.png
+			Personality Crab: crab.png
+			Personality Crane: crane.png
+			Personality Dragon: dragon.png
+			Personality Lion: lion.png
+			Personality Mantis: mantis.png
+			Personality Phoenix: phoenix.png
+			Personality Ratling: ratling.png
+			Personality Scorpion: scorpion.png
+			Personality Shadowlands: shadowlands.png
+			Personality Spider: spider.png
+			Personality Unicorn: unicorn.png
+			Personality Unaligned: unaligned.png
+			Personality Minor Clans Badger: badger.png
+			Personality Minor Clans Bat: unaligned.png
+			Personality Minor Clans Boar: unaligned.png
+			Personality Minor Clans Brotherhood of Shinsei: unaligned.png
+			Personality Minor Clans Centipede: mantis.png
+			Personality Minor Clans Dragonfly: unaligned.png
+			Personality Minor Clans Falcon: crab.png
+			Personality Minor Clans Fox: fox.png
+			Personality Minor Clans Hare: hare.png
+			Personality Minor Clans Monkey: unaligned.png
+			Personality Minor Clans Naga: naga.png
+			Personality Minor Clans Ninja: unaligned.png
+			Personality Minor Clans Oriole: unaligned.png
+			Personality Minor Clans Ox: unaligned.png
+			Personality Minor Clans Snake: unaligned.png
+			Personality Minor Clans Sparrow: sparrow.png
+			Personality Minor Clans Spirit: unaligned.png
+			Personality Minor Clans Tortoise: tortoise.png
+			Personality Minor Clans Toturi's Army: unaligned.png
+			Personality Minor Clans Wasp: mantis.png
+			Personality Minor Clans Yogo Junzo's Army: unaligned.png
+			Personality Minor Clans Yoritomo's Alliance: mantis.png
+			Region: region.png
+			Ring: ring.png
+			Sensei: sensei.png
+			Spell: spell.png
+			Stronghold Crab: crabstr.png
+			Stronghold Crane: cranestr.png
+			Stronghold Dragon: dragonstr.png
+			Stronghold Lion: lionstr.png
+			Stronghold Mantis: mantisstr.png
+			Stronghold Phoenix: phoenixstr.png
+			Stronghold Ratling: ratlingstr.png
+			Stronghold Scorpion: scorpionstr.png
+			Stronghold Shadowlands: shadowlandsstr.png
+			Stronghold Spider: shadowlandsstr.png
+			Stronghold Unicorn: unicornstr.png
+			Stronghold Unaligned: crabstr.png
+			Wind: wind.png
+	name:
+		left: 77
+		top: 26
+		width: 168
+		height: 42
+		z index: 0
+		alignment: center middle
+		font:
+			name: L5RTitles
+			color: rgb(0,0,0)
+			size: 18
+			weight: bold
+			scale down to: 6
+	artistcopyright:
+		left: 50
+		top: 430
+		width: 250
+		height: 10
+		z index: 1
+		alignment: center
+		font:
+			name: Concorde Nova SC
+			color: rgb(255,255,255)
+			size: 6.5
+			scale down to: 2
+	card_number:
+		left: { 178 + (card_style.artistcopyright.content_width) * 0.5 }
+		top: 430
+		width: 250
+		height: 10
+		z index: 1
+		alignment: left
+		font:
+			name: Concorde Nova
+			color: rgb(255,255,255)
+			size: 6.5
+			scale down to: 2
+	rarity:
+		left:
+			script:
+				if card_number() > 99 then ( 191 + (card_style.artistcopyright.content_width) * 0.5 )
+				else if card_number() > 9 then ( 187 + (card_style.artistcopyright.content_width) * 0.5 )
+				else ( 183 + (card_style.artistcopyright.content_width) * 0.5 )
+		top: 431.5
+		width: 7
+		height: 7
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			core set: set.png
+			common: common.png
+			uncommon: uncommon.png
+			rare: rare.png
+			promo: promo.png
+	player credit:
+		left: 300
+		top: 400
+		height: 10
+		width: 344
+		z index: 2
+		alignment: center
+		angle: 90
+		font:
+			name: Concorde Nova SC
+			color: rgb(255,255,255)
+			size: 6.5
+			scale down to: 2
+	set:
+		right: { 150 - (card_style.artistcopyright.content_width) * 0.5 }
+		top: 430
+		width: 250
+		height: 10
+		z index: 1
+		alignment: right
+		font:
+			name: Concorde Nova SC
+			color: rgb(255,255,255)
+			size: 6.5
+			scale down to: 2
+
+#--------------------------------------------------- THE ABOVE PARAMETERS SHOULD BE THE SAME FOR ALL CARD BACKGROUNDS! ----------------------------------
+
+	picture:
+		left: 
+			script: 
+				if is_dynasty() then 33
+				else if is_sensei() then 40
+				else if is_wind() then 130
+				else 34
+		top:
+			script:
+				if is_fate() or is_sensei() then 77
+				else if is_stronghold() then 78
+				else if is_dynasty() then 75
+				else if is_wind() then 79
+				else 76
+		width:
+			script:
+				if is_fate() or is_event() or is_region() then 255
+				else if is_holding() or is_item() then 256
+				else if is_stronghold() then 218
+				else if is_sensei() then 155
+				else if is_wind() then 154
+				else if is_personality() then 259
+				else 254
+		height:
+			script:
+				if is_holding() then 192
+				else if is_stronghold() then 248
+				else if is_sensei() then 208
+				else if is_wind() then 207
+				else if is_personality() then 195
+				else 190
+		mask:
+			script:
+				if is_action() or is_ring() then "mask_action_ring.png"
+				else if is_holding() then "mask_holding.png"
+				else if is_personality() then "mask_personality.png"
+				else if is_event() then "mask_event.png"
+				else if is_region() then "mask_region.png"
+				else if is_item() then "mask_item.png"
+				else if is_kiho() or is_spell() then "mask_kiho_spell.png"
+				else if is_stronghold() then "mask_stronghold.png"
+				else if is_wind() or is_sensei() then "mask_wind_sensei.png"
+				else "mask_ancestor_follower.png"
+	text:
+		left:
+			script:
+				if is_action() or is_ring() then 45
+				else if is_holding() or is_item() then 43
+				else if is_event() then 60
+				else if is_region() or is_sensei() then 50
+				else if is_kiho() or is_spell() then 47
+				else if is_stronghold() then 39
+				else if is_wind() then 46
+				else 36
+		top:
+			script:
+				if is_action() or is_ring() then 311
+				else if is_holding() or is_item() then 306
+				else if is_event() then 298
+				else if is_kiho() or is_spell() or is_sensei() then 307
+				else if is_region() then 294
+				else if is_stronghold() then 352
+				else if is_wind() then 308
+				else 314
+		width:
+			script:
+				if is_action() or is_ring() then 235
+				else if is_holding() or is_item() then 239
+				else if is_event() then 210
+				else if is_kiho() or is_spell() then 231
+				else if is_region() or is_wind() then 230
+				else if is_stronghold() then 250
+				else if is_sensei() then 225
+				else 253
+		height:
+			script:
+				if is_fate() then 92
+				else if is_ancestor() or is_follower() then 90
+				else if is_event() or is_region() then 120
+				else if is_stronghold() then 74
+				else if is_sensei() then 106
+				else 105
+		z index: 0
+		alignment: center
+		font:
+			name: Concorde Nova
+			color: rgb(0,0,0)
+			size: 9
+			scale down to: 6
+		padding left:   6
+		padding top:    2
+		padding right:  4
+		padding bottom: 2
+		line height hard: 1.3
+		line height line: 1.1
+	goldcost:
+		left:
+			script:
+				if is_event() or is_region() or is_sensei() or is_wind() or is_stronghold() then 0
+				else 150
+		top:
+			script:
+				if is_event() or is_region() or is_sensei() or is_wind() or is_stronghold() then 0
+				else 273
+		width:
+			script:
+				if is_event() or is_region() or is_sensei() or is_wind() or is_stronghold() then 0
+				else 25
+		height:
+			script:
+				if is_event() or is_region() or is_sensei() or is_wind() or is_stronghold() then 0
+				else 35
+		z index: 1
+		alignment: center
+		visible: { not is_event() and not is_region() and not is_sensei() and not is_wind() and not is_stronghold() }
+		font:
+			name: L5RTitles
+			color: rgb(0,0,0)
+			size: 20
+			weight: bold
+			scale down to: 8
+	chi:
+		left:
+			script:
+				if is_item() or is_ancestor() or is_follower() or is_personality() then 258
+				else 0
+		top:
+			script:
+				if is_item() or is_ancestor() or is_follower() or is_personality() then 39
+				else 0
+		width:
+			script:
+				if is_item() or is_ancestor() or is_follower() or is_personality() then 35
+				else 0
+		height:
+			script:
+				if is_item() or is_ancestor() or is_follower() or is_personality() then 40
+				else 0
+		z index: 0
+		alignment: top center
+		visible: { is_item() or is_ancestor() or is_follower() or is_personality() }
+		font:
+			name: L5RTitles
+			color: rgb(255,255,255)
+			size: 24
+			weight: bold
+			scale down to: 8
+	force:
+		left:
+			script:
+				if is_item() or is_ancestor() or is_follower() or is_personality() then 30
+				else 0
+		top:
+			script:
+				if is_item() or is_ancestor() or is_follower() or is_personality() then 39
+				else 0
+		width:
+			script:
+				if is_item() or is_ancestor() or is_follower() or is_personality() then 35
+				else 0
+		height:
+			script:
+				if is_item() or is_ancestor() or is_follower() or is_personality() then 40
+				else 0
+		z index: 0
+		alignment: top center
+		visible: { is_item() or is_ancestor() or is_follower() or is_personality() }
+		font:
+			name: L5RTitles
+			color: rgb(0,0,0)
+			size: 24
+			weight: bold
+			scale down to: 8
+	focus:
+		left:
+			script:
+				if is_fate() or is_ancestor() or is_follower() or is_item() then 142
+				else 0
+		top:
+			script:
+				if is_fate() or is_ancestor() or is_follower() or is_item() then 399
+				else 0
+		width:
+			script:
+				if is_fate() or is_ancestor() or is_follower() or is_item() then 40
+				else 0
+		height:
+			script:
+				if is_fate() or is_ancestor() or is_follower() or is_item() then 40
+				else 0
+		z index: 1
+		visible: { is_fate() or is_ancestor() or is_follower() or is_item() }
+		alignment: center
+		font:
+			name: L5RTitles
+			size: 20
+			weight: bold
+			scale down to: 8
+			color: rgb(255,255,255)
+	honorprod:
+		left:
+			script:
+				if is_holding() then 33
+				else 0
+		top:
+			script:
+				if is_holding() then 22
+				else 0
+		width:
+			script:
+				if is_holding() then 30
+				else 0
+		height:
+			script:
+				if is_holding() then 40
+				else 0
+		z index: 1
+		alignment: center
+		visible: { is_holding() }
+		font:
+			name: L5RTitles
+			size: 24
+			color: rgb(0,0,0)
+			weight: bold
+			scale down to: 8
+	goldprod:
+		left:
+			script:
+				if is_sensei() then 237
+				else if is_stronghold() or is_holding() then 260
+				else 0
+		top:
+			script:
+				if is_sensei() then 168
+				else if is_stronghold() then 205
+				else if is_holding() then 22
+				else 0
+		width:
+			script:
+				if is_sensei() or is_stronghold() then 35
+				else if is_holding() then 30
+				else 0
+		height:
+			script:
+				if is_sensei() or is_stronghold() or is_holding() then 40
+				else 0
+		z index: 1
+		alignment: center
+		visible: { is_holding() or is_sensei() or is_stronghold() }
+		font:
+			name: L5RTitles
+			color: rgb(0,0,0)
+			size: 24
+			weight: bold
+			scale down to: 8
+	provincestr:
+		left:
+			script:
+				if is_stronghold() then 260
+				else if is_sensei() then 237
+				else 0
+		top:
+			script:
+				if is_stronghold() then 136
+				else if is_sensei() then 98
+				else 0
+		width:
+			script:
+				if is_sensei() or is_stronghold() then 35
+				else 0
+		height:
+			script:
+				if is_sensei() or is_stronghold() then 40
+				else 0
+		z index: 1
+		alignment: center
+		visible: { is_sensei() or is_stronghold() }
+		font:
+			name: L5RTitles
+			color: rgb(0,0,0)
+			size: 24
+			weight: bold
+			scale down to: 8
+	familyhonor:
+		left:
+			script:
+				if is_stronghold() then 260
+				else if is_sensei() then 237
+				else 0
+		top:
+			script:
+				if is_stronghold() then 270
+				else if is_sensei() then 238
+				else 0
+		width:
+			script:
+				if is_sensei() or is_stronghold() then 35
+				else 0
+		height:
+			script:
+				if is_sensei() or is_stronghold() then 40
+				else 0
+		z index: 1
+		alignment: center
+		visible: { is_sensei() or is_stronghold() }
+		font:
+			name: L5RTitles
+			color: rgb(0,0,0)
+			size: 24
+			weight: bold
+			scale down to: 8
+	honorreq:
+		left:
+			script:
+				if is_ancestor() or is_follower() or is_personality() then 113
+				else 0
+		top:
+			script:
+				if is_ancestor() or is_follower() or is_personality() then 273
+				else 0
+		width:
+			script:
+				if is_ancestor() or is_follower() or is_personality() then 25
+				else 0
+		height:
+			script:
+				if is_ancestor() or is_follower() or is_personality() then 35
+				else 0
+		z index: 1
+		alignment: center
+		visible: { is_ancestor() or is_follower() or is_personality() }
+		font:
+			name: L5RTitles
+			color: rgb(0,0,0)
+			size: 20
+			weight: bold
+			scale down to: 8
+	personalhonor:
+		left: 
+			script:
+				if is_ancestor() or is_follower() or is_personality() then 190
+				else 0
+		top:
+			script:
+				if is_ancestor() or is_follower() or is_personality() then 273
+				else 0
+		width:
+			script:
+				if is_ancestor() or is_follower() or is_personality() then 25
+				else 0
+		height:
+			script:
+				if is_ancestor() or is_follower() or is_personality() then 35
+				else 0
+		z index: 1
+		alignment: center
+		visible: { is_ancestor() or is_follower() or is_personality() }
+		font:
+			name: L5RTitles
+			color: rgb(0,0,0)
+			size: 20
+			weight: bold
+			scale down to: 8
+################################################################## Style Specific Card Fields
+extra card field:
+	type: choice
+	name: holdinghonor
+	save value: false
+	choice: honor
+	editable: false
+extra card field:
+	type: choice
+	name: holdinggold
+	save value: false
+	choice: gold
+	editable: false
+extra card field:
+	type: text
+	name: illus
+	save value: false
+	script: "Illus."
+	editable: false
+extra card field:
+	type: choice
+	name: foil
+	save value: false
+	editable: false
+	script: "foil"
+extra card style:
+	holdinghonor:
+		left:
+			script:
+				if is_holding() and card.honorprod !="" then 23
+				else 0
+		top:
+			script:
+				if is_holding() and card.honorprod !="" then 23
+				else 0
+		width:
+			script:
+				if is_holding() and card.honorprod !="" then 54
+				else 0
+		height:
+			script:
+				if is_holding() and card.honorprod !="" then 36
+				else 0
+		z index: 0
+		render style: image
+		visible: { is_holding() and card.honorprod !="" }
+		choice images:
+			honor: holding_honor.png
+	holdinggold:
+		left:
+			script:
+				if is_holding() and card.goldprod !="" then 259
+				else 0
+		top:
+			script:
+				if is_holding() and card.goldprod !="" then 23
+				else 0
+		width:
+			script:
+				if is_holding() and card.goldprod !="" then 35
+				else 0
+		height:
+			script:
+				if is_holding() and card.goldprod !="" then 37
+				else 0
+		z index: 0
+		render style: image
+		visible: { is_holding() and card.goldprod !="" }
+		choice images:
+			gold: holding_gold.png
+	illus:
+		right: { 172 - (card_style.artistcopyright.content_width) * 0.5 }
+		top: 430
+		width: 250
+		height: 10
+		z index: 1
+		alignment: right
+		font:
+			name: Concorde Nova SC
+			color: rgb(255,255,255)
+			size: 6.5
+			scale down to: 2
+	foil:
+		left: 0
+		top: 0
+		width: 324
+		height: 454
+		z index: 5
+		render style: image
+		popup style: in place
+		visible: { styling.foil }
+		choice images:
+			foil: foil.png

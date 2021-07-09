@@ -1,0 +1,328 @@
+﻿mse version: 2.0.0
+game: b5
+short name: b5 Language Promo
+full name: b5 Language Promo
+installer group: Babylon 5/Language Promo
+icon: card-sample.png
+position hint: 100
+
+version: 2014-01-28
+depends on:
+	package: b5.mse-game
+	version: 2008-05-14
+depends on:
+	package: b5-icons.mse-include
+	version: 2008-05-14
+depends on:
+	package: b5-actual-marks.mse-include
+	version: 2008-05-14
+depends on:
+	package: b5-actual-small.mse-symbol-font
+	version: 2008-05-14
+depends on:
+	package: b5-actual.mse-style
+	version: 2008-05-19
+
+card width: 360
+card height: 502
+card dpi: 150
+############################################################## Extra scripts
+############################################################## Set info fields
+############################################################## Extra style options
+styling field:
+	type: choice
+	name: language
+	description: Use what language for the text?
+	initial: English
+	choice: English
+	choice: Vorlon
+	choice: Centauri
+	choice: Minbari
+	choice: Shadow
+	choice: Narn
+	choice: Great Machine
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	card type:
+		left:	0
+		top:	0
+		width:	360
+		height:	502
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			agenda:	/b5-actual.mse-style/agenda.jpg
+			aftermath: /b5-actual.mse-style/aftermath.jpg
+			conflict: /b5-actual.mse-style/conflict.jpg
+			contingency: /b5-actual.mse-style/contingency.jpg
+			character: /b5-actual.mse-style/agenda.jpg
+			event: /b5-actual.mse-style/event.jpg
+			enhancement: /b5-actual.mse-style/enhancement.jpg
+			fleet: /b5-actual.mse-style/fleet.jpg
+			group: /b5-actual.mse-style/group.jpg
+			limitation: /b5-actual.mse-style/agenda.jpg
+			location: /b5-actual.mse-style/location.jpg
+			centauri: /b5-actual.mse-style/centauri.jpg
+			drakh: /b5-actual.mse-style/drakh.jpg
+			human: /b5-actual.mse-style/human.jpg
+			minbari: /b5-actual.mse-style/minbari.jpg
+			narn: /b5-actual.mse-style/narn.jpg
+			neutral: /b5-actual.mse-style/neutral.jpg
+			nexus: /b5-actual.mse-style/agenda.jpg
+			non-aligned: /b5-actual.mse-style/nonaligned.jpg
+			shadow: /b5-actual.mse-style/shadow.jpg
+			vorlon: /b5-actual.mse-style/vorlon.jpg
+	############################# Name line
+	name:
+		left:   29
+		top :   27
+		width:	307
+		height: 26
+		alignment: bottom center shrink-overflow
+		padding bottom: 0
+		z index: 1
+		font:
+			name:
+				{if styling.language == "Vorlon" then "Vorlon"
+				else if styling.language == "Minbari" then "Minbari"
+				else if styling.language == "Centauri" then "Centauri"
+				else if styling.language == "Narn" then "Narn"
+				else if styling.language == "Shadow" then "Shadow"
+				else if styling.language == "Great Machine" then "G.Machine"
+				else "Serpentine-Bold-Bold"}
+			size: 16
+			color: rgb(0,0,0)
+	############################# Image
+	image:
+		left:	56
+		top:	67
+		width:	273
+		height:	182
+		z index: 1
+		mask: /b5-actual.mse-style/imagemask_standard.png
+	############################# Card type
+	type:
+		left: 58
+		top : 258
+		width: 288
+		height: 13
+		alignment: top center shrink-overflow
+		z index: 2
+		font:
+			name:
+				{if styling.language == "Vorlon" then "Vorlon"
+				else if styling.language == "Minbari" then "Minbari"
+				else if styling.language == "Centauri" then "Centauri"
+				else if styling.language == "Narn" then "Narn"
+				else if styling.language == "Shadow" then "Shadow"
+				else if styling.language == "Great Machine" then "G.Machine"
+				else "Arial Narrow"}
+			size: 14
+			color: rgb(255,255,255)
+			separator color: rgb(128,128,128)
+	############################# Text box
+	rule text:
+		left: 29
+		top : 288
+		width: 307
+		height: 153
+		font:
+			name:
+				{if styling.language == "Vorlon" then "Vorlon"
+				else if styling.language == "Minbari" then "Minbari"
+				else if styling.language == "Centauri" then "Centauri"
+				else if styling.language == "Narn" then "Narn"
+				else if styling.language == "Shadow" then "Shadow"
+				else if styling.language == "Great Machine" then "G.Machine"
+				else "Arial Narrow"}
+			italic name:
+				{if styling.language == "Vorlon" then "Vorlon"
+				else if styling.language == "Minbari" then "Minbari"
+				else if styling.language == "Centauri" then "Centauri"
+				else if styling.language == "Narn" then "Narn"
+				else if styling.language == "Shadow" then "Shadow"
+				else if styling.language == "Great Machine" then "G.Machine"
+				else "Arial Narrow Italic"}
+			size: 15
+			scale down to: 6
+			color: rgb(0,0,0)
+		alignment: middle center
+		z index: 2
+		padding left:   6
+		padding right:  4
+		line height hard: 1.2
+		line height line: 1.5
+		line height soft: 0.9
+		line height hard max: 1.3
+		line height line max: 1.6
+	############################# Mark boxes
+	marka1:
+		z index: 4
+		left:	27
+		top:	446
+		width:	41
+		height:	33
+		render style: image
+		alignment: middle center
+		include file: /b5-actual-marks.mse-include/marks
+	marka2:
+		z index: 4
+		left:	68
+		top:	446
+		width:	41
+		height:	33
+		render style: image
+		alignment: middle center
+		include file: /b5-actual-marks.mse-include/marks
+	marka3:
+		z index: 4
+		left:	27
+		top:	410
+		width:	41
+		height:	33
+		render style: image
+		alignment: middle center
+		include file: /b5-actual-marks.mse-include/marks
+	############################# Influence box
+	influence:
+		z index: 4
+		left:	304
+		top:	434
+		width:	28
+		height:	47
+		alignment: center middle
+		symbol font:
+			name: b5-actual-small
+			size: 13
+			alignment: bottom center
+		always symbol: true
+	############################# Abilities
+	diplomacy:
+		z index: 4
+		left:	42
+		top:	86
+		width:	15
+		height:	28
+		alignment: center middle shrink-overflow
+		symbol font:
+			name: b5-actual-small
+			size: 11
+			alignment: bottom center
+		always symbol: true
+	intrigue:
+		z index: 4
+		left:	42
+		top:	125
+		width:	15
+		height:	28
+		alignment: center middle shrink-overflow
+		symbol font:
+			name: b5-actual-small
+			size: 11
+			alignment: bottom center
+		always symbol: true
+	psi:
+		z index: 4
+		left:	42
+		top:	163
+		width:	15
+		height:	28
+		alignment: center middle shrink-overflow
+		symbol font:
+			name: b5-actual-small
+			size: 11
+			alignment: bottom center
+		always symbol: true
+	military:
+		z index: 4
+		left:	42
+		top:	202
+		width:	15
+		height:	28
+		alignment: center middle shrink-overflow
+		symbol font:
+			name: b5-actual-small
+			size: 11
+			alignment: bottom center
+		always symbol: true
+	############################# Card sorting / numbering
+	############################# Copyright stuff
+############################################################## Extra card fields
+extra card field:
+	type: choice
+	name: diplomacy box
+	editable: false
+	choice: diplomacy
+extra card field:
+	type: choice
+	name: influence box
+	editable: false
+	choice: influence
+extra card field:
+	type: choice
+	name: intrigue box
+	editable: false
+	choice: intrigue
+extra card field:
+	type: choice
+	name: psi box
+	editable: false
+	choice: psi
+extra card field:
+	type: choice
+	name: military box
+	editable: false
+	choice: default
+extra card style:
+	diplomacy box:
+		left:	26
+		top:	86
+		width:	46
+		height:	28
+		z index: 3
+		render style: image
+		visible: { card.diplomacy !="" }
+		choice images:
+			diplomacy: /b5-actual.mse-style/ability_diplomacy.png
+	intrigue box:
+		left:	26
+		top:	125
+		width:	46
+		height:	28
+		z index: 3
+		render style: image
+		visible: { card.intrigue !="" }
+		choice images:
+			intrigue: /b5-actual.mse-style/ability_intrigue.png
+	psi box:
+		left:	26
+		top:	163
+		width:	46
+		height:	28
+		z index: 3
+		render style: image
+		visible: { card.psi !="" }
+		choice images:
+			psi: /b5-actual.mse-style/ability_psi.png
+	military box:
+		left:	26
+		top:	202
+		width:	46
+		height:	28
+		z index: 3
+		render style: image
+		visible: { card.military !="" }
+		choice images:
+			default: { if contains(card.type, match:"Character") then "/b5-actual.mse-style/ability_leadership.png" else "/b5-actual.mse-style/ability_military.png" }
+	influence box:
+		left:	297
+		top:	434
+		width:	41
+		height:	47
+		z index: 3
+		render style: image
+		visible: { card.influence !="" }
+		choice images:
+			influence: /b5-actual.mse-style/influence.png

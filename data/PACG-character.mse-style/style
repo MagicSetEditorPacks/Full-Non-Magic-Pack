@@ -1,0 +1,36 @@
+mse version:	2.0.0
+short name:		Character
+full name:		Character Cards
+icon:			char_sample.png
+position hint:	130
+version:		2015-07-14
+installer_group: PACG/Custom Styles/Character
+
+# Dependencies
+depends on:	PACG.mse-game 2014-05-01
+depends on:	PACG-common.mse-include 2015-07-14
+depends on:	PACG-symbol.mse-symbol-font 2014-05
+
+#  Stylesheet
+game:			PACG
+card width:		375
+card height:	525
+card dpi:		150
+card background: rgb(0,0,0)
+
+#  Initialisation
+init script:
+	Width := 375
+	Height := 525
+	include file:	script-char.mse
+	
+include file:	extra-fields-char.mse
+
+
+#  Card Styling
+include file:	style-pacg.mse
+include file:	style-charcommon.mse
+include file:	style-charfront.mse
+include file:	style-charback.mse
+include file:	style-token.mse
+include file:	style-powers.mse

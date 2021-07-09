@@ -1,0 +1,381 @@
+# Styling Fields
+
+styling_field:
+	type:				choice
+	name:				char card
+	description:		Character Card Type
+	default:			"Character"
+	default_name:		Character
+	choice:				Token
+	choice:				Role
+	initial:			Character
+
+styling field:
+	type: 				choice
+	name: 				char side
+	description: 		Card Side
+	default: 			"Front"
+	default_name: 		Front
+	choice: 			Back
+	initial: 			Front
+
+# Extra Card Boxes/fields
+
+# CHARACTER
+# Front
+extra_card_field:
+	type:				color
+	name:				skills_table
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				text
+	name:				skills_header
+	script:				"SKILLS"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				info
+	name:				str_header
+	script:				"STRENGTH"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				info
+	name:				dex_header
+	script:				"DEXTERITY"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				info
+	name:				con_header
+	script:				"CONSTITUTION"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				info
+	name:				int_header
+	script:				"INTELLIGENCE"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				info
+	name:				wis_header
+	script:				"WISDOM"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				info
+	name:				cha_header
+	script:				"CHARISMA"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+
+extra_card_field:
+	type:				color
+	name:				powers_table
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				text
+	name:				powers_header
+	script:				"POWERS"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				info
+	name:				hand_header
+	script:				"HAND SIZE"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+
+# Back
+extra_card_field:
+	type:				text
+	name:				favoured_header
+	script:				"FAVORED CARD TYPE:"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				info
+	name:				cards_list_header
+	script: 			"CARDS LIST"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				text
+	name:				weapon_header
+	script:				"WEAPON"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				text
+	name:				spell_header
+	script:				"SPELL"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				text
+	name:				armor_header
+	script:				"ARMOR"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				text
+	name:				item_header
+	script:				"ITEM"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				text
+	name:				ally_header
+	script:				"ALLY"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				text
+	name:				blessing_header
+	script:				"BLESSING"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+
+extra_card_field:
+	type: 				text
+	name: 				cohort_forward
+	script:
+		forward_editor(
+			field: card.cohort,
+			prefix:	"COHORT: ",
+			hide_when_empty: false
+		)
+	description: 		Cohort Name
+extra_card_field:
+	type:				color
+	name:				box1
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				box2
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				box3
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				box4
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				box5
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				box6
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				box7
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+	
+# ROLE Power Cells
+# Role 0
+extra_card_field:
+	type:				info
+	name:				role_0_power_1_cell
+	script:				if isProficient(role: 0) then "PROFICIENT WITH"
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				info
+	name:				role_0_power_2_cell
+	script:				""
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				info
+	name:				role_0_power_3_cell
+	script:				""
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				info
+	name:				role_0_power_4_cell
+	script:				""
+	editable: 			false
+	save_value: 		false
+# Role 1
+extra_card_field:
+	type:				text
+	name:				role_1_power_1_header
+	script:				"PROFICIENT WITH"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				role_1_power_1_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				role_1_power_2_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				role_1_power_3_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				role_1_power_4_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				role_1_power_5_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				role_1_power_6_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				role_1_power_7_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+
+
+# Role 2
+extra_card_field:
+	type:				text
+	name:				role_2_power_1_header
+	script:				"PROFICIENT WITH"
+	editable:			false
+	save_value:			false
+extra_card_field:
+	type:				color
+	name:				role_2_power_1_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				role_2_power_2_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				role_2_power_3_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				role_2_power_4_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				role_2_power_5_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				role_2_power_6_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+extra_card_field:
+	type:				color
+	name:				role_2_power_7_cell
+	script:				"white"
+	editable: 			false
+	save_value: 		false
+
+extra_card_field:
+	type:				text
+	name:				favoured_card_value
+	script:				get_favoured_value()
+	editable:			false
+	save_value:			false

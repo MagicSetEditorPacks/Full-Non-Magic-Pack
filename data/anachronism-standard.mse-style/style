@@ -1,0 +1,673 @@
+﻿mse version: 2.0.0
+game: anachronism
+short name: Standard
+installer group: anachronism/standard
+icon: card-sample.png
+position hint: 01
+
+version: 2014-01-29
+depends on:
+	package: anachronism.mse-game
+	version: 2009-11-18
+
+card width: 375
+card height: 523
+card dpi: 150
+
+#Coded by Art_Freak, Images by Tri-King Games and Asst. Prof. Christopher Heard of Pepperdine University
+
+#Fonts used:
+#Charis SIL Bold
+#Charis SIL
+#Charis SIL Italic
+#Courier New
+#Arial Narrow
+############################################################## Extra scripts
+
+init script:
+	pirate_hybrid := {
+		if styling.culturally_aligned_pirate then (
+			if is_warrior() then "piwhybrid.png" else
+			if is_inspiration() then "pihybrid.png" else
+			if is_weapon() then "piwehybrid.png"
+			else                                     "piahybrid.png"
+		) else input
+	}
+
+############################################################## Extra style
+styling field:
+	type: text
+	name: flavor text height
+	description: What percentage of the textbox should the first area use?
+styling field:
+	type: boolean
+	name: culturally aligned pirate
+	initial: no
+	description: Should the art extend into a transparent textbox?
+styling field:
+	type: package choice
+	name: overlay
+	description: Should there be an overlay applied, such as foil?
+	match: magic-overlay-*.mse-include
+	required: false
+styling field:
+	type: choice
+	name: overlay combine type
+	description: What type of combine should the overlay use? Only works if overlay is enabled.
+	choice: normal
+	choice: add
+	choice: subtract
+	choice: stamp
+	choice: difference
+	choice: negation
+	choice: multiply
+	choice: darken
+	choice: lighten
+	choice: color dodge
+	choice: color burn
+	choice: screen
+	choice: overlay
+	choice: hard light
+	choice: soft light
+	choice: reflect
+	choice: glow
+	choice: freeze
+	choice: heat
+	choice: and
+	choice: or
+	choice: xor
+	choice: shadow
+	choice: symmetric overlay
+styling field:
+	type: boolean
+	name: long range weapons
+	initial: no
+	description: Make the weapon long range?
+styling style:
+	culturally aligned pirate:
+		choice images:
+			yes: /anachronism-standard.mse-style/pihybrid.png
+			no:  /anachronism-standard.mse-style/blank.gif
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	card type:
+		left:	0
+		top:	0
+		width:	375
+		height:	523
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			african kingdoms warrior:		akwarrior.gif
+			african kingdoms inspiration:		akinspiration.gif
+			african kingdoms weapon:		akweapon.gif
+			african kingdoms armor:			akarmor.gif
+			african kingdoms special:		akarmor.gif
+			american frontiersman warrior:		afwarrior.gif
+			american frontiersman inspiration:	afinspiration.gif
+			american frontiersman weapon:		afweapon.gif
+			american frontiersman armor:		afarmor.gif
+			american frontiersman special:		afarmor.gif
+			aztec warrior:				azwarrior.gif
+			aztec inspiration:			azinspiration.gif
+			aztec weapon:				azweapon.gif
+			aztec armor:				azarmor.gif
+			aztec special:				azarmor.gif
+			briton warrior:				brwarrior.gif
+			briton inspiration:			brinspiration.gif
+			briton weapon:				brweapon.gif
+			briton armor:				brarmor.gif
+			briton special:				brarmor.gif
+			carthaginian warrior:			cawarrior.gif
+			carthaginian inspiration:		cainspiration.gif
+			carthaginian weapon:			caweapon.gif
+			carthaginian armor:			caarmor.gif
+			carthaginian special:			caarmor.gif
+			chinese warrior:			chwarrior.gif
+			chinese inspiration:			chinspiration.gif
+			chinese weapon:				chweapon.gif
+			chinese armor:				charmor.gif
+			chinese special:			charmor.gif
+			egyptian warrior:			egwarrior.gif
+			egyptian inspiration:			eginspiration.gif
+			egyptian weapon:			egweapon.gif
+			egyptian armor:				egarmor.gif
+			egyptian special:			egarmor.gif
+			french warrior:				frwarrior.gif
+			french inspiration:			frinspiration.gif
+			french weapon:				frweapon.gif
+			french armor:				frarmor.gif
+			french special:				frarmor.gif
+			germanic warrior:			gewarrior.gif
+			germanic inspiration:			geinspiration.gif
+			germanic weapon:			geweapon.gif
+			germanic armor:				gearmor.gif
+			germanic special:			gearmor.gif
+			greek warrior:				grwarrior.gif
+			greek inspiration:			grinspiration.gif
+			greek weapon:				grweapon.gif
+			greek armor:				grarmor.gif
+			greek special:				grarmor.gif
+			irish warrior:				irwarrior.gif
+			irish inspiration:			irinspiration.gif
+			irish weapon:				irweapon.gif
+			irish armor:				irarmor.gif
+			irish special:				irarmor.gif
+			italian warrior:			itwarrior.gif
+			italian inspiration:			itinspiration.gif
+			italian weapon:				itweapon.gif
+			italian armor:				itarmor.gif
+			italian special:			itarmor.gif
+			japanese warrior:			jawarrior.gif
+			japanese inspiration:			jainspiration.gif
+			japanese weapon:			jaweapon.gif
+			japanese armor:				jaarmor.gif
+			japanese special:			jaarmor.gif
+			korean warrior:				kwarrior.gif
+			korean inspiration:			kinspiration.gif
+			korean weapon:				kweapon.gif
+			korean armor:				karmor.gif
+			korean special:				karmor.gif
+			maori warrior:				mawarrior.gif
+			maori inspiration:			mainspiration.gif
+			maori weapon:				maweapon.gif
+			maori armor:				maarmor.gif
+			maori special:				maarmor.gif
+			mongol warrior:				mowarrior.gif
+			mongol inspiration:			moinspiration.gif
+			mongol weapon:				moweapon.gif
+			mongol armor:				moarmor.gif
+			mongol special:				moarmor.gif
+			native american warrior:		nawarrior.gif
+			native american inspiration:		nainspiration.gif
+			native american weapon:			naweapon.gif
+			native american armor:			naarmor.gif
+			native american special:		naarmor.gif
+			norse warrior:				nowarrior.gif
+			norse inspiration:			noinspiration.gif
+			norse weapon:				noweapon.gif
+			norse armor:				noarmor.gif
+			norse special:				noarmor.gif
+			persian warrior:			pewarrior.gif
+			persian inspiration:			peinspiration.gif
+			persian weapon:				peweapon.gif
+			persian armor:				pearmor.gif
+			persian special:			pearmor.gif
+			pirate warrior:				piwarrior.gif
+			pirate inspiration:			piinspiration.gif
+			pirate weapon:				piweapon.gif
+			pirate armor:				piarmor.gif
+			pirate special:				piarmor.gif
+			roman warrior:				rowarrior.gif
+			roman inspiration:			roinspiration.gif
+			roman weapon:				roweapon.gif
+			roman armor:				roarmor.gif
+			roman special:				roarmor.gif
+			romanian warrior:			rawarrior.gif
+			romanian inspiration:			rainspiration.gif
+			romanian weapon:			raweapon.gif
+			romanian armor:				raarmor.gif
+			romanian special:			raarmor.gif
+			russian warrior:			ruwarrior.gif
+			russian inspiration:			ruinspiration.gif
+			russian weapon:				ruweapon.gif
+			russian armor:				ruarmor.gif
+			russian special:			ruarmor.gif
+			saracen warrior:			sawarrior.gif
+			saracen inspiration:			sainspiration.gif
+			saracen weapon:				saweapon.gif
+			saracen armor:				saarmor.gif
+			saracen special:			saarmor.gif
+			scottish warrior:			scwarrior.gif
+			scottish inspiration:			scinspiration.gif
+			scottish weapon:			scweapon.gif
+			scottish armor:				scarmor.gif
+			scottish special:			scarmor.gif
+			spanish warrior:			spwarrior.gif
+			spanish inspiration:			spinspiration.gif
+			spanish weapon:				spweapon.gif
+			spanish armor:				sparmor.gif
+			spanish special:			sparmor.gif
+			tribes of israel warrior:		tiwarrior.gif
+			tribes of israel inspiration:		tiinspiration.gif
+			tribes of israel weapon:		tiweapon.gif
+			tribes of israel armor:			tiarmor.gif
+			tribes of israel special:		tiarmor.gif
+			trojan warrior:				trwarrior.gif
+			trojan inspiration:			trinspiration.gif
+			trojan weapon:				trweapon.gif
+			trojan armor:				trarmor.gif
+			trojan special:				trarmor.gif
+			turkish warrior:			tuwarrior.gif
+			turkish inspiration:			tuinspiration.gif
+			turkish weapon:				tuweapon.gif
+			turkish armor:				tuarmor.gif
+			turkish special:			tuarmor.gif
+	cultured pirate:
+		left:	0
+		top:	0
+		width:	375
+		height:	523
+		z index: -2
+		render style: image
+		popup style: in place
+		image: { pirate_hybrid() }
+		visible: script: styling.culturally_aligned_pirate
+	foil:
+		left: 0
+		top : 0
+		width: 375
+		height: 523
+		z index: 5
+		render style: image
+		image: {if styling.overlay == "" then nil else set_combine(input: styling.overlay + "/overlay.png", combine: styling.overlay_combine_type)}
+	long range:
+		left:	180
+		top:	46
+		width:	18
+		height:	30
+		z index: -1
+		render style: image
+		popup style: in place
+		choice images:
+			lrangeweapon:	lrweapons.gif
+		visible: script: styling.long_range_weapons and is_weapon()
+
+	############################# Name line
+	name:
+		left: 30
+		top : 89
+		width: 318
+		height: 28
+		alignment: middle center
+		padding bottom: 0
+		z index: 2
+		font:
+			name: Charis SIL Bold
+			size: 14
+			color: rgb(0,0,0)
+	element:
+		left: 304
+		top : 7
+		width: 66
+		height: 66
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			aether:		aetherelement.png
+			earth:		earthelement.png
+			fire:		fireelement.png
+			metal:		metalelement.png
+			water:		waterelement.png
+			wind:		windelement.png
+			wood:		woodelement.png
+		visible: script: is_war_or_insp()
+	cost:
+		left: 23
+		top : 25
+		width: 40
+		height: 40
+		z index: 2
+		alignment: middle center
+		font:
+			name: Charis SIL Bold
+			weight: bold
+			size: 24
+			color: rgb(255,204,51)
+		visible: script: is_nwarrior()
+	weapon damage:
+		left: 314
+		top : 23
+		width: 40
+		height: 40
+		z index: 2
+		alignment: middle center
+		font:
+			name: Charis SIL Bold
+			size: 24
+			color: rgb(255,204,51)
+		visible: script: is_weapon()
+
+	############################# Range
+	top left:
+		left:	161
+		top:	12
+		width:	15
+		height:	15
+		z index: 2
+		alignment: middle center
+		font:
+			name: Courier New
+			weight: bold
+			size: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+		visible: script: is_war_or_weapon()
+	top center:
+		left:	182
+		top:	12
+		width:	15
+		height:	15
+		z index: 2
+		alignment: middle center
+		font:
+			name: Courier New
+			weight: bold
+			size: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+		visible: script: is_war_or_weapon()
+	top right:
+		left:	202
+		top:	12
+		width:	15
+		height:	15
+		z index: 2
+		alignment: middle center
+		font:
+			name: Courier New
+			weight: bold
+			size: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+		visible: script: is_war_or_weapon()
+	middle1 left:
+		left:	161
+		top:	30
+		width:	15
+		height:	15
+		z index: 2
+		alignment: middle center
+		font:
+			name: Courier New
+			weight: bold
+			size: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+		visible: script: is_war_or_weapon()
+	middle1 center:
+		left:	182
+		top:	30
+		width:	15
+		height:	15
+		z index: 2
+		alignment: middle center
+		font:
+			name: Courier New
+			weight: bold
+			size: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+		visible: script: is_war_or_weapon()
+	middle1 right:
+		left:	202
+		top:	30
+		width:	15
+		height:	15
+		z index: 2
+		alignment: middle center
+		font:
+			name: Courier New
+			weight: bold
+			size: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+		visible: script: is_war_or_weapon()
+	middle2 left:
+		left:	161
+		top:	46
+		width:	15
+		height:	15
+		z index: 2
+		alignment: middle center
+		font:
+			name: Courier New
+			weight: bold
+			size: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+		visible: script: is_war_or_weapon()
+	middle2 center:
+		left:	182
+		top:	46
+		width:	15
+		height:	15
+		z index: 2
+		alignment: middle center
+		font:
+			name: Courier New
+			weight: bold
+			size: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+		visible: script: styling.long_range_weapons and is_weapon()
+	middle2 right:
+		left:	202
+		top:	46
+		width:	15
+		height:	15
+		z index: 2
+		alignment: middle center
+		font:
+			name: Courier New
+			weight: bold
+			size: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+		visible: script: is_war_or_weapon()
+	bottom left:
+		left:	161
+		top:	64
+		width:	15
+		height:	15
+		z index: 2
+		alignment: middle center
+		font:
+			name: Courier New
+			weight: bold
+			size: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+		visible: script: is_war_or_weapon()
+	bottom center:
+		left:	182
+		top:	64
+		width:	15
+		height:	15
+		z index: 2
+		alignment: middle center
+		font:
+			name: Courier New
+			weight: bold
+			size: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+		visible: script: is_war_or_weapon() and styling.long_range_weapons=="no"
+	bottom right:
+		left:	202
+		top:	64
+		width:	15
+		height:	15
+		z index: 2
+		alignment: middle center
+		font:
+			name: Courier New
+			weight: bold
+			size: 10
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+		visible: script: is_war_or_weapon()
+
+	############################# Image
+	image:
+		left: 25
+		top: 127
+		width: 326
+		height:	213
+		z index: 1
+
+	############################# Card type
+
+	type:
+		left: { if is_warrior() then 88 else 28 }
+		top : 350
+		width: { if is_warrior() then 259 else 320 }
+		height: 14
+		alignment: middle center
+		z index: 2
+		font:
+			name: Charis SIL
+			size: 10
+			color: rgb(0,0,0)
+
+	############################# Text box
+	rule text:
+		left: { if is_warrior() then 88 else 28 }
+		top : 366
+		width: { if is_warrior() then 259 else 320 }
+		height: { 124 - ( if styling.flavor_text_height!="" then styling.flavor_text_height else 10 ) }
+		font:
+			name: Charis SIL
+			italic name: Charis SIL Italic
+			size: 10
+			scale down to: 6
+			color: rgb(0,0,0)
+		alignment:	top left
+		z index: 3
+		padding left:   2
+		padding top:    2
+		padding right:  -3
+		padding bottom: 0
+		line height hard: 0.7
+		line height line: 0.7
+		line height soft: 0.7
+		line height hard max: 1.2
+		line height line max: 1.2
+	flavor text:
+		left: { if is_warrior() then 88 else 28 }
+		bottom: 490
+		width: { if is_warrior() then 259 else 320 }
+		height: { if styling.flavor_text_height!="" then styling.flavor_text_height else 10 }
+		font:
+			name: Charis SIL Italic
+			italic name: Charis SIL Italic
+			size: 8
+			scale down to: 4
+			color: rgb(0,0,0)
+		alignment:	bottom left
+		z index: 4
+		padding left:   2
+		padding top:    0
+		padding right:  -3
+		padding bottom: 0
+		line height hard: 0.7
+		line height line: 0.7
+		line height soft: 0.7
+		line height hard max: 1.2
+		line height line max: 1.2
+
+	############################# Attributes
+	life:
+		left:	30
+		top:	352
+		width:	20
+		height:	25
+		z index: 2
+		alignment: right middle
+		font:
+			name: Charis SIL Bold
+			weight: bold
+			size: 18
+			color: rgb(255,204,51)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 2
+			shadow displacement y: 2
+		visible: script: is_warrior()
+	speed:
+		left:	30
+		top:	389
+		width:	20
+		height:	25
+		z index: 2
+		alignment: right middle
+		font:
+			name: Charis SIL Bold
+			weight: bold
+			size: 18
+			color: rgb(255,204,51)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 2
+			shadow displacement y: 2
+		visible: script: is_warrior()
+	experience:
+		left:	30
+		top:	428
+		width:	20
+		height:	25
+		z index: 2
+		alignment: right middle
+		font:
+			name: Charis SIL Bold
+			weight: bold
+			size: 18
+			color: rgb(255,204,51)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 2
+			shadow displacement y: 2
+		visible: script: is_warrior()
+	damage:
+		left:	30
+		top:	465
+		width:	20
+		height:	25
+		z index: 2
+		alignment: right middle
+		font:
+			name: Charis SIL Bold
+			weight: bold
+			size: 18
+			color: rgb(255,204,51)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 2
+			shadow displacement y: 2
+		visible: script: is_warrior()
+
+	############################# Card sorting / numbering
+	############################# Copyright stuff and numbering
+	number:
+		left: 310
+		top : 501
+		width: 50
+		height: 28
+		z index: 2
+		alignment: top right
+		font:
+			name: Arial Narrow
+			size: 8
+			color: rgb(255,255,255)
+	series:
+		left: 310
+		top: 500
+		width: 20
+		height: 18
+		z index: 2
+		alignment: middle center shrink-overflow
+		font:
+			name: Charis SIL Bold
+			weight: bold
+			size: 12
+			color: rgb(255,204,51)
+	legal line:
+		left: 15
+		top : 501
+		width: 280
+		height: 18
+		z index: 2
+		alignment: top left shrink-overflow
+		font: 
+			name: Arial Narrow
+			size: 8
+			color: rgb(255,255,255)

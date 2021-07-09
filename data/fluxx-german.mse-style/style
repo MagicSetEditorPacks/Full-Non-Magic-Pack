@@ -1,0 +1,28 @@
+﻿mse version: 2.0.0
+game: fluxx
+short name: German
+full name: German Fluxx
+icon: card-sample.png
+position hint: 007
+installer group: fluxx/styles/german
+
+version: 7.0.0
+depends on:
+	package: fluxx.mse-game
+	version: 7.0.0
+
+card width: 333
+card height: 516
+card dpi: 150
+
+############################################################## Extra scripts
+
+include file: scripts
+
+############################################################## Extra style
+
+include file: styling
+
+############################################################## Card fields
+
+include file: card_style

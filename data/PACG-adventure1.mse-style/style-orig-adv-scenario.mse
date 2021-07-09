@@ -1,0 +1,559 @@
+card_style:
+# Location Data
+	location_1a:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 2) }
+		left:				{ playerTblLeft(col: 2)  }
+		width:				{ locationW }
+		height:				{ if isScenBack() then locationH }
+		alignment: 			left middle shrink-overflow
+		padding_left: 		3
+		font:
+			name:				Dax-regular
+			size:				8.5
+		z_index: 			52
+	location_1b:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 3) }
+		left:				{ playerTblLeft(col: 2)  }
+		width:				{ locationW }
+		height:				{ if isScenBack() then locationH }
+		alignment: 			left middle shrink-overflow
+		padding_left: 		3
+		font:
+			name:				Dax-regular
+			size:				8.5
+		z_index: 			52
+	location_1c:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 4) }
+		left:				{ playerTblLeft(col: 2)  }
+		width:				{ locationW }
+		height:				{ if isScenBack() then locationH }
+		alignment: 			left middle shrink-overflow
+		padding_left: 		3
+		font:
+			name:				Dax-regular
+			size:				8.5
+		z_index: 			52
+	location_2:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 5) }
+		left:				{ playerTblLeft(col: 2)  }
+		width:				{ locationW }
+		height:				{ if isScenBack() then locationH }
+		alignment: 			left middle shrink-overflow
+		padding_left: 		3
+		font:
+			name:				Dax-regular
+			size:				8.5
+		z_index: 			52
+	location_3:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 2) }
+		left:				{ playerTblLeft(col: 4)  }
+		width:				{ locationW }
+		height:				{ if isScenBack() then locationH }
+		alignment: 			left middle shrink-overflow
+		padding_left: 		3
+		font:
+			name:				Dax-regular
+			size:				8.5
+		z_index: 			52
+	location_4:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 3) }
+		left:				{ playerTblLeft(col: 4)  }
+		width:				{ locationW }
+		height:				{ if isScenBack() then locationH }
+		alignment: 			left middle shrink-overflow
+		padding_left: 		3
+		font:
+			name:				Dax-regular
+			size:				8.5
+		z_index: 			52
+	location_5:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 4) }
+		left:				{ playerTblLeft(col: 4)  }
+		width:				{ locationW }
+		height:				{ if isScenBack() then locationH }
+		alignment: 			left middle shrink-overflow
+		padding_left: 		3
+		font:
+			name:				Dax-regular
+			size:				8.5
+		z_index: 			52
+	location_6:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 5) }
+		left:				{ playerTblLeft(col: 4)  }
+		width:				{ locationW }
+		height:				{ if isScenBack() then locationH }
+		alignment: 			left middle shrink-overflow
+		padding_left: 		3
+		font:
+			name:				Dax-regular
+			size:				8.5
+		z_index: 			52
+
+	anchored:
+		visible:			{ isScenBack() }
+		render_style:		hidden
+		top:				{ anchoredT() }
+		left:				{ anchoredL() }
+		width:				{ anchoredW() }
+		height:				{ anchoredH() }
+		z_index:			53
+	anchored_text:
+		visible:			{ isScenBack() and card.anchored != "" }
+		top:				{ anchoredT() }
+		left:				{ anchoredL() }
+		width:				{ anchoredW() }
+		height:				{ if isScenBack() and card.anchored != "" then anchoredH() }
+		alignment: 			center middle shrink-overflow
+		font:
+			weight:				bold
+			name:				Dax-regular
+			size:				8
+		z_index: 			52
+
+# VILLAIN and HENCHMAN data
+
+	henchmen_1:
+		visible: 			{ isScenFront() }
+		top:				{ henchmenT(1) }
+		left:				18
+		height:				{ if isScenFront() then villainH }
+		width:				{ Width - 36 }
+		alignment: 			left middle
+		padding_left: 		10
+		font:
+			name:				Dax-regular
+			size:				8
+			color:				rgb(78,48,0)
+		z_index: 			52
+	henchmen_2:
+		visible: 			{ isScenFront() and card.henchmen_1 != "" }
+		top:				{ henchmenT(2) }
+		left:				18
+		height:				{ if isScenFront() then villainH }
+		width:				{ Width - 36 }
+		alignment: 			left middle
+		padding_left: 		10
+		font:
+			name:				Dax-regular
+			size:				8
+			color:				rgb(78,48,0)
+		z_index: 			52
+	henchmen_3:
+		visible: 			{ isScenFront() and card.henchmen_2 != "" }
+		top:				{ henchmenT(3) }
+		left:				18
+		height:				{ if isScenFront() then villainH }
+		width:				{ Width - 36 }
+		alignment: 			left middle
+		padding_left: 		10
+		font:
+			name:				Dax-regular
+			size:				8
+			color:				rgb(78,48,0)
+		z_index: 			52
+	henchmen_4:
+		visible: 			{ isScenFront() }
+		top:				{ henchmenT(4) }
+		left:				18
+		height:				{ if isScenFront() and card.henchmen_3 != "" then villainH }
+		width:				{ Width - 36 }
+		alignment: 			left middle
+		padding_left: 		10
+		font:
+			name:				Dax-regular
+			size:				8
+			color:				rgb(78,48,0)
+		z_index: 			52
+
+# DURING this scenario
+	duringscen:
+		visible: 			{ isScenFront() }
+		top:				{ 330 }
+		left:				25
+		width:				{ Width - 50 }
+		height:				{ if isScenFront() then 112 }
+		alignment: 			left middle shrink-overflow
+		font:
+			name:				Dax-regular
+			size:				11
+			scale_down_to: 		8
+		z_index: 			52
+
+		
+extra_card_style:
+# LOCATIONS TABLES
+# First Table with headings
+	location_table_1:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 1) - 1 }
+		left:				{ playerTblLeft(col: 1) - 1 }
+		width:				{ playerW + locationW + 3 }
+		height:				{ (5 * (locationH+ 1) ) + 1 }
+		z_index: 			50
+	players_hcell_1:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 1) }
+		left:				{ playerTblLeft(col: 1) }
+		width:				{ playerW }
+		height:				{ locationH }
+		z_index: 			51
+	players_header_1:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 1) }
+		left:				{ playerTblLeft(col: 1) + 1  }
+		width:				{ playerW  - 2 }
+		height:				{ locationH }
+		alignment: 			center middle shrink-overflow
+		z_index: 			52
+		font:
+			name:				Dax
+			size:				10
+			color:				rgb(255,255,255)
+	locations_cell_1:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 1) }
+		left:				{ playerTblLeft(col: 2)  }
+		width:				{ locationW }
+		height:				{ locationH }
+		z_index: 			51
+	locations_header_1:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 1) }
+		left:				{ playerTblLeft(col: 2)  }
+		width:				{ locationW }
+		height:				{ locationH }
+		padding_left: 		3
+		alignment: 			left middle shrink-overflow
+		z_index: 			52
+		font:
+			name:				Dax
+			size:				10
+			color:				rgb(255,255,255)
+
+# Second Table with headings
+	location_table_2:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 1) - 1 }
+		left:				{ playerTblLeft(col: 3) - 1 }
+		width:				{ playerW + locationW + 3 }
+		height:				{ (5 * (locationH+ 1) ) + 1 }
+		z_index: 			50
+	players_hcell_2:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 1) }
+		left:				{ playerTblLeft(col: 3) }
+		width:				{ playerW }
+		height:				{ locationH }
+		z_index: 			51
+	locations_cell_2:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 1) }
+		left:				{ playerTblLeft(col: 4)  }
+		width:				{ locationW }
+		height:				{ locationH }
+		z_index: 			51
+
+	players_header_2:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 1) }
+		left:				{ playerTblLeft(col: 3) + 1 }
+		width:				{ playerW - 2 }
+		height:				{ locationH }
+		alignment: 			center middle shrink-overflow
+		z_index: 			52
+		font:
+			name:				Dax
+			size:				10
+			color:				rgb(255,255,255)
+	locations_header_2:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 1) }
+		left:				{ playerTblLeft(col: 4)  }
+		width:				{ locationW }
+		height:				{ locationH }
+		padding_left: 		3
+		alignment: 			left middle shrink-overflow
+		z_index: 			52
+		font:
+			name:				Dax
+			size:				10
+			color:				rgb(255,255,255)
+
+# No. Players Cells
+	players_cell_1a:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 2) + 2 }
+		left:				{ playerTblLeft(col: 1) + 2  }
+		width:				{ playerW - 4 }
+		height:				{ locationH - 4 }
+		alignment: 			center middle
+		background_color: 	rgb(255,255,255)
+		z_index: 			52
+		font:
+			name:				Dax-regular
+			size:				9
+	players_cell_1b:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 3) + 2 }
+		left:				{ playerTblLeft(col: 1) + 2  }
+		width:				{ playerW - 4 }
+		height:				{ locationH - 4 }
+		alignment: 			center middle
+		background_color: 	rgb(255,255,255)
+		z_index:			52
+		font:
+			name:				Dax-regular
+			size:				9
+	players_cell_1c:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 4) + 2 }
+		left:				{ playerTblLeft(col: 1) + 2  }
+		width:				{ playerW - 4 }
+		height:				{ locationH - 4 }
+		alignment: 			center middle
+		background_color: 	rgb(255,255,255)
+		z_index: 			52
+		font:
+			name:				Dax-regular
+			size:				9
+	players_cell_2:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 5) + 2 }
+		left:				{ playerTblLeft(col: 1) + 2  }
+		width:				{ playerW - 4 }
+		height:				{ locationH - 4 }
+		alignment: 			center middle
+		background_color: 	rgb(255,255,255)
+		z_index: 			52
+		font:
+			name:				Dax-regular
+			size:				9
+	players_cell_3:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 2) + 2 }
+		left:				{ playerTblLeft(col: 3) + 2  }
+		width:				{ playerW - 4 }
+		height:				{ locationH - 4 }
+		alignment: 			center middle
+		background_color: 	rgb(255,255,255)
+		z_index: 			52
+		font:
+			name:				Dax-regular
+			size:				9
+	players_cell_4:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 3) + 2 }
+		left:				{ playerTblLeft(col: 3) + 2  }
+		width:				{ playerW - 4 }
+		height:				{ locationH - 4 }
+		alignment: 			center middle
+		background_color: 	rgb(255,255,255)
+		z_index: 			52
+		font:
+			name:				Dax-regular
+			size:				9
+	players_cell_5:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 4) + 2 }
+		left:				{ playerTblLeft(col: 3) + 2  }
+		width:				{ playerW - 4 }
+		height:				{ locationH - 4 }
+		alignment: 			center middle
+		background_color: 	rgb(255,255,255)
+		z_index: 			52
+		font:
+			name:				Dax-regular
+			size:				9
+	players_cell_6:
+		visible:			{ isScenBack() }
+		top:				{ playerTblTop(row: 5) + 2 }
+		left:				{ playerTblLeft(col: 3) + 2  }
+		width:				{ playerW - 4 }
+		height:				{ locationH - 4 }
+		alignment: 			center middle
+		background_color: 	rgb(255,255,255)
+		z_index: 			52
+		font:
+			name:				Dax-regular
+			size:				9
+
+# Location Cells
+	location_cell_1a:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 2) }
+		left:				{ playerTblLeft(col: 2) }
+		width:				{ locationW }
+		height:				{ locationH }
+		z_index: 			51
+	location_cell_1b:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 3) }
+		left:				{ playerTblLeft(col: 2) }
+		width:				{ locationW }
+		height:				{ locationH }
+		z_index: 			51
+	location_cell_1c:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 4) }
+		left:				{ playerTblLeft(col: 2) }
+		width:				{ locationW }
+		height:				{ locationH }
+		z_index: 			51
+	location_cell_2:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 5) }
+		left:				{ playerTblLeft(col: 2) }
+		width:				{ locationW }
+		height:				{ locationH }
+		z_index: 			51
+	location_cell_3:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 2) }
+		left:				{ playerTblLeft(col: 4) }
+		width:				{ locationW }
+		height:				{ locationH }
+		z_index: 			51
+	location_cell_4:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 3) }
+		left:				{ playerTblLeft(col: 4) }
+		width:				{ locationW }
+		height:				{ locationH }
+		z_index: 			51
+	location_cell_5:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 4) }
+		left:				{ playerTblLeft(col: 4) }
+		width:				{ locationW }
+		height:				{ locationH }
+		z_index: 			51
+	location_cell_6:
+		visible: 			{ isScenBack() }
+		top:				{ playerTblTop(row: 5) }
+		left:				{ playerTblLeft(col: 4) }
+		width:				{ locationW }
+		height:				{ locationH }
+		z_index: 			51
+	
+	anchored_table:
+		visible:			{ isScenBack() and card.anchored != "" }
+		top:				{ anchoredT() - 1 }
+		left:				{ anchoredL() - 1 }
+		width:				{ anchoredW() + 2 }
+		height:				{ anchoredH() + 2 }
+		z_index:			50
+	anchored_cell:
+		visible:			{ isScenBack() and card.anchored != "" }
+		top:				{ anchoredT() }
+		left:				{ anchoredL() }
+		width:				{ anchoredW() }
+		height:				{ anchoredH() }
+		z_index:			51
+		
+	villain_table:
+		visible: 			{ isScenFront() }
+		top:				{ villainTblT() }
+		left:				16
+		height:				{ villainTblH() }
+		width:				{ Width - 32 }
+		z_index: 			50
+	villain_header:
+		visible: 			{ isScenFront() }
+		top:				{ villainTblT() + 2 }
+		left:				18
+		height:				{ villainH }
+		width:				{ Width - 36 }
+		z_index: 			51
+	villain_forward:
+		visible: 			{ isScenFront() }
+		top:				{ villainTblT() + 2 }
+		left:				18
+		height:				{ if isScenFront() then villainH }
+		width:				{ Width - 36 }
+		alignment: 			left middle
+		padding_left: 		10
+		z_index: 			52
+		font:
+			name:				Dax
+			size:				8
+			color:				rgb(255,255,255)
+	henchmen_cell:
+		visible: 			{ isScenFront() }
+		top:				{ villainTblT() + villainH + 2 }
+		left:				18
+		height:				{ villainH }
+		width:				{ Width - 36 }
+		z_index: 			51
+	henchmen_header:
+		visible: 			{ isScenFront() }
+		top:				{ villainTblT() + villainH + 4 }
+		left:				18
+		height:				{ villainH }
+		width:				{ Width - 36 }
+		padding_left: 		10
+		alignment: 			left middle
+		font:
+			name:				Dax
+			size:				8
+			color:				rgb(78,48,0)
+		z_index: 			51
+	henchmen_cell_1:
+		visible: 			{ isScenFront() }
+		top:				{ henchmenT(1) }
+		left:				18
+		height:				{ villainH }
+		width:				{ Width - 36 }
+		z_index: 			51
+	henchmen_cell_2:
+		visible: 			{ isScenFront() }
+		top:				{ henchmenT(2) }
+		left:				18
+		height:				{ if card.henchmen_2 != "" then villainH }
+		width:				{ Width - 36 }
+		z_index: 			51
+	henchmen_cell_3:
+		visible: 			{ isScenFront() }
+		top:				{ henchmenT(3) }
+		left:				18
+		height:				{ if card.henchmen_3 != "" then villainH }
+		width:				{ Width - 36 }
+		z_index: 			51
+	henchmen_cell_4:
+		visible: 			{ isScenFront() }
+		top:				{ henchmenT(4) }
+		left:				18
+		height:				{ if card.henchmen_4 != "" then villainH }
+		width:				{ Width - 36 }
+		z_index: 			51
+
+# DURING
+	during_table:
+		visible: 			{ isScenFront() }
+		top:				{ 311 }
+		left:				18
+		width:				{ Width - 36 }
+		height:				{ 137 }
+		background_color:	rgb(0,0,0)
+		alignment:			left top
+		padding_left:		8
+		padding_top:		-2
+		font:
+			name:				Dax
+			size:				11
+			color:				rgb(255,255,255)
+		z_index: 			50
+	during_cell:
+		visible: 			{ isScenFront() }
+		top:				{ 325 }
+		left:				18
+		width:				{ Width - 36 }
+		height:				{ 123 }
+		z_index:			51

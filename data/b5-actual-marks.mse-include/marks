@@ -1,0 +1,9 @@
+# Watermark images
+
+choice images:
+	mark Vorlon:				/B5-actual-marks.mse-include/vorlon.png
+	mark Shadow:				/B5-actual-marks.mse-include/shadow.png
+	mark Strife:				/B5-actual-marks.mse-include/strife.png
+	mark Conspiracy:			/B5-actual-marks.mse-include/conspiracy.png
+	mark Destiny:				/B5-actual-marks.mse-include/destiny.png
+	mark Doom:				/B5-actual-marks.mse-include/doom.png

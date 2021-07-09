@@ -1,0 +1,58 @@
+# OVERRIDE standard styling defined in:
+# \PACG-common.mse-include\style-pacg.mse
+card_style:
+	cardart:
+#		visible:		{ not isRole() }
+		top:			{ if isToken() then 40 else ((if card.portrait_size == "Tall" then Width - 32 + 16 else Width + -32 + 16 + ((Height - Width - 32) / 2)) * (if isToken() then 1 else 0.75)) }
+		left:			{ if isToken() then (if card.portrait_size == "Tall" then 42 else -((Height - Width - 32) / 2)) else 16 }
+		width:			{ (if card.portrait_size == "Tall" then Width - 32 else Height) * (if isToken() then 1 else 0.75) }
+		height:			{ (Height - 32) * (if isToken() then 1 else 0.75)}
+		mask:			{ if isRole() then "/PACG-common.mse-include/res/role_mask.png" }
+		angle:			{ if not isToken() then 90 else 0 }
+	bannerdk:
+		left:			{ 0 }
+		top:			{ if not isToken() then Height else 0 }
+		height:			{ if not isToken() then Width else Height }
+		angle:			{ if not isToken() then 90 else 0 }
+	bannerlt:
+		left:			{ 0 }
+		top:			{ if not isToken() then Height else 0 }
+		height:			{ if not isToken() then Width else Height }
+		angle:			{ advAngle() }
+	pathlogo:
+		bottom:			{ if not isToken() then Height - 44 else Height - logo_top }
+		left:			{ if not isToken() then Width - logo_top else 44 }
+		angle:			{ if not isToken() then 90 else 0 }
+	artist:
+		bottom:			{ if not isToken() then 18 else Height - 8 }
+		right:			{ if not isToken() then Width - 8 else Width - 18 }
+		width:			{ (if not isToken() then Width else Height) - 195 - 16 - 42 }
+		angle:			{ if not isToken() then 90 else 0 }
+	community_use:
+		top:			{ if not isToken() then 8 else 36 }
+		left:			{ if not isToken() then 40 else Width - 8 }
+		width:			{ if not isToken() then Width - 66 else Height - 76 }
+		angle:			{ if not isToken() then 0 else 270 }
+	borderdk:
+		mask:			{ if not isToken() then "/PACG-common.mse-include/res/border_dkh.png" else "/PACG-common.mse-include/res/border_dk.png" }
+		z_index:		39
+	border_fill_1:
+		visible:		{ isCharacter() }
+		left:			{ 40 }
+		top:			{ skillTblT() - skillTblW() }
+		angle:			90
+		z_index:		39
+	traits:
+		visible:		{ not isRole() }
+		top:			{ if isToken() then 45 else if isCharFront() then 122 else Height - 44}
+		left:			{ if isToken() then 45 else if isCharFront() then 44 else cardsListCellL(7 + if has_cohort() then 1) + boxHeight }
+		alignment:		{ if isCharFront() then "right top" else "left top" }
+		angle:			{ if isToken() then 0 else 90 }
+	portrait_size:
+		top:			{ if isToken() then 16 else 40 }
+		left:			{ if isToken() then Width - 100 - 16 }
+		width:			{ 100}
+		height:			{ 40 }
+		render_style:	hidden
+		angle:			{ if isToken() then 0 else 90 }
+		z_index:		99

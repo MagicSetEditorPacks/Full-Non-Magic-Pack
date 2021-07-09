@@ -1,0 +1,100 @@
+mse version: 0.3.6
+version: 2008-05-25
+short name: normal
+position hint: 001
+installer group: chaotic/symbol font
+icon: fire.gif
+# Symbol font for energy
+
+image font size: 12
+horizontal space: 2
+vertical space: 2
+symbol:
+	code: A
+	image: air.gif
+symbol:
+	code: E
+	image: earth.gif
+symbol:
+	code: F
+	image: fire.gif
+symbol:
+	code: W
+	image: water.gif
+symbol:
+	code: @
+	image: generic.png
+symbol:
+	code: ^
+	image: blue.png
+symbol:
+	code: #
+	image: red.png
+symbol:
+	code: &
+	image: brown.png
+symbol:
+	code: ~
+	image: yellow.png
+symbol:
+	code: O
+	image: ow.png
+symbol:
+	code: U
+	image: uw.png
+symbol:
+	code: D
+	image: d.png
+symbol:
+	code: M
+	image: m.png
+symbol:
+	code: C
+	image: courage.gif
+symbol:
+	code: P
+	image: power.gif
+symbol:
+	code: I
+	image: wisdom.gif
+symbol:
+	code: S
+	image: speed.gif
+symbol:
+	image: generic.png
+	code: [0-9]+|.
+	regex: yes
+	draw text: 0
+	text margin left:   2
+	text margin right:  2
+	text margin top:    -2
+	text margin bottom: -2
+	text font:
+		name: Eurostile
+		size: 1
+		color: rgb(0,0,0)
+
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: A
+	item: E
+	item: F
+	item: W
+	item:
+		type: line
+	item: @
+	item: ^
+	item: #
+	item: &
+	item: ~
+	item:
+		type: line
+	item: O
+	item: U
+	item: D
+	item: M
+	item: C
+	item: P
+	item: I
+	item: S

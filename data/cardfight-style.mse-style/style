@@ -1,0 +1,254 @@
+mse version: 0.3.8
+game: cardfight
+short name:  Default
+full name: Zuty's original version
+icon: icon.png
+position hint: 999
+installer group: cardfight/style/default
+#Description: The first cardfight template made by Zuty
+
+version: 2012-02-31
+depends on:
+	package: cardfight.mse-game
+	version: 2017-09-10
+depends on:
+	package: cardfight-symbols-old.mse-symbol-font
+	version: 2012-02-31
+
+card width: 375
+card height: 523
+card dpi: 300
+card background: rgb(200,200,200)
+
+card style:
+	bg_color
+		top: 0
+		left: 0
+		height: 523
+		width: 375
+		z index: -3
+		mask: bg_color_mask.png
+
+	type:
+		top: 0
+		left: 0
+		height: 523
+		width: 375
+		z index: -2
+		render style: image
+		choice images:
+			unit: unit.png
+			trigger: trigger.png
+
+	image:
+		top: 0
+		left: 0
+		height: 523
+		width: 375
+		z index: -1
+		mask: mask.png
+		default: image_bg.png
+
+	name:
+		top: 446
+		left: 100
+		height: 18
+		width: 220
+		alignment: center overflow-shrink
+		z index: 0
+		font:
+			name: Calibri
+			size: 14
+			weight: bold
+			color: rgb(0,0,0)
+
+	power:
+		top: 472
+		left: 65
+		height: 20
+		width: 80
+		alignment: center overflow-shrink
+		z index: 0
+		font:
+			name: Brush Script MT
+			size: 20
+			weight: bold
+			color: rgb(213,204,51)
+
+	grade:
+		top: 8
+		left: 7
+		height: 50
+		width: 50
+		z index: 0
+		render style: image
+		choice images:
+			0: grade0.png
+			1: grade1.png
+			2: grade2.png
+			3: grade3.png
+
+	trigger:
+		top: 2
+		left: 300
+		height: 88
+		width: 72
+		z index: 0
+		render style: image
+		choice images:
+			heal: htrigger.png
+			stand: strigger.png
+			crit: ctrigger.png
+			draw: dtrigger.png
+	shieldtype:
+		top: 140
+		left: 0
+		height: 136
+		width: 46
+		z index: 0
+		render style: image
+		choice images:
+			shield: shield.png
+			special: spshield.png
+
+	shield:
+		top: 197
+		left: 30
+		height: 8
+		width: 40
+		angle:  270
+		z index: 0
+		alignment: center overflow-shrink
+		font:
+			name: Estrangelo Edessa
+			size: 20
+			weight: bold
+			color: rgb(234,218,167)
+
+	skill:
+		top: 58
+		left: 19
+		height: 25
+		width: 25
+		z index: 0
+		render style: image
+		choice images:
+			boost: boost.png
+			intercept: intercept.png
+			twindrive: twindrive.png
+			
+	color:
+		top: 472
+		left: 208
+		height: 16
+		width: 115
+		z index: 0
+		render style: image
+		choice images:
+			US: US.png
+			DE: DE.png
+			DZ: DZ.png
+			M: M.png
+			Z: Z.png
+			SG: SG.png
+
+	clan:
+		top: 473
+		left: 215
+		height: 15
+		width: 100
+		z index: 1
+		alignment: center overflow-shrink
+		font:
+			name: Calibri
+			size: 12
+			scale down to: 7
+			color: rgb(255,255,255)
+			weight: bold
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 2
+			shadow displacement y: 2
+			shadow blur: 0
+	
+	race:
+		top: 488
+		left: 215
+		height: 10
+		width: 100
+		z index: 1
+		alignment: center overflow-shrink
+		font:
+			name: Calibri
+			size: 12
+			scale down to: 7
+			color: rgb(255,255,255)
+			weight: bold
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 2
+			shadow displacement y: 2
+			shadow blur: 0
+	
+	text:
+		top: 325
+		left: 20
+		height: 110
+		width: 330
+		z index: 0
+		alignment: top left justify
+		padding left: 1
+		padding right: 1
+		padding top: 1
+		padding bottom: 1
+		font:
+			name: MatrixBook
+			size: 9
+			scale down to: 6
+			color: rgb(0,0,0)
+		symbol font:
+			name: cardfight-symbols-old
+			scale down to: 1
+			size: 9
+
+	text_box:
+		top: 325
+		left: 20
+		height: 110
+		width: 330
+		z index: -1
+		visible: { if card.text != "" then true else false }
+		render style: image
+		choice images:
+			default: text_bg.png
+			
+	flavor:
+		top: 302
+		left: 20
+		height: 15
+		width: 330
+		z index: 0
+		alignment: center overflow-shrink
+		padding left: 1
+		padding right: 1
+		padding top: 1
+		padding bottom: 1
+		font:
+			name: MatrixRegularSmallCaps
+			size: 11
+			weight: bold
+			scale down to: 6
+			color: rgb(255,255,255)
+		symbol font:
+			name: cardfight-symbols-old
+			scale down to: 1
+			size: 11
+
+	flavor_box:
+		top: 300
+		left: 20
+		height: 15
+		width: 330
+		z index: -1
+		visible: { if card.flavor != "" then true else false }
+		render style: image
+		choice images:
+			default: flavor_bg.png

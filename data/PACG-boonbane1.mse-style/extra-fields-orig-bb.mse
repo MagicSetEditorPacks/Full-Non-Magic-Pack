@@ -1,0 +1,266 @@
+# Styling Fields for Boons and Banes
+
+# choice to amend the TRAITS for dark background images
+styling_field:
+	type:				choice
+	name:				traits style
+	choice:				Black
+	choice:				White
+	choice:				White with Border
+	initial:	 		Black
+	description:		Traits Style
+
+styling_field:
+	type:				choice
+	name:				bb_side
+	default:			"Front"
+	default_name:		Front
+	choice:				Back
+	initial:			Front
+	description:		Card Side
+
+styling_field:
+	type:				boolean
+	name:				use_recharge
+	default:			true
+	description:		Show Recharge Box for Spells, Items and Loot
+
+# Extra Card Fields specific to Boon and Bane cards that don't need to be 
+# a. viewed in the card list or 
+# b. have their atttributes accessed in script
+
+extra_card_field:
+	type:				text
+	name:				check_header_1
+	script:				getCheckInfo()
+	multi_line:			true
+	show_statistics: 	false
+	card_list_allow: 	false
+	
+extra_card_field:
+	type:				choice
+	name:				bb_card_back
+	script:				1
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+	description:		Card Back. Set in the Set Info screen.
+	
+	
+#Villain Henchman Loot (vhl) type
+extra_card_field:
+	type:				color
+	name:				vhl_type_table
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				text
+	name:				vhl_type_header
+	script:				"TYPE"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				vhl_type_cell
+	script:				getLightColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+# Check Table 1 fields
+extra_card_field:
+	type:				color
+	name:				check_table_1
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_cell_1
+	script:				getLightColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_disc_white_1
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_disc_col_1
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+# Check table 2 fields
+extra_card_field:
+	type:				color
+	name:				check_table_2
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+
+extra_card_field:
+	type:				color
+	name:				check_cell_2
+	script:				getLightColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+
+extra_card_field:
+	type:				color
+	name:				check_disc_white_2
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_disc_col_2
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+# Check table 2 fields
+extra_card_field:
+	type:				color
+	name:				check_table_3
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+
+extra_card_field:
+	type:				color
+	name:				check_cell_3
+	script:				getLightColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+
+extra_card_field:
+	type:				color
+	name:				check_disc_white_3
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+extra_card_field:
+	type:				color
+	name:				check_disc_col_3
+	script:				getDarkColour()
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+# POWERS
+extra_card_field:
+	type:				info
+	name:				bb_powers_table
+	script:				if card.type != "SUPPORT" then "POWERS"
+	editable: 			false
+	show_statistics: 	false
+	save_value: 		false
+	card_list_allow: 	false
+
+extra_card_field:
+	type:				color
+	name:				bb_powers_cell
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+
+# RECHARGE
+extra_card_field:
+	type:				info
+	name:				recharge_table
+	script:				if card.type != "SUPPORT" then "RECHARGE"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value: 		false
+
+extra_card_field:
+	type:				color
+	name:				recharge_cell
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+	
+extra_card_field:
+	type:				info
+	name:				encountering_table
+	script:				"WHEN ENCOUNTERING THIS SHIP"
+	editable: 			false
+	save_value:			false
+	editable: 			false
+	save_value: 		false
+	
+extra_card_field:
+	type:				color
+	name:				encountering_cell
+	script:				"white"
+	editable:			false
+	save_value:			false
+	editable: 			false
+	save_value: 		false
+	
+extra_card_field:
+	type:				info
+	name:				commanding_table
+	script:				"WHEN COMMANDING THIS SHIP"
+	editable: 			false
+	save_value:			false
+	editable: 			false
+	save_value: 		false
+	
+extra_card_field:
+	type:				color
+	name:				commanding_cell
+	script:				"white"
+	editable:			false
+	save_value:			false
+	editable: 			false
+	save_value: 		false

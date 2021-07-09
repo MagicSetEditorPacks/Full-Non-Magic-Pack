@@ -1,0 +1,39 @@
+############################################################## Extra style
+
+styling field:
+	type: choice
+	name: keeper style
+	description: Choose the style of Keepers (and Creepers)
+	initial: top and bottom
+	choice: top and bottom
+	choice: left
+	choice: right
+styling field:
+	type: choice
+	name: warning
+	description: Should this card have legal warning text? (works on new rules and actions only)
+	initial: none
+	choice: none
+	choice: old
+	choice: new
+styling field:
+	type: choice
+	name: goal images
+	description: Choose number of images to use for goals
+	initial: one
+	choice: one
+	choice: two
+styling field:
+	type: choice
+	name: name font
+	description: Choose the font to use for the Name of the card (Helvetica is the propper font, Olympia-Bold is the one formerly used by the template)
+	initial: Helvetica
+	choice: Helvetica
+	choice: Olympia-Bold
+styling field:
+	type: choice
+	name: keeper icon position
+	description: Choose the location of the Keeper icons (by name or by type)
+	initial: mid
+	choice: mid
+	choice: top

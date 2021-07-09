@@ -1,0 +1,429 @@
+#################### Keywords ####################
+
+has keywords: true
+
+###################################### Keyword modes
+
+keyword mode:
+	name: core
+	description: Core set keywords, with reminder text
+keyword mode:
+	name: unique
+	description: Keyword unique to one clan
+keyword mode:
+	name: symbol
+	description: Keyword represented as a symbol
+keyword mode:
+	name: pseudo
+	description: Pseudo keywords, no reminder text, italic font
+keyword mode:
+	name: action
+	description: Keyword actions, reminder text at end of line
+keyword mode:
+	is default: true
+	name: custom
+	description: Custom keywords
+	
+###################################### Keyword parameters
+
+keyword parameter type:
+	name: symbol
+	match: [(auto|act|cont)NV/R,GMOCQWF0-9SEPDABITUHJKL(lb4|lb5|gb1|gb2|gb3|gb4|gb5|gb8|stride|ultimate|gguardian|legion|leg18|leg19|leg20|leg21|leg22|leg23|leg24)]+
+	
+keyword parameter type:
+	name: cost
+	match: [CQWFXYZ0-9]+
+	
+keyword parameter type:
+	name: number
+	match: [XYZ0-9]+
+	refer script:
+		name: normal
+		description: (1,2,3)
+		script: \{{input}\}
+	refer script:
+		name: as words
+		description: (one, two, three)
+		script: \{english_number({input})\}
+	refer script:
+		name: as words, use "a" for 1
+		description: (a, two, three)
+		script: \{english_number_a({input})\}
+	refer script:
+		name: as words, use "" for 1
+		description: (, two, three)
+		script: \{english_number_multiple({input})\}
+	refer script:
+		name: as ordinal words
+		description: (first, second, third)
+		script: \{english_number_ordinal({input})\}
+
+keyword parameter type:
+	name: action
+	match: [^(:\n]+
+	separator after is: [.]
+	reminder script: alternative_cost()
+
+keyword parameter type:
+	name: one_word
+	match: [A-Za-z0-9]+
+
+keyword parameter type:
+	name: name
+	match: [^(.:;\n—]+
+	refer script:
+		name: normal
+		description: No changes made.
+		script: \{{input}\}
+	refer script:
+		name: singular
+		description: Removes plurality from words.
+		script: \{english_singular({input})\}
+	refer script:
+		name: separate words with "and/or"
+		description: Changes spaces to " and/or ". "Elf Warrior" becomes "Elf and/or Warrior".
+		script: \{separate_words(spacer: " and/or ", {input})\}
+	refer script:
+		name: separate words with "or"
+		description: Changes spaces to " or ". "Elf Warrior" becomes "Elf or Warrior".
+		script: \{separate_words(spacer: " or ", {input})\}
+
+keyword parameter type:
+	name: prefix
+	description: Prefix for things like "<something>walk" in Magic
+	optional: false
+	match: [A-Z][A-Z,a-z’ ]*
+	#example: Forest
+
+keyword parameter type:
+	name: english_number
+	match: [ upto]*[(an? |one |two |three |four |five |six |seven |eight |nine |ten )]*
+
+keyword parameter type:
+	name: a
+	match: [an?]*
+
+keyword parameter type:
+	name: clan
+	match: (\")?(Royal Paladin|Oracle Think Tank|Angel Feather|Shadow Paladin|Gold Paladin|Genesis|Kagero|Nubatama|Tachikaze|Murakumo|Narukami|Nova Grappler|Dimension Police|Entranger|Link Joker|Spike Brothers|Dark Irregulars|Pale Moon|Gear Chronicle|Granblue|Bermuda Triangle|Aqua Force|Megacolony|Great Nature|Noe Nectar|Cray Elemental|Touken Ranbu)s?(\")?
+	refer script:
+		name: normal
+		description: Must be a clan to be recognised
+		script: \{{input}\}
+	refer script:
+		name: remove plural
+		description: Removes plural s
+		script: \{remove_plural({input})\}
+	refer script:
+		name: as words
+		description: Removes ""
+		script: \{remove_brackets({input})\}
+	refer script:
+		name: remove plural and as words
+		description: Both removes "" and plural s
+		script: \{remove_brackets(remove_plural({input}))\}
+
+###################################### Keywords
+# core keywords
+keyword:
+	keyword: Forerunner
+	match: Forerunner
+	mode: core
+	reminder: When a unit of the same clan rides this unit, you may call this unit to R
+keyword:
+	keyword: Lord
+	match: Lord
+	mode: core
+	reminder: If you have a unit without a same clan as this unit, this unit cannot attack
+keyword:
+	keyword: Resist
+	match: Resist
+	mode: core
+	reminder: This unit cannot be chosen by the effects of your opponent's cards
+keyword:
+	keyword: Restraint
+	match: Restraint
+	mode: core
+	reminder: This unit cannot attack.
+keyword:
+	keyword: Sentinel
+	match: Sentinel
+	mode: core
+	reminder: You may only have up to four cards with "cont:Sentinel" in a deck.
+
+# action keywords
+keyword:
+	keyword: Lock
+	match: lock
+	mode: action
+	reminder: The locked card is turned face down, and cannot do anything. It turns face up at end of the owner's turn.
+keyword:
+	keyword: Legion 18000
+	match: leg18 <atom-param>name</atom-param>
+	mode: action
+	reminder: If your opponent's vanguard is grade 3 or greater, this unit may return four cards from your drop zone into your deck once, search your deck for the specified card, and Legion
+keyword:
+	keyword: Legion 19000
+	match: leg19 <atom-param>name</atom-param>
+	mode: action
+	reminder: If your opponent's vanguard is grade 3 or greater, this unit may return four cards from your drop zone into your deck once, search your deck for the specified card, and Legion
+keyword:
+	keyword: Legion 20000
+	match: leg20 <atom-param>name</atom-param>
+	mode: action
+	reminder: If your opponent's vanguard is grade 3 or greater, this unit may return four cards from your drop zone into your deck once, search your deck for the specified card, and Legion
+keyword:
+	keyword: Legion 21000
+	match: leg21 <atom-param>name</atom-param>
+	mode: action
+	reminder: If your opponent's vanguard is grade 3 or greater, this unit may return four cards from your drop zone into your deck once, search your deck for the specified card, and Legion
+keyword:
+	keyword: Legion 22000
+	match: leg22 <atom-param>name</atom-param>
+	mode: action
+	reminder: If your opponent's vanguard is grade 3 or greater, this unit may return four cards from your drop zone into your deck once, search your deck for the specified card, and Legion
+keyword:
+	keyword: Legion 23000
+	match: leg23 <atom-param>name</atom-param>
+	mode: action
+	reminder: If your opponent's vanguard is grade 3 or greater, this unit may return four cards from your drop zone into your deck once, search your deck for the specified card, and Legion
+keyword:
+	keyword: Legion 24000
+	match: leg24 <atom-param>name</atom-param>
+	mode: action
+	reminder: If your opponent's vanguard is grade 3 or greater, this unit may return four cards from your drop zone into your deck once, search your deck for the specified card, and Legion
+
+# symbol keywords
+keyword:
+	keyword: Generation Break 1
+	match: gb1
+	mode: symbol
+	reminder: This ability is active if you have one or more face up G units in total on V or G zone
+keyword:
+	keyword: Generation Break 2
+	match: gb2
+	mode: symbol
+	reminder: This ability is active if you have two or more face up G units in total on V or G zone
+keyword:
+	keyword: Generation Break 3
+	match: gb3
+	mode: symbol
+	reminder: This ability is active if you have three or more face up G units in total on V or G zone
+keyword:
+	keyword: Generation Break 4
+	match: gb4
+	mode: symbol
+	reminder: This ability is active if you have four or more face up G units in total on V or G zone
+keyword:
+	keyword: Generation Break 5
+	match: gb5
+	mode: symbol
+	reminder: This ability is active if you have five or more face up G units in total on V or G zone
+keyword:
+	keyword: Generation Break 8
+	match: gb8
+	mode: symbol
+	reminder: This ability is active if you have eight or more face up G units in total on V or G zone
+keyword:
+	keyword: G Guardian
+	match: gguardian
+	mode: symbol
+	reminder: Usable when both fighters' vanguards are grade 3 or greater, and the number of face up G guardians in your G zone is three or less
+keyword:
+	keyword: Limit Break 4
+	match: lb4
+	mode: symbol
+	reminder: This ability is active if you have four or more damage
+keyword:
+	keyword: Limit Break 5
+	match: lb5
+	mode: symbol
+	reminder: This ability is active if you have five or more damage
+keyword:
+	keyword: Stride
+	match: stride
+	mode: symbol
+	reminder: Released when both players' vanguard are grade 3 or greater!
+keyword:
+	keyword: Ultimate Stride
+	match: ultimate
+	reminder: Released when the number of face up cards in your G zone is three or more! When it returns to the G zone, remove your G zone!
+
+# unique keywords
+keyword:
+	keyword: Afterimage
+	match: Afterimage
+	mode: unique
+	reminder: When your opponent puts a bound card into his or her hand, if your hand has six or less cards, you may return this unit to your hand
+	rules: Nabutama unique ability
+keyword:
+	keyword: Blaze
+	match: Blaze
+	mode: unique
+	reminder: At the beginning of each of your attacks, if you have more rear-guards than your opponent, your vanguard becomes blazing until end of turn
+	rules: Kagero unique ability
+keyword:
+	keyword: Brave
+	match: Brave
+	mode: unique
+	reminder: This ability is active when you have three or less cards in your hand
+	rules: Royal Paladin unique ability
+keyword:
+	keyword: Charge
+	match: Charge
+	mode: unique
+	reminder: When this unit is placed on R due to an effect, you may have it become charging for that turn. If you do, put it on the bottom of your deck at the end of its battle
+	rules: Spike Brothers unique ability
+keyword:
+	keyword: Dark Device
+	match: Dark Device
+	mode: unique
+	reminder: Active when your opponent has no <sym>S</sym> units in the same column as this unit
+	rules: Megacolony unique ability
+keyword:
+	keyword: Darkness
+	match: Darkness
+	mode: unique
+	reminder: This ability is active if cards have been put into your soul during this turn
+	rules: Dark Irregulars unique ability
+keyword:
+	keyword: Engorge
+	match: Engorge
+	mode: unique
+	reminder: When this unit attacks, you may retire one or more of your other rear-guards. If you do, it is engorged until end of turn
+	rules: Tachikaze unique ability
+keyword:
+	keyword: Harmony
+	match: Harmony
+	mode: unique
+	reminder: When your other unit is placed in the same column as this unit, both units become in harmony until end of turn
+	rules: Bermuda Triangle unique ability
+keyword:
+	keyword: Hollow
+	match: Hollow
+	mode: unique
+	reminder: When this unit is placed on R, you may have it become hollowed. If you do, retire it at the end of turn
+	rules: Granblue unique ability
+keyword:
+	keyword: Homare
+	match: Homare
+	mode: unique
+	reminder: You can only pay the cost for one Homare ability per turn
+	rules: Touken Ranbu unique ability
+keyword:
+	keyword: Oracle
+	match: Oracle (This ability is active when you have five of more cards in your hand)
+	mode: pseudo
+	rules: Oracle Think Tank unique ability. Type Oracle A to trigger reminder text.
+keyword:
+	keyword: Revelation
+	match: Revelation- <atom-param>symbol</atom-param>
+	mode: unique
+	reminder: When this unit is placed on the specified circle, look at the top card of your deck, and you may put that card into your soul. If you do, <sym>E</sym> one of your rear-guards
+	rules: Genesis unique ability
+keyword:
+	keyword: Ritual
+	match: Ritual <atom-param>number</atom-param>
+	mode: unique
+	reminder: Active if there are {english_number(param1)} or more grade 1 cards in your drop zone
+	rules: Shadow Paladin unique ability
+keyword:
+	keyword: Shinken Hissatsu
+	match: Shinken Hissatsu
+	mode: unique
+	reminder: This ability is active if you have three or more damage
+	rules: Touken Ranbu unique ability
+keyword:
+	keyword: Success
+	match: Success <atom-param>number</atom-param>
+	mode: unique
+	reminder: When your rear-guard's <sym>P</sym> becomes {param1} or greater, this unit becomes successful until end of turn
+	rules: Great Nature unique ability
+keyword:
+	keyword: Thunderstrike
+	match: Thunderstrike <atom-param>number</atom-param>
+	mode: unique
+	reminder: This ability is active when your opponent's bind zone has {english_number(param1)} or more cards
+	rules: Narukami unique ability
+keyword:
+	keyword: Unite
+	match: Unite
+	mode: unique
+	reminder: This ability is active if you have called two or more cards to <sym>R</sym> or <sym>G</sym> during this turn
+	rules: Gold Paladin unique ability
+keyword:
+	keyword: Wave
+	match: Wave-<atom-param>action</atom-param>
+	mode: unique
+	reminder: This ability is active during the the specified battles of each turn
+	rules: Aqua Force unique ability
+	
+# unique pseudo keywords
+keyword:
+	keyword: Bloom
+	match: Bloom-
+	mode: pseudo
+	reminder: Neo Nectar unique ability
+	rules: Bloom- [activation requirements]:[cost]? When your other ~ is placed on {R}, [effect].
+keyword:
+	keyword: Burst
+	match: Burst-
+	mode: pseudo
+	reminder: Dimension Police unique ability
+	rules: Burst- [activation requirements]:[cost]? If your vanguard's {P} is [number] or greater, [effect].
+keyword:
+	keyword: Magia
+	match: Magia-
+	mode: pseudo
+	reminder: Pale Moon unique ability
+	rules: Magia- [activation requirements]: [trigger], you may pay the cost. If you do, [soul charge]?, choose up to one card from your soul, call it to {R}, [bonus effect].
+keyword:
+	keyword: Nitou Kaigan
+	match: Nitou Kaigan-
+	mode: pseudo
+	reminder: Touken Ranbu unique ability
+	rules: (This ability is allways connected to boosting or being boosted by another Touken Ranbu unit.)
+keyword:
+	keyword: Rush
+	match: Rush-
+	mode: pseudo
+	reminder: Nova Grappler unique ability
+	rules: Rush- [activation requirements]:[cost]? When this unit {S} due to an effect from one of your cards, [effect].
+keyword:
+	keyword: Shadowstitch
+	match: Shadowstitch-
+	mode: pseudo
+	reminder: Murakumo unique ability
+	rules: Shadowstitch- [activation requirements]:[cost]? At the end of the battle that [something] attacked a vanguard, [effect].
+keyword:
+	keyword: Vanish Delete
+	match: vanish delete
+	mode: pseudo
+	reminder: Link Joker unique ability
+	rules: (Your opponent chooses a card from his or her drop zone and binds it face down.)
+
+# unique action keywords
+keyword:
+	keyword: Delete
+	match: delete
+	mode: action
+	reminder: The deleted unit is turned face down, its power becomes 0 and it loses all text. It turns face up at end of the owner's turn
+	rules: Link Joker unique ability
+keyword:
+	keyword: Dominate
+	match: Dominate-
+	mode: action
+	reminder: You may use its abilities if you pay the cost
+	rules: (Nubatama unique ability): Dominate- [activation requirements]: [trigger], choose up to one of your opponent's rear-guards, {S} and dominate it, and attack your opponent's [something].
+keyword:
+	keyword: Rescue
+	match: Rescue <atom-param>number</atom-param>-
+	mode: action
+	reminder: Perform a damage check. Triggers will also activate
+	rules: (Angel Feather unique ability): Rescue {param1}- [activation reqirements]: [trigger][effect], choose {english_number(param1)} card(s)? from your damage zone, heal them, choose one of your vanguards, and deal {english_number(param1)} damage.
+keyword:
+	keyword: Time Leap
+	match: Time Leap-
+	mode: action
+	reminder: Bind it, call a grade +1 card from your deck, and shuffle your deck. At the end of the turn, put the called unit on the bottom of your deck, and call the bound card
+	rules: Gear Chronicle unique ability:(Involves time leaping one of your unit.)

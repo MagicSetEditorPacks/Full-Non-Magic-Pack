@@ -1,0 +1,114 @@
+card_style:
+
+# OVERRIDES
+	name:
+		visible:		{ card.type != "ADVENTURE PATH" }
+	borderdk:
+		mask:			{ getAdvBorderMask("dk") }
+	borderlt:
+		mask:			{ getAdvBorderMask("lt") }
+	bannerdk:
+		visible:		{ card.type != "ADVENTURE PATH" }
+	bannerlt:	
+		visible:		{ card.type != "ADVENTURE PATH" }
+
+# cardart conversion to sepia
+# 1. convert the image to greyscale: saturate(card.cardart, amount: -1)
+# 2. combine a sepia tone (cardart3 - rgb(162,138,101) using OVERLAY
+# Thanks to http://gimpguru.org/Tutorials/SepiaToning/
+	cardart:
+		visible: 		{ styling.card_side != "Back" }
+	cardart2:
+		visible: 		{ styling.card_side == "Back" }
+		left:			16
+		top:			16
+		width:			{ Width - 32 }
+		height:			{ if styling.card_side == "Back" then card_style.cardart.height }
+		render_style:	image
+		image:			{ saturate(card.cardart, amount: -1) }
+		z_index: 1
+	cardart3:
+		visible: 		{ styling.card_side == "Back" }
+		left:			16
+		top:			16
+		width:			{ Width - 32 }
+		height:			{ if styling.card_side == "Back" then card_style.cardart.height }
+		mask:			{ invert_image(saturate(card.cardart, amount: -1)) }
+		combine: 		overlay
+		z_index: 		2
+
+	artist:
+		visible: 		{ styling.card_side != "Back" }
+		height:	 		{ if styling.card_side != "Back" then 12 }
+	copyright:
+		visible: 		{ styling.card_side != "Back" }
+		height:	 		{ if styling.card_side != "Back" then 12 }
+		
+	reward:
+		visible: 		{ styling.card_side != "Back" and card.type != "LOCATION" }
+		left:			16
+		top:			{ Height - 53 }
+		width:			{ Width - 32 }
+		height:			27
+		alignment: 		center middle
+		z_index: 4
+		font:
+			name:			Dax
+			size:			10
+			scale_down_to: 	8
+			shadow_color:	"white"
+			shadow_blur:	2
+		
+# Card Backs	
+	flavour_text:
+		visible: 				{ styling.card_side == "Back"}
+		top:					{ advFlavourTextT() }
+		left:					26
+		width:					{ Width - 52 }
+		height: 				{ advFlavourTextH() }
+		alignment: 				justify middle
+		line_height_soft_max: 	1.2
+		z_index: 				51
+		font:
+			name:					Dax-regular
+			size:					12
+			scale_down_to: 			8
+			shadow_color: 			rgb(255,255,255)
+			shadow_blur: 			2
+
+	flavour_box:
+		visible: 				{ styling.card_side == "Back" and (split_text(match: " ",card.type)[0] == "ADVENTURE" or card.type == "LOCATION") }
+		top:					{ if split_text(match: " ",card.type)[0] == "ADVENTURE" then 265 else 334 }
+		left:					16
+		width:					{ Width - 32 }
+		height:					{ if split_text(match: " ",card.type)[0] == "ADVENTURE" then 244 else 176}
+		render_style: 			image
+		image:					{ "/PACG-common.mse-include/res-orig/" + to_lower(split_text(match: " ",card.type)[0]) + "flavour.png" }
+		z_index: 				50
+
+extra_card_style:
+
+# REWARDS
+	reward_table:
+		visible: 		{ styling.card_side != "Back" }
+		left:			0
+		top:			{ Height - 26 }
+		width:			{ Width }
+		height:			18
+		mask:			/PACG-common.mse-include/res-orig/reward_mask.png
+		z_index: 		1
+	reward_header:
+		visible: 		{ styling.card_side != "Back" and card.type != "LOCATION" }
+		left:			0
+		top:			{ Height - 70 }
+		width:			{ Width }
+		height:			17
+		alignment: 		center middle
+		z_index: 		3
+		font:
+			name:			Dax
+			weight:			bold
+			size:			10
+			color:			{ getDarkColour() }
+			shadow_color:	white
+			shadow_blur:	10

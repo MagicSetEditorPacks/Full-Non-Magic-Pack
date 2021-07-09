@@ -1,0 +1,34 @@
+mse version:	2.0.0
+short name:		Adventure
+full name:		Adventure cards
+icon:			adv_sample.png
+position hint:	110
+version:		2015-07-14
+installer_group: PACG/Custom Styles/Adventure
+
+# Dependencies
+depends on:		PACG.mse-game 2014-05-01
+depends on:		PACG-common.mse-include 2015-07-14
+
+#  Stylesheet
+game:			PACG
+card width:		375
+card height:	525
+card dpi:		150
+card background: rgb(255,255,255)
+
+#  Initialisation
+
+init script:
+	Width := 375
+	Height := 525
+	include file:	script-adv.mse
+
+#  Styling
+include file:	style-pacg.mse
+include file:	extra-fields-adv.mse
+include file:	style-adv-commmon.mse
+include file:	style-adv-path.mse
+include file:	style-adv-adv.mse
+include file:	style-adv-scen.mse
+include file:	style-adv-loc.mse

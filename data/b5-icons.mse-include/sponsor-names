@@ -1,0 +1,26 @@
+# The watermark choices
+# Included by a game file
+
+choice:
+	name: none
+	line below: true
+choice:
+	name: sponsor
+	choice: Any
+	choice: Diplomacy
+	choice: Technology
+	choice: Faith
+	choice: Intrigue
+	choice: Military
+choice:
+	name: hybrid
+	choice: DiplomacyFaith
+	choice: DiplomacyTechnology
+	choice: TechnologyFaith
+	choice: TechnologyIntrigue
+	choice: FaithIntrigue
+	choice: FaithMilitary
+	choice: IntrigueDiplomacy
+	choice: IntrigueMilitary
+	choice: MilitaryDiplomacy
+	choice: MilitaryTechnology

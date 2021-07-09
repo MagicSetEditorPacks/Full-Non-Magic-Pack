@@ -1,0 +1,139 @@
+mse version: 2.0.0
+game: pokemon
+short name: Delta Species
+full name: Delta Species Set
+icon: card-sample.png
+position hint: 02
+installer group: pokemon/style
+
+version: 0.0.1
+
+depends on: pokemon.mse-game 0.25
+depends on: pokemon-symbols.mse-symbol-font 0.25
+
+card background: white
+card width: 375
+card height: 523
+card dpi: 150
+
+#Fonts Used: Gill Sans Std, Sanvito Pro Light Caption, Futura Std, Frutiger LT Std
+#################### Background Stuff
+card style:
+	
+	card_type:
+		top: 0
+		left: 0
+		height: 523
+		width: 375
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			Pokemon Basic Colorless: cbcard.png
+			Pokemon Basic Grass: gbcard.png
+			Pokemon Basic Fire: rbcard.png
+			Pokemon Basic Water: wbcard.png
+			Pokemon Basic Electric: lbcard.png
+			Pokemon Basic Psychic: pbcard.png
+			Pokemon Basic Fighting: fbcard.png
+			Pokemon Basic Dark: dbcard.png
+			Pokemon Basic Metal: mbcard.png
+			Pokemon Basic Dragon: abcard.png
+			Pokemon Basic Fairy: ybcard.png
+
+			Pokemon Stage 1 Colorless: c1card.png
+			Pokemon Stage 1 Grass: g1card.png
+			Pokemon Stage 1 Fire: r1card.png
+			Pokemon Stage 1 Water: w1card.png
+			Pokemon Stage 1 Electric: l1card.png
+			Pokemon Stage 1 Psychic: p1card.png
+			Pokemon Stage 1 Fighting: f1card.png
+			Pokemon Stage 1 Dark: d1card.png
+			Pokemon Stage 1 Metal: m1card.png
+			Pokemon Stage 1 Dragon: a1card.png
+			Pokemon Stage 1 Fairy: y1card.png
+
+			Pokemon Stage 2 Colorless: c2card.png
+			Pokemon Stage 2 Grass: g2card.png
+			Pokemon Stage 2 Fire: r2card.png
+			Pokemon Stage 2 Water: w2card.png
+			Pokemon Stage 2 Electric: l2card.png
+			Pokemon Stage 2 Psychic: p2card.png
+			Pokemon Stage 2 Fighting: f2card.png
+			Pokemon Stage 2 Dark: d2card.png
+			Pokemon Stage 2 Metal: m2card.png
+			Pokemon Stage 2 Dragon: a2card.png
+			Pokemon Stage 2 Fairy: y2card.png
+
+			Trainer Item: itemcard.png
+			Trainer Tool: toolcard.png
+			Trainer Supporter: supportercard.png
+			Trainer Stadium: stadiumcard.png
+
+			Special Energy: specialenergy.png
+
+########## Name lists
+	name:
+		left: { if card.card_type=="Pokemon Basic Water" then 88 else 23 }
+		top: 20
+		width: 150
+		height: 28
+		alignment: left shrink-overflow
+		padding bottom: 0
+		z index: 1
+		font:
+			name: Gill Sans Std
+			weight: bold
+			size: 18
+			color: rgb(0,0,0)
+	hp:
+		left: 280
+		top: 38
+		width: 12
+		height: 15
+		alignment: left shrink-overflow
+		z index: 1
+		font:
+			name: Gill Sans Std
+			weight: bold
+			size: 6
+			color: rgb(0,0,0)
+	hpnumber:
+		left: 290
+		top: 24
+		width: 32
+		height: 30
+		alignment: left shrink-overflow
+		z index: 1
+		font:
+			name: Futura Lt
+			weight: bold
+			size: 15
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: -1
+
+########## Images
+	imageCard:
+		left: 36
+		top: 57
+		width: 307
+		height: 201
+		z index: -2
+
+	illustrator:
+		left: 239
+		top : 483
+		width: 100
+		height: 12
+		z index: 2
+		alignment: middle right shrink-overflow
+		font:
+			name: MS Reference Sans Serif
+			weight: bold
+			size: 9
+			color: rgb(255,255,255)
+
+		
+
+

@@ -1,0 +1,56 @@
+mse version: 0.3.8
+short name: Bang!
+full name: Bang!
+installer group: Bang!/Game Files
+icon: icon.png
+position hint: 44
+
+version: 2010-01-23
+
+set field:
+	type: text
+	name: set title
+	identifying: true
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: text
+	name: artist
+set field:
+	type: text
+	name: copyright
+card field:
+	type: text
+	name: name
+	description: name of the character.
+	identifying: true
+	script: to_upper(value)
+	card list visible: true
+	card list column: 1
+	show statistics: false
+card field:
+	type: choice
+	name: bullets
+	description: number of bullets or life.
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	card list visible: true
+	card list column: 2
+card field:
+	type: image
+	name: image
+	show statistics: false
+	description: The image of the character.
+card field:
+	type: text
+	name: ability
+	description: description of character's special ability.
+	multi line: true
+	show statistics: false
+	card list visible: true
+	card list column: 3

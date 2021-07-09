@@ -1,0 +1,236 @@
+mse version: 0.3.8
+game: chrononauts
+short name: ID
+full name: Chrononauts ID
+icon: card-sample.png
+position hint: 003
+installer group: chrononauts/styles/id
+
+version: 2.0.0
+depends on:
+	package: chrononauts.mse-game
+	version: 2.0.0
+
+card width: 331
+card height: 514
+card dpi: 150
+
+############################################################## Extra scripts
+init script:
+	type_script := { "id" }
+	
+	# Index for determining card color
+	color_choice := {
+		if match(input, match: "[[:punct:][:alpha:]]") then rgb(255,155,109)
+		else					            rgb(157,174,252)
+	}
+
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	type:
+		left: 0
+		top: 0
+		width: 331
+		height: 514
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			linchpin: /chrononauts.mse-game/none.png
+			ripplepoint: /chrononauts.mse-game/none.png
+			mission: /chrononauts.mse-game/none.png
+			id: id.png
+			patch: /chrononauts.mse-game/none.png
+			artifact: /chrononauts.mse-game/none.png
+			gadget: /chrononauts.mse-game/none.png
+			inverter: /chrononauts.mse-game/none.png
+			action: /chrononauts.mse-game/none.png
+			timewarp: /chrononauts.mse-game/none.png
+	
+	############################# Set Symbol
+	icon:
+		left: 17
+		top: 17
+		width: 24
+		height: 24
+		z index: 0
+		render style: image
+		choice images:
+			set icon: { set.icon }
+	
+	############################# Name
+	name:
+		left: 106
+		top: 24
+		width: 202
+		height: 47
+		z index: 1
+		alignment: middle right
+		font:
+			name: Olympia-Bold
+			size: 28
+			scale down to: 20
+			color: white
+	
+	############################# Years
+	year1:
+		left: 19
+		top: 84
+		width: 114
+		height: 54
+		z index: 1
+		alignment: middle left
+		font:
+			name: Times New Roman
+			weight: bold
+			size: 28
+			color: { if match(card.year1, match: "[[:punct:][:alpha:]]") then rgb(255,80,82) else "black" }
+		padding left: 12
+	
+	year2:
+		left: 19
+		top: 141
+		width: 114
+		height: 54
+		z index: 1
+		alignment: middle left
+		font:
+			name: Times New Roman
+			weight: bold
+			size: 28
+			color: { if match(card.year2, match: "[[:punct:][:alpha:]]") then rgb(255,80,82) else "black" }
+		padding left: 12
+	
+	year3:
+		left: 19
+		top: 199
+		width: 114
+		height: 54
+		z index: 1
+		alignment: middle left
+		font:
+			name: Times New Roman
+			weight: bold
+			size: 28
+			color: { if match(card.year3, match: "[[:punct:][:alpha:]]") then rgb(255,80,82) else "black" }
+		padding left: 12
+	
+	############################# Title
+	name2:
+		left: 19
+		top: 262
+		width: 294
+		height: { max(30, card_style.name2.content_height) }
+		alignment: top center
+		font:
+			name: Times New Roman
+			weight: bold
+			size: 14
+			scale down to: 14
+			color: black
+		padding left: 12			
+	
+	############################# Text
+	text1:
+		left: 19
+		top: { max(292, 262 + card_style.name2.content_height) }
+		width: 294
+		height: { min(204, 234 - card_style.name2.height) }
+		z index: 1
+		alignment: top left
+		font:
+			name: Times New Roman
+			size: 12.5
+			color: black
+		padding left: 12
+		padding right: 12
+		line height soft: 1.1
+		line height hard: 1.1
+		line height line: 1.1
+	
+	############################# Year Names
+	year name1:
+		left: 137
+		top: 84
+		width: 176
+		height: 54
+		z index: 1
+		alignment: middle center
+		font:
+			name: Times New Roman
+			weight: bold
+			size: 16
+			color: black
+	year name2:
+		left: 137
+		top: 141
+		width: 176
+		height: 54
+		z index: 1
+		alignment: middle center
+		font:
+			name: Times New Roman
+			weight: bold
+			size: 16
+			color: black
+	year name3:
+		left: 137
+		top: 199
+		width: 176
+		height: 54
+		z index: 1
+		alignment: middle center
+		font:
+			name: Times New Roman
+			weight: bold
+			size: 16
+			color: black
+
+############################################################## Extra card fields
+
+############################# Year Name Boxes
+extra card field:
+	type: color
+	name: box1
+	script: color_choice(card.year1)
+	choice: rgb(255,155,109)
+	choice: rgb(157,174,252)
+	show statistics: false
+extra card field:
+	type: color
+	name: box2
+	script: color_choice(card.year2)
+	choice: rgb(255,155,109)
+	choice: rgb(157,174,252)
+	show statistics: false
+extra card field:
+	type: color
+	name: box3
+	script: color_choice(card.year3)
+	choice: rgb(255,155,109)
+	choice: rgb(157,174,252)
+	show statistics: false
+
+############################################################## Extra card field styles
+
+extra card style:
+	############################# Year Name Boxes
+	box1:
+		left: 137
+		top: 84
+		width: 176
+		height: 54
+		z index: -1
+	box2:
+		left: 137
+		top: 141
+		width: 176
+		height: 54
+		z index: -1
+	box3:
+		left: 137
+		top: 199
+		width: 176
+		height: 54
+		z index: -1

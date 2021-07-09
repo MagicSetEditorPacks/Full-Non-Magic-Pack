@@ -1,0 +1,603 @@
+﻿mse version: 0.3.8
+short name: Digimon
+installer group: Digimon/Game Files
+icon: card-back.png
+position hint: 43
+
+version: 2009-12-03
+
+############################################################## Functions & filters
+## Copied and Pasted from vs.mse-game, with a few modifications
+# General functions
+init script:
+	# the rule text filter
+	#  - makes text in parentheses italic
+	text_filter := 
+		# step 1 : remove all automatic tags
+		tag_remove_rule(tag: "<sym-auto>") +
+		# step 2 : expand shortcut words ~ and CARDNAME
+		replace_rule(
+			match: "~|~THIS~|CARDNAME",
+			in_context: "(^|[[:space:]]|\\()<match>", # TODO: Allow any punctuation before
+			replace: "<atom-cardname></atom-cardname>"
+			) +
+		# step 3 : fill in the cardname atom field
+		tag_contents_rule(
+			tag: "<atom-cardname>",
+			contents: { if card.name=="" then "CARDNAME" else card.name }
+			) +
+		#step 4 : long dash
+		replace_rule(
+			match: "--",
+			replace: "–") +
+		# step 7 : circle/bullet
+		replace_rule(
+			match: "`|::",
+			replace: "•" );
+		#TODO: Create a symbol font so that the square and triangle symbols can be used in text. The ones provided in fonts cause MSE2 to create some strange errors.
+	copyright_filter :=
+		# step 1 : trademark symbol
+		replace_rule(
+			match: "TM",
+			replace: "™") +
+		# step 2 : copyright symbol
+		replace_rule(
+			match: "CR|\\(C\\)",
+			replace: "©") +
+		# step 3 : bullet symbol
+		replace_rule(
+			match: "`|::",
+			replace: "•")
+	
+	type_over_list := replace_rule(match:" ?/", replace:"")
+	
+	digimon_filter :=
+		tag_remove_rule(tag: "<word-list-") +
+		type_over_list +
+		{ "<word-list-digimon>{input}</word-list-digimon>" }
+	
+	space_to_wltags := replace_rule(match:"( +|<soft> </soft>)",
+	                                replace:{"</word-list-{list_type}>{_1}<word-list-{list_type}>"})
+	
+	# the flavor text filter
+	flavor_text_filter :=
+		# step 1 : remove italic tags
+		tag_remove_rule(tag: "<i-flavor>") +
+		# step 2 : surround by <i> tags
+		{ "<i-flavor>" + input + "</i-flavor>" };
+	
+	type_over_list := replace_rule(match:" ?-$", replace:"")
+	
+	creature_type_filter :=
+		tag_remove_rule(tag: "<word-list-") +
+		type_over_list +
+		{ "<word-list-creature>{input}</word-list-creature>" }
+	
+	space_to_wltags := replace_rule(match:"( +|<soft> </soft>)",
+	                                replace:{"</word-list-{list_type}>{_1}<word-list-{list_type}>"})
+	
+	# Only pass numbers
+	only_numbers := filter_rule(match: "[0-9]")
+	
+	default_battle_type := {
+		if card.battle_type=="data" then "Data" else
+		if card.battle_type=="vaccine" then "Vaccine" else
+		"Virus"
+	}
+	
+	############### Auto Scripts
+	card_type := {
+		if card.battle_type=="digivolve" then "power option digivolve" else
+		if card.battle_type=="field" then "power option field" else
+		if card.battle_type=="force fx" then "power option force fx" else
+		if card.battle_type=="power blast" then "power option power blast" else
+		"digimon"
+	}
+	
+	battle_type := {
+		if card.card_type=="power option digivolve" then "digivolve" else
+		if card.card_type=="power option field" then "field" else
+		if card.card_type=="power option force fx" then "force fx" else
+		if card.card_type=="power option power blast" then "power blast" else
+		card.battle_type
+	}
+	
+	bar_type := {
+		if card.battle_type=="data" then "data" else
+		if card.battle_type=="vaccine" then "vaccine" else
+		"virus"
+	}
+	
+	symbol_filter := {
+		if card.battle_type=="digivolve" then "power option digivolve digiegg" else
+		if card.battle_type=="field" then "power option field" else
+		if card.battle_type=="force fx" then "power option force fx" else
+		if card.battle_type=="power blast" then "power option powerblast one" else
+		card.symbols
+	}
+	
+	is_double_titled := {
+		card.card_type=="power option digivolve" or
+		card.card_type=="power option field"
+	}
+	
+	############### Determine Card Position
+	
+	pos_of_card := {
+		position(
+			of: card
+			in: set
+			order_by: {
+				card.card_type + card.digivolve_level + card.name + card.color + card.battle_type
+			}) + 1
+	}
+
+############################################################## Set fields
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+	description: This information will not appear on the card.
+set field:
+	type: text
+	name: description
+	multi line: true
+	description: This information will not appear on the card.
+set field:
+	type: text
+	name: code
+	description: This is the code that will appear before the number of the card. For example: Bo-181.
+set field:
+	type: text
+	name: illustrator
+	script: copyright_filter(value)
+	description: Illustrator information.
+set field:
+	type: text
+	name: copyright
+	script: copyright_filter(value)
+	description: Copyright information.
+############################# Default style
+default set style:
+	title:
+		padding left: 2
+		font:
+			size: 16
+############################################################## Card fields
+############################# Background stuff
+card field:
+	type: choice
+	name: card type
+	choice: digimon
+	choice:
+		name: power option
+		choice: digivolve
+		choice: field
+		choice: power blast
+	choice colors cardlist:
+		digimon:   	rgb(120,18,0)
+		power option:	rgb(120,0,40)
+	default: card_type(value)
+############################# Name line
+card field:
+	type: text
+	name: name
+	show statistics: false
+	card list visible: true
+	card list column: 1
+card field:
+	type: text
+	name: name 2
+	show statistics: false
+	save value: false
+	editable: false
+	default: card.name
+card field:
+	type: text
+	name: name 3
+	show statistics: false
+	save value: false
+	editable: false
+	default: card.name
+card field:
+	type: text
+	name: name 4
+	show statistics: false
+	save value: false
+	editable: false
+	default: card.name
+card field:
+	type: text
+	name: color
+	show statistics: false
+card field:
+	type: text
+	name: color 2
+	show statistics: false
+	save value: false
+	editable: false
+	default: card.color
+card field:
+	type: text
+	name: color 3
+	show statistics: false
+	save value: false
+	editable: false
+	default: card.color
+card field:
+	type: text
+	name: color 4
+	show statistics: false
+	save value: false
+	editable: false
+	default: card.color
+############################# Digital Info
+card field:
+	type: choice
+	name: battle type
+	choice: data
+	choice: vaccine
+	choice: virus
+	choice: digivolve
+	choice: field
+	choice: force fx
+	choice: power blast
+	default: battle_type(value)
+	identifying: true
+	show statistics: true
+	card list visible: true
+	card list column: 2
+card field:
+	type: choice
+	name: battle bar
+	choice: data
+	choice: vaccine
+	choice: virus
+	default: bar_type(value)
+	editable: false
+	identifying: false
+	show statistics: false
+card field:
+	type: choice
+	name: digivolve level
+	choice: rookie level
+	choice: champion level
+	choice: ultimate level
+	choice: mega level
+	identifying: true
+	show statistics: true
+	card list visible: true
+	card list column: 3
+card field:
+	type: text
+	name: digivolve requirement
+	multi line: true
+	save value: true
+	show statistics: false
+card field:
+	type: choice
+	name: symbols
+	choice: none
+	choice: dig
+	choice: fly
+	choice: swim
+	choice: digimon
+	choice:
+		name: double
+		choice: dig and fly
+		choice: dig and swim
+		choice: dig and digimon
+		choice: fly and swim
+		choice: fly and digimon
+		choice: swim and digimon
+	choice:
+		name: power option
+		choice:
+			name: digivolve
+			choice: digiegg
+			choice: digivice
+		choice: field
+		choice: force fx
+		choice:
+			name: powerblast
+			choice: one
+			choice: two
+	default: symbol_filter(value)
+	identifying: true
+	show statistics: true
+############################# Number
+card field:
+	type: text
+	name: card number
+	script:
+		set.code
+		+ "-" +
+		( if pos_of_card(value)>=10 then "" else "0") +
+		pos_of_card(value)
+	show statistics: false
+	editable: false
+	card list visible: true
+	card list column: 5
+############################# Image
+card field:
+	type: image
+	name: image
+	show statistics: false
+############################# Power Techniques
+card field:
+	type: text
+	name: digimon power 1
+	show statistics: false
+	script: only_numbers(value)
+card field:
+	type: text
+	name: power technique 1
+	show statistics: false
+	script: to_upper(value)
+card field:
+	type: text
+	name: alternate pt1
+	multi line: true
+	default: card.power_technique_1
+	save value: true
+	show statistics: false
+	script: to_upper(value)
+card field:
+	type: text
+	name: digimon power 2
+	show statistics: false
+	script: only_numbers(value)
+card field:
+	type: text
+	name: power technique 2
+	show statistics: false
+	script: to_upper(value)
+card field:
+	type: text
+	name: alternate pt2
+	multi line: true
+	default: card.power_technique_2
+	save value: true
+	show statistics: false
+	script: to_upper(value)
+card field:
+	type: text
+	name: digimon power 3
+	show statistics: false
+	script: only_numbers(value)
+card field:
+	type: text
+	name: power technique 3
+	show statistics: false
+	script: to_upper(value)
+card field:
+	type: text
+	name: alternate pt3
+	multi line: true
+	default: card.power_technique_3
+	save value: true
+	show statistics: false
+	script: to_upper(value)
+############################# Card Type
+card field:
+	type: text
+	name: digimon group
+	script: digimon_filter(value)
+card field:
+	type: text
+	name: digimon word
+	editable: false
+	default: "Digimon"
+card field:
+	type: text
+	name: digimon type
+	script:
+		combined_editor(
+			field1: card.digimon_group,
+			separator1: (if card.digimon_group!="" then " " else ""),
+			field2: card.digimon_word,
+			hide_when_empty: true
+		)
+	multi line: true
+	save value: false
+	identifying: true
+	show statistics: false
+	card list column: 4
+card field:
+	type: text
+	name: digimon battle type
+	editable: false
+	script: default_battle_type(value)
+card field:
+	type: text
+	name: complex type
+	script:
+		combined_editor(
+			field1: card.digimon_group,
+			separator1: (if card.digimon_group!="" then " " else ""),
+			field2: card.digimon_word,
+			separator2: " • ",
+			field3: card.digimon_battle_type,
+			hide_when_empty: true
+		)
+	save value: false
+	identifying: true
+	show statistics: false
+	card list column: 4
+############################# Text box
+card field:
+	type: text
+	name: rule text
+	multi line: true
+	save value: true
+	show statistics: false
+	script: text_filter(value)
+card field:
+	type: text
+	name: reminder
+	multi line: true
+	save value: true
+	show statistics: false
+	script: text_filter(value)
+############################# Scores
+card field:
+	type: text
+	name: rookie score
+	save value: true
+	show statistics: false
+	script: only_numbers(value)
+card field:
+	type: text
+	name: champion score
+	save value: true
+	show statistics: false
+	script: only_numbers(value)
+card field:
+	type: text
+	name: ultimate score
+	save value: true
+	show statistics: false
+	script: only_numbers(value)
+card field:
+	type: text
+	name: mega score
+	save value: true
+	show statistics: false
+	script: only_numbers(value)
+############################# Copyright stuff
+card field:
+	type: text
+	name: illustrator
+	default: set.illustrator
+	script: copyright_filter(value)
+	show statistics: false
+card field:
+	type: text
+	name: copyright
+	default: set.copyright
+	script: copyright_filter(value)
+	show statistics: false
+############################################################## Word lists
+
+word list:
+	name: digimon
+	word:
+		name: A
+		word: Alien
+		word: Amphibian
+		word: Ancient
+		word: Ancient Aquatic Beast Man
+		word: Ancient Beast
+		word: Ancient Bird
+		word: Ancient Birdman
+		word: Ancient Crustacean
+		word: Ancient Draon
+		word: Ancient Insectoid
+		word: Ancient Mineral
+		word: Ancient Phantom Beast
+		word: Ancient Plant
+		word: Ancient Wizard
+		word: Android
+		word: Angel
+		word: Animal
+		word: Aquatic Beast
+		word: Aquatic Beast Man
+	word:
+		name: B-C
+		word: Beast
+		word: Beast Man
+		word: Bewitching Beast
+		word: Bird
+		word: Bulb
+		word: Card
+		word: Composition
+		word: Crustacean
+		word: Cyborg
+	word:
+		name: D-F
+		word: Dark Angel
+		word: Dark Animal
+		word: Dark Dragon
+		word: Demon Beast
+		word: Demon Dragon
+		word: Demon God
+		word: Demon Lord
+		word: Demon Man
+		word: Dinosaur
+		word: Dragon
+		word: Dragon Man
+		word: Dragon Warrior
+		word: Evil
+		word: Evil Beast
+		word: Evil Dragon
+		word: Evil God
+		word: Evil Warrior
+		word: Exalted Knight
+		word: Fairy
+		word: Fallen Angel
+		word: Flame
+		word: Flame Dragon
+		word: Flying Cyborg
+		word: Flying Dragon
+		word: Food
+	word:
+		name: G-L
+		word: Ghost
+		word: Giant Bird
+		word: God Beast
+		word: God Man
+		word: Holy Beast
+		word: Holy Knight
+		word: Horned Dragon
+		word: Human Beast
+		word: Icy
+		word: Insect
+		word: Insectoid
+		word: Invader
+		word: Larva
+		word: Lesser
+		word: Long Neck Dragon
+	word:
+		name: M-P
+		word: Machine
+		word: Magic Warrior
+		word: Mammal
+		word: Mega Beast
+		word: Micro
+		word: Mini Angel
+		word: Mini Dragon
+		word: Mollusk
+		word: Mutant
+		word: Mythical Animal
+		word: Mythical Bird
+		word: Mythical Dragon
+		word: Ogre
+		word: Parasite
+		word: Phantom Beast
+		word: Phantom Dragon
+		word: Pixie
+		word: Plant
+		word: Power
+		word: Puppet
+	word:
+		name: Q-Z
+		word: Rare Animal
+		word: Reptile
+		word: Rock
+		word: Sea Animal
+		word: Seed
+		word: Skeleton
+		word: Slime
+		word: Small Demon
+		word: Small Dragon
+		word: Smoke
+		word: Synthetic
+		word: Synthetic Fallen Angel
+		word: Undead
+		word: Vegetation
+		word: Warrior
+		word: Wicked God
+		word: Winged Dragon
+		word: Wizard

@@ -1,0 +1,306 @@
+mse version: 0.3.6
+game: warlord
+short name: Warlord
+full name: Warlord Standard
+installer group: warlord/standard
+icon: card-sample.png
+position hint: 001
+
+version: 2008-05-25
+depends on:
+	package: warlord.mse-game
+	version: 2007-12-19
+
+card background: white
+card width: 375
+card height: 523
+card dpi: 150
+
+#By: Artfreakwiu
+#Fonts used:
+#Vhati's Warlord Title
+#Vhati's Warlord Text
+#Times New Roman Italic
+############################################################## Extra scripts
+
+init script:
+	# Does the card have a color that requires a white font for copyright/artist?
+	black_font_colors := filter_rule(match:"item")
+	font_color := {
+		if  black_font_colors(card.card_color) != "" then
+			rgb(0,0,0)
+		else
+			rgb(255,255,255)
+	}
+
+
+############################################################## Set info fields
+set info style:
+	title:
+		padding left: 2
+		font:
+			size: 16
+	symbol:
+		variation:
+			name: common
+			border radius: 0.10
+			fill type: solid
+			fill color:   rgb(0,0,0)
+			border color: rgb(255,255,255)
+
+
+############################################################## Extra style
+
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	card color:
+		left:	0
+		top:	0
+		width:	375
+		height:	523
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			faction deverenian:	r-character.jpg
+			faction dwarf:		b-character.jpg
+			faction elf:		w-character.jpg
+			faction free kingdoms:	o-character.jpg
+			faction mercenary:	u-character.jpg
+			faction NoThRog:	g-character.jpg
+			item:			item.jpg
+			action:			action.jpg
+
+	############################# Name line
+	name:
+		left: 
+			script: if card.card_color=="action" then 70 else 100
+		top : 40
+		width: 
+			script: if card.card_color=="action" then 227 else 197
+		height: 23
+		alignment: middle center shrink-overflow
+		padding bottom: 0
+		z index: 4
+		font:
+			name: Vhati's Warlord Title
+			size: 18
+			color: rgb(0,0,0)
+	attack:
+		left:   20
+		top:	25
+		width:	75
+		height: 45
+		z index: 4
+		alignment: middle center
+		font:
+			name: Vhati's Warlord Title
+			size: 18
+			color: rgb(0,0,0)
+
+	armor class:
+		left:  	300
+		top:	25
+		width:	50
+		height: 50
+		z index: 4
+		alignment: middle center
+		font:
+			name: Vhati's Warlord Title
+			size: 18
+			color: rgb(0,0,0)
+
+	############################# Image
+	image:
+		left:	48
+		top:	73
+		width:	278
+		height:	230
+		z index: 1
+		mask: imagemask2.png
+	
+	############################# Symbols
+	symbol1:
+		left: 330
+		top: 280
+		width: 20
+		height: 20
+		z index: 2
+		render style: image
+		choice images:
+			# Images based on the set symbol
+
+			first symbol: script: symbol_variation(symbol: set.symbol, variation: "common")
+
+	############################# LCA
+	lca:
+		left: 
+			script: if card.lca_image=="good wizard" then 38 else
+				if card.lca_image=="evil wizard" then 38 else
+				if card.lca_image=="item wizard" then 38 else
+				if card.lca_image=="action wizard" then 38 else
+				36
+		top : 
+			script: if card.lca_image=="good rogue" then 288 else
+				if card.lca_image=="evil rogue" then 288 else
+				if card.lca_image=="item rogue" then 288 else
+				if card.lca_image=="action rogue" then 288 else
+				if card.lca_image=="good cleric" then 284 else
+				if card.lca_image=="evil cleric" then 284 else
+				if card.lca_image=="item cleric" then 284 else
+				if card.lca_image=="action cleric" then 284 else
+				if card.lca_image=="good wizard" then 285 else
+				if card.lca_image=="evil wizard" then 285 else
+				if card.lca_image=="item wizard" then 285 else
+				if card.lca_image=="action wizard" then 285 else
+				282
+		width: 30
+		height: 30
+		alignment: middle center shrink-overflow
+		z index: 2
+		padding top: 2
+		font:
+			name: Vhati's Warlord Title
+			size: 18
+			color: 
+				script: if card.lca_image=="good classless" 	then rgb(0,0,0) else
+					if card.lca_image=="good cleric" 		then rgb(0,0,0) else
+					if card.lca_image=="good fighter" 		then rgb(0,0,0) else
+					if card.lca_image=="good rogue" 		then rgb(0,0,0) else
+					if card.lca_image=="good wizard" 		then rgb(0,0,0) else
+					if card.lca_image=="item classless" 	then rgb(0,0,0) else
+					if card.lca_image=="item cleric" 		then rgb(0,0,0) else
+					if card.lca_image=="item fighter"		then rgb(0,0,0) else
+					if card.lca_image=="item rogue" 		then rgb(0,0,0) else
+					if card.lca_image=="item wizard" 		then rgb(0,0,0) else
+					rgb(255,255,255)
+	lca image:
+		left: 22
+		top : 265
+		width: 59
+		height: 68
+		z index: 1
+		render style: image
+		choice images:
+			good classless:		goodcl.png
+			good cleric:		goodc.png
+			good fighter:		goodf.png
+			good rogue:		goodr.png
+			good wizard:		goodw.png
+			evil classless:		evilcl.png
+			evil cleric:		evilc.png
+			evil fighter:		evilf.png
+			evil rogue:		evilr.png
+			evil wizard:		evilw.png
+			item classless:		itemcl.png
+			item cleric:		itemc.png
+			item fighter:		itemf.png
+			item rogue:		itemr.png
+			item wizard:		itemw.png
+			action classless:		actioncl.png
+			action cleric:		actionc.png
+			action fighter:		actionf.png
+			action rogue:		actionr.png
+			action wizard:		actionw.png
+
+	############################# Text box
+	text:
+		left: 60
+		top : 328
+		width: 255
+		height: 142
+		font:
+			name: Vhati's Warlord Text
+			italic name: Times New Roman Italic
+			size: 12
+			scale down to: 6
+			color: rgb(0,0,0)
+		alignment: middle center
+		z index: 2
+		padding left:   6
+		padding top:    2
+		padding right:  4
+		padding bottom: 2
+		line height hard: 1.2
+		line height line: 1.5
+
+	############################# Extras
+	skill:
+		z index: 4
+		left:	40
+		top:	445
+		width:	30
+		height:	35
+		alignment: center middle
+		font:
+			name: Vhati's Warlord Title
+			size: 18
+			color: rgb(255,255,255)
+	hit points:
+		z index: 4
+		left:	309
+		top:	450
+		width:	20
+		height:	28
+		alignment: center middle
+		font:
+			name: Vhati's Warlord Title
+			size: 18
+			color: rgb(255,255,255)
+
+	############################# Card sorting / numbering
+	rarity:
+		left: 182
+		top : 475
+		width: 9
+		height: 10
+		z index: 2
+		render style: image
+		choice images:
+			fixed: 		rarityfixed.png
+			common: 	raritycommon.png
+			uncommon: 	rarityuncommon.png
+			rare: 		rarityrare.png
+
+	card number:
+		left: 162
+		top: 470
+		width: 50
+		height: 20
+		z index: 1
+		alignment: middle center
+		font:
+			name: Vhati's Warlord Title
+			size: 6
+			color: rgb(0,0,0)
+
+	############################# Copyright stuff
+
+	illustrator:
+		left: 40
+		top: 100
+		height: 15
+		width: 140
+		angle: 270
+		alignment: bottom center
+		z index: 1
+		font:
+			name: Vhati's Warlord Title
+			size: 6
+			color:
+				script: font_color()
+
+	copyright:
+		left: 340
+		top: 240
+		height: 15
+		width: 140
+		angle: 90
+		z index: 1
+		alignment: top center
+		font:
+			name: Vhati's Warlord Title
+			size: 6
+			color:
+				script: font_color()

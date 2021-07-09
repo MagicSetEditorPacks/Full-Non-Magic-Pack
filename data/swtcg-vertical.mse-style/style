@@ -1,0 +1,219 @@
+mse version: 2.0.0
+game: swtcg
+short name: Vertical
+full name: Vertical Style
+icon: card-sample.png
+position hint: 001
+installer group: star wars tcg/vertical style
+
+version: 2014-01-29
+depends on:
+	package: swtcg.mse-game
+	version: 2009-10-02
+
+card width: 375
+card height: 523
+card dpi: 150
+# Author: CAOC
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	card type:
+		left:	0
+		top:	0
+		width:	375
+		height:	523
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+		render style: image
+		choice images:
+			unit character: character.png
+			unit ground: ground.png
+			unit space: space.png
+			unit character-unique: characteru.png
+			unit ground-unique: groundu.png
+			unit space-unique: spaceu.png
+	############################# Name line
+	name:
+		left: 58
+		top : 22
+		width: 255
+		height: 17
+		alignment: top shrink-overflow
+		z index: 1
+		font:
+			name: Armada
+			size: 15.8
+			scale down to: 15
+			color: white
+		line height hard: -1
+		line height line: 1
+		line height soft: 1
+	############################# Image
+	image:
+		left:	16
+		top:	58
+		width:	342
+		height:	290
+		z index: 1
+		mask: maskvert.png
+	############################# Card type
+	type:
+		left: 58
+		top : 47
+		width: 255
+		height: 12
+		alignment: top shrink-overflow
+		z index: 1
+		font:
+			name: Armada
+			size: 8
+			scale down to: 7
+			color: white
+		line height hard: -1
+		line height line: 1
+		line height soft: 1
+	############################# Text box
+	textbox:
+		left: 73
+		top : 345
+		width: 250
+		height: 150
+		alignment:  top shrink-overflow
+		z index: 1
+		always symbol: true
+		font:
+			name: Dax-Regular
+			size: 12
+			scale down to: 0
+			color: white
+		symbol font:
+			name: swtcg-symbols
+			alignment: middle left
+			scale down to: 6
+			size: 16
+		line height hard: 1.2
+		line height line: 1.5
+		line height soft: 0.9
+		############################# Cost
+	cost:
+		left: 10
+		top : 22
+		width: 35
+		height: 35
+		font:
+			name: Agency FB
+			size: 17
+			weight: bold
+			color: 
+				script: if contains(card.card_type, match:"character") then rgb(143,73,140)
+					else if contains(card.card_type, match:"ground") then rgb(59,134,103)
+					else if contains(card.card_type, match:"space") then rgb(28,82,180)
+					else "white"
+		alignment: middle center
+		z index: 1
+	############################# Aligment
+	alignment:
+		left:	320
+		top:	23
+		width:	34
+		height:	34
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+		render style: image
+		choice images:
+			light: light.png
+			dark: dark.png
+			neutral: neutral.png
+	############################# Speed
+	speed:
+		left: 8
+		top : 348
+		width: 35
+		height: 35
+		font:
+			name: Agency FB
+			size: 19
+			weight: bold
+			color: white
+		alignment: middle center
+		z index: 1
+	############################# Power
+	power:
+		left: 8
+		top : 415
+		width: 35
+		height: 35
+		font:
+			name: Agency FB
+			size: 19
+			weight: bold
+			color: white
+		alignment: middle center
+		z index: 1
+	############################# Healt
+	health:
+		left: 8
+		top : 452
+		width: 35
+		height: 35
+		font:
+			name: Agency FB
+			size: 19
+			weight: bold
+			color: white
+		alignment: middle center
+		z index: 1
+	############################# Edition and Card ID
+	number:
+		left: 31
+		top : 500
+		width: 300
+		height: 18
+		z index: 1
+		alignment: middle center shrink-overflow
+		font:
+			name: Dax-Regular
+			size: 10
+			color: white
+	############################# Rarity
+	rarity:
+		left:	341
+		top:	503
+		width:	11
+		height:	11
+		z index: 1
+		render style: image
+		popup style: in place
+		choice images:
+		render style: image
+		choice images:
+			common: common.png
+			uncommon: uncommon.png
+			rare: rare.png
+	############################# Unique
+	unique:
+		left: 340
+		top : 463
+		width: 11
+		height: 11
+		visible: { contains(card.card_type, match: "-unique") }
+		font:
+			name: BankGothic Md BT
+			size: 11
+			weight: bold
+			color: white
+		alignment: middle center
+		z index: 1
+	############################# Symbol
+	symbol:
+		left:	37
+		top:	389
+		width:	20
+		height:	20
+		z index: 1
+ 

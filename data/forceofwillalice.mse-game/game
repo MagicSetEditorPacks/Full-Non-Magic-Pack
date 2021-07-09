@@ -1,0 +1,553 @@
+﻿mse version: 2.0.0
+version: 2018-05-18
+short name: FoW Alice
+full name: FoW Alice (obsolete)
+icon: icon.png
+position hint: 24
+installer group: fowalice/game
+
+init script: include file: script
+
+card field:
+	type: image
+	name: card_art
+	description: The card art
+	show statistics: false
+	editable: true
+	
+card field:
+	type: image
+	name: card_background
+	description: The card's foreground art
+	show statistics: false
+	editable: true
+
+card field:
+	type: image
+	name: layer
+	description: The card borders
+	show statistics: false
+	editable: false
+	
+card field:
+	type: text
+	name: card_name
+	description: The name of the card
+	card list column: 1
+	card list visible: true
+	card list width: 100
+	card list alignment: left
+
+card field:
+	type: choice
+	name: color
+	description: The card's color
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	choice: GB
+	choice: RB
+	choice: RG
+	choice: RU
+	choice: UB
+	choice: UG
+	choice: WB
+	choice: WG
+	choice: WR
+	choice: WU
+	card list visible: true
+	card list width: 100
+	card list alignment: center
+
+card field:
+	type: multiple choice
+	name: color2
+	description: The card's color
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	card list visible: true
+	card list width: 100
+	card list alignment: center
+
+card field:
+	type: choice
+	name: color3
+	description: The card's color
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	card list visible: true
+	card list width: 100
+	card list alignment: center
+	
+card field:
+	type: choice
+	name: color_img1
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	editable: false
+	script: ci_value(num: 1)
+	
+card field:
+	type: choice
+	name: color_img2
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	editable: false
+	script: ci_value(num: 2)
+	
+card field:
+	type: choice
+	name: color_img3
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	editable: false
+	script: ci_value(num: 3)
+	
+card field:
+	type: choice
+	name: color_img4
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	editable: false
+	script: ci_value(num: 4)
+	
+card field:
+	type: choice
+	name: color_img5
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	editable: false
+	script: ci_value(num: 5)
+	
+card field:
+	type: choice
+	name: color_img6
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	editable: false
+	script: ci_value(num: 6)
+	
+card field:
+	type: choice
+	name: lapis_type_void
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_type_white
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_type_red
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_type_blue
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_type_green
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_type_black
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_type_stone
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_void
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_white
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_red
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_blue
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_green
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_black
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_stone
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: text
+	name: race
+	description: The race of the card
+	
+card field:
+	type: text
+	name: ATK
+	description: The ATK of the card
+	card list column: 2
+	card list visible: true
+	card list width: 100
+	card list alignment: center
+	
+card field:
+	type: text
+	name: DEF
+	description: The DEF of the card
+	card list column: 3
+	card list visible: true
+	card list width: 100
+	card list alignment: center
+	
+card field:
+	type: choice
+	name: canbattle
+	description: Does this card have ATK/DEF or can it not battle?
+	choice: atkdef
+	choice: cannotbattle
+	
+card field:
+	type: text
+	name: artist
+	description: The artist of the art
+
+card field:
+	type: text
+	name: card_id
+	editable: false
+	save value: false
+	identifying: true
+	script: card_serial()
+	description: Serial of the card
+	description: The ID of the card
+	show statistics: false
+	
+card field:
+	type: text
+	name: rules
+	description: Rules text. PRESS SHIFT+TAB TO ACCESS FLAVOR TEXT.
+	multi line: true
+	show statistics: false
+
+card field:
+	type: text
+	name: flavor
+	description: The flavor of the card.
+	multi line: true
+	show statistics: false
+
+card field:
+	type: choice
+	name: cardtype
+	description: Type of card
+	choice: ruler
+	choice: jruler
+	choice: resonator
+	choice: spell
+	choice: regalia
+	choice: stone
+	
+card field:
+	type: choice
+	name: srborder
+	description: Do you want your SR to have a foreground?
+	choice: No
+	choice: Yes
+	
+card field:
+	type: choice
+	name: rarity
+	description: Determines the card border for Resonators and Spells
+	choice: C
+	choice: U
+	choice: R
+	choice: SR
+
+card field:
+	type: choice
+	name: resStatColor
+	description: The matches the card's color. Transparent section where ATK/DEF go for Resonators
+	choice: default
+	editable: false
+	
+card field:
+	type: choice
+	name: spellStatColor
+	description: The matches the card's color. Transparent section where type go for Spells
+	choice: default
+	editable: false
+	
+card field:
+	type: choice
+	name: topBarColor
+	description: The matches the card's color. Transparent section for the card name
+	choice: default
+	
+card field:
+	type: choice
+	name: jrulerbutton
+	description: Badge of honor for cards strong enough to call themselves a Ruler or J-Ruler
+	choice: default
+	editable: false
+	
+card field:
+	type: choice
+	name: costwheel1
+	description: Cost Wheel
+	choice: blank
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	choice: void
+	
+	
+card field:
+	type: choice
+	name: costwheel2
+	description: Cost Wheel
+	choice: blank
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	choice: void
+
+card field:
+	type: choice
+	name: costwheel3
+	description: Cost Wheel
+	choice: blank
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	choice: void
+	
+card field:
+	type: choice
+	name: costwheel4
+	description: Cost Wheel
+	choice: blank
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	choice: void
+	
+card field:
+	type: choice
+	name: costwheel5
+	description: Cost Wheel
+	choice: blank
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	choice: void
+	
+card field:
+	type: choice
+	name: colorless_cost
+	description: The colorless cost of the card
+	description: Cost Wheel
+	choice: none
+	choice: zero
+	choice: one
+	choice: two
+	choice: three
+	choice: four
+	choice: five
+	choice: six
+	choice: seven
+	choice: eight
+	choice: nine
+	choice: X
+
+card field:
+	type: text
+	name: copyright
+	multi line: false
+	show statistics: false
+	
+card field:
+	type: choice
+	name: wheeltype
+	description: The card's cost wheel graphic
+	choice: Normal
+	
+#### set fields
+
+set field:
+	type: text
+	name: set name
+	description: The name of the set.
+set field:
+	type: text
+	name: set id
+	description: The 3-letter reference of the series.
+	
+### packs
+pack type:
+	name: Booster Pack
+	item:
+		name: common
+		amount: 5
+	item:
+		name: basic or rare or SR
+		amount: 1
+	item:
+		name: foil or ruler
+		amount: 1
+	item:
+		name: uncommon
+		amount: 2
+	item:
+		name: rare
+		amount: 1
+		
+### pack proportions
+pack type:
+	name: basic or rare or SR
+	selectable: false
+	select: equal
+	item:
+		name: basic
+		weight: 22
+	item:
+		name: rare
+		weight: 5
+	item:
+		name: SR
+		weight: 9
+pack type:
+	name: foil or ruler
+	selectable: false
+	select: equal
+	item:
+		name: Ruler
+		weight: 2
+	item:
+		name: nonRulerFoil
+		weight: 34
+		
+### card definitions
+pack type:
+	name: basic
+	select: equal
+	filter: card.race == "Magic Stone"
+pack type:
+	name: common
+	filter: card.rarity == "C" and card.race != "Magic Stone"
+pack type:
+	name: uncommon
+	filter: card.rarity == "U"
+pack type:
+	name: rare
+	filter: card.rarity == "R" and card.cardtype != "ruler" and card.cardtype != "jruler"
+pack type:
+	name: SR
+	filter: card.rarity == "SR"
+pack type:
+	name: Ruler
+	filter: card.cardtype == "ruler"
+pack type:
+	name: nonRulerFoil
+	filter: card.cardtype != "ruler" and card.cardtype != "jruler"
+		

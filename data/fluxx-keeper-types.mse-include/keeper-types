@@ -1,0 +1,15 @@
+﻿# Keeper type images
+
+choice images:
+	official weapon:		/fluxx-keeper-types.mse-include/weapon.png
+	official food:			/fluxx-keeper-types.mse-include/food.png
+	official kotrt:			/fluxx-keeper-types.mse-include/kotrt.png
+	official martian:		/fluxx-keeper-types.mse-include/martian.png
+	official booty:			/fluxx-keeper-types.mse-include/booty.png
+	official ship:			/fluxx-keeper-types.mse-include/ship.png
+	official device:		/fluxx-keeper-types.mse-include/device.png
+	official sentient:	/fluxx-keeper-types.mse-include/sentient.png
+	official attached:	/fluxx-keeper-types.mse-include/attached.png
+
+	custom tbrocks rebel:		  /fluxx-keeper-types.mse-include/rebel.png
+	custom tbrocks imperial:	/fluxx-keeper-types.mse-include/imperial.png

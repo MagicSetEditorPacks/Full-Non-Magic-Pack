@@ -1,0 +1,341 @@
+# Common Data Fields
+
+card_field:
+	type: 				text
+	name: 				name
+	default:			if card.type == "ADVENTURE PATH" then to_upper(set.set_name)
+	identifying: 		true
+	show_statistics: 	false
+	card_list_visible: 	true
+	card_list_column: 	0
+	description: 		Card Name
+
+# Multiple Choice with script to require_exclusive_choice from one of the 3 styles
+# Drives card colours for borders and banners
+card_field:
+	type: 				multiple choice
+	name: 				type
+	choice:
+		name:			CHARACTER
+		enabled: 		{ false }
+	choice: 
+		name:			TOKEN
+		enabled: 		{ false }
+	choice:
+		name:			ROLE
+		enabled: 		{ false }
+		line_below: 	true
+	choice:	
+		name:			ADVENTURE PATH
+		enabled:		{ isAdventureStyle() }
+	choice:
+		name:			ADVENTURE
+		enabled: 		{ isAdventureStyle() }
+	choice:
+		name:			SCENARIO
+		enabled: 		{ isAdventureStyle() }
+	choice:
+		name:			LOCATION
+		enabled: 		{ isAdventureStyle() }
+		line_below: 	true
+	choice:
+		name:			VILLAIN
+		enabled: 		{ isBoonBaneStyle() }
+	choice:
+		name:			HENCHMAN
+		enabled: 		{ isBoonBaneStyle() }
+	choice:
+		name:			MONSTER
+		enabled: 		{ isBoonBaneStyle() }
+	choice:
+		name:			BARRIER
+		enabled: 		{ isBoonBaneStyle() }
+	choice:
+		name:			SHIP
+		enabled: 		{ isBoonBaneStyle() }
+	choice:
+		name:			WEAPON
+		enabled: 		{ isBoonBaneStyle() }
+	choice:
+		name:			SPELL
+		enabled: 		{ isBoonBaneStyle() }
+	choice:
+		name:			ARMOR
+		enabled: 		{ isBoonBaneStyle() }
+	choice:
+		name:			ITEM
+		enabled: 		{ isBoonBaneStyle() }
+	choice:
+		name:			ALLY
+		enabled: 		{ isBoonBaneStyle() }
+	choice:
+		name:			LOOT
+		enabled: 		{ isBoonBaneStyle() }
+	choice:
+		name:			BLESSING
+		enabled: 		{ isBoonBaneStyle() }
+	choice:
+		name:			SUPPORT
+		enabled:		{ isBoonBaneStyle() }
+	choice:
+		name:			COHORT
+		enabled:		{ isBoonBaneStyle() }
+
+	card_list_visible: 	true
+	description: 		Card Type
+	script:				card_type_requirements()
+	sort_script:		sort_type()
+
+# Text field to render type choice 
+# used to access card_style.type_text.content_width for styling
+card_field:
+	type:				text
+	name:				type_text
+	script:				card.type
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+
+card_field:
+	type:				text
+	name:				custom_type_text
+	description:		Custom Card Type
+	
+card_field:
+	type: 				choice
+	name: 				set
+	choice: 			Special
+	choice: 			Base
+	choice: 			Character
+	choice:				Promo
+	choice: 			1
+	choice: 			2
+	choice: 			3
+	choice: 			4
+	choice: 			5
+	choice: 			6
+	choice:				7
+	choice:				8
+	choice:				9
+	choice:				10
+	choice:				11
+	choice:				12
+	initial: 			Special
+	description: 		Adventure Set
+	card_list_visible:	true
+	card_list_column: 	1
+	card_list_width: 	50
+	sort_script:		sort_set()
+
+card_field:
+	type:				color
+	name:				set_bg
+	script:				if getMainType() = "Bane" then getLightColour() else getDarkColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+	
+card_field:
+	type:				text
+	name:				set_text
+	script:				if length(card.set)>2 then substring(card.set, end: 1) else to_string(card.set)
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+	
+card_field:
+	type:				text
+	name:				traits
+	multi_line:			true
+	description:		Trait Keywords
+
+card_field:
+	type:				image
+	name:				cardart
+	show_statistics: 	false
+	description:		Card Art
+
+# Logo, artist and copyright
+
+# Use Choice, script: 1, render_style: image for fixed graphics
+card_field:
+	type:				choice
+	name:				pathlogo
+	script:				1
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+
+card_field: 
+	type:				text
+	name:				illustrator
+	card_list_visible: 	true
+	card_list_column: 	5
+	description:		Illustrator	
+
+card_field:
+	type: 				text
+	name: 				artist
+	save_value:			false
+	card_list_allow:	false
+	script:
+		forward_editor(
+			field: card.illustrator,
+			prefix:	"Illustration by ",
+			hide_when_empty: true
+		)
+	description: 		Card Artist
+card_field:
+	type: 				text
+	name: 				copyright
+	default: 			set.set_copyright
+	show_statistics: 	false
+	card_list_allow:	false
+	editable:			false
+	save_value:			false
+
+card_field:
+	type:				text
+	name:				community_use
+	default:			set.card_community_use
+	show_statistics: 	false
+	card_list_allow:	false
+	editable:			false
+	save_value:			false
+# Background
+card_field:
+	type: 				choice
+	name: 				bg
+	script:				1
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+
+#Card Borders
+card_field:
+	type: 				color
+	name: 				borderdk
+	script: 			getDarkColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+card_field:
+	type: 				color
+	name: 				borderblk
+	script: 			"black"
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+card_field:
+	type:				color
+	name:				borderprnt
+	script:				"white"
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+card_field:
+	type:				color
+	name:				border_fill_1
+	script: 			getDarkColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+	
+#Card Name Banner
+card_field:
+	type: 				color
+	name: 				bannerdk
+	script:				getBannerDarkColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+card_field:
+	type: 				color
+	name: 				bannerlt
+	script:				getBannerLightColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+
+card_field:
+	type:				text
+	name:				flavour_text
+	multi_line: 		true
+	description: 		Flavour Text
+	show_statistics: 	false
+	card_list_allow: 	false
+card_field:
+	type:				choice
+	name:				flavour_box
+	script:				1
+	show_statistics: 	false
+	card_list_allow: 	false
+	editable: 			false
+	save_value:			false
+
+card_field:
+	type:				info
+	name:				main type
+	script:				getMainType()
+	card_list_visible:	true
+	card_list_column:	6
+	card_list_name:		Main Type
+	save_value:			false
+	
+# Card Layout Fields
+
+card_field:
+	type: 				color
+	name: 				borderlt
+	script: 			getLightColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+card_field:
+	type: 				color
+	name: 				bordertype
+	script: 			getDarkColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+
+# Old ICON fields
+# Logo, set & Background
+card_field:
+	type: 				color
+	name: 				icondk
+	script: 			getDarkColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+card_field:
+	type: 				color
+	name: 				iconlt
+	script: 			getLightColour()
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+# Use Choice, script: 1, render_style: image for fixed graphics
+card_field:
+	type:				choice
+	name:				icon
+	script:				1
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false

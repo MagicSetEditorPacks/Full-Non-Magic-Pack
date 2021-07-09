@@ -1,0 +1,308 @@
+############### Scripts #################
+
+######################################### Defaults and Localization
+
+# TODO: Add language file
+#include file: language
+
+# Shape of cards, can be changed in style files
+card_shape := { "normal" }
+
+######################################### Sorting symbols
+# correctly sort a symbol
+symbol_sort := sort_text@(order: "[(act|auto|cont)]NV/R,GMOCQWFXYZ[0123456789]SEPDABITUHJKL")
+
+######################################### Numbers and sorting
+# Sorting scripts ordered by rarity -> clan -> grade -> name
+rarity_sort := {
+	if card.rarity == "UR" then "A"
+	else if card.rarity == "GR" then "B"
+	else if card.rarity == "RRRR" then "C"
+	else if card.rarity == "RRR" then "D"
+	else if card.rarity == "RR" then "E"
+	else if card.rarity == "R" then "F"
+	else if card.rarity == "C" then "G"
+	else if card.rarity == "SP" then "S"
+	else if card.rarity == "SGR" then "T"
+	else if card.rarity == "SCR" then "U"
+	else "Z"
+}
+
+# Sorting clans: First letter is for Nation, second is for Clan
+clan_sort := {
+	if card.clan == "Royal Paladin" then "AA"
+	else if card.clan == "Oracle Think Tank" then "AB"
+	else if card.clan == "Angel Feather" then "AC"
+	else if card.clan == "Shadow Paladin" then "AD"
+	else if card.clan == "Gold Paladin" then "AE"
+	else if card.clan == "Genesis" then "AF"
+	else if card.clan == "Kagero" then "BA"
+	else if card.clan == "Nubatama" then "BB"
+	else if card.clan == "Tachikaze" then "BC"
+	else if card.clan == "Murakumo" then "BD"
+	else if card.clan == "Narukami" then "BE"
+	else if card.clan == "Nova Grappler" then "CA"
+	else if card.clan == "Dimension Police" then "CB"
+	else if card.clan == "Entranger" then "CC"
+	else if card.clan == "Link Joker" then "CD"
+	else if card.clan == "Spike Brothers" then "DA"
+	else if card.clan == "Dark Irregulars" then "DB"
+	else if card.clan == "Pale Moon" then "DC"
+	else if card.clan == "Gear Chronicle" then "DD"
+	else if card.clan == "Granblue" then "EA"
+	else if card.clan == "Bermuda Triangle" then "EB"
+	else if card.clan == "Aqua Force" then "EC"
+	else if card.clan == "Megacolony" then "FA"
+	else if card.clan == "Great Nature" then "FB"
+	else if card.clan == "Neo Nectar" then "FC"
+	else if card.clan == "Cray Elemental" then "XA"
+	else if card.clan == "Touken Ranbu" then "XB"
+	else "ZZ"
+}
+
+# Sortig grades from top and down:
+grade_sort := { 9 - card.grade }
+
+# Process the name for sorting rules
+sort_name :=
+	# Remove "The", "A", and "And" at the beginning
+	replace@(match: "^(The|An?) ", replace: "") +
+	# Remove commas and apostrophes
+	replace@(match: "(,|')", replace: "") +
+	# Remove bold and italic tags
+	replace@(match: "(<b>|<i>|</b>|</i>)", replace: "") +
+	# Make lowercase
+	to_lower
+
+is_special := { card.rarity == "SP" or card.rarity == "SGR" or card.rarity == "SCR" }
+
+set_filter := {
+	if is_special()
+		then { is_special() }
+	else
+		{ not is_special() }
+}
+
+card_position := {
+	position (
+		of: card
+		in: set
+		order_by: { rarity_sort() + clan_sort() + grade_sort() + sort_name(card.name) }
+		filter: set_filter()
+	) + 1
+}
+
+card_count := {
+	number_of_items(in: set, filter: set_filter())
+}
+
+card_number := { 
+	(if is_special() then "S" else if card_position() < 100 then "0" else "") + 
+	(if card_position() < 10 then "0" else "") + card_position() 
+}
+
+######################################### Textbox and textfield scripts
+# Function for automatic symbol-font
+symbol_context := 
+	"(?ix)				# case insensitive, ignore whitespace
+	 (^|[[:space:]\"('])		# start of a word
+	 (  <match>:			# G: something
+	 |  \\[<match>-			# G-<clan>: something or G-<number>
+	 |  /?<match>[+]		# G+<number>
+	 |  /?<match>-[0-9]		# G-<number>
+	 |  \\[?<match>[ ]&		# G & something
+	 |  &[ ]<match>([ ]&|\\])	# something & G (& something)
+	 |  \\[<match>\\]		# [G]
+	 |  <match>[ ](can|may)([ ]also)?[ ]be[ ]payed
+	 |  call[ ](it|this|them|these|those)([ ]units?)?[ ]to(([ ]your)?[ ]<match>([ ]|,|.)[^open]|([ ]an?)?[ ]open[ ]<match>)
+	 |  (placed|in[ ]total)[ ]on[ ]<match>
+	 |  (additional|costs?
+	    |be[ ]payed[ ]by
+	    )
+	    ([ ]either)?			 # pay either X or Y
+	    ([ ](<sym[^>]*>)?[(act|auto|cont)NV/R,GMOCQWF0-9SEPDABITUHJKL]+(</sym[^>]*>)?,)* # pay X, Y or Z
+	    ([ ](<sym[^>]*>)?[(act|auto|cont)NV/R,GMOCQWF0-9SEPDABITUHJKL]+(</sym[^>]*>)?[ ](and|or|and/or))* # pay X or Y
+	    [ ]\"?<match>\"?
+	    ([,.)]|$				# (end of word)
+	    |[ ][^ .,]*$			# still typing...
+	    |[ ]( or | and | in | less | more | to ) # or next word is ...
+	    )
+	    )
+	 |  <param-symbol><match></param-symbol>	# keyword argument that is declared as symbol
+	 |  <param-cost>[ ]*<match></param-cost>	# keyword argument that is declared as cost
+	 |  <param-cost><match>-			# keyword argument that is declared as cost
+	 ";
+
+# Function for automatic <<>> symbols
+clan_context := 
+	"(?xi)
+	 (^|[[:space:]\"('])
+	 (<match>(
+		Royal[ ]Paladin|Oracle[ ]Think[ ]Tank|Angel[ ]Feather|Shadow[ ]Paladin|Gold[ ]Paladin|Genesis
+		|Kagero|Nubatama|Tachikaze|Murakumo|Narukami
+		|Nova[ ]Grappler|Dimension[ ]Police|Entranger|Link[ ]Joker
+		|Spike[ ]Brothers|Dark[ ]Irregulars|Pale[ ]Moon|Gear[ ]Chronicle
+		|Granblue|Bermuda[ ]Triangle|Aqua[ ]Force
+		|Megacolony|Great[ ]Nature|Neo[ ]Nectar|Cray[ ]Elemental|Touken[ ]Ranbu)
+	)|(
+		(
+		Royal[ ]Paladin|Oracle[ ]Think[ ]Tank|Angel[ ]Feather|Shadow[ ]Paladin|Gold[ ]Paladin|Genesis
+		|Kagero|Nubatama|Tachikaze|Murakumo|Narukami
+		|Nova[ ]Grappler|Dimension[ ]Police|Entranger|Link[ ]Joker
+		|Spike[ ]Brothers|Dark[ ]Irregulars|Pale[ ]Moon|Gear[ ]Chronicle
+		|Granblue|Bermuda[ ]Triangle|Aqua[ ]Force
+		|Megacolony|Great[ ]Nature|Neo[ ]Nectar|Cray[ ]Elemental|Touken[ ]Ranbu)<match>
+	)
+	| -<match>
+	";
+
+# Remove $ and % used for forcing mana symbols
+symbol_filter := replace@(match: "[\\\{\\\}]", replace: "") + { input }
+
+# Function for automatic italic-font
+italic_filter := 
+	# step 1 : remove italic tags
+	remove_tag@(tag: "<i-flavor>") +
+	remove_tag@(tag: "<i>") +
+	# step 2 : surround by <i> tags
+	{ "<i>" + input + "</i>" }
+
+# Filetr for textbox content
+text_filter := 
+	# step 1 : remove all automatic tags
+	remove_tag@(tag: "<sym-auto>") +
+	remove_tag@(tag: "<i-auto>")   +
+	remove_tag@(tag: "<b-auto>")   +
+	remove_tag@(tag: "<error-spelling") +
+	remove_tag@(tag: "<nospellcheck") +
+	remove_tag@(tag: "<color:red>") +
+	remove_tag@(tag: "</color>") +
+	# step 2: reminder text for keywords
+	expand_keywords@(
+		condition: {
+			correct_case or (mode != "pseudo" and not used_placeholders)
+		}
+		default_expand: {
+			chosen(choice:if correct_case then mode else "lower case", set.automatic_reminder_text)
+		},
+		combine: {
+			keyword  := "<nospellcheck>{keyword}</nospellcheck>"
+			reminder := process_english_hints(reminder)
+			if mode == "pseudo" then "{keyword}"
+			else (if mode == "symbol" then ("<sym-auto>{keyword}</sym-auto>" + if expand then "<atom-reminder-{mode}> ({reminder})</atom-reminder-{mode}>")
+			else keyword + if expand then "<atom-reminder-{mode}> ({reminder})</atom-reminder-{mode}>")
+		}) +
+	# step 2b : move action keywords' reminder text to the end of the line
+	replace@(
+		match: "(<atom-reminder-action>(?:(?!<kw-).)*</atom-reminder-action></kw[^>]*>)(((?!<atom-reminder| ?<kw-)[^\n(])+)",
+		replace: "\\2\\1"
+		) +
+	# step 2c : remove duplicate reminder text
+	replace@(
+		match: "(<atom-reminder-[^>]*>[^)]+[)]</atom-reminder-[^>]*>)([^\n]+)\\1"
+		replace: "\\2\\1"
+		) +
+	# step 2d : Auto Legion
+	replace@(match: "(<sym-auto>)?leg18(</sym-auto>)?", replace: "<sym-auto>leg18</sym-auto>") +
+	replace@(match: "(<sym-auto>)?leg19(</sym-auto>)?", replace: "<sym-auto>leg19</sym-auto>") +
+	replace@(match: "(<sym-auto>)?leg20(</sym-auto>)?", replace: "<sym-auto>leg20</sym-auto>") +
+	replace@(match: "(<sym-auto>)?leg21(</sym-auto>)?", replace: "<sym-auto>leg21</sym-auto>") +
+	replace@(match: "(<sym-auto>)?leg22(</sym-auto>)?", replace: "<sym-auto>leg22</sym-auto>") +
+	replace@(match: "(<sym-auto>)?leg23(</sym-auto>)?", replace: "<sym-auto>leg23</sym-auto>") +
+	replace@(match: "(<sym-auto>)?leg24(</sym-auto>)?", replace: "<sym-auto>leg24</sym-auto>") +
+	# step 2e : Fix Oracle ability
+	replace@(
+		match: "Oracle A",
+		replace: "Oracle (This ability is active when you have five of more cards in your hand)")+
+	# step 3 : add symbol font
+	replace@(
+		match: "\\b[(act|auto|cont)NV/R,GMOCQWF0-9SEPDABITUHJKL]+\\b",
+		in_context: symbol_context,
+		replace: {"<sym-auto>" + symbol_sort() + "</sym-auto>"} ) +
+	# step 3b : add explict symbol font
+	replace@(
+		match: "\\\{[(act|auto|cont)NV/R,GMOCQWF0-9SEPDABITUHJKL(legion)]+\\\}",
+		replace: {"<sym>" + symbol_filter() + "</sym>"} ) +
+	# step 3c : replace <> around clan names with <<>> quote symbols
+	replace@(match: "(<sym-auto>)?\<(</sym-auto>)?", in_context: clan_context, replace: "<sym-auto>\<</sym-auto>") +
+	replace@(match: "(<sym-auto>)?>(</sym-auto>)?", in_context: clan_context, replace: "<sym-auto>></sym-auto>") +
+	# step 3d : turn everything in front of _ into symbol font
+	replace@(
+		match: "[(act|auto|cont)NV/R,GMOCQWF0-9SEPDABITUHJKL]+_",
+		replace: {"<sym>" + symbol_sort() + "</sym> "} ) +
+	# step 4a : italicize text in parenthesis
+	replace@(
+		match: "[(]([^)\n]|[(][^)\n]*[)])*[)]?",
+		in_context: "(^|[[:space:]])<match>|<atom-keyword><match></",
+		replace: "<i-auto>&</i-auto>") +
+	# step 4b : make paranthesis non-italic
+	replace@(match: "<i-auto>[(]", replace: "(<i-auto>") +
+	replace@(match: "[)]</i-auto>", replace: "</i-auto>)") +
+	# step 5 : make text of gained abilities red
+	replace@(match: "\"", in_context: "(gets?|costs?)[ ]<match>[^\"]*\"", replace: "<color:red>\"") +
+	replace@(match: "\"", in_context: "(gets?|costs?)[ ](<color:red>)?\"[^\"]*<match>", replace: "\"</color>")	
+
+######################################### Utilities for Keywords
+alternative_cost := replace@(match:"^[A-Z]", replace: { to_lower() })
+
+remove_brackets := replace@(match: "\"", replace: "")
+
+remove_plural := replace@(match: "s", in_context: clan_context, replace: "")
+
+######################################### Add cards, set and card default scripts (Update)
+to_clan := {
+	if contains(input, match:"(") then to_title(split_text(input, match:"[(]").0)
+	else to_title(input)
+}
+clan_to_color := {
+	if to_title(input) == "Royal Paladin" then "US"
+	else if to_title(input) == "Oracle Think Tank" then "US"
+	else if to_title(input) == "Angel Feather" then "US"
+	else if to_title(input) == "Shadow Paladin" then "US"
+	else if to_title(input) == "Gold Paladin" then "US"
+	else if to_title(input) == "Genesis" then "US"
+	else if to_title(input) == "Kagero" then "DE"
+	else if to_title(input) == "Nubatama" then "DE"
+	else if to_title(input) == "Tachikaze" then "DE"
+	else if to_title(input) == "Murakumo" then "DE"
+	else if to_title(input) == "Narukami" then "DE"
+	else if to_title(input) == "Nova Grappler" then "SG"
+	else if to_title(input) == "Dimension Police" then "SG"
+	else if to_title(input) == "Entranger" then "SG"
+	else if to_title(input) == "Link Joker" then "SG"
+	else if to_title(input) == "Spike Brothers" then "DZ"
+	else if to_title(input) == "Dark Irregulars" then "DZ"
+	else if to_title(input) == "Pale Moon" then "DZ"
+	else if to_title(input) == "Gear Chronicle" then "DZ"
+	else if to_title(input) == "Granblue" then "M"
+	else if to_title(input) == "Bermuda Triangle" then "M"
+	else if to_title(input) == "Aqua Force" then "M"
+	else if to_title(input) == "Megacolony" then "Z"
+	else if to_title(input) == "Great Nature" then "Z"
+	else if to_title(input) == "Neo Nectar" then "Z"
+	else if to_title(input) == "Cray Elemental" then "CE"
+	else if to_title(input) == "Touken Ranbu" then "TR"
+	else if contains(input, match: "(US)") then "US"
+	else if contains(input, match: "(DE)") then "DE"
+	else if contains(input, match: "(SG)") then "SG"
+	else if contains(input, match: "(DZ)") then "DZ"
+	else if contains(input, match: "(M)") then "M"
+	else if contains(input, match: "(Z)") then "Z"
+	else "SG"
+}
+
+default_trigger := {
+	if card.grade == "4" then "tridrive"
+	else if card.grade == "3" then "twindrive"
+	else if card.grade == "2" then "intercept"
+	else "boost"
+}
+	
+
+clan_list := ["Royal Paladin", "Oracle Think Tank", "Angel Feather", "Shadow Paladin", "Gold Paladin", "Genesis", "Kagero", "Nubatama", "Tachikaze", "Murakumo", "Narukami", "Nova Grappler", "Dimension Police", "Entranger", "Link Joker", "Spike Brothers", "Dark Irregulars", "Pale Moon", "Gear Chronicle", "Granblue", "Bermuda Triangle", "Aqua Force", "Megacolony", "Great Nature", "Neo Nectar"]
+
+rarity_ratio := ["C","C","C","C","C","C","C","C","C","C","C","C","C","C","C","R","R","R","R","R","RR","RR","RR","RRR","RRR"]
+
+trigger_shield := { if input == "draw" then 5000 else 10000 }
+
+heal_text := { if input == "heal" then "(You may only have up to four cards with \"<sym>H</sym> HEAL\" in a deck.)" else "" }

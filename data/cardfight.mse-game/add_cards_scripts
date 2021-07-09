@@ -1,0 +1,63 @@
+######################### Add Cards Scripts #########################
+
+#add cards script:
+#	name: &Nation Cycle
+#	description: Adds one card of each nation. (Does not include Cray Elementals and Touken Ranbu)
+#	script:
+#		[ new_card([color: "US"])
+#		, new_card([color: "DE"])
+#		, new_card([color: "DZ"])
+#		, new_card([color: "M"])
+#		, new_card([color: "Z"])
+#		, new_card([color: "SG"])
+#		]
+
+add cards script:
+	name: &Trigger Cycle
+	description: Adds a trigger of each type for each clan mentioned in the set clans field (set info).
+	script: for each c in (if set.set_clans != "" then split_text(set.set_clans, match:", ") else [""]) do for each t in ["heal","draw","stand","crit"] do [ new_card([clan: to_string(to_clan(c)), color: clan_to_color(c), type: "trigger", grade: "0", skill: "boost", trigger: to_string(t), power: "5000 ", shieldtype: "shield", shield: trigger_shield(t), text: heal_text(t)]) ]
+
+add cards script:
+	name: &Clan Cycle 0
+	description: Adds one grade 0 of each clan mentioned in the set clans field (set info).
+	script:
+		for each c in (if set.set_clans != "" then split_text(set.set_clans, match:", ") else clan_list) do 
+			[ new_card([clan: to_string(to_clan(c)), color: clan_to_color(c), grade: "0", skill: "boost"]) ]
+		
+add cards script:
+	name: &Clan Cycle 1
+	description: Adds one grade 1 of each clan mentioned in the set clans field (set info).
+	script:
+		for each c in (if set.set_clans != "" then split_text(set.set_clans, match:", ") else clan_list) do 
+			[ new_card([clan: to_string(to_clan(c)), color: clan_to_color(c), grade: "1", skill: "boost"]) ]
+		
+add cards script:
+	name: &Clan Cycle 2
+	description: Adds one grade 2 of each clan mentioned in the set clans field (set info).
+	script:
+		for each c in (if set.set_clans != "" then split_text(set.set_clans, match:", ") else clan_list) do 
+			[ new_card([clan: to_string(to_clan(c)), color: clan_to_color(c), grade: "2", skill: "intercept"]) ]
+		
+add cards script:
+	name: &Clan Cycle 3
+	description: Adds one grade 3 of each clan mentioned in the set clans field (set info).
+	script:
+		for each c in (if set.set_clans != "" then split_text(set.set_clans, match:", ") else clan_list) do 
+			[ new_card([clan: to_string(to_clan(c)), color: clan_to_color(c), grade: "3", skill: "twindrive"]) ]
+		
+add cards script:
+	name: &Clan Cycle 4
+	description: Adds one grade 4 "Stride" g-unit of each clan mentioned in the set clans field (set info).
+	script:
+		for each c in (if set.set_clans != "" then split_text(set.set_clans, match:", ") else clan_list) do 
+			[ new_card([rarity: "GR", type: "g-unit", clan: to_string(to_clan(c)), color: clan_to_color(c), grade: "4", skill: "tridrive"]) ]
+		
+add cards script:
+	name: &Rarity Pyramid
+	description: Adds cards of each clan in the set clan field (set info) equal to the rarity ratio of a Cardfight!! Vanguard set.
+	script: for each c in (if set.set_clans != "" then split_text(set.set_clans, match:", ") else [""]) do for each r in rarity_ratio do [ new_card([rarity: to_string(r), clan: to_string(to_clan(c)), color: clan_to_color(c)]) ]
+
+add cards script:
+	name: &Special Copies
+	description: Adds a SP rarity copy of each RRR already exisiting in your set (without art, flavor text or illustrator).
+	script: for each card in filter_list(set, filter: { input.rarity == "RRR" }) do [ new_card([rarity: "SP", type: card.type, name: card.name, grade: card.grade, skill: card.skill, clan: card.clan, color: card.color, race: card.race, power: card.power, shieldtype: card.shieldtype, shield: card.shield, text: card.text, trigger: card.trigger]) ]

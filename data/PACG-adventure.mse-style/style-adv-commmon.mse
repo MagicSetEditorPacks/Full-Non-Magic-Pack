@@ -1,0 +1,162 @@
+# Styling for items common all Adventure Cards
+
+# Stylesheet styling
+styling_style:
+	landscape_cards:
+		popup_style:	in place
+		render_style:	text
+
+card_style:
+# cardart conversion to sepia
+# 1. convert the image to greyscale - cardart2: image: { saturate(card.cardart, amount: -1) }
+# 2. combine a sepia tone version	- cardart3: script: rgb(162,138,101) mask: { invert_image(saturate(card.cardart, amount: -1)) } combine: overlay
+# Thanks to http://gimpguru.org/Tutorials/SepiaToning/
+# TODO: Script TOP/LEFT/WIDTH/HEIGHT
+	cardart:
+		visible: 		{ styling.card_side != "Back" }
+		left:			{ 40 }
+		top:			{ if isLandscape() then cardArtW() else 0 }
+		width:			{ if isLandscape() then cardArtW() else Width - 36 }
+		height:			{ if isLandscape() then (Width - 58) else 310 }
+		angle:			{ advAngle() }
+	cardart2:
+		visible: 		{ styling.card_side == "Back" }
+		left:			{ 40 }
+		top:			{ if isLandscape() then cardArtW() else 0 }
+		width:			{ if isLandscape() then cardArtW() else Width - 36 }
+		height:			{ if isLandscape() then (Width - 58) else 310 }
+		angle:			{ advAngle() }
+		render_style:	image
+		image:			{ saturate(card.cardart, amount: -1) }
+		z_index: 1
+	cardart3:
+		visible: 		{ styling.card_side == "Back" }
+		left:			{ 40 }
+		top:			{ if isLandscape() then cardArtW() else 0 }
+		width:			{ if isLandscape() then cardArtW() else Width - 36 }
+		height:			{ if isLandscape() then (Width - 58) else 310 }
+		angle:			{ advAngle() }
+		mask:			{ invert_image(saturate(card.cardart, amount: -1)) }
+		combine: 		overlay
+		z_index: 		2
+	
+# OVERRIDE standard styling defined in:
+# \PACG-common.mse-include\style-pacg.mse
+	bannerdk:
+		left:			{ 0 }
+		top:			{ if isLandscape() then Height else 0 }
+		height:			{ if isLandscape() then Width else Height }
+		angle:			{ advAngle() }
+	bannerlt:
+		left:			{ 0 }
+		top:			{ if isLandscape() then Height else 0 }
+		height:			{ if isLandscape() then Width else Height }
+		angle:			{ advAngle() }
+	border_fill_1:
+		visible:		{ isLandscape() and styling.card_side == "Front" }
+		top:			{ Height - landscapeTblW() - 42 }
+		left:			{ 40 }
+		angle:			90
+	pathlogo:
+		bottom:			{ if isLandscape() then Height - 44 else Height - logo_top }
+		left:			{ if isLandscape() then Width - logo_top else 44 }
+		angle:			{ advAngle() }
+	artist:
+		bottom:			{ if isLandscape() then 18 else Height - 8 }
+		right:			{ if isLandscape() then Width - 8 else Width - 18 }
+		width:			{ (if isLandscape() then Width else Height) - 195 - 16 - 42 }
+		angle:			{ advAngle() }
+	community_use:
+		top:			{ if isLandscape() then 8 else 36 }
+		left:			{ if isLandscape() then 40 else Width - 8 }
+		width:			{ if isLandscape() then Width - 66 else Height - 76 }
+		angle:			{ if isLandscape() then 0 else 270 }
+	borderdk:
+		mask:			{ if isLandscape() then "/PACG-common.mse-include/res/border_dkh.png" else "/PACG-common.mse-include/res/border_dk.png" }
+
+
+# No style override for Flavour so all dimensions need to be defined
+	flavour_box:
+		visible:				{ styling.card_side == "Back" or isLandscape() }
+		left:					{ 40 }
+		top:					{ if isLandscape() and styling.card_side == "Front" then Height - landscapeTblW() - 42 - 2 else 265 }
+		width:					{ Width - 40 }
+		height:					{ if isLandscape() then (if styling.card_side == "Front" then landscapeTblW() + 2 else Height - 265 - 42) else Height - 265 }
+		render_style:			image
+		image:					{ set_mask(image: "/PACG-common.mse-include/res/background.png", mask: "/PACG-common.mse-include/res/fade_mask.png") }
+		z_index:				41
+	flavour_text:
+		visible:				{ styling.card_side == "Back" }
+		left:					{ flavourL() }
+		top:					{ flavourT() }
+		width:					{ flavourW() }
+		height:					{ if styling.card_side == "Back" then flavourH() }
+		angle:					{ flavourA() }
+		z_index:				52
+		alignment: 				left middle
+		line_height_soft_max:	1.2
+		padding_left:			7
+		padding_right:			5
+		padding_top:			5
+		padding_bottom:			5
+		font:
+			name:					{ getAltFont() }
+			size:					{ getFontSize(11) }
+			scale_down_to:			8
+			shadow_color:			{ "white" }
+			shadow_blur:			2
+
+# Reward common to Adventure cards only so all dimensions need to be defined
+	reward:
+		visible: 		{ styling.card_side != "Back" and card.type != "LOCATION" }
+		left:			{ rewardL() + (if isLandscape() then headerH() ) }
+		top:			{ rewardT() + (if not isLandscape() then headerH() )}
+		width:			{ rewardW() }
+		height:			{ if styling.card_side != "Back" and card.type != "LOCATION" then rewardCellH() }
+		angle:			{ rewardA() }
+		alignment: 		center middle
+		z_index: 		55
+		padding_left:	2
+		padding_right:	2
+		padding_top:	2
+		padding_bottom:	2
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(10) }
+
+extra_card_style:
+# Reward
+	reward_table:
+		visible: 		{ styling.card_side != "Back" and card.type != "LOCATION" }
+		left:			{ rewardL() }
+		top:			{ rewardT() }
+		width:			{ rewardW() }
+		height:			{ rewardH() }
+		angle:			{ rewardA() }
+		z_index:		51
+
+	reward_cell:
+		visible: 		{ styling.card_side != "Back" and card.type != "LOCATION" }
+		left:			{ rewardL() + (if isLandscape() then headerH()) }
+		top:			{ rewardT() + (if not isLandscape() then headerH()) }
+		width:			{ rewardW() }
+		height:			{ rewardH() - headerH() }
+		angle:			{ rewardA() }
+		z_index:		52
+
+	reward_header:
+		visible: 		{ styling.card_side != "Back" and card.type != "LOCATION" }
+		left:			{ rewardL() }
+		top:			{ rewardT() }
+		width:			{ rewardW() }
+		height:			{ headerH() }
+		angle:			{ rewardA() }
+		alignment:		center middle
+		z_index: 		53
+		padding_left:	5
+		font:
+			name:			{ getFont() }
+			size:			{ getFontSize(11) }
+			color:			{ "white" }
+			shadow_color:	{ getShadowColour() }
+			shadow_blur:	4

@@ -1,0 +1,182 @@
+mse version: 2.0.0
+full name: Top Trumps
+short name: Top Trumps
+installer group: Top Trumps/game files
+icon: icon.png
+position hint: 05
+
+version: 2014-08-08
+
+set field:
+	type: text
+	name: field 1
+set field:
+	type: text
+	name: field 2
+set field:
+	type: text
+	name: field 3
+set field:
+	type: text
+	name: field 4
+set field:
+	type: text
+	name: field 5
+set field:
+	type: text
+	name: field 6
+set field:
+	type: choice
+	name: stats
+	choice: 4
+	choice: 5
+	choice: 6
+set field:
+	type: choice
+	name: flavor_text
+	choice: right
+	choice: left
+	choice: none
+set field:
+	type: choice
+	name: image_mask
+	choice: none
+	choice: arc
+	choice: point
+	choice: tripoint
+	choice: bubble
+set field:
+	type: boolean
+	name: custom background
+	initial: no
+card field:
+	type: image
+	name: custombackgroundimage
+	show statistics: false
+card field:
+	type: choice
+	name: background
+	choice:
+		name: color
+		choice: blue
+		choice: green
+		choice: purple
+		choice: red
+		choice: teal
+		choice: yellow
+	choice:
+		name: pattern
+		choice: marble
+		choice: rusty steel
+		choice: scales
+		choice: steel
+		choice: stones
+		choice: zebra
+card field:
+	type: text
+	name: name
+	show statistics: false
+	description: The name of the card.
+card field:
+	type: image
+	name: image
+	show statistics: false
+	description: The image of the card. Double click to load an image.
+card field:
+	type: text
+	name: artist
+	description: The artist of the card.
+card field:
+	type: text
+	name: copyright
+	show statistics: false
+	description: The copyright of the card.
+card field:
+	type: text
+	name: flavortext
+	multi line: true
+	show statistics: false
+	description: The flavor text of the card.
+card field:
+	type: choice
+	name: overlay
+	editable: false
+	show statistics: false
+	script: 	
+			if set.flavor_text=="right" and set.stats=="4" then "rft4" else
+			if set.flavor_text=="right" and set.stats=="5" then "rft5" else
+			if set.flavor_text=="right" and set.stats=="6" then "rft6" else
+			if set.flavor_text=="left" and set.stats=="4" then "lft4" else
+			if set.flavor_text=="left" and set.stats=="5" then "lft5" else
+			if set.flavor_text=="left" and set.stats=="6" then "lft6" else
+			if set.flavor_text=="none" and set.stats=="4" then "nft4" else
+			if set.flavor_text=="none" and set.stats=="5" then "nft5" else "nft6"
+	choice: rft4
+	choice: rft5
+	choice: rft6
+	choice: lft4
+	choice: lft5
+	choice: lft6
+	choice: nft4
+	choice: nft5
+	choice: nft6
+card field:
+	type: text
+	name: stat1
+	editable: false
+	script: set.field_1
+	show statistics: false
+card field:
+	type: text
+	name: stat2
+	editable: false
+	script: set.field_2
+	show statistics: false
+card field:
+	type: text
+	name: stat3
+	editable: false
+	script: set.field_3
+	show statistics: false
+card field:
+	type: text
+	name: stat4
+	editable: false
+	script: set.field_4
+	show statistics: false
+card field:
+	type: text
+	name: stat5
+	editable: false
+	script: set.field_5
+	show statistics: false
+card field:
+	type: text
+	name: stat6
+	editable: false
+	script: set.field_6
+	show statistics: false
+card field:
+	type: text
+	name: value1
+	description: The value of the first statistic of the card.
+card field:
+	type: text
+	name: value2
+	description: The value of the second statistic of the card.
+card field:
+	type: text
+	name: value3
+	description: The value of the third statistic of the card.
+card field:
+	type: text
+	name: value4
+	description: The value of the fourth statistic of the card.
+card field:
+	type: text
+	name: value5
+	description: The value of the fifth statistic of the card.
+card field:
+	type: text
+	name: value6
+	description: The value of the sixth statistic of the card.

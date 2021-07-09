@@ -1,0 +1,487 @@
+﻿mse version: 0.3.8
+short name: munchkin
+full name: munchkin
+icon: card-back.png
+position hint: 45
+installer group: munchkin/game files
+
+version: 2010-06-06
+#By benicetodan
+##### Scripts
+
+init script: 
+	real_to_real := to_real
+	to_real := { if match(input, match:"[-+]?[0-9]*[.]?[0-9]+") == true then real_to_real() else 0 }
+	card_type := {"monster"}
+	card_supertype := {"door"}
+	
+##### Set fields
+
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+	identifying: true
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: text
+	name: bigfont
+	default: "Windlass"
+set field:
+	type: text
+	name: smallfont
+	default: "Caslon Antique"
+set field:
+	type: text
+	name: name font size
+	description: Font size for the name, big detail, and monster enhancer amount fields
+	default: "19"
+set field:
+	type: text
+	name: level bonus font size
+	description: Font size for the monster level and equipment bonus fields
+	default: "15.5"
+set field:
+	type: text
+	name: thingie font size
+	description: Font size for the levels gained, loot, usable by, equipment class, item value, and thingie type fields
+	default: "14"
+set field:
+	type: text
+	name: detail font size
+	description: Font size for the detail (card rules) field
+	default: "13.5"
+set field:
+	type: text
+	name: monster subtype font size
+	description: Font size for the monster subtype field
+	default: "12"
+set field:
+	type: color
+	name: small text color
+	choice:
+		name: Munchkin
+		color: rgb(83,27,4)
+	choice:
+		name: Black (Bites, Blender, Booty, Cthulu, Fu, Impossible, Star, Super, The Good The Bad)
+		color: rgb(0,0,0)
+	choice:
+		name: White
+		color: rgb(255,255,255)
+	show statistics: false
+	description: The text of the card; can be any solid color.
+set field:
+	type: color
+	name: big text color
+	choice:
+		name: Munchkin
+		color: rgb(83,27,4)
+	choice:
+		name: Super
+		color: rgb(238,19,34)
+	choice:
+		name: Black (Bites, Blender, Booty, Cthulu, Fu, Impossible, Star, The Good The Bad)
+		color: rgb(0,0,0)
+	choice:
+		name: White
+		color: rgb(255,255,255)
+	show statistics: false
+	description: The text of the card; can be any solid color.
+set field:
+	type: color
+	name: door border color
+	choice:
+		name: Munchkin
+		color: rgb(83,27,4)
+	choice:
+		name: Bites
+		color: rgb(239,28,35)
+	choice:
+		name: Blender
+		color: rgb(110,10,124)
+	choice:
+		name: Booty
+		color: rgb(108,10,11)
+	choice:
+		name: Cthulu
+		color: rgb(214,223,36)
+	choice:
+		name: Super
+		color: rgb(254,230,0)
+	choice:
+		name: The Good The Bad
+		color: rgb(144,44,42)
+	choice:
+		name: Black (Star)
+		color: rgb(0,0,0)
+	choice:
+		name: White (Fu)
+		color: rgb(255,255,255)
+	show statistics: true
+	description: The border of the card; can be any solid color.
+set field:
+	type: color
+	name: door middle border color
+	choice:
+		name: Munchkin
+		color: rgb(83,27,4)
+	choice:
+		name: Bites
+		color: rgb(239,28,35)
+	choice:
+		name: Booty
+		color: rgb(108,10,11)
+	choice:
+		name: Cthulu
+		color: rgb(214,223,36)
+	choice:
+		name: Super
+		color: rgb(254,230,0)
+	choice:
+		name: The Good The Bad
+		color: rgb(144,44,42)
+	choice:
+		name: Black (Star)
+		color: rgb(0,0,0)
+	choice:
+		name: White (Blender, Fu)
+		color: rgb(255,255,255)
+	show statistics: false
+	description: The middle border of the card; can be any solid color.
+set field:
+	type: color
+	name: door inner border color
+	choice:
+		name: Munchkin
+		color: rgb(83,27,4)
+	choice:
+		name: Booty
+		color: rgb(108,10,11)
+	choice:
+		name: Cthulu
+		color: rgb(245,241,152)
+	choice:
+		name: Super
+		color: rgb(254,230,0)
+	choice:
+		name: The Good The Bad
+		color: rgb(144,44,42)
+	choice:
+		name: Black (Star)
+		color: rgb(0,0,0)
+	choice:
+		name: White (Bites, Blender, Fu)
+		color: rgb(255,255,255)
+	show statistics: false
+	description: The thin inner border of the card; can be any solid color.
+set field:
+	type: color
+	name: door background color
+	choice:
+		name: Munchkin
+		color: rgb(250,220,150)
+	choice:
+		name: Booty
+		color: rgb(255,243,219)
+	choice:
+		name: Cthulu
+		color: rgb(245,241,152)
+	choice:
+		name: Star
+		color: rgb(227,244,252)
+	choice:
+		name: Super
+		color: rgb(254,246,152)
+	choice:
+		name: The Good The Bad
+		color: rgb(247,218,176)
+	choice:
+		name: Black
+		color: rgb(0,0,0)
+	choice:
+		name: White (Bites, Blender, Fu)
+		color: rgb(255,255,255)
+	show statistics: false
+	description: The background of the card; can be any solid color.
+set field:
+	type: color
+	name: treasure border color
+	choice:
+		name: Munchkin
+		color: rgb(83,27,4)
+	choice:
+		name: Bites
+		color: rgb(239,28,35)
+	choice:
+		name: Blender
+		color: rgb(110,10,124)
+	choice:
+		name: Booty
+		color: rgb(108,10,11)
+	choice:
+		name: Cthulu
+		color: rgb(214,223,36)
+	choice:
+		name: Super
+		color: rgb(254,230,0)
+	choice:
+		name: The Good The Bad
+		color: rgb(144,44,42)
+	choice:
+		name: Black (Star)
+		color: rgb(0,0,0)
+	choice:
+		name: White (Fu)
+		color: rgb(255,255,255)
+	show statistics: true
+	description: The border of the card; can be any solid color.
+set field:
+	type: color
+	name: treasure middle border color
+	choice:
+		name: Munchkin
+		color: rgb(83,27,4)
+	choice:
+		name: Bites
+		color: rgb(239,28,35)
+	choice:
+		name: Booty
+		color: rgb(108,10,11)
+	choice:
+		name: Cthulu
+		color: rgb(214,223,36)
+	choice:
+		name: Super
+		color: rgb(254,230,0)
+	choice:
+		name: The Good The Bad
+		color: rgb(144,44,42)
+	choice:
+		name: Black (Star)
+		color: rgb(0,0,0)
+	choice:
+		name: White (Blender, Fu)
+		color: rgb(255,255,255)
+	show statistics: false
+	description: The middle border of the card; can be any solid color.
+set field:
+	type: color
+	name: treasure inner border color
+	choice:
+		name: Munchkin
+		color: rgb(83,27,4)
+	choice:
+		name: Blender
+		color: rgb(110,10,124)
+	choice:
+		name: Booty
+		color: rgb(108,10,11)
+	choice:
+		name: Fu
+		color: rgb(172,28,38)
+	choice:
+		name: Cthulu
+		color: rgb(175,86,102)
+	choice:
+		name: Super
+		color: rgb(238,19,34)
+	choice:
+		name: Black (Bites, Star)
+		color: rgb(0,0,0)
+	choice:
+		name: The Good The Bad
+		color: rgb(144,44,42)
+	choice:
+		name: White
+		color: rgb(255,255,255)
+	show statistics: false
+	description: The inner border of the card; can be any solid color.
+set field:
+	type: color
+	name: treasure background color
+	choice:
+		name: Munchkin
+		color: rgb(248,205,100)
+	choice:
+		name: Booty
+		color: rgb(255,207,79)
+	choice:
+		name: Star
+		color: rgb(119,209,244)
+	choice:
+		name: Super
+		color: rgb(255,247,200)
+	choice:
+		name: The Good The Bad
+		color: rgb(248,231,201)
+	choice:
+		name: Black
+		color: rgb(0,0,0)
+	choice:
+		name: White (Bites, Blender, Cthulu, Fu)
+		color: rgb(255,255,255)
+	show statistics: false
+	description: The background of the card; can be any solid color.
+
+##### Card fields
+
+##### Background Fields
+card_field:
+	type: color
+	name: border color
+	default: if styling.supertype == "door" then set.door_border_color else set.treasure_border_color
+	show statistics: false
+	description: The border of the card; can be any solid color.
+card field:
+	type: color
+	name: middle border color
+	default: if styling.supertype == "door" then set.door_middle_border_color else set.treasure_middle_border_color
+	show statistics: false
+	description: The middle border of the card; can be any solid color.
+card field:
+	type: color
+	name: inner border color
+	default: if styling.supertype == "door" then set.door_inner_border_color else set.treasure_inner_border_color
+	show statistics: false
+	description: The thin inner border of the card; can be any solid color.
+card field:
+	type: color
+	name: background color
+	default: if styling.supertype == "door" then set.door_background_color else set.treasure_background_color
+	show statistics: false
+	description: The background of the card; can be any solid color.
+	
+##### Generic Fields
+card field:
+	type: text
+	name: name
+	description: The name of the card
+	identifying: true
+	multi line: true
+	show statistics: false
+	card list visible: true
+	card list column: 1
+	card list alignment: right
+	card list width: 50
+	card list name: Name
+card field:
+	type: text
+	name: details
+	description: The rules on the card
+	multi line: true
+	show statistics: false
+card field:
+	type: text
+	name: bigdetails
+	description: The rules on the card - in BIG CENTERED TEXT
+	multi line: true
+	show statistics: false
+card field:
+	type: image
+	name: image
+	show statistics: false
+	description: The card's art
+card field:
+	type: choice
+	name: type
+	description: The type of card
+	choice: race
+	choice: class
+	choice: style
+	choice: power
+	choice: loyalty
+	choice: training
+	choice: accent
+	choice: gual
+	choice: equipment
+	choice: item
+	choice: steed
+	choice: ship
+	choice: helper
+	choice: hireling
+	choice: sidekick
+	choice: mook
+	choice: minion
+	choice: monster
+	choice: monster enhancer
+	choice: enhancer enhancer
+	choice: room
+	choice: curse
+	choice: other
+	save value: false
+	show statistics: true
+	editable: false
+	script:
+		stylesheet   # indicate that this value should be updated when the stylesheet changes
+		card_type() # determined by the style
+card field:
+	type: choice
+	name: supertype
+	description: Door or Treasure
+	choice: door
+	choice: treasure
+	save value: false
+	show statistics: true
+	editable: false
+	script:
+		stylesheet   # indicate that this value should be updated when the stylesheet changes
+		card_supertype() # determined by the style
+
+##### Monster Fields
+card field:
+	type: text
+	name: level
+	description: The level of the monster
+card field:
+	type: text
+	name: monstersubtype
+	description: Sub-type of the monster - where applicable (ie: Undead)
+card field:
+	type: text
+	name: levelsgained
+	description: The number of levels gained by defeating the monster
+card field:
+	type: text
+	name: loot
+	description: What loot you get for defeating the monster
+
+##### Monster Enhancer Fields
+card field:
+	type: text
+	name: monsterenhanceramount
+	multi line: true
+	description: The amount added to the monster's level
+	
+
+##### Equipment Fields
+card field:
+	type: text
+	name: bonus
+	multi line: true
+	description: How much does this add to your level
+card field:
+	type: text
+	name: usableby
+	multi line: true
+	description: Who can or can't use this
+card field:
+	type: text
+	name: equipmentclass
+	multi line: true
+	description: Footgear, Headgear, Big, 2 Hands, etc.
+card field:
+	type: text
+	name: value
+	multi line: true
+	description: For how many gold pieces can this be sold
+
+##### Other Fields
+card field:
+	type: text
+	name: thingietype
+	description: Race/Class/Accent/Loyalty/etc.

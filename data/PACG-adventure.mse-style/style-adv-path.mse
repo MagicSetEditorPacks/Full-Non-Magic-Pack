@@ -1,0 +1,229 @@
+# ADVENTURE PATH Card Styling
+
+card_style:
+# During this adventure path
+	during:
+		visible:		{ isAPFront() }
+		top:			{ duringapT() + if not isLandscape() then headerH() }
+		height:			{ if isAPFront() then duringapH() - headerH() }
+		left:			{ duringapL() + if isLandscape() then headerH() }
+		width:			{ duringapW() }
+		angle:			{ duringapA() }
+		z_index:		55
+		padding_left:	5
+		padding_right:	5
+		alignment:		justify middle 
+		font:
+			name:			{ getAltFont() }
+			size:			{ getFontSize(11) }
+			scale_down_to:	8
+# 	flavour:
+#		/style-adv-common
+
+
+extra_card_style:
+
+# Adventures in this path
+	adventure_table:
+		visible:		{ isAPFront() }
+		top:			{ adventureT() }
+		height:			{ if isAPFront() then adventureH() }
+		left:			{ adventureL() }
+		width:			{ adventureW() + 2 }
+		angle:			{ adventureA() }
+		z_index:		50
+	adventure_header:
+		visible:		{ isAPFront() }
+		top:			{ adventureT() }
+		height:			{ if isAPFront() then (if isLandscape() then headerH() * 1.5 else headerH()) }
+		left:			{ adventureL() }
+		width:			{ adventureW() }
+		angle:			{ adventureA() }
+		alignment:		center middle shrink-overflow
+		z_index:		51
+		font:
+			name:			{ getFont() }
+			size:			{ getFontSize(9.5) }
+			color:			{ "white" }
+			shadow_color:	{ getDarkColour() }
+			shadow_blur:	2
+# Forward Editors for adventure_n fields display 'n. <adventure_n>'
+	adventure_fwd_1:
+		visible:		{ isAPFront() }
+		top:			{ adventureCellT(0) }
+		height:			{ if isAPFront() then adventureCellH() }
+		left:			{ adventureCellL(0) }
+		width:			{ adventureCellW() }
+		angle:			{ adventureA() }
+		z_index:		52
+		padding_left:	2
+		padding_right:	2
+		alignment:		left middle shrink-overflow
+		font:
+			name:		{ getAltFont() }
+			size:			{ getFontSize(10) }
+			scale_down_to:	8
+			color:			{ getDarkColour() }
+	adventure_fwd_2:
+		visible:		{ isAPFront() }
+		top:			{ adventureCellT(1) }
+		height:			{ if isAPFront() then adventureCellH() }
+		left:			{ adventureCellL(1) }
+		width:			{ adventureCellW() }
+		angle:			{ adventureA() }
+		z_index:		52
+		padding_left:	2
+		padding_right:	2
+		alignment:		left middle shrink-overflow
+		font:
+			name:		{ getAltFont() }
+			size:			{ getFontSize(10) }
+			scale_down_to:	8
+			color:			{ getDarkColour() }
+	adventure_fwd_3:
+		visible:		{ isAPFront() }
+		top:			{ adventureCellT(2) }
+		height:			{ if isAPFront() then adventureCellH() }
+		left:			{ adventureCellL(2) }
+		width:			{ adventureCellW() }
+		angle:			{ adventureA() }
+		z_index:		52
+		padding_left:	2
+		padding_right:	2
+		alignment:		left middle shrink-overflow
+		font:
+			name:		{ getAltFont() }
+			size:			{ getFontSize(10) }
+			scale_down_to:	8
+			color:			{ getDarkColour() }
+	adventure_fwd_4:
+		visible:		{ isAPFront() }
+		top:			{ adventureCellT(3) }
+		height:			{ if isAPFront() then adventureCellH() }
+		left:			{ adventureCellL(3) }
+		width:			{ adventureCellW() }
+		angle:			{ adventureA() }
+		z_index:		52
+		padding_left:	2
+		padding_right:	2
+		alignment:		left middle shrink-overflow
+		font:
+			name:		{ getAltFont() }
+			size:			{ getFontSize(10) }
+			scale_down_to:	8
+			color:			{ getDarkColour() }
+	adventure_fwd_5:
+		visible:		{ isAPFront() }
+		top:			{ adventureCellT(4) }
+		height:			{ if isAPFront() then adventureCellH() }
+		left:			{ adventureCellL(4) }
+		width:			{ adventureCellW() }
+		angle:			{ adventureA() }
+		z_index:		52
+		padding_left:	2
+		padding_right:	2
+		alignment:		left middle shrink-overflow
+		font:
+			name:		{ getAltFont() }
+			size:			{ getFontSize(10) }
+			scale_down_to:	8
+			color:			{ getDarkColour() }
+	adventure_fwd_6:
+		visible:		{ isAPFront() }
+		top:			{ adventureCellT(5) }
+		height:			{ if isAPFront() then adventureCellH() }
+		left:			{ adventureCellL(5) }
+		width:			{ adventureCellW() }
+		angle:			{ adventureA() }
+		z_index:		52
+		padding_left:	2
+		padding_right:	2
+		alignment:		left middle shrink-overflow
+		font:
+			name:		{ getAltFont() }
+			size:			{ getFontSize(10) }
+			scale_down_to:	8
+			color:			{ getDarkColour() }
+
+	adventure_cell_1:
+		visible:		{ isAPFront() }
+		top:			{ adventureCellT(0) }
+		height:			{ adventureCellH() }
+		left:			{ adventureCellL(0) }
+		width:			{ adventureCellW() }
+		angle:			{ adventureA() }
+		z_index:		51
+	adventure_cell_2:
+		visible:		{ isAPFront() }
+		top:			{ adventureCellT(1) }
+		height:			{ adventureCellH() }
+		left:			{ adventureCellL(1) }
+		width:			{ adventureCellW() }
+		angle:			{ adventureA() }
+		z_index:		51
+	adventure_cell_3:
+		visible:		{ isAPFront() }
+		top:			{ adventureCellT(2) }
+		height:			{ adventureCellH() }
+		left:			{ adventureCellL(2) }
+		width:			{ adventureCellW() }
+		angle:			{ adventureA() }
+		z_index:		51
+	adventure_cell_4:
+		visible:		{ isAPFront() }
+		top:			{ adventureCellT(3) }
+		height:			{ adventureCellH() }
+		left:			{ adventureCellL(3) }
+		width:			{ adventureCellW() }
+		angle:			{ adventureA() }
+		z_index:		51
+	adventure_cell_5:
+		visible:		{ isAPFront() }
+		top:			{ adventureCellT(4) }
+		height:			{ adventureCellH() }
+		left:			{ adventureCellL(4) }
+		width:			{ adventureCellW() }
+		angle:			{ adventureA() }
+		z_index:		51
+	adventure_cell_6:
+		visible:		{ isAPFront() }
+		top:			{ adventureCellT(5) }
+		height:			{ adventureCellH() }
+		left:			{ adventureCellL(5) }
+		width:			{ adventureCellW() }
+		angle:			{ adventureA() }
+		z_index:		51
+
+
+# During this Adventure Path
+	duringap_table:
+		visible:		{ isAPFront() }
+		top:			{ duringapT() }
+		height:			{ duringapH() }
+		left:			{ duringapL() }
+		width:			{ duringapW() + 2 }
+		angle:			{ duringapA() }
+		z_index:		50
+	duringap_header:
+		visible:		{ isAPFront() }
+		top:			{ duringapT() }
+		height:			{ headerH() }
+		left:			{ duringapL() }
+		width:			{ duringapW() }
+		angle:			{ duringapA() }
+		alignment:		center middle shrink-overflow
+		z_index:		51
+		font:
+			name:			{ getFont() }
+			size:			{ getFontSize(9.5) }
+			color:			{ "white" }
+			shadow_color:	{ getDarkColour() }
+			shadow_blur:	2
+	duringap_cell:
+		visible:		{ isAPFront() }
+		top:			{ duringapT() + if not isLandscape() then headerH() }
+		height:			{ duringapH() - headerH() }
+		left:			{ duringapL() + if isLandscape() then headerH() }
+		width:			{ duringapW() }
+		angle:			{ duringapA() }
+		z_index:		51

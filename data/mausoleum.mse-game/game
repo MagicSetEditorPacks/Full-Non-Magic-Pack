@@ -1,0 +1,112 @@
+mse version: 0.3.7
+short name: Mausoleum
+full name: Mausoleum
+installer group: mausoleum/game files
+icon: cardback.png
+position hint: 30
+version: 2008-12-29
+
+################## scripts
+init script:
+	################## sorting
+	type_sort := {
+		if card.type == "heir" then "A"
+		else if card.type == "accident" then "B"
+		else if card.type == "grave" then "C"
+		else if card.type == "incident" then "D"
+		else "E"
+	}
+	card_number := {
+		position (
+			of: card
+			in: set
+			order_by: { type_sort() }
+		) + 1
+	}
+################## set fields
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+	description: This information will not appear on the card.
+set field:
+	type: text
+	name: description
+	multi line: true
+	description: This information will not appear on the card.
+set field:
+	type: text
+	name: copyright
+	description: Copyright information. This will not appear on the card.
+set field:
+	type: text
+	name: designer
+	description: Designer(s) of the set.
+set field:
+	type: text
+	name: date
+	description: Date
+################ Card fields
+card field:
+	type: choice
+	name: type
+	choice: accident
+	choice: incident
+	choice: grave
+	choice: heir
+	description: The type of the card.
+	card list visible: true
+	card list column: 2
+card field:
+	type: image
+	name: image
+	description: Image for the top left corner of the card.
+	show statistics: false
+card field:
+	type: choice
+	name: image 2
+	show statistics: false
+	choice: default
+	editable: false
+	save value: false
+card field:
+	type: choice
+	name: image 3
+	show statistics: false
+	choice: default
+	editable: false
+	save value: false
+card field:
+	type: text
+	name: card number
+	description: The card's collector number.
+	editable: false
+	script: card_number()
+	show statistics: false
+	card list visible: true
+	card list column: 4
+	save value: false
+card field:
+	type: text
+	name: name
+	description: The name of the card.
+	card list visible: true
+	card list column: 1
+	show statistics: false
+	multi line: true
+card field:
+	type: text
+	name: price
+	description: The value of the card.
+	card list visible: true
+	card list column: 3
+card field:
+	type: text
+	name: text
+	description: Special rules for the card.
+	show statistics: false
+	card list visible: true
+	card list column: 5
+	multi line: true

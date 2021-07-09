@@ -1,0 +1,15 @@
+# The watermark choices
+# Included by a game file
+
+choice:
+	name: none
+	line below: true
+choice:
+	name: mark
+	choice: Vorlon
+	choice: Shadow
+	choice: Strife
+	choice: Conspiracy
+	choice: Destiny
+	choice: Doom
+	

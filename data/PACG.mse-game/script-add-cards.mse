@@ -1,0 +1,59 @@
+# TODO - enabled scripts don't appear to work
+# Add card scripts for ADVENTURE PATH, ADVENTURE and SCENARIO
+
+# ADVENTURE PATH
+add_cards_script:
+	name:			Create &Adventure cards
+	description:	Add an Adventure card for each adventure in this Adventure Path.
+	enabled:		{ card.type == "ADVENTURE PATH" }
+	script:
+		if card == [] then []
+		else
+		(if card.adventure_1 != "" then [ new_card( [name: to_upper(card.adventure_1), type: "ADVENTURE", set: card.set] ) ] )
+		+ (if card.adventure_2 != "" then [ new_card( [name: to_upper(card.adventure_2), type: "ADVENTURE", set: card.set] ) ] )
+		+ (if card.adventure_3 != "" then [ new_card( [name: to_upper(card.adventure_3), type: "ADVENTURE", set: card.set] ) ] )
+		+ (if card.adventure_4 != "" then [ new_card( [name: to_upper(card.adventure_4), type: "ADVENTURE", set: card.set] ) ] )
+		+ (if card.adventure_5 != "" then [ new_card( [name: to_upper(card.adventure_5), type: "ADVENTURE", set: card.set] ) ] )
+		+ (if card.adventure_6 != "" then [ new_card( [name: to_upper(card.adventure_6), type: "ADVENTURE", set: card.set] ) ] )
+		
+# ADVENTURE
+add_cards_script:
+	name:			Create &Scenario cards
+	description:	Add a Scenario card for each scenario in this Adventure
+	enabled:		{ card.type == "ADVENTURE" }
+	script:
+		if card == [] then []
+		else
+		(if card.scenario_1 != "" then [ new_card( [name: to_upper(card.scenario_1), type: "SCENARIO", set: card.set] ) ] )
+		+ (if card.scenario_2 != "" then [ new_card( [name: to_upper(card.scenario_2), type: "SCENARIO", set: card.set] ) ] )
+		+ (if card.scenario_3 != "" then [ new_card( [name: to_upper(card.scenario_3), type: "SCENARIO", set: card.set] ) ] )
+		+ (if card.scenario_4 != "" then [ new_card( [name: to_upper(card.scenario_4), type: "SCENARIO", set: card.set] ) ] )
+		+ (if card.scenario_5 != "" then [ new_card( [name: to_upper(card.scenario_5), type: "SCENARIO", set: card.set] ) ] )
+
+# SCENARIO
+add_cards_script:
+	name: 			Create &Location Cards
+	description: 	Add a Location card for each location in this Scenario
+	enabled:		{ card.type == "SCENARIO" }
+	script:
+		if card == [] then []
+		else
+		(if card.location_1a != "" then [ new_card( [name: to_upper(card.location_1a), type: "LOCATION", set: card.set] ) ] )
+		+ (if card.location_1b != "" then [ new_card( [name: to_upper(card.location_1b), type: "LOCATION", set: card.set] ) ] )
+		+ (if card.location_1c != "" then [ new_card( [name: to_upper(card.location_1c), type: "LOCATION", set: card.set] ) ] )
+		+ (if card.location_2 != "" then [ new_card( [name: to_upper(card.location_2), type: "LOCATION", set: card.set] ) ] )
+		+ (if card.location_3 != "" then [ new_card( [name: to_upper(card.location_3), type: "LOCATION", set: card.set] ) ] )
+		+ (if card.location_4 != "" then [ new_card( [name: to_upper(card.location_4), type: "LOCATION", set: card.set] ) ] )
+		+ (if card.location_5 != "" then [ new_card( [name: to_upper(card.location_5), type: "LOCATION", set: card.set] ) ] )
+		+ (if card.location_6 != "" then [ new_card( [name: to_upper(card.location_6), type: "LOCATION", set: card.set] ) ] )
+
+# VILLAIN \ HENCHMAN
+#add_cards_script:
+#	name:			Create &Villain Cards
+#	description:	Add a Villain and Henchmen for each listed in this Scenario
+#	enabled:		{ card.type == "SCENARIO" }
+#	script:
+#		(if card.villain != "" then [ new_card( [name: to_upper(card.villain), stylesheet: "BoonBane", type: "VILLAIN"] ) ] )
+#		+ (if card.henchmen_1 != "" then [ new_card( [name: to_upper(card.henchmen_1), stylesheet: "BoonBane", type: "HENCHMAN"] ) ] )
+#		+ (if card.henchmen_2 != "" then [ new_card( [name: to_upper(card.henchmen_2), stylesheet: "BoonBane", type: "HENCHMAN"] ) ] )
+#		+ (if card.henchmen_3 != "" then [ new_card( [name: to_upper(card.henchmen_3), stylesheet: "BoonBane", type: "HENCHMAN"] ) ] )

@@ -1,0 +1,1362 @@
+﻿mse version: 2.0.0
+version: 2018-09-02
+game: forceofwill
+short name: Normal
+full name: Regular Card
+icon: ruler_icon.png
+position hint: 1
+installer group: fow/game/normal
+
+depends on: 
+	package: forceofwill.mse-game
+depends on:
+	package: forceofwill-symbols.mse-symbol-font
+	
+card width: 650
+card height: 908
+card dpi: 90
+card background: rgb(255,255,255)
+
+########################################
+
+init script:
+	full_art := "no"
+	style := { styling.card_format }
+
+########################################
+	
+styling field:
+	type: choice
+	name: card format
+	description: Render the card in different styles
+	choice: Lapis Cluster
+	initial: Lapis Cluster
+	
+styling field:
+	type: choice
+	name: name font
+	description: Render the card in different styles
+	choice: Lapis Cluster
+	choice: Reiya Cluster
+	initial: Lapis Cluster
+
+########################################
+
+card style:
+	
+	cardtype:
+		top: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 807 - card_rules_height() else 562
+		left: 68
+		width: 130
+		height: 24
+		render style: hidden
+		z index: 15
+		
+	srborder:
+		top: 0
+		left: 0
+		width: 20
+		height: 20
+		render style: hidden
+		z index: 16
+	
+	card_art:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		z index: 1
+		
+	card_background:
+		top: 0
+		left: 0
+		width: 
+			{
+				if card.srborder == "No" then 0
+				else 650
+			}
+		height: 908
+		z index: 10
+		
+	card_name:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		bottom:
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 90
+				else if styling.name_font == "Reiya Cluster" then 83 else if styling.name_font == "Reiya Cluster" then 83 else 84
+			}
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.wheeltype == "Inverse" then 67
+				else 172
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 512
+				else 430
+			}
+		height: 40
+		alignment: "middle center stretch if-overflow"
+		font:
+			name: { if styling.name_font == "Lapis Cluster" then "Force of Will001.0" else if styling.name_font == "Reiya Cluster" then "ForceofWill002.0" }
+			size: { if styling.name_font == "Lapis Cluster" then 25 else if styling.name_font == "Reiya Cluster" then 23 }
+			color: { font_color_changer(type: card.cardtype, rarity: card.rarity, style: styling.card_format) }
+		z index: 12
+
+	color2:
+		top: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 805 - card_rules_height() else 560
+		left: 557
+		width: 28
+		height: 28
+		z index: 12
+		render style: hidden
+		choice images:
+			white: {card_color(type: card.cardtype, color: "W", style: styling.card_format)}
+			red: {card_color(type: card.cardtype, color: "R", style: styling.card_format)}
+			blue: {card_color(type: card.cardtype, color: "U", style: styling.card_format)}
+			green: {card_color(type: card.cardtype, color: "G", style: styling.card_format)}
+			black: {card_color(type: card.cardtype, color: "B", style: styling.card_format)}
+			void: {card_color(type: card.cardtype, color: "V", style: styling.card_format)}
+			default: void
+	color_img1:
+		visible: 
+			{
+				if styling.card_format == "Lapis Cluster" then ci_visible(num: 1)
+				else false
+			}
+		top: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 805 - card_rules_height() else 560
+		left: 
+			{
+				if count_chosen(card.color2) <= 3 then (557 - (45 * count_chosen(card.color2))+45)
+				else if count_chosen(card.color2) >= 4 then 467
+			}
+		width: 28
+		height: 28
+		render style: image
+		z index: 12
+		choice images:
+			white: {card_color(type: card.cardtype, color: "W", style: styling.card_format)}
+			red: {card_color(type: card.cardtype, color: "R", style: styling.card_format)}
+			blue: {card_color(type: card.cardtype, color: "U", style: styling.card_format)}
+			green: {card_color(type: card.cardtype, color: "G", style: styling.card_format)}
+			black: {card_color(type: card.cardtype, color: "B", style: styling.card_format)}
+			void: {card_color(type: card.cardtype, color: "V", style: styling.card_format)}
+			default: none
+	color_img2:
+		visible: script: ci_visible(num: 2)
+		top: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 805 - card_rules_height() else 560
+		left: 
+			{
+				467 + (90 / (count_chosen(card.color2)-1))
+			}
+		width: 28
+		height: 28
+		render style: image
+		z index: 12
+		choice images:
+			white: {card_color(type: card.cardtype, color: "W", style: styling.card_format)}
+			red: {card_color(type: card.cardtype, color: "R", style: styling.card_format)}
+			blue: {card_color(type: card.cardtype, color: "U", style: styling.card_format)}
+			green: {card_color(type: card.cardtype, color: "G", style: styling.card_format)}
+			black: {card_color(type: card.cardtype, color: "B", style: styling.card_format)}
+			void: {card_color(type: card.cardtype, color: "V", style: styling.card_format)}
+			default: none
+	color_img3:
+		visible: script: ci_visible(num: 3)
+		top: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 805 - card_rules_height() else 560
+		left: 
+			{
+				467 + ((90 / (count_chosen(card.color2)-1))*2)  
+			}
+		width: 28
+		height: 28
+		render style: image
+		z index: 12
+		choice images:
+			white: {card_color(type: card.cardtype, color: "W", style: styling.card_format)}
+			red: {card_color(type: card.cardtype, color: "R", style: styling.card_format)}
+			blue: {card_color(type: card.cardtype, color: "U", style: styling.card_format)}
+			green: {card_color(type: card.cardtype, color: "G", style: styling.card_format)}
+			black: {card_color(type: card.cardtype, color: "B", style: styling.card_format)}
+			void: {card_color(type: card.cardtype, color: "V", style: styling.card_format)}
+			default: none
+	color_img4:
+		visible: script: ci_visible(num: 4)
+		top: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 805 - card_rules_height() else 560
+		left: 
+			{
+				467 + ((90 / (count_chosen(card.color2)-1))*3)
+			}
+		width: 28
+		height: 28
+		render style: image
+		z index: 12
+		choice images:
+			white: {card_color(type: card.cardtype, color: "W", style: styling.card_format)}
+			red: {card_color(type: card.cardtype, color: "R", style: styling.card_format)}
+			blue: {card_color(type: card.cardtype, color: "U", style: styling.card_format)}
+			green: {card_color(type: card.cardtype, color: "G", style: styling.card_format)}
+			black: {card_color(type: card.cardtype, color: "B", style: styling.card_format)}
+			void: {card_color(type: card.cardtype, color: "V", style: styling.card_format)}
+			default: none
+	color_img5:
+		visible: script: ci_visible(num: 5)
+		top: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 805 - card_rules_height() else 560
+		left: 
+			{
+				467 + ((90 / (count_chosen(card.color2)-1))*4)
+			}
+		width: 28
+		height: 28
+		render style: image
+		z index: 12
+		choice images:
+			white: {card_color(type: card.cardtype, color: "W", style: styling.card_format)}
+			red: {card_color(type: card.cardtype, color: "R", style: styling.card_format)}
+			blue: {card_color(type: card.cardtype, color: "U", style: styling.card_format)}
+			green: {card_color(type: card.cardtype, color: "G", style: styling.card_format)}
+			black: {card_color(type: card.cardtype, color: "B", style: styling.card_format)}
+			void: {card_color(type: card.cardtype, color: "V", style: styling.card_format)}
+			default: none
+	color_img6:
+		visible: script: ci_visible(num: 6)
+		top: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 805 - card_rules_height() else 560
+		left: 557
+		width: 28
+		height: 28
+		render style: image
+		z index: 12
+		choice images:
+			white: {card_color(type: card.cardtype, color: "W", style: styling.card_format)}
+			red: {card_color(type: card.cardtype, color: "R", style: styling.card_format)}
+			blue: {card_color(type: card.cardtype, color: "U", style: styling.card_format)}
+			green: {card_color(type: card.cardtype, color: "G", style: styling.card_format)}
+			black: {card_color(type: card.cardtype, color: "B", style: styling.card_format)}
+			void: {card_color(type: card.cardtype, color: "V", style: styling.card_format)}
+			default: none			
+	
+	jrulerbutton:
+		visible: 
+			{
+				if (card.cardtype == "ruler" or card.cardtype == "jruler") then true
+				else false
+			}
+		top: 562
+		left: 75
+		height: 24
+		width: 115
+		z index: 12
+		render style: image
+		choice images:
+			default: {jrulerbutton(type: card.cardtype)}
+	
+	canbattle:
+		visible:
+			{
+				if card.canbattle == "cannotbattle" then false
+				else true
+			}
+		top: 
+			{
+				if (card.cardtype == "resonator" or card.cardtype == "jruler" or card.cardtype == "tokenResonator") then 485
+				else 2000
+			}
+		angle: -270
+		left: 3
+		width: 295
+		height: 58
+		render style: image
+		choice images:
+			atkdef: stats\ATKDEF.png
+			cannotbattle: stats\CANNOT.png
+		z index: 12
+	
+	ATK:
+		bottom: 
+			{
+				if card.canbattle != "cannotbattle" then 352
+				else 1000
+			}
+		right: 75
+		width: 150
+		height: 60
+		alignment: right top
+		angle: -270
+		visible:
+			{
+				if card.cardtype == "ruler" then false
+				else if card.cardtype == "spell" then false
+				else if card.cardtype == "regalia" then false
+				else if card.cardtype == "stone" then false
+				else if card.cardtype == "rune" then false
+				else if card.canbattle == "atkdef" then true
+				else if card.canbattle == "cannotbattle" then false
+			}
+		font:
+			name: Georgia
+			size: 29
+			color: rgb(255,255,255)
+			style: italic
+		z index: 13
+		
+	DEF:
+		bottom: 
+			{
+				if card.canbattle != "cannotbattle" then 202
+				else 1000
+			}
+		right: 75
+		width: 150
+		height: 60
+		alignment: right top
+		angle: -270
+		visible:
+			{
+				if card.cardtype == "ruler" then false
+				else if card.cardtype == "spell" then false
+				else if card.cardtype == "regalia" then false
+				else if card.cardtype == "stone" then false
+				else if card.cardtype == "rune" then false
+				else if card.canbattle == "atkdef" then true
+				else if card.canbattle == "cannotbattle" then false
+			}
+		font:
+			name: Georgia
+			size: 29
+			color: rgb(255,255,255)
+			style: italic
+		z index: 13
+		
+	divinity:
+		bottom: 
+			{
+				if card.cardtype == "rune" then 200
+				else 1000
+			}
+		right: 67
+		width: 270
+		height: 60
+		alignment: center top
+		angle: -270
+		visible: true
+		font:
+			name: Georgia
+			size: 33
+			color: rgb(255,255,255)
+			style: italic
+		z index: 13
+	
+	wheeltype:
+		visible: { wheel_visible_check(type: card.cardtype) }
+		top: 52
+		left: 49
+		height: 110
+		width: 110
+		z index: 12
+		render style: image
+		choice images:
+			Normal: color\blank.png
+			Quickcast: color\blank.png
+			Inverse: color\blank.png
+			Will of Hope: WillofHope.png
+			Will of Despair: WillofDespair.png
+		
+	
+	costwheel1:
+		top: 57
+		left: 90
+		width: 29
+		height: {if card.wheeltype == "Inverse" then 0 else 30}
+		visible:
+			{
+				wheel_visible_check(type: card.cardtype)
+			}
+		z index: 13
+		render style: image
+		choice images:
+			none: color\empty.png
+			white: color\white.png
+			red: color\red.png
+			blue: color\blue.png
+			green: color\green.png
+			black: color\black.png
+			void: color\void.png
+			moon: color\moon.png
+			time: color\time.png
+	
+	costwheel2:
+		top: 86
+		left: 125
+		width: 29
+		height: {if card.wheeltype == "Inverse" then 0 else 30}
+		visible:
+			{
+				wheel_visible_check(type: card.cardtype)
+			}
+		z index: 13
+		render style: image
+		choice images:
+			none: color\empty.png
+			white: color\white.png
+			red: color\red.png
+			blue: color\blue.png
+			green: color\green.png
+			black: color\black.png
+			void: color\void.png
+			moon: color\moon.png
+			time: color\time.png
+			
+	costwheel3:
+		top: 85
+		left: 56
+		width: 29
+		height: {if card.wheeltype == "Inverse" then 0 else 30}
+		visible:
+			{
+				wheel_visible_check(type: card.cardtype)
+			}
+		z index: 13
+		render style: image
+		choice images:
+			none: color\empty.png
+			white: color\white.png
+			red: color\red.png
+			blue: color\blue.png
+			green: color\green.png
+			black: color\black.png
+			void: color\void.png
+			moon: color\moon.png
+			time: color\time.png
+			
+			
+	costwheel4:
+		top: 121
+		left: 69
+		width: 29
+		height: {if card.wheeltype == "Inverse" then 0 else 30}
+		visible:
+			{
+				wheel_visible_check(type: card.cardtype)
+			}
+		z index: 13
+		render style: image
+		choice images:
+			none: color\empty.png
+			white: color\white.png
+			red: color\red.png
+			blue: color\blue.png
+			green: color\green.png
+			black: color\black.png
+			void: color\void.png
+			moon: color\moon.png
+			time: color\time.png
+			
+			
+	costwheel5:
+		top: 122
+		left: 110
+		width: 29
+		height: {if card.wheeltype == "Inverse" then 0 else 30}
+		visible:
+			{
+				wheel_visible_check(type: card.cardtype)
+			}
+		z index: 13
+		render style: image
+		choice images:
+			none: color\empty.png
+			white: color\white.png
+			red: color\red.png
+			blue: color\blue.png
+			green: color\green.png
+			black: color\black.png
+			void: color\void.png
+			moon: color\moon.png
+			time: color\time.png
+			
+	colorless_cost:
+		bottom: 124
+		left: 88
+		width: 33
+		height: {if card.wheeltype == "Inverse" then 0 else 33}
+		visible:
+			{
+				wheel_visible_check(type: card.cardtype)
+			}
+		z index: 13
+		render style: image
+		choice images:
+			zero: stats\0.png
+			one: stats\1.png
+			two: stats\2.png
+			three: stats\3.png
+			four: stats\4.png
+			five: stats\5.png
+			six: stats\6.png
+			seven: stats\7.png
+			eight: stats\8.png
+			nine: stats\9.png
+			X: stats\X.png
+			XX: stats\xx.png
+			none: color\empty.png
+			
+	race:
+		top: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 807 - card_rules_height() else 562
+		left: 
+			{
+				if (card.cardtype == "ruler" or card.cardtype == "jruler") then 206
+				else 68
+			}
+		width: 
+			{
+				if (card.cardtype == "ruler" or card.cardtype == "jruler") then 260
+				else 342
+			}
+		height: 30
+		alignment: "stretch if-overflow"
+		font:
+			name: Constantia
+			size: 16
+			color: 
+				{
+					if (card.cardtype == "ruler" or card.cardtype == "jruler") and card.color_img1 == "green" and card.color_img2 == "black" then "white"
+					else if (card.color_img1 == "green" or card.color_img1 == "black") then "white"
+					else "black"
+				}
+			max stretch: 0.5
+		z index: 14
+		
+	rules:
+		visible: true
+		bottom: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 851 else (855 - card_flavor_height() - card_rules_flavor_gap(style: styling.card_format) - (if ceil(set.stylesheet.card_style.flavor.content_height) == 0 then 10))
+		left: 68
+		alignment: "middle"
+		width: 520
+		height: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then max(19,card_rules_height()) else (243 - card_flavor_height())
+		line height hard: 1.32
+		line height soft: 1
+		symbol font:
+			name: forceofwill-symbols
+			size: 8
+			scale down to: 2
+		font:
+			name: AdobeFangsongStd-Regular
+			size: 23.42
+			color: rgb(0,0,0)
+			scale down to: 10
+		z index: 15
+		
+	flavor:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true}
+		bottom: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 0 else 851
+		left: 68
+		width: 520
+		height: 
+			{
+				if card.rules == "" then 248
+				else max(19, card_flavor_height())
+			}
+		line height hard: 0.9
+		line height soft: 0.9
+		font:
+			name: Times New Roman
+			size: 
+				{
+					if card.rules == "" and styling.card_format == "Lapis Cluster" then 18
+					else flavor_font(query: "size", style: styling.card_format)
+				}
+			color: rgb(0,0,0)
+		alignment: 
+			{
+				if card.rules == "" then "middle center"
+				else "center"
+			}
+		z index: 14
+	
+	card_id:
+		bottom: 902
+		left: 75
+		width: 30
+		height: 20
+		alignment: left top
+		allow formating: false
+		font:
+			name: Arial
+			size: 10
+			color: rgb(255,255,255)
+		z index: 13
+		
+	artist:
+		bottom: 902
+		right: 590
+		width: 200
+		height: 20
+		alignment: right top
+		allow formating: false
+		font:
+			name: Arial
+			size: 10
+			color: rgb(255,255,255)
+		z index: 13
+	
+	rarity:
+		bottom: 902
+		left: 88
+		width: 60
+		height: 20
+		render style: hidden
+		z index: 15
+		
+	copyright:
+		bottom: 902
+		left: 250
+		width: 152
+		height: 20
+		alignment: center
+		allow formating: false
+		font:
+			name: Arial
+			size: 10
+			color: rgb(255,255,255)
+		z index: 13
+	
+	lapis_type_void:
+		left: 51
+		bottom: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 840.5 - card_rules_height() else 594.5
+		width:554
+		height: 39
+		z index: 11
+		render style: image
+		choice images:
+			default: {if (card.cardtype == "tokenResonator" or card.cardtype == "tokenOther") and (card_rules_height() == 0) then type_bar_token(type: card.cardtype, color: "void") else type_bar(type: card.cardtype, color: "void")}
+	lapis_type_white:
+		left: 51
+		bottom: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 840.5 - card_rules_height() else 594.5
+		width:554
+		height: 39
+		z index: 11
+		render style: image
+		choice images:
+			default: {if (card.cardtype == "tokenResonator" or card.cardtype == "tokenOther") and (card_rules_height() == 0) then type_bar_token(type: card.cardtype, color: "white") else type_bar(type: card.cardtype, color: "white")}
+	lapis_type_red:
+		left: 51
+		bottom: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 840.5 - card_rules_height() else 594.5
+		width:554
+		height: 39
+		z index: 11
+		render style: image
+		choice images:
+			default: {if (card.cardtype == "tokenResonator" or card.cardtype == "tokenOther") and (card_rules_height() == 0) then type_bar_token(type: card.cardtype, color: "red") else type_bar(type: card.cardtype, color: "red")}
+	lapis_type_blue:
+		left: 51
+		bottom: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 840.5 - card_rules_height() else 594.5
+		width:554
+		height: 39
+		z index: 11
+		render style: image
+		choice images:
+			default: {if (card.cardtype == "tokenResonator" or card.cardtype == "tokenOther") and (card_rules_height() == 0) then type_bar_token(type: card.cardtype, color: "blue") else type_bar(type: card.cardtype, color: "blue")}
+	lapis_type_green:
+		left: 51
+		bottom: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 840.5 - card_rules_height() else 594.5
+		width:554
+		height: 39
+		z index: 11
+		render style: image
+		choice images:
+			default: {if (card.cardtype == "tokenResonator" or card.cardtype == "tokenOther") and (card_rules_height() == 0) then type_bar_token(type: card.cardtype, color: "green") else type_bar(type: card.cardtype, color: "green")}
+	lapis_type_black:
+		left: 51
+		bottom: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 840.5 - card_rules_height() else 594.5
+		width:554
+		height: 39
+		z index: 11
+		render style: image
+		choice images:
+			default: {if (card.cardtype == "tokenResonator" or card.cardtype == "tokenOther") and (card_rules_height() == 0) then type_bar_token(type: card.cardtype, color: "black") else type_bar(type: card.cardtype, color: "black")}
+	lapis_name_void:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		top: 42
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 60
+				else if (card.cardtype == "resonator" or card.cardtype == "rune") or
+				(card.cardtype == "spell") or
+				(card.cardtype == "regalia") then 131
+				else if card.cardtype != "resonator" then 0
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 528
+				else 482
+			}
+		height: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 48
+				else if (card.cardtype == "resonator" or card.cardtype == "rune") or
+				(card.cardtype == "regalia") or
+				(card.cardtype == "spell") then 41
+				else if card.cardtype != "resonator" then 0
+			}
+		z index: 2
+		render style: image
+		choice images:
+			default: {type_bar(type: card.cardtype, color: "void")}
+	lapis_name_white:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		top: 42
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") and styling.card_format == "Lapis Cluster" then 60
+				else if (card.cardtype == "resonator" or card.cardtype == "rune") or
+				(card.cardtype == "spell") or
+				(card.cardtype == "regalia") then 131
+				else if card.cardtype != "resonator" then 0
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") and styling.card_format == "Lapis Cluster" then 528
+				else if styling.card_format == "Lapis Cluster" then 482
+			}
+		height: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") and styling.card_format == "Lapis Cluster" then 48
+				else if (card.cardtype == "resonator" or card.cardtype == "rune") or
+				(card.cardtype == "regalia") or
+				(card.cardtype == "spell") then 41
+				else if card.cardtype != "resonator" then 0
+			}
+		z index: 2
+		render style: image
+		choice images:
+			default: {type_bar(type: card.cardtype, color: "white")}
+	lapis_name_red:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		top: 42
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 60
+				else if (card.cardtype == "resonator" or card.cardtype == "rune") or
+				(card.cardtype == "spell") or
+				(card.cardtype == "regalia") then 131
+				else if card.cardtype != "resonator" then 0
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 528
+				else 482
+			}
+		height: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 48
+				else if (card.cardtype == "resonator" or card.cardtype == "rune") or
+				(card.cardtype == "regalia") or
+				(card.cardtype == "spell") then 41
+				else if card.cardtype != "resonator" then 0
+			}
+		z index: 2
+		render style: image
+		choice images:
+			default: {type_bar(type: card.cardtype, color: "red")}
+	lapis_name_blue:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		top: 42
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 60
+				else if (card.cardtype == "resonator" or card.cardtype == "rune") or
+				(card.cardtype == "spell") or
+				(card.cardtype == "regalia") then 131
+				else if card.cardtype != "resonator" then 0
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 528
+				else 482
+			}
+		height: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 48
+				else if (card.cardtype == "resonator" or card.cardtype == "rune") or
+				(card.cardtype == "regalia") or
+				(card.cardtype == "spell") then 41
+				else if card.cardtype != "resonator" then 0
+			}
+		z index: 2
+		render style: image
+		choice images:
+			default: {type_bar(type: card.cardtype, color: "blue")}
+	lapis_name_green:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		top: 42
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 60
+				else if (card.cardtype == "resonator" or card.cardtype == "rune") or
+				(card.cardtype == "spell") or
+				(card.cardtype == "regalia") then 131
+				else if card.cardtype != "resonator" then 0
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 528
+				else 482
+			}
+		height: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 48
+				else if (card.cardtype == "resonator" or card.cardtype == "rune") or
+				(card.cardtype == "regalia") or
+				(card.cardtype == "spell") then 41
+				else if card.cardtype != "resonator" then 0
+			}
+		z index: 2
+		render style: image
+		choice images:
+			default: {type_bar(type: card.cardtype, color: "green")}
+	lapis_name_black:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		top: 42
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 60
+				else if (card.cardtype == "resonator" or card.cardtype == "rune") or
+				(card.cardtype == "spell") or
+				(card.cardtype == "regalia") then 131
+				else if card.cardtype != "resonator" then 0
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 528
+				else 482
+			}
+		height: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.wheeltype == "Inverse") then 48
+				else if (card.cardtype == "resonator" or card.cardtype == "rune") or
+				(card.cardtype == "regalia") or
+				(card.cardtype == "spell") then 41
+				else if card.cardtype != "resonator" then 0
+			}
+		z index: 2
+		render style: image
+		choice images:
+			default: {type_bar(type: card.cardtype, color: "black")}
+	
+	lapis_name_stone:
+		visible:
+			{
+				if card.cardtype == "stone" then true
+				else false
+			}
+		top: 42
+		left: 60
+		width: 528
+		height: 48
+		z index: 2
+		render style: image
+		choice images:
+			default: {"bars/lapis_void.png"}
+	
+	lapis_type_stone:
+		visible:
+			{
+				if card.cardtype == "stone" then true
+				else false
+			}
+		left: 51
+		top: 555
+		width:554
+		height: 39
+		z index: 11
+		render style: image
+		choice images:
+			default: {"bars/lapis_void.png"}
+		
+extra card field:
+	type: choice
+	name: layer
+	editable: false
+	choice: default
+extra card field:
+	type: choice
+	name: wheel_above_layer
+	editable: false
+	choice: default
+extra card field:
+	type: choice
+	name: layer_2
+	editable: false
+	choice: default
+extra card field:
+	type: choice
+	name: layer_3
+	editable: false
+	choice: default
+extra card field:
+	type: choice
+	name: cardOutline
+	editable: false
+	choice: default
+extra card field:
+	type: choice
+	name: layer_4_AR_Frame
+	editable: false
+	choice: default
+extra card field:
+	type: choice
+	name: lapis_atkdef_shield
+	editable: false
+	choice: default
+extra card field:
+	type: choice
+	name: layer_card_edges
+	editable: false
+	choice: default
+extra card field:
+	type: choice
+	name: bottom bar
+	editable: false
+	choice:	default
+extra card field:
+	type: choice
+	name: middle bar
+	editable: false
+	choice:	default
+extra card field:
+	type: choice
+	name: top bar mask
+	editable: false
+	choice:	default
+extra card field:
+	type: text
+	name: cardshadow1
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardshadow3
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardshadow6
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardshadow8
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardNameShadowUp
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardNameShadowDown
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardNameShadowLeft
+	script: card.card_name
+	editable: false
+	save value: false
+extra card field:
+	type: text
+	name: cardNameShadowRight
+	script: card.card_name
+	editable: false
+	save value: false
+extra card style:
+	layer:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		render style: image
+		choice images:
+			default: {card_background(type: card.cardtype, rarity: card.rarity, style: styling.card_format, wheel: card.wheeltype)}
+		z index: 2
+extra card style:
+	wheel_above_layer:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		render style: image
+		choice images:
+			default: {wheel(type: card.cardtype, rarity: card.rarity, style: styling.card_format, wheel: card.wheeltype)}
+		z index: 11
+extra card style:
+	cardOutline:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		render style: image
+		choice images:
+			default: {card_outline(type: card.cardtype, rarity: card.rarity, style: styling.card_format, fullart: "No", battle: card.canbattle)}
+		z index: 1
+extra card style:
+	layer_2:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		render style: image
+		choice images:
+			default: {card_assets(type: card.cardtype, rarity: card.rarity, style: styling.card_format)}
+		z index: 11
+extra card style:
+	layer_3:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		render style: image
+		choice images:
+			default: {card_cost(type: card.cardtype, rarity: card.rarity, style: styling.card_format)}
+		z index: 8
+extra card style:
+	layer_4_AR_Frame:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		render style: image
+		choice images:
+			default: {AR(type: card.cardtype, rarity: card.rarity, style: styling.card_format)}
+		z index: 9
+extra card style:
+	lapis_atkdef_shield:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		visible:
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "resonator" or card.cardtype == "tokenResonator") and card.canbattle == "cannotbattle" then false
+				else if card.cardtype == "jruler" or card.cardtype == "resonator" or card.cardtype == "tokenResonator" or card.cardtype == "rune" then true
+				else false
+			}
+		render style: image
+		choice images:
+			default: {shield(type: card.cardtype, rarity: card.rarity, style: styling.card_format)}
+		z index: 11
+extra card style:
+	layer_card_edges:
+		top: 0
+		left: 0
+		width: 650
+		height: 908
+		render style: image
+		choice images:
+			default: curved_edges.png
+		z index: 15
+extra card style:
+	bottom bar:
+		visible:
+			{
+				if card_rules_height() != 0 then true
+				else if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false
+				else if card_flavor_height() != 0 then true
+				else if card_rules_height() == 0 then false
+				else if card_rules_height() == 0 then false
+			}
+		left: 51
+		top: 858
+		width: 554
+		height: 9
+		z index: 10
+		render style: image
+		choice images:
+			default: bars\bottom.png
+extra card style:
+	top bar mask:
+		visible:
+			{
+				if card.color2 == "none" then false
+				else if card.color3 == "none" then false
+				else true
+			}
+		left: 51
+		bottom: script: if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then 840.5 - card_rules_height() else 594.5
+		width:554
+		height: 39
+		z index: 11
+		render style: image
+		choice images:
+			default: {top_bar_masking(color: card.color2, checker: card.color3)}
+extra card style:
+	middle bar:
+		visible:
+			{
+				if card_rules_height() != 0 then true
+				else if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false
+				else if card_flavor_height() != 0 then true
+				else if card_rules_height() == 0 then false
+				else if card_rules_height() == 0 then false
+			}
+		left: 51
+		bottom: 858
+		width: 554
+		height: 
+			{
+				if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" and card_rules_height() != 0 then max(19,card_rules_height())+18 
+				else if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then max(19,card_rules_height())-1
+				else 264
+			}
+		z index: 10
+		render style: image
+		choice images:
+			default: bars\middlebar.png
+extra card style:
+	cardshadow1:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		bottom:
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 90
+				else if styling.name_font == "Reiya Cluster" then 83 else if styling.name_font == "Reiya Cluster" then 83 else 84
+			}
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.wheeltype == "Inverse" then 67
+				else 172
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 512
+				else 430
+			}
+		height: 40
+		alignment: "middle center stretch if-overflow"
+		font:
+			name: { if styling.name_font == "Lapis Cluster" then "Force of Will001.0" else if styling.name_font == "Reiya Cluster" then "ForceofWill002.0" }
+			size: { if styling.name_font == "Lapis Cluster" then 25 else if styling.name_font == "Reiya Cluster" then 23 }
+			color: black
+			shadow color: black
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardshadow3:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		bottom:
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 90
+				else if styling.name_font == "Reiya Cluster" then 83 else if styling.name_font == "Reiya Cluster" then 83 else 84
+			}
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.wheeltype == "Inverse" then 67
+				else 172
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 512
+				else 430
+			}
+		height: 40
+		alignment: "middle center stretch if-overflow"
+		font:
+			name: { if styling.name_font == "Lapis Cluster" then "Force of Will001.0" else if styling.name_font == "Reiya Cluster" then "ForceofWill002.0" }
+			size: { if styling.name_font == "Lapis Cluster" then 25 else if styling.name_font == "Reiya Cluster" then 23 }
+			color: black
+			shadow color: black
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardshadow6:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		bottom:
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 90
+				else if styling.name_font == "Reiya Cluster" then 83 else if styling.name_font == "Reiya Cluster" then 83 else 84
+			}
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.wheeltype == "Inverse" then 67
+				else 172
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 512
+				else 430
+			}
+		height: 40
+		alignment: "middle center stretch if-overflow"
+		font:
+			name: { if styling.name_font == "Lapis Cluster" then "Force of Will001.0" else if styling.name_font == "Reiya Cluster" then "ForceofWill002.0" }
+			size: { if styling.name_font == "Lapis Cluster" then 25 else if styling.name_font == "Reiya Cluster" then 23 }
+			color: black
+			shadow color: black
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardshadow8:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		bottom:
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 90
+				else if styling.name_font == "Reiya Cluster" then 83 else if styling.name_font == "Reiya Cluster" then 83 else 84
+			}
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.wheeltype == "Inverse" then 67
+				else 172
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 512
+				else 430
+			}
+		height: 40
+		alignment: "middle center stretch if-overflow"
+		font:
+			name: { if styling.name_font == "Lapis Cluster" then "Force of Will001.0" else if styling.name_font == "Reiya Cluster" then "ForceofWill002.0" }
+			size: { if styling.name_font == "Lapis Cluster" then 25 else if styling.name_font == "Reiya Cluster" then 23 }
+			color: black
+			shadow color: black
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardNameShadowDown:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		bottom:
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 90
+				else if styling.name_font == "Reiya Cluster" then 83 else if styling.name_font == "Reiya Cluster" then 83 else 84
+			}
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.wheeltype == "Inverse" then 67
+				else 172
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 512
+				else 430
+			}
+		height: 40
+		alignment: "middle center stretch if-overflow"
+		font:
+			name: { if styling.name_font == "Lapis Cluster" then "Force of Will001.0" else if styling.name_font == "Reiya Cluster" then "ForceofWill002.0" }
+			size: { if styling.name_font == "Lapis Cluster" then 25 else if styling.name_font == "Reiya Cluster" then 23 }
+			color: black
+			shadow color: black
+			shadow displacement x: 0
+			shadow displacement y: -1.5
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardNameShadowLeft:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		bottom:
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 90
+				else if styling.name_font == "Reiya Cluster" then 83 else if styling.name_font == "Reiya Cluster" then 83 else 84
+			}
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.wheeltype == "Inverse" then 67
+				else 172
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 512
+				else 430
+			}
+		height: 40
+		alignment: "middle center stretch if-overflow"
+		font:
+			name: { if styling.name_font == "Lapis Cluster" then "Force of Will001.0" else if styling.name_font == "Reiya Cluster" then "ForceofWill002.0" }
+			size: { if styling.name_font == "Lapis Cluster" then 25 else if styling.name_font == "Reiya Cluster" then 23 }
+			color: black
+			shadow color: black
+			shadow displacement x: -1.5
+			shadow displacement y: 0
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardNameShadowRight:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		bottom:
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 90
+				else if styling.name_font == "Reiya Cluster" then 83 else if styling.name_font == "Reiya Cluster" then 83 else 84
+			}
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.wheeltype == "Inverse" then 67
+				else 172
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 512
+				else 430
+			}
+		height: 40
+		alignment: "middle center stretch if-overflow"
+		font:
+			name: { if styling.name_font == "Lapis Cluster" then "Force of Will001.0" else if styling.name_font == "Reiya Cluster" then "ForceofWill002.0" }
+			size: { if styling.name_font == "Lapis Cluster" then 25 else if styling.name_font == "Reiya Cluster" then 23 }
+			color: black
+			shadow color: black
+			shadow displacement x: 1.5
+			shadow displacement y: 0
+			shadow blur: 0
+		z index: 11
+extra card style:
+	cardNameShadowUp:
+		visible: { if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then false else true }
+		bottom:
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 90
+				else if styling.name_font == "Reiya Cluster" then 83 else if styling.name_font == "Reiya Cluster" then 83 else 84
+			}
+		left: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone") then 67
+				else if card.wheeltype == "Inverse" then 67
+				else 172
+			}
+		width: 
+			{
+				if (card.cardtype == "jruler" or card.cardtype == "ruler" or card.cardtype == "stone" or card.wheeltype == "Inverse") then 512
+				else 430
+			}
+		height: 40
+		alignment: "middle center stretch if-overflow"
+		font:
+			name: { if styling.name_font == "Lapis Cluster" then "Force of Will001.0" else if styling.name_font == "Reiya Cluster" then "ForceofWill002.0" }
+			size: { if styling.name_font == "Lapis Cluster" then 25 else if styling.name_font == "Reiya Cluster" then 23 }
+			color: black
+			shadow color: black
+			shadow displacement x: 0
+			shadow displacement y: 1.5
+			shadow blur: 0
+		z index: 11

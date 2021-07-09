@@ -1,0 +1,104 @@
+mse version: 0.3.8
+version: 2012-02-31
+short name:  Cardfight old
+full name: Cardfight symbols old
+position hint: 1
+installer group: cardfight/symbols fonts/old symbol font
+
+image font size: 125
+
+symbol:
+	code: C
+	image: counterblast.png
+	image font size: 23
+symbol:
+	code: O
+	image: soulblast.png
+	image font size: 23
+symbol:
+	code: H
+	image: soulcharge.png
+	draw text: 0
+	image font size: 23
+symbol:
+	code: S
+	image: stand.png
+	image font size: 15
+symbol:
+	code: E
+	image: rest.png
+	image font size: 15
+symbol:
+	code: P
+	image: power.png
+	image font size: 20
+symbol:
+	code: G
+	image: guardian.png
+	image font size: 20
+symbol:
+	code: R
+	image: rearguard.png
+	image font size: 15
+symbol:
+	code: V
+	image: vanguard.png
+	image font size: 15
+symbol:
+	code: B
+	image: boost.png
+	image font size: 12
+symbol:
+	code: I
+	image: intercept.png
+	image font size: 12
+symbol:
+	code: T
+	image: twindrive.png
+	image font size: 12
+symbol:
+	code: A
+	image: act.png
+	image font size: 22
+symbol:
+	code: U
+	image: auto.png
+	image font size: 20
+symbol:
+	code: Q
+	image: cont.png
+	image font size: 30
+symbol:
+	image: mana_circle.png
+	code: [0-9]+(?!/[XYZ])|.
+	regex: yes
+	draw text: 0
+	text margin left:   .2
+	text margin right:  .2
+	text margin top:    -.14
+	text margin bottom: -.14
+	text font:
+		name: MPlantin
+		size: 1
+		color: rgb(0,0,0)
+		max stretch: 0.57
+
+insert symbol menu:
+	item: C
+	item: O
+	item: H
+	item:
+		type: custom
+		name: number
+	item: S
+	item: E
+	item: P
+	item: G
+	item: R
+	item: V
+	item: B
+	item: I
+	item: T
+	item: A
+	item: U
+	item: O

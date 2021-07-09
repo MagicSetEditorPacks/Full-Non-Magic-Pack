@@ -1,0 +1,409 @@
+﻿mse version: 0.3.8
+game: munchkin
+short name: blender
+full name: munchkin blender
+icon: blender-sample.png
+position hint: 002
+installer group: munchkin/blender style
+
+version: 2010-01-28
+depends on: munchkin.mse-game 2010-01-28
+
+card width: 330
+card height: 513
+card dpi: 150
+#By benicetodan
+##### Scripts
+
+init script:
+	card_type := {styling.type}
+	card_supertype := {styling.supertype}
+	
+##### Extra style options
+
+styling field:
+	type: choice
+	name: supertype
+	description: Door or Treasure
+	initial: door
+	choice: door
+	choice: treasure
+	show statistics: true
+styling field:
+	type: choice
+	name: type
+	description: The type of card
+	initial: race
+	choice: race
+	choice: class
+	choice: style
+	choice: power
+	choice: loyalty
+	choice: training
+	choice: accent
+	choice: gual
+	choice: equipment
+	choice: item
+	choice: steed
+	choice: ship
+	choice: helper
+	choice: hireling
+	choice: sidekick
+	choice: mook
+	choice: minion
+	choice: monster
+	choice: monster enhancer
+	choice: enhancer enhancer
+	choice: room
+	choice: curse
+	choice: other
+styling field:
+	type: boolean
+	name: Monster Subtype
+	description: Display the monster subtype field?
+	initial: no
+styling field:
+	type: boolean
+	name: Usable By
+	description: Display the usable by field?
+	initial: no
+styling field:
+	type: text
+	name: imagetop
+	description: Number of pixels between the top edge of the card and the image.
+styling field:
+	type: text
+	name: imageleft
+	description: Number of pixels between the left hand edge of the card and the image.
+styling field:
+	type: text
+	name: imagewidth
+	description: Image width
+styling field:
+	type: text
+	name: imageheight
+	description: Image height
+styling field:
+	type: text
+	name: fudge factor
+	description: Amount to move the basic fields up/down on the card. Can be any real number
+
+##### Card fields
+card style:
+##### Background Stuff
+	border color:
+		left:	0
+		top :	0
+		width:	330
+		height:	513
+		mask: munchkin-border-mask.png
+		z index: -2
+	middle border color:
+		left:	0
+		top :	0
+		width:	330
+		height:	513
+		mask: munchkin-blender-middle-border-mask.png
+		z index:	-1
+	inner border color:
+		left:	0
+		top :	0
+		width:	330
+		height:	513
+		mask: munchkin-blender-inner-border-mask.png
+		z index:	-1
+	background color:
+		left:	0
+		top :	0
+		width:	330
+		height:	513
+		mask:	munchkin-blender-background-mask.png
+		z index:	-3
+##### Generic Card Fields
+	name:
+		left:	26
+		top :	
+			{
+				if styling.type=="monster" then
+					if not styling.Monster_Subtype then
+						if set.level_bonus_font_size != "" then card_style.level.top + to_real(set.level_bonus_font_size) * 1.8 + 10
+						else 74 + to_real(styling.fudge_factor)
+					else
+						if set.monster_subtype_font_size != "" then card_style.monstersubtype.top + to_real(set.monster_subtype_font_size) * 1.8
+						else card_style.monstersubtype.top + 25
+				else if styling.type=="equipment" or styling.type=="steed" or styling.type=="ship" then
+					if not styling.Usable_By then 
+						if set.level_bonus_font_size != "" then card_style.bonus.top + to_real(set.level_bonus_font_size) * 1.8
+						else 78 + to_real(styling.fudge_factor)
+					else
+						if card_style.usableby.content_lines > 1 then card_style.usableby.top + card_style.usableby.content_height
+						else if set.thingie_font_size != "" then card_style.usableby.top + to_real(set.thingie_font_size) * 1.8
+						else card_style.usableby.top + 25
+				else if styling.type=="curse" then 36 + to_real(styling.fudge_factor)
+				else if styling.type=="item" then 34 + to_real(styling.fudge_factor)
+				else 40 + to_real(styling.fudge_factor)
+			}
+		width:	278
+		height:	
+			{ 
+				if card_style.name.content_lines > 1 then card_style.name.content_height 
+				else if set.name_font_size != "" then to_real(set.name_font_size) * 1.8
+				else 34
+			}
+		alignment:	center
+		z index:	3
+		line height soft: 0.95
+		line height hard: 0.2375
+		font:
+			name:	{ set.bigfont }
+			size:	{ if set.name_font_size != "" then to_real(set.name_font_size) else 19}
+			color: { set.big_text_color }
+	details:
+		left:	26
+		top :	
+			{ 
+				if styling.type=="monster enhancer" or styling.type=="enhancer enhancer" then 
+					if card_style.monsterenhanceramount.content_lines > 1 then card_style.monsterenhanceramount.top + card_style.monsterenhanceramount.content_height + 10
+					else if set.name_font_size != "" then card_style.monsterenhanceramount.top + to_real(set.name_font_size) * 1.8 + 10
+					else card_style.monsterenhanceramount.top + 44
+				else
+					if card_style.name.content_lines > 1 then card_style.name.top + card_style.name.content_height 
+					else if set.name_font_size != "" then card_style.name.top + to_real(set.name_font_size) * 1.8
+					else card_style.name.top + 34
+			}
+		width:	278
+		height:	
+			{ 
+				if card_style.details.content_lines > 1 then card_style.details.content_height 
+				else if set.detail_font_size != "" then to_real(set.detail_font_size) * 1.8 
+				else 24
+			}
+		alignment:	left
+		z index:	2
+		line height soft: 0.95
+		line height hard: 0.2375
+		font:
+			name:	{ set.smallfont }
+			size:	{ if set.detail_font_size != "" then to_real(set.detail_font_size) else 13.5}
+			color:	{ set.small_text_color }	
+	bigdetails:
+		left:	26
+		top :	
+			{
+				if styling.type=="gual" or styling.type=="curse" then 
+				  if card_style.details.content_lines > 1 then card_style.details.top + card_style.details.content_height
+				  else if set.detail_font_size != "" then card_style.details.top + to_real(set.detail_font_size) * 1.8
+				  else card_style.details.top + 24
+				else -1000
+			}
+		width:	278
+		height:	
+			{ 
+				if card_style.bigdetails.content_lines > 1 then card_style.bigdetails.content_height 
+				else if set.name_font_size != "" then to_real(set.name_font_size) * 1.8 
+				else 34
+			}
+		alignment: center
+		z index:	1
+		line height soft: 0.95
+		line height hard: 0.2375
+		font:
+			name:	{ set.bigfont }
+			size:	{ if set.name_font_size != "" then to_real(set.name_font_size) else 19}
+			color:	{ set.small_text_color }	
+	image:
+		top: { if styling.imagetop != "" then to_real(styling.imagetop) else 200}
+		left: { if styling.imageleft != "" then to_real(styling.imageleft) else 64}
+		width: { if styling.imagewidth != "" then to_real(styling.imagewidth) else 200}
+		height: { if styling.imageheight != "" then to_real(styling.imageheight) else 200}
+		z index: -2
+
+##### Monster Card Fields
+	level:
+		left:	26
+		top :	{ if styling.type=="monster" then 42 + to_real(styling.fudge_factor) else -1000 }
+		width:	278
+		height:	
+			{ 
+				if set.level_bonus_font_size != "" then to_real(set.level_bonus_font_size) * 1.6 
+				else 25
+			}
+		alignment:	center
+		z index:	2
+		line height soft: 0.95
+		line height hard: 0.95
+		font:
+			name:	{ set.bigfont }
+			size:	{ if set.level_bonus_font_size != "" then to_real(set.level_bonus_font_size) else 15.5}
+			color:	{ set.small_text_color }	
+	monstersubtype:
+		left:	26
+		top :	
+			{ 
+				if styling.type=="monster" and styling.Monster_Subtype then
+					if set.level_bonus_font_size != "" then card_style.level.top + to_real(set.level_bonus_font_size) * 1.6 
+					else card_style.level.top + 25
+				else -1000
+			}
+		width:	278
+		height:	
+			{ 
+				if set.monster_subtype_font_size != "" then to_real(set.monster_subtype_font_size) * 1.7 
+				else 25
+			}
+		alignment:	center
+		z index:	1
+		line height soft: 0.95
+		line height hard: 0.95
+		font:
+			name:	{ set.smallfont }
+			size:	{ if set.monster_subtype_font_size != "" then to_real(set.monster_subtype_font_size) else 12}
+			weight: bold
+			color:	{ set.small_text_color }	
+	levelsgained:
+		left:	45
+		bottom : { if styling.type=="monster" then 490 else -1000 }
+		width: 120
+		height:	
+			{ 
+				if set.thingie_font_size != "" then to_real(set.thingie_font_size) * 1.8 
+				else 23
+			}
+		alignment:	left
+		z index:	1
+		font:
+			name:	{ set.smallfont }
+			size:	{ if set.thingie_font_size != "" then to_real(set.thingie_font_size) else 14 }
+			color:	{ set.small_text_color }	
+	loot:
+		left:	165
+		bottom : { if styling.type=="monster" then 490 else -1000 }
+		width: 122
+		height:	
+			{ 
+				if set.thingie_font_size != "" then to_real(set.thingie_font_size) * 1.8 
+				else 23
+			}
+		alignment:	right
+		z index:	1
+		font:
+			name:	{ set.smallfont }
+			size:	{ if set.thingie_font_size != "" then to_real(set.thingie_font_size) else 14 }
+			color:	{ set.small_text_color }	
+
+##### Monster Enhancer Card Fields
+	monsterenhanceramount:
+		left:	26
+		top :	
+			{ 
+				if styling.type=="monster enhancer" or styling.type=="enhancer enhancer" then
+					if card_style.name.content_lines > 1 then card_style.name.top + card_style.name.content_height + 10
+					else if set.name_font_size != "" then card_style.name.top + to_real(set.name_font_size) * 1.8 + 10
+					else 84 + to_real(styling.fudge_factor)
+				else -1000 
+			}
+		width:	278
+		height:	
+			{ 
+				if card_style.monsterenhanceramount.content_lines > 1 then card_style.monsterenhanceramount.content_height 
+				else if set.name_font_size != "" then to_real(set.name_font_size) * 1.8
+				else 34
+			}
+		alignment:	center
+		z index:	1
+		line height soft: 0.95
+		line height hard: 0.475
+		font:
+			name:	{ set.bigfont }
+			size:	{ if set.name_font_size != "" then to_real(set.name_font_size) else 19 }
+			color:	{ set.small_text_color }
+
+
+##### Equipment Card Fields
+	bonus:
+		left:	26
+		top :	{ if styling.type=="equipment" or styling.type=="steed" or styling.type=="ship" then 42 + to_real(styling.fudge_factor) else -1000 }
+		width:	278
+		height:	
+			{ 
+				if card_style.bonus.content_lines > 1 then card_style.bonus.content_height 
+				else if set.level_bonus_font_size != "" then to_real(set.level_bonus_font_size) * 1.6 
+				else 29 
+			}
+		alignment:	center
+		z index:	2
+		line height soft: 0.95
+		line height hard: 0.95
+		font:
+			name:	{ set.bigfont }
+			size:	{ if set.level_bonus_font_size != "" then to_real(set.level_bonus_font_size) else 15.5 }
+			color:	{ set.small_text_color }	
+	usableby:
+		left:	26
+		top :	
+			{ 
+				if (styling.type=="equipment" or styling.type=="steed" or styling.type=="ship") and styling.Usable_By then
+					if set.level_bonus_font_size != "" then card_style.bonus.top + to_real(set.level_bonus_font_size) * 1.6 
+					else card_style.bonus.top + 38
+				else -1000
+			}
+		width:	278
+		height:	
+			{ 
+				if card_style.usableby.content_lines > 1 then card_style.usableby.content_height
+				else if set.thingie_font_size != "" then to_real(set.thingie_font_size) * 1.7 
+				else 25
+			}
+		alignment:	center
+		z index:	1
+		line height soft: 0.95
+		line height hard: 0.95
+		font:
+			name:	{ set.smallfont }
+			size:	{ if set.thingie_font_size != "" then to_real(set.thingie_font_size) else 14 }
+			color:	{ set.small_text_color }	
+	equipmentclass:
+		left:	45
+		bottom : { if styling.type=="equipment" or styling.type=="steed" or styling.type=="ship" then 488 else -1000 }
+		width:	110
+		height:	
+			{ 
+				if card_style.equipmentclass.content_lines > 1 then card_style.equipmentclass.content_height 
+				else if set.thingie_font_size != "" then to_real(set.thingie_font_size) * 1.8
+				else 25
+			}
+		alignment: bottom left
+		z index:	3
+		font:
+			name:	{ set.smallfont }
+			size:	{ if set.thingie_font_size != "" then to_real(set.thingie_font_size) else 14 }
+			color:	{ set.small_text_color }	
+	value:
+		left:	160
+		bottom : { if styling.type=="equipment" or styling.type=="steed" or styling.type=="ship" or styling.type=="item" then 488 else -1000 }
+		width:	130
+		height:	
+			{ 
+				if card_style.value.content_lines > 1 then card_style.value.content_height 
+				else if set.thingie_font_size != "" then to_real(set.thingie_font_size) * 1.8
+				else 25
+			}
+		alignment: bottom right
+		z index:	1
+		font:
+			name:	{ set.smallfont }
+			size:	{ if set.thingie_font_size != "" then to_real(set.thingie_font_size) else 14 }
+			color:	{ set.small_text_color }	
+			
+##### OTHER FIELDS
+	thingietype:
+		left:	187
+		bottom : { if styling.type=="race" or styling.type=="class" or styling.type=="style" or styling.type=="power" or styling.type=="loyalty" or styling.type=="training" or styling.type=="accent" or styling.type=="room" then 490 else -1000 }
+		width: 100
+		height:	23
+		alignment: right
+		z index:	1
+		font:
+			name:	{ set.smallfont }
+			size:	{ if set.thingie_font_size != "" then to_real(set.thingie_font_size) else 14 }
+			color:	{ set.small_text_color }

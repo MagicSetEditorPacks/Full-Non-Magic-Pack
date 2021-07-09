@@ -1,0 +1,765 @@
+﻿mse version: 2.0.0
+short name: 7thsea
+full name: 7th Sea
+position hint: 40
+icon: icon.png
+installer group: 7th Sea/Game Files
+
+version: 2014-01-11
+#By: agent ig
+#Text Filter Scripts from Pichoro's Legend of the Five Rings template
+################################################################################################ Scripts
+init script:
+	############################################################################################ Text Filter Scripts
+	flavor_text_filter :=
+		# step 1 : remove italic tags
+		remove_tag@(tag: "<i-flavor>")   +
+		# step 2 : surround by <i> tags
+		{ "<i-flavor>" + input + "</i-flavor>" }
+	traits_text_filter :=
+		# step 1 : remove bold tags
+		remove_tag@(tag: "<b-auto>")   +
+		# step 3 : surround by <b> tags
+		{ "<b-auto>" + input + "</b-auto>" }
+	# the rule text filter
+	text_filter := 
+		# step 1 : remove all automatic tags
+		remove_tag@(tag: "<sym-auto>") +
+		remove_tag@(tag: "<b-auto>")   +
+		# step 2 : reminder text for keywords
+		expand_keywords@(
+			condition: {
+				correct_case
+			}
+			default_expand: {
+				chosen(choice:if correct_case then mode else "lower case", set.automatic_bold_keywords)
+			},
+			combine:        { "<b-auto>{keyword}</b-auto>" }
+			) +
+		# step 3a : expand shortcut words ~ and CARDNAME
+		replace@(
+			match: "CARDNAME",
+			in_context: "(^|[[:space:]]|\\()<match>", # TODO: Allow any punctuation before
+			replace: "<atom-cardname></atom-cardname>"
+			) +
+		# step 3c : fill in atom fields
+		tag_contents@(
+			tag: "<atom-cardname>",
+			contents: { if card_name=="" then "CARDNAME" else card_name }
+			)
+	
+	numbers_only := filter_rule(match: "[*+0-9-]")
+
+	sort_index := {
+		type := card.background
+		if type == "action (dpt)" then "A"
+		else if type == "action (sdp)" then "B"
+		else if type == "adventure" then "C"
+		else if type == "attachment" then "D"
+		else if type == "captain" then "E"
+		else if type == "chantey" then "F"
+		else if type == "crew" then "G"
+		else if type == "ship" then "H"
+	}
+		
+	sort_name :=
+		replace@(match: "^(The|An?) ", replace: "") +
+		to_lower
+	
+	card_number := {
+		position (
+			of: card
+			in: set
+			order_by: { sort_index() + sort_name(card.name) }
+		) + 1
+	}
+	
+	card_count := {
+		number_of_items(in: set)
+	}
+	
+	is_captain := { contains(card.background, match: "captain") }
+	is_ship := { contains(card.background, match: "ship") }
+################################################### Set Fields
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: Name
+	identifying: true
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: text
+	name: artist
+	description: The default artist of all cards
+set field:
+	type: text
+	name: Copyright
+	description: The default copyright line of all cards
+set field:
+	type: text
+	name: set code
+	description: This code will appear in the artist and copyright line of all cards
+set field:
+	type: info
+	name: Defaults and Automation
+set field:
+	type: multiple choice
+	name: automatic bold keywords
+	choice: real
+	choice: custom
+	initial: real, custom
+	description: For which kinds of keywords should automatic bolding take place?
+################################################### Card Background and Picture
+card field:
+	type: image
+	name: picture
+	show statistics: false
+	card list visible: false
+	description: The art for the card; double click to chose art
+card field:
+	type: choice
+	name: background
+	description: Type of card
+	card list visible: true
+	card list column: 2
+	card list alignment: left
+	card list width: 60
+	card list name: Type
+	choice: action (dpt)
+	choice: action (sdp)
+	choice: adventure
+	choice: attachment
+	choice: captain
+	choice: chantey
+	choice: crew
+	choice: ship
+################################################### Card Icons
+card field:
+	type: choice
+	name: faction_1
+	description: Card's Primary Faction
+	card list visible: true
+	card list column: 3
+	card list alignment: left
+	card list width: 60
+	card list name: Primary Faction
+	choice: unaligned
+	choice: the black freighter
+	choice: brotherhood
+	choice: castille
+	choice: corsairs
+	choice: crimson rogers
+	choice: explorer's society
+	choice: gosse's gentlemen
+	choice: montainge
+	choice: sea dogs
+	choice: vesten
+	choice: roberts
+	choice: lion clan
+	choice: crab clan
+	choice: mantis clan
+	choice: ratling
+card field:
+	type: choice
+	name: faction_2
+	description: Card's Secondary Faction
+	card list visible: true
+	card list column: 4
+	card list alignment: left
+	card list width: 60
+	card list name: Secondary Faction
+	choice: unaligned
+	choice: the black freighter
+	choice: brotherhood
+	choice: castille
+	choice: corsairs
+	choice: crimson rogers
+	choice: explorer's society
+	choice: gosse's gentlemen
+	choice: montainge
+	choice: sea dogs
+	choice: vesten
+	choice: roberts
+	choice: lion clan
+	choice: crab clan
+	choice: mantis clan
+	choice: ratling
+card field:
+	type: choice
+	name: secret_society
+	description: Card's Secret Society
+	card list visible: true
+	card list column: 5
+	card list alignment: left
+	card list width: 60
+	card list name: Secret Society
+	choice: none
+	choice: die kreutzritter
+	choice: invisible college
+	choice: knights of the rose & cross
+	choice: los vagos
+	choice: rilasciare
+	choice: sophia's daughters
+card field:
+	type: choice
+	name: nation
+	description: Card's Nation
+	card list visible: true
+	card list column: 6
+	card list alignment: left
+	card list width: 60
+	card list name: Nation
+	choice: none
+	choice: avalon
+	choice: eisen
+	choice: ussura
+	choice: vodacce
+	choice: rokugan
+card field:
+	type: choice
+	name: single_costs
+	description: For cards with a single cost/cancel value
+	choice: none
+	choice: cost cannon
+	choice: cost sailing
+	choice: cost adventuring
+	choice: cost influence
+	choice: cost swashbuckling
+	choice: cost ship
+	choice: cancel cannon
+	choice: cancel sailing
+	choice: cancel adventuring
+	choice: cancel influence
+	choice: cancel swashbuckling
+	choice: cancel ship
+card field:
+	type: choice
+	name: cost
+	description: For cards with a cost value and a cancel value
+	choice: none
+	choice: cost cannon
+	choice: cost sailing
+	choice: cost adventuring
+	choice: cost influence
+	choice: cost swashbuckling
+	choice: cost ship
+card field:
+	type: choice
+	name: cancel
+	description: For cards with a cost value and a cancel value
+	choice: none
+	choice: cancel cannon
+	choice: cancel sailing
+	choice: cancel adventuring
+	choice: cancel influence
+	choice: cancel swashbuckling
+	choice: cancel ship
+card field:
+	type: choice
+	name: bonus
+	choice: none
+	choice: skill cannon
+	choice: skill sailing
+	choice: skill adventuring
+	choice: skill influence
+	choice: skill swashbuckling
+############################################################ Card Text
+card field:
+	type: text
+	name: name
+	description: Name of the card
+	identifying: true
+	multi line: true
+	card list visible: true
+	card list column: 1
+	card list width: 75
+card field:
+	type: text
+	name: type
+	description: Type of the card
+	show statistics: false
+	multi line: true
+	default: "ATTACHMENT"
+card field:
+	type: text
+	name: traits_text
+	description: The card's printed Traits
+	show statistics: false
+	multi line: true
+	script: traits_text_filter(value)
+	default: if is_captain() then "Starting Sea: "
+card field:
+	type: text
+	name: ship_traits
+	description: The Ship's printed Traits
+	show statistics: false
+	multi line: true
+	script: traits_text_filter(value)
+	default: if is_ship() then "Maximum Crew: "
+card field:
+	type: text
+	name: rules_text
+	description: The card's rules text
+	show statistics: false
+	multi line: true
+	script: text_filter(input: value, card_name: card.name)
+	default: "  "
+card field:
+	type: text
+	name: flavor_text
+	description: The card's flavor text
+	show statistics: false
+	multi line: true
+	script: flavor_text_filter(value)
+card field:
+	type: text
+	name: card_text
+	save value: false
+	show statistics: false
+	multi line: true
+	script: combined_editor(field1: card.traits_text, separator1: "<line>\n", field2: card.rules_text, separator2: "<line>\n", field3: card.flavor_text)
+	description: Traits, Rules, and Flavor text goes here.
+card field:
+	type: text
+	name: ship_text
+	save value: false
+	show statistics: false
+	multi line: true
+	script: combined_editor(field1: card.ship_traits, separator1: "<line>\n", field2: card.rules_text, separator2: "<line>\n", field3: card.flavor_text)
+	description: Traits, Rules, and Flavor text goes here.
+card field:
+	type: text
+	name: cannon
+	script: numbers_only(value)
+	description: Character's cannon skill
+	show statistics: true
+card field:
+	type: text
+	name: sailing
+	script: numbers_only(value)
+	description: Character's sailing skill
+	show statistics: true
+card field:
+	type: text
+	name: adventuring
+	script: numbers_only(value)
+	description: Character's adventuring skill
+	show statistics: true
+card field:
+	type: text
+	name: influence
+	script: numbers_only(value)
+	description: Character's influence skill
+	show statistics: true
+card field:
+	type: text
+	name: swashbuckling
+	script: numbers_only(value)
+	description: Character's swashbuckling skill
+	show statistics: true
+card field:
+	type: text
+	name: bonus_text
+	script: numbers_only(value)
+	description: For cards with an attachment skill bonus
+	card list visible: true
+	card list column: 10
+	card list alignment: left
+	card list width: 60
+	card list name: Skill Bonus
+	description: value of skill bonus
+	show statistics: false
+card field:
+	type: text
+	name: cost_cancel
+	script: numbers_only(value)
+	card list visible: true
+	card list column: 7
+	card list alignment: left
+	card list width: 60
+	card list name: Single Cost/Cancel Value
+	description: Value for cards with single cost/cancel value
+	show statistics: false
+card field:
+	type: text
+	name: cost_text
+	script: numbers_only(value)
+	card list visible: true
+	card list column: 8
+	card list alignment: left
+	card list width: 60
+	card list name: Action/Attachment Cost
+	description: value of cost for card's with a cost and cancel value
+	show statistics: false
+card field:
+	type: text
+	name: cancel_text
+	script: numbers_only(value)
+	card list visible: true
+	card list column: 9
+	card list alignment: left
+	card list width: 60
+	card list name: Action/Attachment Cancel
+	description: value of cost for card's with a cost and cancel value
+	show statistics: false
+card field:
+	type: text
+	name: starting_wealth
+	script: numbers_only(value)
+	description: Captain's starting wealth
+	show statistics: true
+card field:
+	type: text
+	name: crew_cost
+	script: numbers_only(value)
+	description: Cost to hire crewmember
+	show statistics: true
+card field:
+	type: text
+	name: movement
+	script: numbers_only(value)
+	description: Ship's movement cost
+	show statistics: true
+card field:
+	type: text
+	name: artist
+	show statistics: false
+	editable: false
+	description: The artist for the card's art
+card field:
+	type: text
+	name: copyright
+	default: set.Copyright
+	show statistics: false
+	editable: false
+	description: The copyright line for the card
+card field:
+	type: text
+	name: card number
+	save value: false
+	script: card_number() + "    " + card_count()
+	card list visible: true
+	card list column: 13
+	card list width: 50
+	card list name: #
+	card list alignment: right
+	editable: false
+	show statistics: false
+card field:
+	type: choice
+	name: rarity
+	choice: core set
+	choice: common
+	choice: uncommon
+	choice: rare
+	choice: promo
+	initial: common
+	card list visible: true
+	card list column: 14
+	card list width: 50
+	description: The rarity of the card
+	choice colors:
+		core set: rgb(109,62,39)
+		common:     rgb(33,33,33)
+		uncommon:   rgb(224,224,224)
+		rare:       rgb(255,207,52)
+		special:    rgb(190,0,255)
+card field:
+	type: text
+	name: artistcopyright
+	show statistics: false
+	script: combined_editor(field1: card.artist, separator: " ", field2: card.copyright)
+	description: The artist and copyright line for the card
+	save value: false
+card field:
+	type: text
+	name: set
+	save value: false
+	script:
+		if set.set_code == "" then "Custom" 
+		else set.set_code
+	editable: false
+	show statistics: false
+############################################################# Automatic Text Replacements
+auto replace:
+	match: (C)
+	replace: ©
+auto replace:
+	match: CR
+	replace: ©
+auto replace:
+	match: TM
+	replace: ™
+	whole word: true
+auto replace:
+	match: --
+	replace: —
+auto replace:
+	# note the spaces
+	match:
+		 - 
+	replace:
+		 — 
+auto replace:
+	match: ::
+	replace: •
+auto replace:
+	match: ~
+	replace: CARDNAME
+############################################################## Card pack items
+pack type:
+	name: core set card
+	filter: card.rarity == "core set"
+pack type:
+	name: common
+	filter: card.rarity == "common"
+pack type:
+	name: uncommon
+	filter: card.rarity == "uncommon"
+pack type:
+	name: rare
+	filter: card.rarity == "rare"
+pack type:
+	name: promo
+	filter: card.rarity == "promo"
+############################################################## Card packs
+pack type:
+	name: core set booster pack
+	item:
+		name: rare
+	item:
+		name: uncommon
+		amount: 3
+	item:
+		name: common
+		amount: 11
+pack type:
+	name: expansion booster pack
+	item:
+		name: rare
+	item:
+		name: uncommon
+		amount: 2
+	item:
+		name: common
+		amount: 8
+pack type:
+	name: additional core set card
+	item:
+		name: core set card
+pack type:
+	name: additional common
+	item:
+		name: common
+pack type:
+	name: additional uncommon
+	item:
+		name: uncommon
+pack type:
+	name: additional rare
+	item:
+		name: rare
+pack type:
+	name: additional promo
+	item:
+		name: promo
+############################################################## We have keywords
+has keywords: true
+############################################################## Keyword mode
+keyword mode:
+	name: real
+	description: Real keywords
+keyword mode:
+	is default: true
+	name: custom
+	description: Custom keywords
+############################################################## Keyword parameter types
+keyword parameter type:
+	name: number
+	match: [XYZ0-9]+
+	refer script:
+		name: normal
+		description: (1,2,3)
+		script: \{{input}\}
+	refer script:
+		name: as words
+		description: (one, two, three)
+		script: \{english_number({input})\}
+	refer script:
+		name: as words, use "a" for 1
+		description: (a, two, three)
+		script: \{english_number_a({input})\}
+	refer script:
+		name: as words, use "" for 1
+		description: (, two, three)
+		script: \{english_number_multiple({input})\}
+	refer script:
+		name: as ordinal words
+		description: (first, second, third)
+		script: \{english_number_ordinal({input})\}
+keyword parameter type:
+	name: name
+	match: [^(.:;\n—]+
+	refer script:
+		name: normal
+		description: No changes made.
+		script: \{{input}\}
+	refer script:
+		name: singular
+		description: Removes plurality from words.
+		script: \{english_singular({input})\}
+keyword parameter type:
+	name: prefix
+	description: Prefix for things like "<something>walk"
+	optional: false
+	match: [A-Z][A-Z,a-z’ ]*
+############################# All Magic keywords
+keyword:
+	mode: real
+	match: Captive
+	keyword: Captive
+keyword:
+	mode: real
+	match: Rower
+	keyword: Rower
+keyword:
+	mode: real
+	match: Loyal
+	keyword: Loyal
+keyword:
+	mode: real
+	match: Topman
+	keyword: Topman
+keyword:
+	mode: real
+	match: Swordsman
+	keyword: Swordsman
+keyword:
+	mode: real
+	match: Villainous
+	keyword: Villainous
+keyword:
+	mode: real
+	match: Heroic
+	keyword: Heroic
+keyword:
+	mode: real
+	match: Unique
+	keyword: Unique
+keyword:
+	mode: real
+	match: Fate
+	keyword: Fate
+keyword:
+	mode: real
+	match: Gunner
+	keyword: Gunner
+keyword:
+	mode: real
+	match: Porte
+	keyword: Porte
+keyword:
+	mode: real
+	match: Port
+	keyword: Port
+keyword:
+	mode: real
+	match: First Mate
+	keyword: First Mate
+keyword:
+	mode: real
+	match: Experienced
+	keyword: Experienced
+keyword:
+	mode: real
+	match: Ally
+	keyword: Ally
+keyword:
+	mode: real
+	match: Leg
+	keyword: Leg
+keyword:
+	mode: real
+	match: Illegal
+	keyword: Illegal
+keyword:
+	mode: real
+	match: Control
+	keyword: Control
+keyword:
+	mode: real
+	match: Weather
+	keyword: Weather
+keyword:
+	mode: real
+	match: Glamour
+	keyword: Glamour
+keyword:
+	mode: real
+	match: Artifact
+	keyword: Artifact
+keyword:
+	mode: real
+	match: Goods
+	keyword: Goods
+keyword:
+	mode: real
+	match: Skeletal
+	keyword: Skeletal
+keyword:
+	mode: real
+	match: Item
+	keyword: Item
+keyword:
+	mode: real
+	match: Patron
+	keyword: Patron
+keyword:
+	mode: real
+	match: Oath
+	keyword: Oath
+keyword:
+	mode: real
+	match: Letter of Marque
+	keyword: Letter of Marque
+keyword:
+	mode: real
+	match: Figurehead
+	keyword: Figurehead
+keyword:
+	mode: real
+	match: Pet
+	keyword: Pet
+keyword:
+	mode: real
+	match: Holy
+	keyword: Holy
+keyword:
+	mode: real
+	match: Eye
+	keyword: Eye
+keyword:
+	mode: real
+	match: Fear
+	keyword: Fear
+keyword:
+	mode: real
+	match: Laerdom
+	keyword: Laerdom
+keyword:
+	mode: real
+	match: Hand
+	keyword: Hand
+keyword:
+	mode: real
+	match: Pyeryem
+	keyword: Pyeryem
+keyword:
+	mode: real
+	match: Cheap
+	keyword: Cheap

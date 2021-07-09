@@ -1,0 +1,164 @@
+﻿mse version: 2.0.0
+short name: stargate
+full name: stargate
+installer group: stargate/game files
+icon: card-back.png
+position hint: 100
+
+version: 2014-02-01
+
+############################################################## Set Fields
+set field:
+	type: text
+	name: title
+set field:
+	type: text
+	name: description
+	multi line: true
+############################################################## Card fields
+card field:
+	type: text
+	name: skill1
+	card list visible: true
+	card list column: 10
+	card list width: 50
+	description: Culture Skill
+card field:
+	type: text
+	name: skill2
+	card list visible: true
+	card list column: 10
+	card list width: 50
+	description: Science Skill
+card field:
+	type: text
+	name: skill3
+	card list visible: true
+	card list column: 10
+	card list width: 50
+	description: Combat Skill
+card field:
+	type: text
+	name: skill4
+	card list visible: true
+	card list column: 10
+	card list width: 50
+	description: Ingenuity Skill
+card field:
+	type: text
+	name: fpower
+	card list visible: true
+	card list column: 10
+	card list width: 50
+	description: Ship Firepower
+card field:
+	type: text
+	name: rcost
+	card list visible: true
+	card list column: 10
+	card list width: 50
+	description: Adversary Revive Cost
+card field:
+	type: text
+	name: cost
+	card list visible: true
+	card list column: 10
+	card list width: 50
+	description: The cost of the card.
+card field:
+	type: text
+	name: name
+	card list visible: true
+	card list column: 1
+	card list width: 100
+	description: The name of the card.
+	show statistics: false
+	identifying: true
+card field:
+	type: text
+	name: subname
+	card list visible: true
+	description: The lore title of card.
+	show statistics: false
+	identifying: true
+card field:
+	type: text
+	name: subtype
+	card list visible: true
+	description: Card Type
+	show statistics: false
+	identifying: true
+card field:
+	type: text
+	name: gametext
+	show statistics: false
+	multi line: true
+	description: The Game Text
+card field:
+	type: choice
+	name: type
+	description: The Card Type
+	choice:
+		name: character
+		choice: sgc
+		choice: tokra
+		choice: ancient
+		choice: asgard
+		choice: atlantis
+		choice: nid
+		choice: russian
+		choice: jaffa
+		choice: generic
+	choice: 
+		name: gear event
+		choice: sgc
+		choice: tokra
+		choice: ancient
+		choice: asgard
+		choice: atlantis
+		choice: nid
+		choice: russian
+		choice: jaffa
+		choice: wraith
+		choice: generic
+	choice:
+		name: adversary
+		choice: political
+		choice: jaffa
+		choice: goauld
+		choice: replicator
+		choice: ori
+		choice: wraith
+		choice: generic
+	choice:
+		name: obstacle
+		choice: political
+		choice: jaffa
+		choice: goauld
+		choice: replicator
+		choice: ori
+		choice: wraith
+		choice: disease
+		choice: generic
+	choice:
+		name: ship
+		choice: sgc
+		choice: tokra
+		choice: ancient
+		choice: asgard
+		choice: atlantis
+		choice: nid
+		choice: russian
+		choice: hjaffa
+		choice: hgeneric
+		choice: ori
+		choice: goauld
+		choice: replicator
+		choice: wraith
+		choice: vjaffa
+		choice: vgeneric
+card field:
+	type: image
+	name: image
+	description: The art of the card.
+	show statistics: false

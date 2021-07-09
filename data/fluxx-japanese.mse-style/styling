@@ -1,0 +1,22 @@
+styling field:
+	type: choice
+	name: keeper style
+	description: Choose the style of Keepers (and Creepers)
+	initial: top and bottom
+	choice: top and bottom
+	choice: left
+	choice: right
+styling field:
+	type: choice
+	name: goal images
+	description: Choose number of images to use for goals
+	initial: one
+	choice: one
+	choice: two
+styling field:
+	type: choice
+	name: name font
+	description: Choose the font to use for the Name of the card
+	initial: Helvetica
+	choice: Helvetica
+	choice: Olympia-Bold

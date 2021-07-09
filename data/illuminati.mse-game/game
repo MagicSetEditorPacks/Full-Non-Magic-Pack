@@ -1,0 +1,12 @@
+﻿mse version: 2.0.0
+short name: illuminati
+full name: Illuminati Deluxe Edition
+installer group: illuminati/game files
+icon: card-back.png
+version: 2014-03-03
+position hint: 48
+
+init script: include file: init_script
+
+include file: set_fields
+include file: card_fields

@@ -1,0 +1,368 @@
+mse version: 2.0.0
+game: pokemon
+full name: Pokemon Template Development Tools
+short name: Tools
+icon: card-sample.jpg
+position hint: 099
+
+version: 2016-09-31
+depends on:
+	package: pokemon.mse-game
+	version: 2016-09-30
+depends on:
+	package: pokemon-a-energy.mse-symbol-font
+	version: 2016-09-22
+depends on:
+	package: pokemon-a-color.mse-symbol-font
+	version: 2016-09-10
+depends on:
+	package: pokemon-a-lg-color.mse-symbol-font
+	version: 2016-09-24
+depends on:
+	package: pokemon-a-title.mse-symbol-font
+	version: 2016-09-22
+depends on:
+	package: pokemon-a-rule.mse-symbol-font
+	version: 2016-09-22
+depends on:
+	package: pokemon-b-common.mse-include
+	version: 2016-09-30
+depends on:
+	package: pokemon-b-publicdomain.mse-include
+	version: 2018-07-01
+
+#By: Imp Elemental Spirit Guide
+#	Version 0.6.03
+
+#expand_size()==2
+#card face only
+card width: 700
+card height: 990
+card dpi: 294
+
+#sideways card face
+#card width: 1026
+#card height: 736
+#card dpi: 294
+
+#expand_size()==2
+#border included
+#card width: 736
+#card height: 1026
+#card dpi: 294
+
+#Actual card width is 2.5", height is 3.5" almost exactly
+############################################################## Extra scripts
+init script:
+	diagnostic := { "   " }
+	##############################These two equations were originally used for centering and placing the different frames and text so that they matched the original card.
+	##############################			They have been kept in here because they would allow a different resolution of card should such thing apply
+	##############################                  Be careful to change the card size when altering these value
+	expand_size := { 2 }
+	# 2 is the size of the actual images used
+	# to watch 2 , card width 736, height 750, expand_size==2, slide_up == 0 or 276
+	# for 2   card width: 736, card height: 1026, card dpi: 294
+	# for 1.5 card width: 552, card height:  770, card dpi: 220
+	# for 1.4 card width: 515, card height:  717, card dpi: 205
+	# for 1   card width: 368, card height:  513, card dpi: 147
+	slide_left := { 0 }
+	slide_up := { 0 }
+	x_left := { to_int(input * expand_size()) - slide_left() }
+	y_top := { to_int(input * expand_size()) - slide_up() }
+	fun_expand_size := { to_int(input * expand_size()) }
+	fun_expand_font := { input * expand_size() }
+	fun_decompress := { input / expand_size() }
+	##Basic pokemon are Sunmoon with Foreground=Background (only 2 colors), Evolution is BW, Color1=Foreground, Color2=Stencil, Color3=Background
+	saturation_light := { if contains(styling.Coloration_Settings, match: "Super Rare Gold Color Conversion")
+			then if styling.Gold_Image_Type=="SunMoon Style" then rgb(252,198,1)
+			else if styling.Gold_Image_Type=="BlackWhite Style" then rgb(252,201,0)
+			else if styling.Gold_Image_Type=="Light Spectrum" then rgb(255,230,145)
+			else rgb(252,201,0)
+		else styling.Image_Color_Light }
+	saturation_dark := { if contains(styling.Coloration_Settings, match: "Super Rare Gold Color Conversion")
+			then if styling.Gold_Image_Type=="SunMoon Style" then rgb(187,107,8)
+			else if styling.Gold_Image_Type=="BlackWhite Style" then rgb(211,175,1)
+			else if styling.Gold_Image_Type=="Light Spectrum" then rgb(211,175,1)
+			else if styling.Gold_Image_Type=="Large Spectrum" then rgb(156,121,0)
+			else rgb(0,0,0)
+		else styling.Image_Color_Dark }
+	####### The SunMoon gold colors use a stencil the background is rgb(252,198,1) the foreground is rgb(181,107,8)
+	####### The BW gold colors use a stencil with fill the background is rgb(230,184,0) the stencil is rgb(221,175,1) and the fill is rgb(252,201,0)
+	white_sat := { if styling.White_Conversion=="5" then rgb(255,255,255) else if styling.White_Conversion=="0" then rgb(255,0,0) else if styling.White_Conversion=="-5" then rgb(0,0,0)
+		else if to_int(styling.White_Conversion)<0 then rgb((250+50*to_int(styling.White_Conversion)),0,0)
+		else rgb(255,50*to_int(styling.White_Conversion),50*to_int(styling.White_Conversion)) }
+	red_sat := { if (styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" and styling.Red_Conversion<0) or styling.Color_Conversion<0
+			then rgb(250+50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Red_Conversion else styling.Color_Conversion),0,0)
+			else rgb(255,50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Red_Conversion else styling.Color_Conversion),50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Red_Conversion else styling.Color_Conversion)) }
+	blue_sat := { if (styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" and styling.Blue_Conversion<0) or styling.Color_Conversion<0
+			then rgb(250+50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Blue_Conversion else styling.Color_Conversion),0,0)
+			else rgb(255,50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Blue_Conversion else styling.Color_Conversion),50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Blue_Conversion else styling.Color_Conversion)) }
+	green_sat := { if (styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" and styling.Green_Conversion<0) or styling.Color_Conversion<0
+			then rgb(250+50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Green_Conversion else styling.Color_Conversion),0,0)
+			else rgb(255,50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Green_Conversion else styling.Color_Conversion),50*to_int(if styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" then styling.Green_Conversion else styling.Color_Conversion)) }
+	image_sat := { rgb(128+25*to_int(styling.Image_Saturation),128+25*to_int(styling.Image_Saturation),128+25*to_int(styling.Image_Saturation)) }
+############################################################## Styling fields
+styling field:
+	type: multiple choice
+	name: Coloration Settings
+	description: Panel of coloration settings
+	choice: Invert Colors
+	choice: Super Rare Gold Color Conversion
+	choice: Rainbow Rare Color Conversion
+	choice: Rainbow Outline Image
+	initial: Super Rare Gold Color Conversion
+styling field:
+	type: choice
+	name: Image Conversion Type
+	description: Options for converting the image to a mono-colored image
+	choice: Strict Desaturation
+	choice: Convert All Colors to Grey
+	choice: Convert Red Green & Blue Separately to Grey
+	initial: Strict Desaturation
+styling field:
+	type: choice
+	name: Gold Image Type
+	description: Options for the type of gold image to convert to
+	choice: SunMoon Style
+	choice: BlackWhite Style
+	choice: Light Spectrum
+	choice: Large Spectrum
+	choice: Full Spectrum
+styling field:
+	type: color
+	name: Image Color Light
+	description: The color used to color the image
+	initial: rgb(170,170,170)
+styling field:
+	type: color
+	name: Image Color Dark
+	description: The color used to color the image
+	initial: rgb(85,85,85)
+styling field:
+	type: choice
+	name: White Conversion
+	description: Set the Image White Conversion
+	choice: 5
+	choice: 4
+	choice: 3
+	choice: 2
+	choice: 1
+	choice: 0
+	choice: -1
+	choice: -2
+	choice: -3
+	choice: -4
+	choice: -5
+	initial: 0
+styling field:
+	type: choice
+	name: Color Conversion
+	description: Set the Color Conversion
+	choice: 5
+	choice: 4
+	choice: 3
+	choice: 2
+	choice: 1
+	choice: 0
+	choice: -1
+	choice: -2
+	choice: -3
+	choice: -4
+	choice: -5
+	initial: 0
+styling field:
+	type: choice
+	name: Red Conversion
+	description: Set the Red Conversion
+	choice: 5
+	choice: 4
+	choice: 3
+	choice: 2
+	choice: 1
+	choice: 0
+	choice: -1
+	choice: -2
+	choice: -3
+	choice: -4
+	choice: -5
+	initial: 0
+styling field:
+	type: choice
+	name: Blue Conversion
+	description: Set the Blue Conversion
+	choice: 5
+	choice: 4
+	choice: 3
+	choice: 2
+	choice: 1
+	choice: 0
+	choice: -1
+	choice: -2
+	choice: -3
+	choice: -4
+	choice: -5
+	initial: 0
+styling field:
+	type: choice
+	name: Green Conversion
+	description: Set the Green Conversion
+	choice: 5
+	choice: 4
+	choice: 3
+	choice: 2
+	choice: 1
+	choice: 0
+	choice: -1
+	choice: -2
+	choice: -3
+	choice: -4
+	choice: -5
+	initial: 0
+styling field:
+	type: choice
+	name: Image Saturation
+	description: Set the Image Color Saturation
+	choice: 5
+	choice: 4
+	choice: 3
+	choice: 2
+	choice: 1
+	choice: 0
+	choice: -1
+	choice: -2
+	choice: -3
+	choice: -4
+	choice: -5
+	initial: 0
+styling style:
+	Coloration Settings:
+		render style: checklist
+		direction: vertical
+	Gold Image Type
+		visible: { contains(styling.Coloration_Settings, match: "Super Rare Gold Color Conversion") }
+	Image Color Light:
+		visible: { not(contains(styling.Coloration_Settings, match: "Gold") or contains(styling.Coloration_Settings, match: "Rainbow")) }
+	Image Color Dark:
+		visible: { not(contains(styling.Coloration_Settings, match: "Gold") or contains(styling.Coloration_Settings, match: "Rainbow")) }
+	White Conversion:
+		visible: { not(styling.Image_Conversion_Type=="Strict Desaturation") }
+	Color Conversion:
+		visible: { styling.Image_Conversion_Type=="Convert All Colors to Grey" }
+	Red Conversion:
+		visible: { styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" }
+	Blue Conversion:
+		visible: { styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" }
+	Green Conversion:
+		visible: { styling.Image_Conversion_Type=="Convert Red Green & Blue Separately to Grey" }
+	Image Saturation:
+		visible: { not(styling.Image_Conversion_Type=="Strict Desaturation") }
+############################################################## Throughout this odd number layers are reserved for shading/covering up etc.
+card style:
+	######################## Unused card fields
+
+	################## Choice Fields
+	#card type:	#trainer:	#energy type:
+	#card color 1:	#card color 2:
+	#texture type 1:	#texture type 2:	#color texture 1:	#color texture 2:	#basic texture:	#metal texture:
+	#stage restored:	#stage levelup:	#stage baby:	#stage base:
+	#dual blend type:	#dual blend sideways:	#rarity:	#place:
+	#basic user image type: (Multiple Choice)
+
+	################## Image Fields
+	#card image:	#card popout:
+	#background pic 2:
+	#energy orb pic 1:	#energy orb pic 2:
+	#evolution pic:	#gym leader pic:	#team watermark:
+
+	################## Color Fields
+	#energy color 1:	#energy color 2:	#energy color 3:
+
+	################## Text Fields
+	#card name:	#hp:	#pokedex text 1:	#pokedex text 2:	#evolution entry:	#evolution text 1:	#evolution text 2:
+	#copyright:	#illustrator:	#weakness:	#resistance:	#retreat cost:	#flavor text:
+	#rule np 1:	#rule np 2:	#rule text 1:	#rule text 2:	#rule text 3:
+	#cost new 1:	#cost new 2:	#cost new 3:	#cost classic 1:	#cost classic 2:	#cost classic 3:
+	#attack 1:	#attack 2:	#attack 3:	#damage 1:	#damage 2:	#damage 3:
+	#title text 1:	#title text 2:	#title text 3:	#ability text 1:	#ability text 2:	#ability rule text 1::	#special rule text 1:	#special rule text 2:
+
+	################## Text Fields based upon equations (will need to add equation to use)
+	#rule reminder 1:	#special rule reminder 1:	#special rule reminder 2:
+	#ability reminder 1:	#ability reminder 2:	#title reminder 1:	#title reminder 2:	#title reminder 3:
+	#evolution reminder 1:	#evolution reminder 2:	#weakoverlay:	#resoverlay:	#retoverlay:
+	#color text 1:	#color text 2:	#color text 1 dup:
+
+	################## Non-user input choices fields (for use as images)
+	#background 2:
+	#window:
+	#image overlay:
+	#border:
+	#border overlay:
+	#text popout image:
+
+#########Image used for user defined card color background image
+	background pic 1:
+		left: { x_left(183)-350 }
+		top: { y_top(257)-495 }
+		width: { 700 }
+		height: { 990 }
+		visible: { true }
+		z index: -17
+#########Blank image to underlay the presented image but overlay the user input image (provides background for transparencies)
+	blank image:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(350) }
+		height: { fun_expand_size(495) }
+		#width: { fun_expand_size(513) }
+		#height: { fun_expand_size(368) }
+		z index: -15
+		visible: { true }
+		render style: image
+		image: { recolor_image(input: "mask-color.png", red: styling.Image_Color_Light, green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)) }
+#########Background image
+	background:
+		left: { x_left(0) }
+		top: { y_top(0) }
+		width: { fun_expand_size(350) }
+		height: { fun_expand_size(495) }
+		#width: { fun_expand_size(513) }
+		#height: { fun_expand_size(368) }
+		z index: -14
+		render style: image
+		image: 
+			script: if contains(styling.Coloration_Settings, match: "Rainbow Outline Image") then masked_blend(
+					light: 	if styling.Image_Conversion_Type=="Strict Desaturation"
+							then if contains(styling.Coloration_Settings, match: "Invert Colors") then masked_blend(light: "fore-rainbow-bright.png", dark: "fore-rainbow.png", mask: saturate(input: invert_image(input: card.background_pic_1), amount: -1))
+							else masked_blend(light: "fore-rainbow-bright.png", dark: "fore-rainbow.png", mask: saturate(input: card.background_pic_1, amount: -1))
+						else if contains(styling.Coloration_Settings, match: "Invert Colors") then masked_blend(light: "fore-rainbow-bright.png", dark: "fore-rainbow.png", mask: recolor_image(input: recolor_image(input: invert_image(input: card.background_pic_1), red: red_sat(), green: green_sat(), blue: blue_sat(), white: white_sat()), red: image_sat(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)))
+						else masked_blend(light: "fore-rainbow-bright.png", dark: "fore-rainbow.png", mask: recolor_image(input: recolor_image(input: card.background_pic_1, red: red_sat(), green: green_sat(), blue: blue_sat(), white: white_sat()), red: image_sat(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)))
+					dark: "out-rainbow.png", 
+					mask: saturate(input: combine_blend(image1: combine_blend(image1: card.background_pic_1, image2: "/pokemon-b-common.mse-include/mask-blank.png", combine: "overlay"), image2: "/pokemon-b-common.mse-include/mask-blank.png", combine: "overlay"), amount: -1))
+				else if styling.Image_Conversion_Type=="Strict Desaturation"
+					then if contains(styling.Coloration_Settings, match: "Invert Colors") then masked_blend(light: if contains(styling.Coloration_Settings, match: "Rainbow Rare Color Conversion") then "fore-rainbow-bright.png" else recolor_image(input: "mask-color.png", red: saturation_light(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), dark: if contains(styling.Coloration_Settings, match: "Rainbow Rare Color Conversion") then "fore-rainbow.png" else recolor_image(input: "mask-color.png", red: saturation_dark(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), mask: saturate(input: invert_image(input: card.background_pic_1), amount: -1))
+					else masked_blend(light: if contains(styling.Coloration_Settings, match: "Rainbow Rare Color Conversion") then "fore-rainbow-bright.png" else recolor_image(input: "mask-color.png", red: saturation_light(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), dark: if contains(styling.Coloration_Settings, match: "Rainbow Rare Color Conversion") then "fore-rainbow.png" else recolor_image(input: "mask-color.png", red: saturation_dark(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), mask: saturate(input: card.background_pic_1, amount: -1))
+				else if contains(styling.Coloration_Settings, match: "Invert Colors") then masked_blend(light: if contains(styling.Coloration_Settings, match: "Rainbow Rare Color Conversion") then "fore-rainbow-bright.png" else recolor_image(input: "mask-color.png", red: saturation_light(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), dark: if contains(styling.Coloration_Settings, match: "Rainbow Rare Color Conversion") then "fore-rainbow.png" else recolor_image(input: "mask-color.png", red: saturation_dark(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), mask: recolor_image(input: recolor_image(input: invert_image(input: card.background_pic_1), red: red_sat(), green: green_sat(), blue: blue_sat(), white: white_sat()), red: image_sat(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)))
+				else masked_blend(light: if contains(styling.Coloration_Settings, match: "Rainbow Rare Color Conversion") then "fore-rainbow-bright.png" else recolor_image(input: "mask-color.png", red: saturation_light(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), dark: if contains(styling.Coloration_Settings, match: "Rainbow Rare Color Conversion") then "fore-rainbow.png" else recolor_image(input: "mask-color.png", red: saturation_dark(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)), mask: recolor_image(input: recolor_image(input: card.background_pic_1, red: red_sat(), green: green_sat(), blue: blue_sat(), white: white_sat()), red: image_sat(), green: rgb(128,128,128), blue: rgb(128,128,128), white: rgb(255,255,255)))
+
+extra card field:
+	type: text
+	name: info text
+	show statistics: false
+	default: diagnostic()
+	card list allow: false
+	save value: false
+	editable: false
+extra card style:
+	info text:
+		left: { x_left(50) }
+		top: { y_top(50)+slide_up() }
+		width: { fun_expand_size(200) }
+		height: { fun_expand_size(50) }
+		z index: 5
+		visible: { true }
+		font:
+			name: { "GillSans" }
+			weight: { "bold" }
+			style: { "normal" }
+			size: { fun_expand_font(10) }
+			color: rgb(255,0,0)

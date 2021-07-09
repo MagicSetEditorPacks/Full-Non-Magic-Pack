@@ -1,0 +1,299 @@
+﻿mse version: 2.0.0
+short name: DBM
+full name: dreamblade
+icon: card-back.png
+position hint: 31
+installer group: dreamblade/game files
+
+version: 2015-01-03
+
+init script:
+	sort_index := {
+		aspect := card.background
+		if aspect == "valor" then "A"
+		else if aspect == "madness" then "B"
+		else if aspect == "fear" then "C"
+		else if aspect == "passion" then "D"
+		else if aspect == "multi" then "E"
+		else "F"
+	}
+	# Process the name for sorting rules (specifically, remove "The", "A", and "And" at the beginning, and make lowercase)
+	sort_name :=
+		replace@(match: "^(The|An?) ", replace: "") +
+		to_lower
+	
+	card_number := {
+		position (
+			of: card
+			in: set
+			order_by: { sort_index() + sort_name(card.name) }
+		) + 1
+	}
+	card_count := {
+		number_of_items(in: set)
+	}
+
+############################################################## Set fields
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+	identifying: true
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: symbol
+	name: symbol
+	description: The symbol for this set, double click to edit
+############################# Default style
+default set style:
+	title:
+		padding left: 2
+		font:
+			size: 16
+############################################################## Card fields
+card field
+	type: text
+	name: name
+	card list visible: true
+	card list column: 1
+	card list width: 100
+	card list name: Name
+	card list alignment: right
+	identifying: true
+	show statistics: false
+	description: The miniature's name.
+card field:
+	type: image
+	name: imageone
+	show statistics: false
+	description: A picture representing the miniature. It will be copied to the other side
+card field:
+	type: choice
+	name: imagetwo
+	show statistics: false
+	choice: default
+	editable: false
+card field:
+	type: text
+	name: topname
+	card list visible: false
+	identifying: true
+	show statistics: false
+	save value: false
+	editable: false
+	script: to_string(card.name)
+card field
+	type: text
+	name: lineage
+	card list visible: true
+	card list column: 2
+	card list width: 100
+	card list name: Lineage
+	card list alignment: right
+	identifying: true
+	show statistics: false
+	description: The miniature's lineage.
+card field
+	type: text
+	name: rule
+	card list visible: false
+	multi line: true
+	identifying: true
+	show statistics: false
+	description: The rule text of the miniature.
+card field
+	type: text
+	name: summary
+	card list visible: false
+	identifying: true
+	show statistics: false
+	description: A summary of the mini's rule text.
+card field
+	type: text
+	name: flavor
+	card list visible: false
+	multi line: true
+	identifying: true
+	show statistics: false
+	description: The miniature's flavor text.
+card field
+	type: text
+	name: cost
+	card list visible: true
+	card list column: 3
+	card list width: 100
+	card list name: Cost
+	card list alignment: right
+	identifying: true
+	description: The miniature's spawn and aspect cost.
+card field
+	type: text
+	name: topcost
+	card list visible: false
+	identifying: true
+	show statistics: false
+	save value: false
+	editable: false
+	script: to_string(card.cost)
+card field
+	type: text
+	name: power
+	card list visible: true
+	card list column: 4
+	card list width: 50
+	card list name: P
+	card list alignment: right
+	identifying: true
+	description: The miniature's power.
+card field
+	type: text
+	name: defenselife
+	card list visible: true
+	card list column: 5
+	card list width: 50
+	card list name: D/L
+	card list alignment: right
+	identifying: true
+	description: The miniature's defense and life. If the card is a Location, indicate that here in place of defense and life.
+card field
+	type: text
+	name: toppower
+	card list visible: false
+	identifying: true
+	show statistics: false
+	save value: false
+	editable: false
+	script: to_string(card.power)
+card field
+	type: text
+	name: topdefenselife
+	card list visible: false
+	identifying: true
+	show statistics: false
+	save value: false
+	editable: false
+	script: to_string(card.defenselife)
+card field:
+	type: choice
+	name: set
+	position hint: 100
+	choice: common
+	initial: common
+	editable: false
+	show statistics: false
+	card list visible: true
+	card list column: 6
+	choice colors:
+		common:     rgb(33,33,33).
+card field
+	type: choice
+	name: rarity
+	choice: common
+	choice: uncommon
+	choice: rare
+	description: The miniature's rarity.
+card field:
+	type: choice
+	name: background
+	save value: true
+	choice: valor
+	choice: fear
+	choice: madness
+	choice: passion
+	choice: multi
+	choice: none
+############################################################## Card list
+card list color script:
+	input := card.background
+	if input == "valor" then rgb(0,51,136)
+	else if input == "fear" then rgb(51,102,0)
+	else if input == "madness" then rgb(139,137,137)
+	else if input == "passion" then rgb(68,0,0)
+	else if input == "multi" then rgb(221,204,0)
+	else if input == "none" then rgb(0,0,0)
+	else rgb(0,0,0)
+############################# Card sorting / numbering
+card field:
+	type: text
+	name: card number
+	save value: false
+	script:      card_number() + "/" + card_count()
+	sort script: card.card_number
+	card list visible: true
+	card list column: 6
+	card list width: 50
+	card list name: #
+	card list alignment: right
+	editable: false
+	show statistics: false
+############################################################## Card pack items
+pack type:
+	name: common
+	filter: card.rarity == "common"
+pack type:
+	name: uncommon
+	filter: card.rarity == "uncommon"
+pack type:
+	name: rare
+	filter: card.rarity == "rare"
+############################################################## Card packs
+pack type:
+	name: starter pack
+	item:
+		name: rare
+		amount: 1
+	item:
+		name: uncommon
+		amount: 3
+	item:
+		name: common
+		amount: 12
+pack type:
+	name: booster pack
+	item:
+		name: rare
+		amount: 1
+	item:
+		name: uncommon
+		amount: 2
+	item:
+		name: common
+		amount: 4
+pack type:
+	name: additional common
+	item:
+		name: common
+pack type:
+	name: additional uncommon
+	item:
+		name: uncommon
+pack type:
+	name: additional rare
+	item:
+		name: rare
+############################################################## Auto replace
+auto replace:
+	match: (C)
+	replace: ©
+auto replace:
+	match: AE
+	replace: Æ
+	whole word: false
+auto replace:
+	match: TM
+	replace: ™
+	whole word: false
+auto replace:
+	match: --
+	replace: —
+auto replace:
+	# note the spaces
+	match:
+		 - 
+	replace:
+		 — 

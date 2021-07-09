@@ -1,0 +1,246 @@
+# card_fields for ADVENTURE Cards
+
+# Additional fields for sepia cardart
+# Use CHOICE field to limit user access 
+card_field:
+	type:				choice
+	name:				cardart2
+	script:				1
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+# color field merged with cardart
+card_field:
+	type:				color
+	name:				cardart3
+	default:			rgb(162,138,101)
+	show_statistics: 	false
+	card_list_allow:	false
+	editable: 			false
+	save_value: 		false
+
+# Reward
+card_field:
+	type:				text
+	name:				reward
+	multi_line: 		true
+	description:		Reward for completing this Path\Adventure\Scenario.
+
+
+# ADVENTURE PATH
+card_field:
+	type:				text
+	name:				adventure_1
+	description:		Adventure 1
+	show_statistics: 	false
+	card_list_allow: 	false
+card_field:
+	type:				text
+	name:				adventure_2
+	description:		Adventure 2
+	show_statistics: 	false
+	card_list_allow: 	false
+card_field:
+	type:				text
+	name:				adventure_3
+	description:		Adventure 3
+	show_statistics: 	false
+	card_list_allow: 	false
+card_field:
+	type:				text
+	name:				adventure_4
+	description:		Adventure 4
+	show_statistics: 	false
+	card_list_allow: 	false
+card_field:
+	type:				text
+	name:				adventure_5
+	description:		Adventure 5
+	show_statistics: 	false
+	card_list_allow: 	false
+card_field:
+	type:				text
+	name:				adventure_6
+	description:		Adventure 6
+	show_statistics: 	false
+	card_list_allow: 	false
+
+card_field:
+	type:				text
+	name:				during
+	multi_line:			true
+	description:		Specific rules for this Adventure Path
+	show_statistics:	false
+	card_list_allow:	false
+
+# ADVENTURE
+card_field:
+	type:				text
+	name:				scenario_1
+	description:		Scenario #1
+	show_statistics: 	false
+	card_list_allow:	false
+card_field:
+	type:				text
+	name:				scenario_2
+	description:		Scenario #2
+	show_statistics: 	false
+	card_list_allow:	false
+card_field:
+	type:				text
+	name:				scenario_3
+	description:		Scenario #3
+	show_statistics: 	false
+	card_list_allow:	false
+card_field:
+	type:				text
+	name:				scenario_4
+	description:		Scenario #4
+	show_statistics: 	false
+	card_list_allow:	false
+card_field:
+	type:				text
+	name:				scenario_5
+	description:		Scenario #5
+	show_statistics: 	false
+	card_list_allow:	false
+
+# SCENARIO
+# Front
+card_field:
+	type:				text
+	name:				villain
+card_field:
+	type:				text
+	name:				henchmen 1
+	description:		Named Henchman 1 \ Other Henchmen.
+card_field:
+	type:				text
+	name:				henchmen 2
+	description:		Named Henchman 2 \ Other Henchmen.
+card_field:
+	type:				text
+	name:				henchmen 3
+	description:		Named Henchman 3 \ Other Henchmen.
+card_field:
+	type:				text
+	name:				henchmen 4
+	description:		Named Henchman 4 \ Other Henchmen.
+
+card_field:
+	type:				text
+	name:				duringscen
+	multi_line: 		true
+	description:		Special rules for this scenario
+
+# Back
+card_field:
+	type:				text
+	name:				location_1a
+	description:		Location for 1 or more players
+card_field:
+	type:				text
+	name:				location_1b
+	description:		Location for 1 or more players
+card_field:
+	type:				text
+	name:				location_1c
+	description:		Location for 1 or more players
+card_field:
+	type:				text
+	name:				location_2
+	description:		Location for 2 or more players
+card_field:
+	type:				text
+	name:				location_3
+	description:		Location for 3 or more players
+card_field:
+	type:				text
+	name:				location_4
+	description:		Location for 4 or more players
+card_field:
+	type:				text
+	name:				location_5
+	description:		Location for 5 or more players
+card_field:
+	type:				text
+	name:				location_6
+	description:		Location for 6 players
+
+card_field:
+	type:				choice
+	name:				anchored
+	default:			""
+	default_name:		(None)
+	choice:				Anchored
+	description:		Select if the ship is anchored at location 1a.
+card_field:
+	type:				text
+	name:				anchored_text
+	script:				"YOUR SHIP IS ANCHORED AT THE " + to_upper(card.location_1a)
+	editable:			false
+	save_value:			false
+	show_statistics:	false
+	
+# LOCATION
+card_field:
+	type:				text
+	name:				deck monster
+	description: 		Monster cards to include in this deck
+card_field:
+	type:				text
+	name:				deck barrier
+	description: 		Barrier cards to include in this deck
+card_field:
+	type:				text
+	name:				deck weapon
+	description: 		Weapon cards to include in this deck
+card_field:
+	type:				text
+	name:				deck spell
+	description: 		Spell cards to include in this deck
+card_field:
+	type:				text
+	name:				deck armor
+	description: 		Armor cards to include in this deck
+card_field:
+	type:				text
+	name:				deck item
+	description: 		Item cards to include in this deck
+card_field:
+	type:				text
+	name:				deck ally
+	description: 		Ally cards to include in this deck
+card_field:
+	type:				text
+	name:				deck blessing
+	description: 		Blessing cards to include in this deck
+
+card_field:
+	type:				text
+	name:				atl
+	multi_line: 		true
+	show_statistics: 	false
+	description: 		Specific rules for this location.
+card_field:
+	type:				text
+	name:				wc
+	multi_line: 		true
+	show_statistics: 	false
+	description: 		How to close this location.
+card_field:
+	type:				text
+	name:				wpc
+	multi_line: 		true
+	show_statistics: 	false
+	description: 		Rules for when this location is closed.
+card_field:
+	type:				choice
+	name:				closed_rules
+	default:			""
+	default_name:		(None)
+	choice:				AT THIS LOCATION
+	choice:				WHEN PERMANENTLY CLOSED
+	show_statistics: 	false
+	description: 		Rules to show when the location is closed

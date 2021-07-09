@@ -1,0 +1,945 @@
+﻿mse version: 2.0.0
+game: animayhem
+full name: Standard
+short name: Original
+installer group: Ani-Mayhem/Templates/Standard Template
+icon: icon.png
+position hint: 001
+version: 2014-01-29
+
+depends on:
+	package: animayhem.mse-game
+	version: 2009-08-03
+depends on:
+	package: animayhem-symbols.mse-symbol-font
+	version: 2009-07-22
+
+card width: 375
+card height: 524
+card dpi: 150
+
+#By: Blank Space
+#Fonts used:
+#Sho Roman
+#Freefrm721 BT		(in place of Auriol)
+#Arial
+################################################## Style Scripts
+init script:
+	
+	is_character := { contains(card.background, match: "character") }
+	is_disaster := { contains(card.background, match: "disaster") }
+	is_item := { contains(card.background, match: "item") }
+	is_power := { contains(card.background, match: "power") }
+	is_combat := { contains(card.background, match: "combat") }
+	is_haven := { contains(card.background, match: "haven") }
+	is_location := { contains(card.background, match: "location") }
+	
+	is_place := { is_haven() or is_location() }
+	
+	is_equipment := { is_power() and contains(card.type_icon, match: "equipment") }
+	
+	is_transforming := { contains(card.background, match: "transforming") }
+	is_transforming_character := { is_transforming() and is_character() }
+	is_transforming_disaster := { is_transforming() and is_disaster() }
+	
+	is_combat_disaster := { is_disaster() and (card.attack != "" or card.defense != "" or card.charm != "") }
+	
+	is_dimensional := { contains(card.special_category, match:"dimensional") }
+	
+	is_planetary := { contains(card.special_category, match:"planetary") }
+	
+	is_science := { contains(card.special_category, match:"science") }
+	
+	is_female := { contains(card.gender, match:"female") }
+	
+	is_male := { contains(card.gender, match:"male") }
+	
+	has_type_icon := { is_disaster() or is_power() or is_combat() }
+	has_two_pictures := { is_transforming() or is_combat() }
+
+################################################## Extra Style Options
+styling field:
+	type: boolean
+	name: foil
+	description: Should the cards be foiled?
+	initial: no
+styling field:
+	type: boolean
+	name: old equipment
+	description: Use the old equipment frames?
+	initial: no
+styling field:
+	type: boolean
+	name: rotate item
+	description: Rotate the picture of an item card?
+	initial: no
+styling field:
+	type: boolean
+	name: combat swap
+	description: Swap the text fields on combat cards?
+	initial: no
+################################################## Card Fields
+card style:
+	
+	#----------------<Background>--------------------
+	background:
+		left: 0
+		top: 0
+		width: 375
+		height: 523
+		z index: -1
+		render style: image
+		popup style: in place
+		choice images:
+			character standard: character.jpg
+			character transforming: character_t.jpg
+			combat: combat.jpg
+			disaster standard:
+				script: if card.attack != "" or card.defense != ""
+					or card.charm != "" then "disaster_reduced.jpg"
+				else "disaster.jpg"
+			disaster transforming:
+				script: if card.attack != "" or card.defense != ""
+					or card.charm != "" then "disaster_reduced_t.jpg"
+				else "disaster_t.jpg"
+			haven: haven.jpg
+			item: item.jpg
+			location: location.jpg
+			power:
+				script: if contains(card.type_icon, match: "enhancement") then "power_pink.jpg"
+				else if contains(card.type_icon, match: "equipment")
+					and styling.old_equipment then "equipment_old.jpg"
+				else if contains(card.type_icon, match: "equipment") then "power_purple.jpg"
+				else if contains(card.type_icon, match: "flash") then "power_green.jpg"
+				else "power_orange.jpg"
+
+	#------------------<Name>-------------------------
+	name:
+		left:
+			script: if is_combat() then 68
+			else if is_character() or is_place() then 33
+			else if is_power() then 72
+			else if is_item() then 44
+			else 75
+		top:
+			script: if is_combat() then 13
+			else if is_character() then 20
+			else if is_power() then 22
+			else if is_item() then 482
+			else if is_place() then 30
+			else 29
+		width:
+			script: if is_combat() then 265
+			else if is_character() then 305
+			else if is_power() then 268
+			else if is_item() then 445
+			else if is_place() then 309
+			else 261
+		height:
+			script: if is_combat() then 24
+			else if is_power() then 28
+			else if is_character() then 27
+			else if is_item() then 29
+			else if is_disaster() then 23
+			else 25
+		angle: 
+			script: if is_item() then 90
+		z index: 0
+		alignment:
+			script: if is_place() then "center middle"
+			else if is_combat() or is_power() or is_disaster() then "right middle"
+			else "left middle"
+		font:
+			name: Sho Roman
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script:
+					if card_style.name.content_lines == 1 then 20
+					else 13
+			scale down to: 6
+	name2:
+		left:
+			script: if is_combat() then 306
+			else -10
+		top:
+			script: if is_combat() then 509
+			else -10
+		width:
+			script: if is_combat() then 265
+		height:
+			script: if is_combat() then 24
+		angle: 180
+		z index: 0
+		visible: { is_combat() }
+		alignment: right middle
+		font:
+			name: Sho Roman
+			color: rgb(0,0,0)
+			weight: bold
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if card_style.name2.content_lines == 1 then 20
+				else 13
+			scale down to: 6
+	
+	#----------------------<Picture>------------------
+	picture:
+		left:
+			script: if is_item() then 110
+			else if is_haven() or (is_equipment() and styling.old_equipment) then 42
+			else if is_character() or is_power() then 41
+			else if is_disaster() or is_location() then 40
+			else 44
+		top:
+			script: if is_item() and styling.rotate_item then 310
+			else if is_item() then 41
+			else if is_character() then 50
+			else if is_combat() then 40
+			else if is_disaster() then 68
+			else if is_equipment() and styling.old_equipment then 53
+			else if is_power() then 51
+			else if is_haven() then 69
+			else 66
+		width:
+			script: if is_item() and styling.rotate_item then 269
+			else if is_item() then 225
+			else if is_location() or (is_equipment() and styling.old_equipment) then 292
+			else if is_power() then 291
+			else if is_haven() then 290
+			else if is_combat() then 289
+			else if is_character() then 288
+			else 294
+		height:
+			script: if is_item() and styling.rotate_item then 225
+			else if is_item() then 269
+			else if is_location() then 277
+			else if is_haven() then 272
+			else if is_combat() then 220
+			else if is_equipment() and styling.old_equipment then 212
+			else if is_power() or is_character() then 215
+			else 214
+		angle:
+			script: if is_item() and styling.rotate_item then 90
+		mask:
+			script: if is_item() and styling.rotate_item then "mask_rotate_item.png"
+			else if is_item() then "mask_item.png"
+			else if is_combat() then "mask_combat.png"
+			else if is_transforming_character() then "mask_character_t.png"
+			else if is_transforming_disaster() then "mask_disaster_t.png"
+			else if is_character() then "mask_character.png"
+			else if is_disaster() then "mask_disaster.png"
+			else if is_haven() then "mask_haven.png"
+			else if is_location() then "mask_location.png"
+			else if is_equipment() and styling.old_equipment then "mask_equipment.png"
+			else "mask_power.png"
+	picture2:
+		left:
+			script: if is_transforming_character() then 244
+			else if is_transforming_disaster() then 242
+			else if is_combat() then 332
+			else -10
+		top:
+			script: if is_transforming_character() then 185
+			else if is_transforming_disaster() then 207
+			else if is_combat() then 485
+			else -10
+		width:
+			script: if is_transforming() then 93
+			else if is_combat() then 289
+		height:
+			script: if is_transforming_character() then 78
+			else if is_transforming_disaster() then 79
+			else if is_combat() then 219
+		angle:
+			script: if is_combat() then 180
+		mask:
+			script: if is_transforming_character() then "mask_character_t2.png"
+			else if is_transforming_disaster() then "mask_disaster_t2.png"
+			else if is_combat() then "mask_combat2.png"
+		visible: { has_two_pictures() }
+	
+	#---------------------<Type Icon>----------------------
+	type_icon:
+		left:
+			script: if not has_type_icon() then -10
+			else if is_disaster() or (is_equipment() and styling.old_equipment) then 31
+			else if is_power() then 32
+			else 28
+		top:
+			script: if not has_type_icon() then -10
+			else if is_equipment() and styling.old_equipment then 41
+			else if is_disaster() or is_power() then 40
+			else 26
+		width:
+			script: if has_type_icon() then 42
+		height:
+			script: if has_type_icon() then 42
+		z index: 1
+		visible: { has_type_icon() }
+		render style: image
+		popup style: in place
+		choice images:
+			combat battle: Battle.png
+			combat charm: Seduction.png
+			disaster major: D!.png
+			disaster minor: D.png
+			power enhancement: Enhancement.png
+			power equipment: Equipment.png
+			power flash: Flash.png
+			power global: Global.png
+	type_icon2:
+		left:
+			script: if is_combat() then 347
+			else -10
+		top:
+			script: if is_combat() then 499
+			else -10
+		width:
+			script: if is_combat() then 42
+		height:
+			script: if is_combat() then 42
+		z index: 1
+		visible: { is_combat() }
+		angle: 180
+		render style: image
+		popup style: in place
+		choice images:
+			combat battle: Battle.png
+			combat charm: Seduction.png
+			disaster major: D!.png
+			disaster minor: D.png
+			power enhancement: Enhancement.png
+			power equipment: Equipment.png
+			power flash: Flash.png
+			power global: Global.png
+	
+	#----------------------------<Special Icon>-----------------------
+	special_category:
+		left:
+			script: if is_dimensional() and is_power() then 34
+			else if is_dimensional() and is_disaster() then 33
+			else if is_dimensional() and is_location() then 44
+			else if is_dimensional() and is_haven() then 264
+			else if is_dimensional() and is_item() then 103
+			else if is_dimensional() and is_character() then 37
+			else if is_power() then 38
+			else if is_disaster() then 37
+			else if is_location() then 48
+			else if is_haven() then 268
+			else if is_item() then 107
+			else if is_character() then 41
+			else -10
+		top:
+			script: if is_planetary() and is_power() then 220
+			else if is_planetary() and is_disaster() then 234
+			else if is_planetary() and is_place() then 270
+			else if is_planetary() and is_item() then 263
+			else if is_planetary() and is_character() then 216
+			else if is_power() then 217
+			else if is_disaster() then 231
+			else if is_place() then 267
+			else if is_item() then 260
+			else if is_character() then 213
+			else -10
+		width:
+			script: if not is_combat() and is_dimensional() then 54
+			else if not is_combat() then 50
+		height:
+			script: if not is_combat() and is_planetary() then 51
+			else if not is_combat() then 54
+		z index: 1
+		visible: { not is_combat() }
+		render style: image
+		popup style: in place
+		choice images:
+			dimensional: Dimensional.png
+			planetary: Planetary.png
+			science: Science.png
+	
+	#----------------------------<Gender Icon>------------------------
+	gender:
+		left:
+			script: if not is_combat() and is_female() then 310
+			else if not is_combat() then 303
+			else -10
+		top:
+			script: if not is_combat() and is_female() then 447
+			else if not is_combat() then 450
+			else -10
+		width:
+			script: if not is_combat() and is_female() then 35
+			else if not is_combat() then 42
+		height: 
+			script: if not is_combat() and is_female() then 49
+			else if not is_combat() then 46
+		z index: 1
+		visible: { not is_combat() }
+		render style: image
+		popup style: in place
+		choice images:
+			female: Female.png
+			male: Male.png
+	
+	#-----------------------------<Card Text>------------------------------
+	skills_text:
+		left:
+			script: if is_transforming_character() then 130
+			else if is_character() then 113
+			else -10
+		top:
+			script: if is_character() then 287
+			else -10
+		width:
+			script: if is_transforming_character() then 208
+			else if is_character() then 224
+		height:
+			script: if is_character() then 59
+		z index: 0
+		visible: { is_character() }
+		alignment: center middle
+		font:
+			name: Freefrm721 BT
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if card_style.skills_text.content_lines == 1 then 16
+				else 13
+			scale down to: 6
+	
+	text:
+		left:
+			script: if is_transforming_character() then 130
+			else if is_character() then 113
+			else if is_combat() and styling.combat_swap then 37
+			else if is_combat() then 225
+			else if is_item() then 108
+			else if is_disaster() then 43
+			else if is_place() then 39
+			else 42
+		top:
+			script: if is_character() then 353
+			else if is_combat() and styling.combat_swap then 234
+			else if is_combat() then 235
+			else if is_item() then 330
+			else if is_combat_disaster() then 344
+			else if is_disaster() then 305
+			else if is_place() then 358
+			else if is_equipment() and styling.old_equipment then 292
+			else 295
+		width:
+			script: if is_transforming_character() then 208
+			else if is_character() then 224
+			else if is_combat() then 112
+			else if is_item() then 230
+			else if is_combat_disaster() then 291
+			else if is_disaster() then 288
+			else if is_place() then 297
+			else if is_equipment() and styling.old_equipment then 291
+			else 292
+		height:
+			script: if is_character() then 132
+			else if is_combat() then 61
+			else if is_item() then 153
+			else if is_combat_disaster() then 143
+			else if is_disaster() then 175
+			else if is_place() then 127
+			else if is_equipment() and styling.old_equipment then 183
+			else 179
+		z index: 0
+		alignment:
+			script: if is_character() then "center top"
+			else "center middle"
+		font:
+			name: Freefrm721 BT
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if card_style.text.content_lines == 1 then 16
+				else 13
+			scale down to: 6
+		symbol font:
+			name: animayhem-symbols
+			size:
+				script: if card_style.text.content_lines == 1 then 16
+				else 13
+			scale down to: 6
+			alignment: middle center
+		line height hard: 1.2
+		line height line: 1.5
+		line height soft: 0.9
+		line height hard max: 1.3
+		line height line max: 1.6
+	text2:
+		left:
+			script: if is_combat() and styling.combat_swap then 337
+			else if is_combat() then 149
+			else -10
+		top:
+			script: if is_combat() and styling.combat_swap then 296
+			else if is_combat() then 295
+			else -10
+		width:
+			script: if is_combat() then 112
+		height:
+			script: if is_combat() then 61
+		angle: 180
+		z index: 0
+		visible: { is_combat() }
+		alignment: center middle
+		font:
+			name: Freefrm721 BT
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if card_style.text2.content_lines == 1 then 16
+				else 13
+			scale down to: 6
+		symbol font:
+			name: animayhem-symbols
+			size:
+				script: if card_style.text2.content_lines == 1 then 16
+				else 13
+			scale down to: 6
+			alignment: middle center
+		line height hard: 1.2
+		line height line: 1.5
+		line height soft: 0.9
+		line height hard max: 1.3
+		line height line max: 1.6
+	
+	#----------------------------<Legal Text>-------------------------------
+	legal:
+		left:
+			script: if is_combat() then 357
+			else 25
+		top:
+			script: if is_combat() then 52
+			else if is_character() or is_place() then 495
+			else 493
+		width: 325
+		height: 10
+		z index: 3
+		angle:
+			script: if is_combat() then 270
+		alignment: bottom left
+		font:
+			name: Arial
+			color: rgb(255,255,255)
+			weight: normal
+			size: 6
+	legal2:
+		left:
+			script: if is_combat() then 18
+			else -10
+		top:
+			script: if is_combat() then 471
+			else -10
+		width:
+			script: if is_combat() then 325
+		height:
+			script: if is_combat() then 10
+		z index: 3
+		visible: { is_combat() }
+		angle: 90
+		alignment: bottom left
+		font:
+			name: Arial
+			color: rgb(255,255,255)
+			weight: normal
+			size: 6
+	
+	#----------------------------<Ability Scores>---------------------------
+	attack:
+		left:
+			script: if is_transforming_character() then 72
+			else if is_transforming_disaster() then 70
+			else if is_character() then 69
+			else if is_disaster() then 88
+			else if is_combat() then 73
+			else if is_place() then 127
+			else if is_power() then 64
+			else -10
+		top:
+			script: if is_transforming_character() then 286
+			else if is_character() then 285
+			else if is_disaster() then 298
+			else if is_combat() then 192
+			else if is_place() then 344
+			else if is_power() then 317
+			else -10
+		width:
+			script: if not is_item() and is_transforming() then 40
+			else if not is_item() then 26
+		height:
+			script: if not is_item() then 27
+		z index: 2
+		visible: { not is_item() }
+		alignment: center middle
+		font:
+			name: Freefrm721 BT
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if is_transforming() and length(to_text(card.attack)) <= 4 then 13
+				else if length(to_text(card.attack)) <= 2 then 13
+				else 9
+			scale down to: 6
+		symbol font:
+			name: animayhem-symbols
+			size: 20
+			scale down to: 6
+	defense:
+		left:
+			script: if is_transforming_character() then 72
+			else if is_transforming_disaster() then 184
+			else if is_character() then 69
+			else if is_disaster() then 192
+			else if is_combat() then 73
+			else if is_place() then 252
+			else if is_power() then 64
+			else -10
+		top:
+			script: if is_transforming_character() then 330
+			else if is_character() then 329
+			else if is_disaster() then 298
+			else if is_combat() then 151
+			else if is_place() then 344
+			else if is_power() then 359
+			else -10
+		width:
+			script: if not is_item() and is_transforming() then 40
+			else if not is_item() then 26
+		height:
+			script: if not is_item() then 27
+		z index: 2
+		visible: { not is_item() }
+		alignment: center middle
+		font:
+			name: Freefrm721 BT
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if is_transforming() and length(to_text(card.defense)) <= 4 then 13
+				else if length(to_text(card.defense)) <= 2 then 13
+				else 9
+			scale down to: 6
+		symbol font:
+			name: animayhem-symbols
+			size: 20
+			scale down to: 6
+	charm:
+		left:
+			script: if is_transforming_character() then 72
+			else if is_transforming_disaster() then 298
+			else if is_character() then 69
+			else if is_disaster() then 286
+			else if is_combat() then 302
+			else if is_power() then 64
+			else -10
+		top:
+			script: if is_transforming_character() then 417
+			else if is_character() then 418
+			else if is_disaster() then 298
+			else if is_combat() then 336
+			else if is_power() then 443
+			else -10
+		width:
+			script: if not (is_item() or is_place()) and is_transforming() then 40
+			else if not (is_item() or is_place()) then 26
+		height:
+			script: if not (is_item() or is_place()) then 27
+		z index: 2
+		visible: { not (is_item() or is_place()) }
+		angle:
+			script: if is_combat() then 180
+		alignment: center middle
+		font:
+			name: Freefrm721 BT
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if is_transforming() and length(to_text(card.charm)) <= 4 then 13
+				else if length(to_text(card.charm)) <= 2 then 13
+				else 9
+			scale down to: 6
+		symbol font:
+			name: animayhem-symbols
+			size: 20
+			scale down to: 6
+	energy:
+		left:
+			script: if is_transforming_character() then 72
+			else if is_transforming_disaster() then 68
+			else if is_character() then 69
+			else if is_disaster() or is_power() then 64
+			else -10
+		top:
+			script: if is_transforming_character() then 461
+			else if is_character() then 462
+			else if is_disaster() then 443
+			else if is_power() then 275
+			else -10
+		width:
+			script: if not (is_item() or is_place() or is_combat()) and is_transforming() then 40
+			else if not (is_item() or is_place() or is_combat()) then 26
+		height:
+			script: if not (is_item() or is_place() or is_combat()) then 27
+		z index: 2
+		visible: { not (is_item() or is_place() or is_combat()) }
+		alignment: center middle
+		font:
+			name: Freefrm721 BT
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if is_transforming() and length(to_text(card.energy)) <= 4 then 13
+				else if length(to_text(card.energy)) <= 2 then 13
+				else 9
+			scale down to: 6
+		symbol font:
+			name: animayhem-symbols
+			size: 20
+			scale down to: 6
+	movement:
+		left:
+			script: if is_transforming_character() then 72
+			else if is_transforming_disaster() then 68
+			else if is_character() then 69
+			else if is_disaster() or is_power() then 64
+			else -10
+		top:
+			script: if is_character() then 374
+			else if is_disaster() or is_power() then 401
+			else -10
+		width:
+			script: if not (is_item() or is_place() or is_combat()) and is_transforming() then 40
+			else if not (is_item() or is_place() or is_combat()) then 26
+		height:
+			script: if not (is_item() or is_place() or is_combat()) then 27
+		z index: 2
+		visible: { not (is_item() or is_place() or is_combat()) }
+		alignment: center middle
+		font:
+			name: Freefrm721 BT
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if is_transforming() and length(to_text(card.movement)) <= 4 then 13
+				else if length(to_text(card.movement)) <= 2 then 13
+				else 9
+			scale down to: 6
+		symbol font:
+			name: animayhem-symbols
+			size: 20
+			scale down to: 6
+	
+########################Extra Card Fields
+extra card field:
+	type: choice
+	name: attack_field
+	save value: false
+	editable: false
+	script: "attack"
+extra card field:
+	type: choice
+	name: defense_field
+	save value: false
+	editable: false
+	script: "defense"
+extra card field:
+	type: choice
+	name: charm_field
+	save value: false
+	editable: false
+	script: "charm"
+extra card field:
+	type: choice
+	name: energy_field
+	save value: false
+	editable: false
+	script: "energy"
+extra card field:
+	type: choice
+	name: move_field
+	save value: false
+	editable: false
+	script: "move"
+extra card field:
+	type: choice
+	name: foil
+	save value: false
+	editable: false
+	script: "foil"
+
+extra card style:
+	attack_field:
+		left:
+			script: if is_transforming_character() then 30
+			else if is_transforming_disaster() then 28
+			else if is_character() then 31
+			else if is_disaster() then 50
+			else if is_combat() then 35
+			else if is_place() then 89
+			else if is_power() then 26
+			else -10
+		top:
+			script: if is_transforming_character() then 282
+			else if is_character() then 281
+			else if is_disaster() then 294
+			else if is_combat() then 188
+			else if is_place() then 340
+			else if is_power() then 313
+			else -10
+		width:
+			script: if is_transforming() then 89
+			else 68
+		height: 34
+		z index: 1
+		visible: { card.attack != "" and not is_item() }
+		render style: image
+		choice images:
+			attack:
+				script: if is_transforming() then "attackbutton_wide.png"
+				else "attackbutton.png"
+	defense_field:
+		left:
+			script: if is_transforming_character() then 30
+			else if is_transforming_disaster() then 142
+			else if is_character() then 31
+			else if is_disaster() then 154
+			else if is_combat() then 35
+			else if is_place() then 214
+			else if is_power() then 26
+			else -10
+		top:
+			script: if is_transforming_character() then 326
+			else if is_character() then 325
+			else if is_disaster() then 294
+			else if is_combat() then 147
+			else if is_place() then 340
+			else if is_power() then 355
+			else -10
+		width:
+			script: if is_transforming() then 89
+			else 68
+		height: 34
+		z index: 1
+		visible: { card.defense != "" and not is_item() }
+		render style: image
+		choice images:
+			defense:
+				script: if is_transforming() then "defensebutton_wide.png"
+				else "defensebutton.png"
+	charm_field:
+		left:
+			script: if is_transforming_character() then 30
+			else if is_transforming_disaster() then 256
+			else if is_character() then 31
+			else if is_disaster() then 248
+			else if is_combat() then 340
+			else if is_power() then 26
+			else -10
+		top:
+			script: if is_transforming_character() then 413
+			else if is_character() then 414
+			else if is_disaster() then 294
+			else if is_combat() then 340
+			else if is_power() then 439
+			else -10
+		width:
+			script: if is_transforming() then 89
+			else 68
+		height: 34
+		z index: 1
+		angle:
+			script: if is_combat() then 180
+		visible: { card.charm != "" and not (is_item() or is_place()) }
+		render style: image
+		choice images:
+			charm:
+				script: if is_transforming() then "charmbutton_wide.png"
+				else "charmbutton.png"
+	energy_field:
+		left:
+			script: if is_transforming_character() then 30
+			else if is_character() then 31
+			else if is_disaster() or is_power() then 26
+			else -10
+		top:
+			script: if is_transforming_character() then 457
+			else if is_character() then 458
+			else if is_disaster() then 439
+			else if is_power() then 271
+			else -10
+		width:
+			script: if is_transforming() then 89
+			else 68
+		height: 34
+		z index: 1
+		visible: { card.energy != "" and not (is_item() or is_place() or is_combat()) }
+		render style: image
+		choice images:
+			energy:
+				script: if is_transforming() then "energybutton_wide.png"
+				else "energybutton.png"
+	move_field:
+		left:
+			script: if is_transforming_character() then 30
+			else if is_character() then 31
+			else if is_disaster() or is_power() then 26
+			else -10
+		top:
+			script: if is_character() then 370
+			else if is_disaster() or is_power() then 397
+			else -10
+		width:
+			script: if is_transforming() then 89
+			else 68
+		height: 34
+		z index: 1
+		visible: { card.movement != "" and not (is_item() or is_place() or is_combat()) }
+		render style: image
+		choice images:
+			move:
+				script: if is_transforming() then "movebutton_wide.png"
+				else "movebutton.png"
+	foil:
+		left: 0
+		top: 0
+		width: 375
+		height: 523
+		z index: 5
+		render style: image
+		popup style: in place
+		visible: { styling.foil }
+		choice images:
+			foil: foil.png

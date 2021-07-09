@@ -1,0 +1,23 @@
+mse version:	2.0.0
+version:		2014.05
+icon:			checkbox.png
+image font size: 170
+installer_group: PACG/Symbol Fonts/PACG-Symbol
+
+insert symbol menu:
+	item:
+		type: code
+	item:	-
+	item:	BOX
+	item:	CHECKBOX
+	item:	TAB
+
+symbol:
+	code:	BOX
+	image:	box.png
+symbol:
+	code:	CHECKBOX
+	image:	checkbox.png
+symbol:
+	code:	TAB
+	image:	tab.png

@@ -1,0 +1,116 @@
+card_style:
+
+# ADVENTURE
+	scenario_1:
+		visible:	 	{ isAdvFront() }
+		top:			{ scenarioTop(1) }
+		left:			24
+		width:			{ Width - 42 }
+		height:			{ if isAdvFront() then scenarioH }
+		alignment: 		left middle
+		font:
+			name:			Dax-Regular
+			size:			11
+		z_index: 		52
+	scenario_2:
+		visible:	 	{ isAdvFront() }
+		top:			{ scenarioTop(2) }
+		left:			24
+		width:			{ Width - 42 }
+		height:			{ if isAdvFront() and card.scenario_1 != "" then scenarioH }
+		alignment: 		left middle
+		font:
+			name:			Dax-Regular
+			size:			11
+		z_index:		52
+	scenario_3:
+		visible:	 	{ isAdvFront() }
+		top:			{ scenarioTop(3) }
+		left:			24
+		width:			{ Width - 42 }
+		height:			{ if isAdvFront() and card.scenario_2 != "" then scenarioH }
+		alignment: 			left middle
+		font:
+			name:			Dax-Regular
+			size:			11
+		z_index:		52
+	scenario_4:
+		visible:	 	{ isAdvFront() }
+		top:			{ scenarioTop(4) }
+		left:			24
+		width:			{ Width - 42 }
+		height:			{ if isAdvFront() and card.scenario_3 != "" then scenarioH }
+		alignment: 		left middle
+		font:
+			name:			Dax-Regular
+			size:			11
+		z_index: 		52
+	scenario_5:
+		visible:	 	{ isAdvFront() }
+		top:			{ scenarioTop(5) }
+		left:			24
+		width:			{ Width - 42 }
+		height:			{ if isAdvFront() and card.scenario_4 != "" then scenarioH }
+		alignment: 		left middle
+		font:
+			name:			Dax-Regular
+			size:			11
+		z_index: 		52
+
+
+extra_card_style:
+	scenario_table:
+		visible: 		{ styling.card_side != "Back" and card.type == "ADVENTURE" }
+		top:			{ scenarioTop(0) }
+		left:			{ 16 }
+		width:			{ Width - 32 }
+		height:			{ scenarioTblH() }
+		z_index: 		50
+	scenario_header:
+		visible: 		{ styling.card_side != "Back" and card.type == "ADVENTURE" }
+		top:			{ Height - 72 - (6 * 22) }
+		left:			{ 24 }
+		width:			{ Width - 64 }
+		height:			{ scenarioH + 2 }
+		alignment: 		left middle
+		font:
+			name:			Dax
+			size:			10.5
+			color:			rgb(255,255,255)
+		z_index: 		51
+
+	scenario_cell_1:
+		visible: 		{ styling.card_side != "Back" and card.type == "ADVENTURE" }
+		top:			{ scenarioTop(1) }
+		left:			18
+		width:			{ Width - 36 }
+		height:			{ scenarioH }
+		z_index: 		51
+	scenario_cell_2:
+		visible: 		{ styling.card_side != "Back" and card.type == "ADVENTURE" }
+		top:			{ scenarioTop(2) }
+		left:			18
+		width:			{ Width - 36 }
+		height:			{ if card.scenario_2 != "" then scenarioH }
+		z_index: 		51
+	scenario_cell_3:
+		visible: 		{ styling.card_side != "Back" and card.type == "ADVENTURE" }
+		top:			{ scenarioTop(3) }
+		left:			18
+		width:			{ Width - 36 }
+		height:			{ if card.scenario_3 != "" then scenarioH }
+		z_index: 		51
+	scenario_cell_4:
+		visible:		{ styling.card_side != "Back" and card.type == "ADVENTURE" }
+		top:			{ scenarioTop(4) }
+		left:			18
+		width:			{ Width - 36 }
+		height:			{ if card.scenario_4 != "" then scenarioH }
+		z_index: 		51
+	scenario_cell_5:
+		visible: 		{ styling.card_side != "Back" and card.type == "ADVENTURE" }
+		top:			{ scenarioTop(5) }
+		left:			18
+		width:			{ Width - 36 }
+		height:			{ if card.scenario_5 != "" then scenarioH }
+		z_index: 		51

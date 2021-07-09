@@ -1,0 +1,205 @@
+mse version: 0.3.6
+game: hecatomb
+short name: Plain
+full name: Printable Style
+icon: sample.png
+position hint: 100
+installer group: hecatomb/plain
+
+version: 2008-08-02
+
+depends on:
+	package: hecatomb.mse-game
+	version: 2008-08-01
+
+card width: 150
+card height: 200
+card dpi: 96
+############################################################## Extra scripts
+
+init script:
+	
+	text_filter :=
+		# step 1 : remove all automatic tags
+		tag_remove_rule(tag: "<sym-auto>") +
+		tag_remove_rule(tag: "<i-auto>") +
+		tag_remove_rule(tag: "<b-auto>") +
+		tag_remove_rule(tag: "<color") +
+		# step 2 : reminder text for keywords
+		expand_keywords_rule(
+			default_expand: { chosen(choice:mode, set.automatic_bold_keywords) },
+			combine:        {
+				if mode == "official" then "<b-auto>{keyword}</b-auto>"
+				else "<b-auto>{keyword}</b-auto><atom-reminder-{mode}> ({process_english_hints(reminder)})</atom-reminder-{mode}>" }
+			) +
+		# step 2c : remove duplicate reminder text
+		replace_rule(
+			match: "(<atom-reminder-[^>]*>[^)]+[)]</atom-reminder-[^>]*>)([^\n]+)\\1"
+			replace: "\\2\\1"
+			) +
+		# step 3a : expand shortcut words ~ and CARDNAME
+		replace_rule(
+			match: "~|~THIS~|CARDNAME",
+			in_context: "(^|[[:space:]]|\\()<match>", # TODO: Allow any punctuation before
+			replace: "<atom-cardname></atom-cardname>"
+			) +
+		# step 3c : fill in atom fields
+		tag_contents_rule(
+			tag: "<atom-cardname>",
+			contents: { if card_name=="" then "CARDNAME" else card_name }
+			) +
+		# step 8 : automatic capitalization
+		curly_quotes
+	
+############################################################## Extra style options
+styling field:
+	type: choice
+	name: font
+	description: Which font should be used for the card?
+	initial: Tahoma
+	choice: Tahoma
+	choice: Arial
+	choice: Cambria
+	choice: Verdana
+	choice: Times New Roman
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	############################# Name line
+	name:
+		left:   4
+		top :   4
+		right:  146
+		height: 14
+		alignment: left middle shrink-overflow
+		z index: 1
+		font:
+			name: {styling.font}
+			weight: bold
+			size: 10
+			color: rgb(0,0,0)
+	casting cost:
+		left: 4
+		top : 20
+		right: 146
+		height: 20
+		alignment: left middle
+		font:
+			name: {styling.font}
+			size: 10
+			color: rgb(0,0,0)
+			separator color: rgb(128,128,128)
+		always symbol: true
+		z index: 2
+		padding top: 0
+	############################# Card type
+	type:
+		left: 4
+		top: 42
+		right: 146
+		height: 14
+		alignment: left middle shrink-overflow
+		z index: 1
+		font:
+			name: {styling.font}
+			size: 10
+			color: rgb(0,0,0)
+			separator color: rgb(128,128,128)
+	rarity:
+		left: 9
+		height: 16
+		bottom: 196
+		width: 32
+		z index: 5
+		render style: text
+		font:
+			name: {styling.font}
+			size: 6
+			color: rgb(0,0,0)
+		alignment: left middle
+	############################# Text box
+	############################# PT
+	strength:
+		z index: 4
+		right:	146
+		top: 22
+		width: 40
+		height:	16
+		alignment: right middle
+		font:
+			name: {styling.font}
+			size: 12
+			weight: bold
+			color: rgb(0,0,0)
+############################################################## Extra card fields
+extra card field:
+	type: color
+	name: lines
+	editable: false
+	save value: false
+	show statistics: false
+	card list allow: false
+	allow custom: false
+	choice:
+		name: Default
+		color: rgb(0,0,0)
+extra card field:
+	type: text
+	name: total rules text
+	multi line: true
+	save value: false
+	show statistics: false
+	script:
+		combined_editor(
+			field1: card.rule_text_2,
+			separator: "<line>\n</line>",
+			field2: card.rule_text_1,
+			soft_when_empty: false,
+			hide_when_empty: false
+		)
+	description: The complete rules text for the card; use up and down arrows to switch
+extra card field:
+	type: color
+	name: divider
+	editable: false
+	save value: false
+	show statistics: false
+	choice:
+		name: black
+		color: rgb(0,0,0)
+extra card style:
+	lines:
+		top: 60
+		height: 118
+		left: 8
+		width: 134
+		left width: 0
+		right width: 0
+		top width: 3
+		bottom width: 3
+		z index: 2
+		radius: 3
+	total rules text:
+		top: 65
+		left: 6
+		right: 144
+		bottom: 173
+		alignment: middle left
+		font:
+			name: {styling.font}
+			size: 10
+			scale down to: 6
+			color: rgb(0,0,0)
+		line height hard: 1.1
+		line height line: 1.3
+		z index: 2
+	divider:
+		top: 0
+		left: 0
+		width: 150
+		height: 200
+		z index: 5
+		left width: 1
+		right width: 1
+		top width: 1
+		bottom width: 1

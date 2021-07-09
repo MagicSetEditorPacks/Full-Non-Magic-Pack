@@ -1,0 +1,926 @@
+﻿mse version: 0.3.8
+short name: L5R
+full name: Legend of the Five Rings
+installer group: Legend of the Five Rings/Game Files
+icon: icon.png
+position hint: 06
+
+version: 2010-10-10
+
+################################################################## By: MysticHobo
+################################################################## Updated By: Pichoro
+init script:
+	############################################################################################ Text Filter Scripts
+	flavor_text_filter :=
+		# step 1 : remove italic tags
+		remove_tag@(tag: "<i-flavor>")   +
+		# step 2 : surround by <i> tags
+		{ "<i-flavor>" + input + "</i-flavor>" }
+	traits_text_filter :=
+		# step 1 : remove bold tags
+		remove_tag@(tag: "<b-auto>")   +
+		# step 2 : recognize keywords, although they aren't exactly used
+		expand_keywords@(
+			condition: {
+				correct_case
+			}
+			default_expand: {
+				chosen(choice:if correct_case then mode else "lower case", set.automatic_bold_keywords)
+			},
+			combine:        { "{keyword}" }
+			) +
+		# step 3 : surround by <b> tags
+		{ "<b-auto>" + input + "</b-auto>" }
+	# the rule text filter
+	text_filter := 
+		# step 1 : remove all automatic tags
+		remove_tag@(tag: "<sym-auto>") +
+		remove_tag@(tag: "<b-auto>")   +
+		# step 2 : reminder text for keywords
+		expand_keywords@(
+			condition: {
+				correct_case
+			}
+			default_expand: {
+				chosen(choice:if correct_case then mode else "lower case", set.automatic_bold_keywords)
+			},
+			combine:        { "<b-auto>{keyword}</b-auto>" }
+			) +
+		# step 3a : expand shortcut words ~ and CARDNAME
+		replace@(
+			match: "CARDNAME",
+			in_context: "(^|[[:space:]]|\\()<match>", # TODO: Allow any punctuation before
+			replace: "<atom-cardname></atom-cardname>"
+			) +
+		# step 3c : fill in atom fields
+		tag_contents@(
+			tag: "<atom-cardname>",
+			contents: { if card_name=="" then "CARDNAME" else card_name }
+			)
+	
+	numbers_only := filter_rule(match: "[*+0-9-]")
+	
+	############################################################################################# Statistics Utility Scripts
+	word_count := break_text@(match:"[^[:space:]]+") + length
+	
+	clan_detect := replace@(match:"Personality", replace: "")+
+		replace@(match:"Minor", replace: "")+
+		replace@(match:"Clans", replace: "")+
+		replace@(match:"Stronghold", replace: "")+
+		replace@(match:" ", replace: "")
+	clan_stronghold := { if contains(card.background, match:"Stronghold") then clan_detect() else nil }
+	clan_personality := { if contains(card.background, match:"Personality") then clan_detect() else nil }
+
+	############################################################################################# Card Sorting Scripts	
+	sort_index := {
+		type := card.background
+		if type == "Celestial" then "A"
+		else if type == "Event" then "B"
+		else if type == "Holding" then "C"
+		else if contains(type, match:"Personality") then (
+			if contains(type, match:"Crab") then "DA"
+			else if contains(type, match:"Crane") then "DB"
+			else if contains(type, match:"Dragon") then "DC"
+			else if contains(type, match:"Lion") then "DD"
+			else if contains(type, match:"Mantis") then "DE"
+			else if contains(type, match:"Pheonix") then "DF"
+			else if contains(type, match:"Scorpion") then "DG"
+			else if contains(type, match:"Spider") then "DH"
+			else if contains(type, match:"Unicorn") then "DI"
+			else if contains(type, match:"Shadowlands") then "DM"
+			else "DN"
+		) else if type == "Region" then "E"
+		else if type == "Action" or type == "Kiho" then "F"
+		else if type == "Follower" then "G"
+		else if type == "Ancestor" then "H"
+		else if type == "Sensei" then "I"
+		else if type == "Item" then "J"
+		else if type == "Ring" then "M"
+		else if type == "Spell" then "N"
+		else if contains(type, match:"Stronghold") then (
+			if contains(type, match:"Crab") then "OA"
+			else if contains(type, match:"Crane") then "OB"
+			else if contains(type, match:"Dragon") then "OC"
+			else if contains(type, match:"Lion") then "OD"
+			else if contains(type, match:"Mantis") then "OE"
+			else if contains(type, match:"Pheonix") then "OF"
+			else if contains(type, match:"Scorpion") then "OG"
+			else if contains(type, match:"Spider") then "OH"
+			else if contains(type, match:"Unicorn") then "OI"
+			else if contains(type, match:"Shadowlands") then "OM"
+			else "ON"
+		) else if type == "Wind" then "P"
+		else "Q"
+	}
+		
+	sort_name :=
+		replace@(match: "^(The|An?) ", replace: "") +
+		to_lower
+	
+	card_number := {
+		position (
+			of: card
+			in: set
+			order_by: { sort_index() + sort_name(card.name) }
+		) + 1
+	}
+	
+	card_count := {
+		number_of_items(in: set)
+	}
+	
+	############################################################Automation to Control Available Background Choices
+	# Styles replace with a script, grouping them according to what frames they support.
+	card_shape := { "" }
+	
+############################################################## Set fields
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: Name
+	identifying: true
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: text
+	name: artist
+	description: The default artist of all cards
+set field:
+	type: text
+	name: Copyright
+	description: The default copyright line of all cards
+set field:
+	type: text
+	name: set code
+	description: This code will appear in the artist and copyright line of all cards
+set field:
+	type: info
+	name: Defaults and Automation
+set field:
+	type: multiple choice
+	name: automatic bold keywords
+	choice: real
+	choice: custom
+	initial: real, custom
+	description: For which kinds of keywords should automatic bolding take place?
+############################################################# Card Fields
+############################################ Background Stuff
+card field:
+	type: choice
+	name: shape
+	save value: false
+	show statistics: false
+	editable: false
+	choice: old
+	choice: new
+	choice: new spell only
+	script:
+		stylesheet   # indicate that this value should be updated when the stylesheet changes
+		card_shape() # determined by the style
+card field:
+	type: choice
+	name: background
+	card list visible: true
+	card list column: 2
+	card list alignment: left
+	card list width: 60
+	card list name: Type
+	choice: Action
+	choice:
+		name: Ancestor
+		enabled: {card.shape != "new"}
+	choice:
+		name: Celestial
+		enabled: {card.shape != "old"}
+	choice: Event
+	choice: Follower
+	choice: Holding
+	choice: Item
+	choice: Kiho
+	choice: 
+		name: Personality
+		choice: Crab
+		choice: Crane
+		choice: Dragon
+		choice: Lion
+		choice: Mantis
+		choice: Phoenix
+		choice:
+			name: Ratling
+		choice: Scorpion
+		choice:
+			name: Shadowlands
+			enabled: {card.shape != "new"}
+		choice: Spider
+		choice: Unicorn
+		choice: Unaligned
+		choice:
+			name: Minor Clans
+			choice:
+				name: Badger
+				enabled: {card.shape != "new"}
+			choice:
+				name: Bat
+				enabled: {card.shape != "new" and card.shape != "old"}
+			choice:
+				name: Boar
+				enabled: {card.shape != "new" and card.shape != "old"}
+			choice:
+				name: Brotherhood of Shinsei
+				enabled: {card.shape != "new" and card.shape != "old"}
+			choice: Centipede
+			choice:
+				name: Dragonfly
+				enabled: {card.shape != "new" and card.shape != "old"}
+			choice: Falcon
+			choice: Fox
+			choice:
+				name: Hare
+			choice:
+				name: Monkey
+				enabled: {card.shape != "new" and card.shape != "old"}
+			choice:
+				name: Naga
+				enabled: {card.shape != "new"}
+			choice:
+				name: Ninja
+				enabled: {card.shape != "new" and card.shape != "old"}
+			choice:
+				name: Oriole
+				enabled: {card.shape != "new" and card.shape != "old"}
+			choice:
+				name: Ox
+				enabled: {card.shape != "new" and card.shape != "old"}
+			choice:
+				name: Snake
+				enabled: {card.shape != "new" and card.shape != "old"}
+			choice:
+				name: Sparrow
+				enabled: {card.shape != "new"}
+			choice:
+				name: Spirit
+				enabled: {card.shape != "new" and card.shape != "old"}
+			choice:
+				name: Tortoise
+				enabled: {card.shape != "new"}
+			choice:
+				name: Toturi's Army
+				enabled: {card.shape != "new" and card.shape != "old"}
+			choice: Wasp
+			choice:
+				name: Yogo Junzo's Army
+				enabled: {card.shape != "new" and card.shape != "old"}
+			choice: Yoritomo's Alliance
+	choice: Region
+	choice: Ring
+	choice:
+		name: Sensei
+		enabled: {card.shape != "new"}
+	choice: Spell
+	choice:
+		name: Stronghold
+		choice: Crab
+		choice: Crane
+		choice: Dragon
+		choice: Lion
+		choice: Mantis
+		choice: Phoenix
+		choice:
+			name: Ratling
+		choice: Scorpion
+		choice:
+			name: Shadowlands
+			enabled: {card.shape != "new"}
+		choice: Spider
+		choice: Unicorn
+		choice: Unaligned
+	choice:
+		name: Wind
+		enabled: {card.shape != "new"}
+	description: The type of the card
+############################################ Name
+card field:
+	type: text
+	name: name
+	identifying: true
+	multi line: true
+	show statistics: false
+	card list visible: true
+	card list column: 1
+	card list width: 75
+	description: The name of the card
+############################################ Image
+card field:
+	type: image
+	name: picture
+	show statistics: false
+	description: The art for the card; double click to choose art
+############################################ Textbox
+card field:
+	type: text
+	name: traits_text
+	show statistics: false
+	script: traits_text_filter(value)
+	default: "  "
+	multi line: true
+	card list visible: true
+	card list column: 14
+	card list alignment: left
+	card list width: 200
+	card list name: Traits
+	description: The list of traits for the card
+card field:
+	type: text
+	name: rules_text
+	show statistics: false
+	script: text_filter(input: value, card_name: card.name)
+	default: " "
+	multi line: true
+	card list visible: true
+	card list column: 15
+	card list alignment: left
+	card list width: 200
+	card list name: Rules Text
+	description: The rules text for the card
+card field:
+	type: text
+	name: flavor_text
+	multi line: true
+	show statistics: false
+	script: flavor_text_filter(value)
+	description: The flavor text for the card
+card field:
+	type: text
+	name: text_no_traits
+	save value: false
+	show statistics: false
+	multi line: true
+	script: combined_editor(field1: card.rules_text, separator: "<line>\n", field2: card.flavor_text)
+	description: The text for the card
+card field:
+	type: text
+	name: text
+	save value: false
+	show statistics: false
+	multi line: true
+	script: combined_editor(field1: card.traits_text, separator1: "<line>\n", field2: card.rules_text, separator2: "<line>\n", field3: card.flavor_text)
+	description: The traits and text for the card
+############################################ Various Number Fields
+card field:
+	type: text
+	name: provincestr
+	script: numbers_only(value)
+	card list visible: true
+	card list column: 8
+	card list alignment: right
+	card list width: 60
+	card list name: Prov. Str.
+	show statistics: false
+	description: The province strength for the card
+card field:
+	type: text
+	name: goldprod
+	script: numbers_only(value)
+	card list visible: true
+	card list column: 9
+	card list alignment: right
+	card list width: 60
+	card list name: Gold Prod.
+	show statistics: false
+	description: The gold production for the card
+card field:
+	type: text
+	name: familyhonor
+	script: numbers_only(value)
+	card list visible: true
+	card list column: 10
+	card list alignment: right
+	card list width: 60
+	card list name: Family Honor
+	show statistics: false
+	description: The family honor for the card
+card field:
+	type: text
+	name: force
+	card list visible: true
+	card list column: 3
+	card list alignment: right
+	card list width: 60
+	script: numbers_only(value)
+	description: The force for the card
+card field:
+	type: text
+	name: chi
+	script: numbers_only(value)
+	card list visible: true
+	card list column: 4
+	card list alignment: right
+	card list width: 60
+	description: The chi for the card
+card field:
+	type: text
+	name: goldcost
+	script: numbers_only(value)
+	card list visible: true
+	card list column: 6
+	card list alignment: right
+	card list width: 60
+	card list name: Gold Cost
+	show statistics: false
+	description: The gold cost for the card
+card field:
+	type: text
+	name: honorreq
+	script: numbers_only(value)
+	card list visible: true
+	card list column: 5
+	card list alignment: right
+	card list width: 60
+	card list name: Honor Req.
+	show statistics: false
+	description: The honor requirement for the card
+card field:
+	type: text
+	name: personalhonor
+	script: numbers_only(value)
+	card list visible: true
+	card list column: 7
+	card list alignment: right
+	card list width: 60
+	card list name: Pers. Honor
+	show statistics: false
+	description: The personal honor for the card
+card field:
+	type: text
+	name: honorprod
+	script: numbers_only(value)
+	card list visible: true
+	card list column: 11
+	card list alignment: right
+	card list width: 60
+	card list name: Honor Prod.
+	show statistics: false
+	description: The honor production for the card
+card field:
+	type: text
+	name: focus
+	script: numbers_only(value)
+	card list visible: true
+	card list column: 12
+	card list alignment: right
+	card list width: 60
+	description: The focus value for the card
+############################################ "Legal" Stuff
+card field:
+	type: text
+	name: artist
+	show statistics: false
+	editable: false
+	description: The artist for the card's art
+card field:
+	type: text
+	name: copyright
+	default: set.Copyright
+	show statistics: false
+	editable: false
+	description: The copyright line for the card
+card field:
+	type: text
+	name: artistcopyright
+	show statistics: false
+	script: combined_editor(field1: card.artist, separator: " ", field2: card.copyright)
+	description: The artist and copyright line for the card
+	save value: false
+card field:
+	type: text
+	name: set
+	save value: false
+	script:
+		if set.set_code == "" then "Custom" else set.set_code
+	editable: false
+	show statistics: false
+card field:
+	type: text
+	name: player credit
+	show statistics: false
+	description: The line of text for denoting that a card was inspired by a player
+############################################ Card Number
+card field:
+	type: text
+	name: card number
+	save value: false
+	script: card_number() + "    " + card_count()
+	card list visible: true
+	card list column: 13
+	card list width: 50
+	card list name: #
+	card list alignment: right
+	editable: false
+	show statistics: false
+############################################ Rarity
+card field:
+	type: choice
+	name: rarity
+	choice: core set
+	choice: common
+	choice: uncommon
+	choice: rare
+	choice: promo
+	initial: common
+	card list visible: true
+	card list column: 14
+	card list width: 50
+	description: The rarity of the card
+	choice colors:
+		core set: rgb(109,62,39)
+		common:     rgb(33,33,33)
+		uncommon:   rgb(224,224,224)
+		rare:       rgb(255,207,52)
+		special:    rgb(190,0,255)
+############################################################## Statistics Package
+statistics dimension:
+	name: Province Strength
+	script: card.provincestr
+	numeric: true
+statistics dimension:
+	name: Gold Production
+	script: card.goldprod
+	numeric: true
+statistics dimension:
+	name: Family Honor
+	script: card.familyhonor
+	numeric: true
+statistics dimension:
+	name: Gold Cost
+	script: card.goldcost
+	numeric: true
+statistics dimension:
+	name: Honor Requirement
+	script: card.honorreq
+	numeric: true
+statistics dimension:
+	name: Personal Honor
+	script: card.personalhonor
+	numeric: true
+statistics dimension:
+	name: Honor Production
+	script: card.honorprod
+	numeric: true
+statistics dimension:
+	name: Clan (Stronghold)
+	script: clan_stronghold(card.background)
+statistics dimension:
+	name: Clan (Personality)
+	script: clan_personality(card.background)
+statistics dimension:
+	name: keywords
+	script: keyword_usage(unique:true)
+	show empty: false
+	split list: true
+statistics dimension:
+	name: style
+	script: stylesheet.full_name + " " + stylesheet.short_name
+statistics dimension:
+	name: text length (words)
+	script: word_count(to_text(card.rules_text))
+	numeric: true
+	bin size: 5
+############################################################# Automatic Text Replacements
+auto replace:
+	match: (C)
+	replace: ©
+auto replace:
+	match: CR
+	replace: ©
+auto replace:
+	match: TM
+	replace: ™
+	whole word: true
+auto replace:
+	match: --
+	replace: —
+auto replace:
+	# note the spaces
+	match:
+		 - 
+	replace:
+		 — 
+auto replace:
+	match: ::
+	replace: •
+auto replace:
+	match: ~
+	replace: CARDNAME
+############################################################## Card pack items
+pack type:
+	name: core set card
+	filter: card.rarity == "core set"
+pack type:
+	name: common
+	filter: card.rarity == "common"
+pack type:
+	name: uncommon
+	filter: card.rarity == "uncommon"
+pack type:
+	name: rare
+	filter: card.rarity == "rare"
+pack type:
+	name: promo
+	filter: card.rarity == "promo"
+############################################################## Card packs
+pack type:
+	name: core set booster pack
+	item:
+		name: rare
+	item:
+		name: uncommon
+		amount: 3
+	item:
+		name: common
+		amount: 11
+pack type:
+	name: expansion booster pack
+	item:
+		name: rare
+	item:
+		name: uncommon
+		amount: 2
+	item:
+		name: common
+		amount: 8
+pack type:
+	name: additional core set card
+	item:
+		name: core set card
+pack type:
+	name: additional common
+	item:
+		name: common
+pack type:
+	name: additional uncommon
+	item:
+		name: uncommon
+pack type:
+	name: additional rare
+	item:
+		name: rare
+pack type:
+	name: additional promo
+	item:
+		name: promo
+############################################################## We have keywords
+has keywords: true
+############################################################## Keyword mode
+keyword mode:
+	name: real
+	description: Real keywords
+keyword mode:
+	is default: true
+	name: custom
+	description: Custom keywords
+############################################################## Keyword parameter types
+keyword parameter type:
+	name: number
+	match: [XYZ0-9]+
+	refer script:
+		name: normal
+		description: (1,2,3)
+		script: \{{input}\}
+	refer script:
+		name: as words
+		description: (one, two, three)
+		script: \{english_number({input})\}
+	refer script:
+		name: as words, use "a" for 1
+		description: (a, two, three)
+		script: \{english_number_a({input})\}
+	refer script:
+		name: as words, use "" for 1
+		description: (, two, three)
+		script: \{english_number_multiple({input})\}
+	refer script:
+		name: as ordinal words
+		description: (first, second, third)
+		script: \{english_number_ordinal({input})\}
+keyword parameter type:
+	name: name
+	match: [^(.:;\n—]+
+	refer script:
+		name: normal
+		description: No changes made.
+		script: \{{input}\}
+	refer script:
+		name: singular
+		description: Removes plurality from words.
+		script: \{english_singular({input})\}
+keyword parameter type:
+	name: prefix
+	description: Prefix for things like "<something>walk"
+	optional: false
+	match: [A-Z][A-Z,a-z’ ]*
+############################# Some L5R keywords
+# By Pichoro
+keyword:
+	mode: real
+	match: Unaligned
+	keyword: Unaligned
+keyword:
+	mode: real
+	match: Imperial
+	keyword: Imperial
+keyword:
+	mode: real
+	match: Shadowlands
+	keyword: Shadowlands
+keyword:
+	mode: real
+	match: Ronin
+	keyword: Ronin
+keyword:
+	mode: real
+	match: Samurai
+	keyword: Samurai
+keyword:
+	mode: real
+	match: Courtier
+	keyword: Courtier
+keyword:
+	mode: real
+	match: Shugenja
+	keyword: Shugenja
+keyword:
+	mode: real
+	match: Magistrate
+	keyword: Magistrate
+keyword:
+	mode: real
+	match: Naval
+	keyword: Naval
+keyword:
+	mode: real
+	match: Cavalry
+	keyword: Cavalry
+keyword:
+	mode: real
+	match: Duelist
+	keyword: Duelist
+keyword:
+	mode: real
+	match: Daimyo
+	keyword: Daimyo
+keyword:
+	mode: real
+	match: Yojimbo
+	keyword: Yojimbo
+keyword:
+	mode: real
+	match: Ninja
+	keyword: Ninja
+keyword:
+	mode: real
+	match: Scout
+	keyword: Scout
+keyword:
+	mode: real
+	match: Unique
+	keyword: Unique
+keyword:
+	mode: real
+	match: Experienced
+	keyword: Experienced
+keyword:
+	mode: real
+	match: Air
+	keyword: Air
+keyword:
+	mode: real
+	match: Fire
+	keyword: Fire
+keyword:
+	mode: real
+	match: Earth
+	keyword: Earth
+keyword:
+	mode: real
+	match: Void
+	keyword: Void
+keyword:
+	mode: real
+	match: Water
+	keyword: Water
+keyword:
+	mode: real
+	match: Tactician
+	keyword: Tactician
+keyword:
+	mode: real
+	match: Champion
+	keyword: Champion
+keyword:
+	mode: real
+	match: Paragon
+	keyword: Paragon
+keyword:
+	mode: real
+	match: Ashigaru
+	keyword: Ashigaru
+keyword:
+	mode: real
+	match: Budoka
+	keyword: Budoka
+keyword:
+	mode: real
+	match: Nonhuman
+	keyword: Nonhuman
+keyword:
+	mode: real
+	match: Naga
+	keyword: Naga
+keyword:
+	mode: real
+	match: Ratling
+	keyword: Ratling
+keyword:
+	mode: real
+	match: Goblin
+	keyword: Goblin
+keyword:
+	mode: real
+	match: Oni
+	keyword: Oni
+keyword:
+	mode: real
+	match: Singular
+	keyword: Singular
+keyword:
+	mode: real
+	match: Kensai
+	keyword: Kensai
+keyword:
+	mode: real
+	match: Political
+	keyword: Political
+keyword:
+	mode: real
+	match: Recon
+	keyword: Recon
+keyword:
+	mode: real
+	match: Terrain
+	keyword: Terrain
+keyword:
+	mode: real
+	match: Kiho
+	keyword: Kiho
+keyword:
+	mode: real
+	match: Maho
+	keyword: Maho
+keyword:
+	mode: real
+	match: Armor
+	keyword: Armor
+keyword:
+	mode: real
+	match: Weapon
+	keyword: Weapon
+keyword:
+	mode: real
+	match: Retainer
+	keyword: Retainer
+keyword:
+	mode: real
+	match: Temple
+	keyword: Temple
+keyword:
+	mode: real
+	match: Mountain
+	keyword: Mountain
+keyword:
+	mode: real
+	match: Bloodspeaker
+	keyword: Bloodspeaker
+keyword:
+	mode: real
+	match: Monk
+	keyword: Monk
+keyword:
+	mode: real
+	keyword: Master
+	match: Master of <atom-param>name</atom-param>
+keyword:
+	mode: real
+	keyword: Experienced
+	match: Experienced <atom-param>name</atom-param>
+keyword:
+	mode: real
+	keyword: X Clan
+	match: <atom-param>name</atom-param> Clan
+keyword:
+	mode: real
+	keyword: Clan X
+	match: Clan <atom-param>name</atom-param>

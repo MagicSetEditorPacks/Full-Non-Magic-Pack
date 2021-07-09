@@ -1,0 +1,323 @@
+﻿mse version: 2.0.0
+game: yugioh
+short name: CBG Style
+installer group: Yugioh/CBG
+icon: card-sample.png
+position hint: 07
+
+version: 2014-03-11
+depends on:
+	package: yugioh.mse-game
+	version: 2008-10-27
+depends on:
+	package: yugioh-standard-levels.mse-symbol-font
+	version: 2007-10-27
+depends on:
+	package: yugioh-text-replacements.mse-symbol-font
+	version: 2008-01-04
+
+card width: 361
+card height: 523
+card dpi: 152.6265
+############################################################## Extra scripts
+############################################################## Extra style
+styling field:
+	type: choice
+	name: rules alignment
+	description: Should the rules text be justified? WARNING: Justification is not perfect.
+	initial: justified
+	choice: not justified
+	choice: justified
+styling field:
+	type: boolean
+	name: extended art
+	description: Do you want an extended art card?
+	initial: no
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	card type:
+		left: 0
+		top: 0
+		width: 361
+		height: 523
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			normal monster: normal-card.jpg
+			effect monster: effect-card.jpg
+			ritual monster: ritual-card.jpg
+			synchro monster: synchro-card.jpg
+			dark synchro monster: darksynchro-card.jpg
+			fusion monster: fusion-card.jpg
+			token monster: token-card.jpg
+			obelisk: obelisk-card.jpg
+			slifer: slifer-card.jpg
+			ra: ra-card.jpg
+			legendary dragons: dragons-card.jpg
+			spell card: spell-card.jpg
+			trap card: trap-card.jpg
+			xyz monster: darksynchro-card.jpg
+	foils:
+		left: { if card.rarity=="parallel rare" then 0 else if card.rarity=="gold tech" then 0 else 22 }
+		top: { if card.rarity=="parallel rare" then 0 else if card.rarity=="gold tech" then 0 else 61 }
+		width: { if card.rarity=="parallel rare" then 361 else if card.rarity=="gold tech" then 361 else 319 }
+		height: { if card.rarity=="parallel rare" then 523 else if card.rarity=="gold tech" then 523 else 264 }
+		z index: 5
+		render style: image
+		popup style: in place
+		image:
+			script:	if card.rarity=="super rare" then "superfoil.png" else
+				if card.rarity=="ultra rare" then "superfoil.png" else
+				if card.rarity=="secret rare" then "secretfoil.png" else
+				if card.rarity=="ultimate rare" then "superfoil.png" else
+				if card.rarity=="parallel rare" then "parallelfoil.png" else
+				if card.rarity=="gold tech" then "goldfoil.png" else
+				if card.rarity=="promo" then "superfoil.png" else nil
+	############################# Name line
+	name:
+		left: 60
+		top : 18
+		width: 250
+		height: 25
+		alignment: top center shrink-overflow
+		padding bottom: 0
+		z index: 2
+		font:
+			name: Lightfoot Narrow
+			size: 18
+			color:
+				script: if card.rarity=="rare" then rgb(230,230,230)
+				else if card.rarity=="secret rare" then rgb(230,230,230)
+				else if card.rarity=="promo" then rgb(230,230,230)
+				else if card.rarity=="ultra rare" then rgb(216,199,53)
+				else if card.rarity=="ultimate rare" then rgb(60,0,0)
+				else if card.rarity=="parallel rare" then rgb(216,199,53)
+				else if card.rarity=="gold tech" then rgb(216,199,53)
+				else if card.card_type=="dark synchro monster" then rgb(255,255,255)
+				else rgb(0,0,0)
+	attribute:
+		left: 315
+		top : 20
+		width: 30
+		height: 30
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			earth: earth.png
+			water: water.png
+			fire: fire.png
+			wind: wind.png
+			light: light.png
+			dark: dark.png
+			divine: divine.png
+			spell: spell.png
+			trap: trap.png
+	level:
+		left: 55
+		top : 53
+		height: 14
+		width: 260
+		z index: 2
+		alignment: middle center
+		font:
+			name: Lightfoot Narrow
+			size: 12
+			color: 
+				script: if card.card_type=="dark synchro monster" then rgb(255,255,255) else rgb(0,0,0)
+		symbol font:
+			name: yugioh-standard-levels
+			alignment: middle center
+			size: 6
+	############################# Image
+	image:
+		left: 22
+		top: 61
+		width: 319
+		height: { if styling.extended_art=="yes" then "426" else "264" }
+		mask: { if styling.extended_art=="yes" then "imagemask_long_m.png" else if styling.extended_art=="yes" and is_nmonster() then "imagemask_long.png" else "imagemask.png" }
+		z index: 1
+	############################# Card type
+	monster type:
+		left: 55
+		top : 318
+		width: 250
+		height: 14
+		alignment: middle center shrink-overflow
+		z index: 2
+		font:
+			name: Lightfoot Narrow
+			size: 11
+			color: 
+				script: if card.card_type=="dark synchro monster" then rgb(255,255,255) else rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 3.5
+		visible: script: if is_nmonster() then false else true
+	############################# Edition and Card ID
+	number:
+		left: 22
+		top : 491
+		width: 115
+		height: 10
+		z index: 2
+		alignment: middle left
+		font:
+			name: Palatino Linotype
+			size: 8
+			color: 
+				script: if card.card_type=="dark synchro monster" then rgb(255,255,255)
+				else rgb(0,0,0)
+	edition:
+		left: 28
+		top: 469
+		width: 115
+		height: 15
+		z index: 4
+		font:
+			name: Palatino Linotype Bold
+			size: 8
+			color: rgb(0,0,0)
+	############################# Text box
+	rule text:
+		left: 28
+		top : 350
+		width: 307
+		height:
+			script: if is_nmonster() and card.edition=="" then 132 else if is_nmonster() and card.edition!="" then  117 else 110
+		font:
+			name: MatrixBook
+			size: 8
+			scale down to: 4
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 3.5
+		alignment: { if styling.rules_alignment=="justified" then "top left justify" else "top left" }
+		z index: 3
+		padding left: 1
+		padding top: 2
+		padding right: 0
+		padding bottom: 0
+		line height hard: 1.5
+		line height line: 1.0
+		line height soft: 0.9
+		line height hard max: 1.1
+		line height line max: 1.1
+	############################# Attack/Defense
+	attack:
+		left: 212
+		top: 469
+		width: 48
+		height: 18
+		z index: 2
+		alignment: right middle
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix-Bold
+			size: 12
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 6
+		visible: script: if is_nmonster() then false else true
+	defense:
+		z index: 4
+		left: 286
+		top: 469
+		width: 48
+		height: 18
+		z index: 2
+		alignment: right middle
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix-Bold
+			size: 12
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 6
+		visible: script: if is_nmonster() then false else true
+	############################# Card sorting / numbering
+	############################# Copyright stuff
+	gamecode:
+		left: 140
+		top : 491
+		width: 80
+		height: 10
+		alignment: middle center
+		z index: 2
+		font:
+			name: Palatino Linotype
+			size: 8
+			color: 
+				script: if card.card_type=="dark synchro monster" then rgb(255,255,255)
+				else rgb(0,0,0)
+	rarity:
+		left: 332
+		top : 492
+		height: 20
+		width: 20
+		z index: 3
+		render style: image
+		popup style: in place
+		image: { if card.edition!="" then "cornerfirst.png" else "cornerunlimited.png" }
+	copyright:
+		left: 221
+		top : 491
+		width: 107
+		height: 10
+		z index: 4
+		alignment: middle right shrink-overflow
+		font:
+			name: Palatino Linotype
+			size: 7
+			color: 
+				script: if card.card_type=="dark synchro monster" then rgb(255,255,255)
+				else rgb(0,0,0)
+############################################extra card field:
+extra card field:
+	type: text
+	name: atkoverlay
+	default: "ATK/"
+	editable: false
+	show statistics: false
+extra card field:
+	type: text
+	name: defoverlay
+	default: "DEF/"
+	editable: false
+	show statistics: false
+extra card style:
+	atkoverlay:
+		left: 178
+		top: 469
+		width: 48
+		height: 18
+		z index: 1
+		alignment: right middle
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix-Bold
+			size: 12
+			color: rgb(0,0,0)
+		visible: script: if is_nmonster() then false else true
+	defoverlay:
+		left: 252
+		top: 469
+		width: 48
+		height: 18
+		z index: 1
+		alignment: right middle
+		font:
+			name: MatrixBoldSmallCaps
+			italic name: Matrix-Bold
+			size: 12
+			color: rgb(0,0,0)
+		visible: script: if is_nmonster() then false else true

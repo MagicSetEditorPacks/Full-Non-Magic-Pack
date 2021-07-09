@@ -1,0 +1,231 @@
+mse version: 0.3.8
+game: l5r
+full name: New FT Spell
+short name: Standard
+installer group: Legend of the Five Rings/New/Fulltext/Spell
+icon: icon.png
+position hint: 004
+
+version: 2010-05-18
+depends on:
+	package: l5r.mse-game
+	version: 2009-05-19
+depends on:
+	package: l5r-new.mse-style
+	version: 2009-05-19
+
+card width: 324
+card height: 454
+card dpi: 131.24999998359377
+
+#By: Pichoro
+#Fonts used:
+#L5RTitles
+#Concorde Nova
+#Concorde Nova SC
+############################################################ Style Scripts
+init script:
+	card_shape := { "new spell only" }
+	
+############################################################## Extra Style Options
+styling field:
+	type: boolean
+	name: foil
+	description: Should the cards be foiled?
+	initial: no
+############################################################ Card Fields
+card style:
+	background:
+		left: 0
+		top: 0
+		width: 324
+		height: 454
+		z index: -1
+		render style: image
+		popup style: in place
+		image: spell.jpg
+	name:
+		left: 44
+		top: 12
+		width: 236
+		height: 40
+		z index: 0
+		alignment: middle center
+		font:
+			name: L5RTitles
+			color: rgb(0,0,0)
+			size:
+				script:
+					if card_style.name.content_width > 235 or card_style.name.content_lines > 1 then 11
+					else 18
+			weight: bold
+			scale down to: 6
+	rarity:
+		left:
+			script:
+				if card_count() > 99 then 278
+				else if card_count() > 9 then 282
+				else 286
+		top: 441
+		width: 7
+		height: 7
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			core set: /l5r-new.mse-style/set.png
+			common: /l5r-new.mse-style/common.png
+			uncommon: /l5r-new.mse-style/uncommon.png
+			rare: /l5r-new.mse-style/rare.png
+			promo: /l5r-new.mse-style/promo.png
+	player credit:
+		left: 312
+		top: 400
+		height: 10
+		width: 344
+		z index: 2
+		alignment: center
+		angle: 90
+		font:
+			name: Concorde Nova SC
+			color: rgb(255,255,255)
+			size: 6.5
+			scale down to: 2
+
+#--------------------------------------------------- THE ABOVE PARAMETERS SHOULD BE THE SAME FOR ALL CARD BACKGROUNDS! ----------------------------------
+
+	traits_text:
+		left: 36
+		top: 85
+		width: 253
+		height: { 7 + card_style.traits_text.content_height }
+		z index: 1
+		alignment: middle center
+		font:
+			name: Concorde Nova SC
+			color: rgb(0,0,0)
+			size: 9
+			scale down to: 9
+		padding left:   6
+		padding top:    2
+		padding right:  4
+		padding bottom: 2
+		line height hard: 1.3
+		line height line: 1.1
+	text_no_traits:
+		left: 36
+		bottom: 411
+		width: 253
+		height: { 310 - card_style.traits_text.content_height }
+		z index: 0
+		alignment: center
+		font:
+			name: Concorde Nova
+			color: rgb(0,0,0)
+			size: 9
+			scale down to: 6
+		padding left:   6
+		padding top:    2
+		padding right:  4
+		padding bottom: 2
+		line height hard: 1.3
+		line height line: 1.1
+	goldcost:
+		left: 150
+		top: 52
+		width: 25
+		height: 35
+		z index: 1
+		alignment: center
+		font:
+			name: L5RTitles
+			color: rgb(0,0,0)			
+			size: 20
+			weight: bold
+			scale down to: 8
+	focus:
+		left: 142
+		top: 405
+		width: 40
+		height: 40
+		z index: 1
+		alignment: middle center
+		font:
+			name: L5RTitles
+			size: 20
+			weight: bold
+			scale down to: 8
+			color: rgb(255,255,255)
+################################################################## Style Specific Card Fields
+extra card field:
+	type: choice
+	name: foil
+	save value: false
+	editable: false
+	script: "foil"
+extra card field:
+	type: choice
+	name: divider
+	save value: false
+	editable: false
+	script: "line"
+extra card field:
+	type: text
+	name: setartist
+	show statistics: false
+	script: combined_editor(field1: card.set, separator: " Illus ", field2: card.artist)
+	description: The set code and artist for the card
+	save value: false
+extra card field:
+	type: text
+	name: copyrightnumber
+	show statistics: false
+	script: combined_editor(field1: card.copyright, separator: " ", field2: card.card_number)
+	description: The copyright line and number for the card
+	save value: false
+extra card style:
+	setartist:
+		left: 24
+		top: 440
+		width: 250
+		height: 10
+		z index: 1
+		alignment: left
+		font:
+			name: Concorde Nova SC
+			color: rgb(255,255,255)
+			size: 6.5
+			scale down to: 2
+	copyrightnumber:
+		right: 298
+		top: 440
+		width: 150
+		height: 10
+		z index: 1
+		alignment: right
+		font:
+			name: Concorde Nova
+			color: rgb(255,255,255)
+			size: 6.5
+			scale down to: 2
+	foil:
+		left: 0
+		top: 0
+		width: 324
+		height: 454
+		z index: 5
+		render style: image
+		popup style: in place
+		visible: { styling.foil }
+		choice images:
+			foil: /l5r-new.mse-style/foil.png
+	divider:
+		left: 40
+		top: { 95 + card_style.traits_text.content_height }
+		width: 249
+		height: 5
+		z index: 5
+		render style: image
+		popup style: in place
+		choice images:
+			line: line.png

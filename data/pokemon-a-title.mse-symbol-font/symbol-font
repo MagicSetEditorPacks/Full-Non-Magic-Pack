@@ -1,0 +1,235 @@
+mse version: 2.0.0
+version: 2018-07-08
+short name: normal
+position hint: 002
+icon: hp.png
+# Symbol font for energy
+
+image font size: 135
+horizontal space: 1
+vertical space: 1
+#EX (BW & XY) Pokemon
+symbol:
+	code: EX
+	image: { if is_outline_title() then "EX-outline.png" else "EX.png" }
+	image font size: 300
+#Mega (BW & XY) Pokemon
+symbol:
+	code: M
+	image: { if is_outline_title() then "XM-outline.png" else if is_wt_title() then "XM-wt.png" else "XM-Bk.png" }
+	image font size: 300
+#BREAK Pokemon
+symbol:
+	code: BREAK
+	image: { if is_outline_title() then "BREAK-outline.png" else "BREAK.png" }
+	image font size: 300
+#Star Pokemon
+symbol:
+	code: Star
+	image: { if is_outline_title() then "#-outline.png" else "#.png" }
+	image font size: 300
+#ex (EX Series) Pokemon
+symbol:
+	code: ex
+	image: { if is_outline_title() then "XS-outline.png" else if is_wt_title() then "XS-wt.png" else "XS-Bk.png" }
+	image font size: 300
+#Elite 4 Pokemon
+symbol:
+	code: E4
+	image: { "%.png" }
+	image font size: 300
+#Gym Leader Pokemon
+symbol:
+	code: GL
+	image: { "TL.png" }
+	image font size: 300
+#Galactic Pokemon
+symbol:
+	code: g
+	image: { "TG.png" }
+	image font size: 300
+#Frontier Brain's Pokemon
+symbol:
+	code: FB
+	image: { "FB.png" }
+	image font size: 300
+#GX Pokemon
+symbol:
+	code: GX
+	image: { "GX-"+gx_color()+".png" }
+	image font size: 325
+#Ultra Prism
+symbol:
+	code: Prism
+	image: { "UP.png" }
+	image font size: 300
+#Unown A
+symbol:
+	code: &A
+	image: {if is_outline_title() then "&A-Outline.png" else if is_wt_title() then "&A-Wt.png" else "&A-Bk.png"}
+	image font size: 299
+#Unown B
+symbol:
+	code: &B
+	image: {if is_outline_title() then "&B-Outline.png" else if is_wt_title() then "&B-Wt.png" else "&B-Bk.png"}
+	image font size: 299
+#Unown C
+symbol:
+	code: &C
+	image: {if is_outline_title() then "&C-Outline.png" else if is_wt_title() then "&C-Wt.png" else "&C-Bk.png"}
+	image font size: 299
+#Unown D
+symbol:
+	code: &D
+	image: {if is_outline_title() then "&D-Outline.png" else if is_wt_title() then "&D-Wt.png" else "&D-Bk.png"}
+	image font size: 299
+#Unown E
+symbol:
+	code: &E
+	image: {if is_outline_title() then "&E-Outline.png" else if is_wt_title() then "&E-Wt.png" else "&E-Bk.png"}
+	image font size: 299
+#Unown F
+symbol:
+	code: &F
+	image: {if is_outline_title() then "&F-Outline.png" else if is_wt_title() then "&F-Wt.png" else "&F-Bk.png"}
+	image font size: 299
+#Unown G
+symbol:
+	code: &G
+	image: {if is_outline_title() then "&G-Outline.png" else if is_wt_title() then "&G-Wt.png" else "&G-Bk.png"}
+	image font size: 299
+#Unown H
+symbol:
+	code: &H
+	image: {if is_outline_title() then "&H-Outline.png" else if is_wt_title() then "&H-Wt.png" else "&H-Bk.png"}
+	image font size: 299
+#Unown I
+symbol:
+	code: &I
+	image: {if is_outline_title() then "&I-Outline.png" else if is_wt_title() then "&I-Wt.png" else "&I-Bk.png"}
+	image font size: 299
+#Unown J
+symbol:
+	code: &J
+	image: {if is_outline_title() then "&J-Outline.png" else if is_wt_title() then "&J-Wt.png" else "&J-Bk.png"}
+	image font size: 299
+#Unown K
+symbol:
+	code: &K
+	image: {if is_outline_title() then "&K-Outline.png" else if is_wt_title() then "&K-Wt.png" else "&K-Bk.png"}
+	image font size: 299
+#Unown L
+symbol:
+	code: &L
+	image: {if is_outline_title() then "&L-Outline.png" else if is_wt_title() then "&L-Wt.png" else "&L-Bk.png"}
+	image font size: 299
+#Unown M
+symbol:
+	code: &M
+	image: {if is_outline_title() then "&M-Outline.png" else if is_wt_title() then "&M-Wt.png" else "&M-Bk.png"}
+	image font size: 299
+#Unown N
+symbol:
+	code: &N
+	image: {if is_outline_title() then "&N-Outline.png" else if is_wt_title() then "&N-Wt.png" else "&N-Bk.png"}
+	image font size: 299
+#Unown O
+symbol:
+	code: &O
+	image: {if is_outline_title() then "&O-Outline.png" else if is_wt_title() then "&O-Wt.png" else "&O-Bk.png"}
+	image font size: 299
+#Unown P
+symbol:
+	code: &P
+	image: {if is_outline_title() then "&P-Outline.png" else if is_wt_title() then "&P-Wt.png" else "&P-Bk.png"}
+	image font size: 299
+#Unown Q
+symbol:
+	code: &Q
+	image: {if is_outline_title() then "&Q-Outline.png" else if is_wt_title() then "&Q-Wt.png" else "&Q-Bk.png"}
+	image font size: 299
+#Unown R
+symbol:
+	code: &R
+	image: {if is_outline_title() then "&R-Outline.png" else if is_wt_title() then "&R-Wt.png" else "&R-Bk.png"}
+	image font size: 299
+#Unown S
+symbol:
+	code: &S
+	image: {if is_outline_title() then "&S-Outline.png" else if is_wt_title() then "&S-Wt.png" else "&S-Bk.png"}
+	image font size: 299
+#Unown T
+symbol:
+	code: &T
+	image: {if is_outline_title() then "&T-Outline.png" else if is_wt_title() then "&T-Wt.png" else "&T-Bk.png"}
+	image font size: 299
+#Unown U
+symbol:
+	code: &U
+	image: {if is_outline_title() then "&U-Outline.png" else if is_wt_title() then "&U-Wt.png" else "&U-Bk.png"}
+	image font size: 299
+#Unown V
+symbol:
+	code: &V
+	image: {if is_outline_title() then "&V-Outline.png" else if is_wt_title() then "&V-Wt.png" else "&V-Bk.png"}
+	image font size: 299
+#Unown W
+symbol:
+	code: &W
+	image: {if is_outline_title() then "&W-Outline.png" else if is_wt_title() then "&W-Wt.png" else "&W-Bk.png"}
+	image font size: 299
+#Unown X
+symbol:
+	code: &X
+	image: {if is_outline_title() then "&X-Outline.png" else if is_wt_title() then "&X-Wt.png" else "&X-Bk.png"}
+	image font size: 299
+#Unown Y
+symbol:
+	code: &Y
+	image: {if is_outline_title() then "&Y-Outline.png" else if is_wt_title() then "&Y-Wt.png" else "&Y-Bk.png"}
+	image font size: 299
+#Unown Z
+symbol:
+	code: &Z
+	image: {if is_outline_title() then "&Z-Outline.png" else if is_wt_title() then "&Z-Wt.png" else "&Z-Bk.png"}
+	image font size: 299
+###########################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: &A
+	item: &B
+	item: &C
+	item: &D
+	item: &E
+	item: &F
+	item: &G
+	item: &H
+	item: &I
+	item: &J
+	item: &K
+	item: &L
+	item: &M
+	item: &N
+	item: &O
+	item: &P
+	item: &Q
+	item: &R
+	item: &S
+	item: &T
+	item: &U
+	item: &V
+	item: &W
+	item: &X
+	item: &Y
+	item: &Z
+	item: BREAK
+	item: ex
+	item: EX
+	item: E4
+	item: FB
+	item: g
+	item: GL
+	item: GX
+	item: M
+	item: Prism
+	item: Star

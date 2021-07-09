@@ -1,0 +1,608 @@
+card_style:
+	name:	
+		visible:			{ isbbFront() }
+		height:				{ if isbbFront() then 32 }
+	
+	type:
+		visible:			{ isbbFront() }
+		height:				{ if isbbFront() then 32 }
+		
+	set:
+		visible:			{ isbbFront() }
+		height:				{ if isbbFront() then setHW() }
+	
+	artist:
+		visible:			{ isbbFront() }
+		height:				{ if isbbFront() then 10 }
+	
+	cardart:
+		visible:			{ styling.card_side == "Front" }
+		top:				{ cardartT() }
+		height:				{ if isbbFront() then cardartH() }
+		left:				{ checkL() }
+	cardart2:
+		visible: 			{ styling.card_side == "Back" and card.type == "SHIP" }
+		left:				{ checkL() }
+		top:				{ cardartT() }
+		width:				{ Width - 36 }
+		height:				{ if styling.card_side == "Back" then card_style.cardart.height }
+		render_style:		image
+		image:				{ saturate(card.cardart, amount: -1) }
+		z_index: 			1
+	cardart3:
+		visible: 			{ styling.card_side == "Back" and card.type == "SHIP" }
+		left:				{ checkL() }
+		top:				{ cardartT() }
+		width:				{ Width - 36 }
+		height:				{ if styling.card_side == "Back" then card_style.cardart.height }
+		mask:				{ invert_image(saturate(card.cardart, amount: -1)) }
+		combine: 			overlay
+		z_index: 			2
+
+	traits:
+		visible:			{ isbbFront() }
+		height:				{ if isbbFront() then max(15,card_style.traits.content_height) }
+		top:				{ typeTblT + 4 }
+		left:				{ Width - card_style.traits.width - ( if set.banner_position == "Right" then 44 else 24 ) }
+		alignment:			right top
+		font:
+			color:				{ if styling.traits_style == "Black" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow_color:		{ if styling.traits_style == "White with Border" then rgb(0,0,0) else "transparent" }
+			shadow_blur:		5
+
+# Corner Fill
+	border_fill_1:
+		visible:			{ card.type != "COHORT"}
+		left:				{ checkL() + checkW }
+
+	vhl_type:
+		visible:			{ typeVisible() }
+		top:				{ typeCellT() }
+		height:				{ if isbbFront() and typeVisible() then typeCellH }
+		left:				{ checkL() }
+		width:				{ checkW }
+		render_style: 		text
+		popup_style: 		in place
+		alignment: 			center middle
+		font:
+			name:				{ getFont() }
+			weight: 			bold
+			size:				{ getFontSize(8) }
+			color:				rgb(0,0,0)
+		z_index:			51
+	
+	
+# CHECKS
+# Check 1
+#	check_header_1:
+#		top:				{ check1T() }
+##		height:				{ if isbbFront() then check1H() }
+	#	left:				{ checkL() }
+	#	width:				{ checkW }
+#		alignment: 			center bottom
+#		line_height_soft: 	0.8
+#		font:
+#			name:				{ getFont() }
+#			weight:				bold
+#			size:				{ getFontSize(7.5) }
+#			color:				{ checkFontClr() }
+#		z_index: 			91
+	
+	check_list_1:
+		top:				{ check1T() + check1H() }
+		height:				{ if styling.card_side == "Front" and card.type != "COHORT" then checkList1H() }
+		left:				{ checkL() }
+		width:				{ checkW - 2 }
+		render_style: 		hidden
+		z_index: 			52
+
+	check_list_text_1:
+		visible:			{ card.type != "COHORT" }
+		top:				{ check1T() + check1H() }
+		height:				{ if  styling.card_side == "Front" then checkList1H() }
+		left:				{ checkL() }
+		width:				{ checkW - 2 }
+		alignment: 			center middle shrink-overflow
+		line_height_hard:	0.8
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(7) }
+		z_index: 			52
+
+	check_1:
+		visible: 			{ check1Visible() and styling.card_side == "Front" }
+		top:				{ check1T() + check1H() + checkList1H() + 2 }
+		left:				{ checkL() + (checkW-36)/2 }
+		height:				{ if check1Visible() and styling.card_side == "Front" then 36 }
+		width:				36
+		always_symbol:		true
+		alignment: 			center middle
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(12) }
+		symbol_font:
+			name:				PACG-check
+			size:				{ getFontSize(18) }
+		z_index: 			54
+
+# Check 2
+	check_header_2:
+		visible:			{ check1Visible() and styling.card_side == "Front" }
+		top:				{ check2T() }
+		height:				{ if isbbFront() and styling.card_side == "Front" then check2H() }
+		left:				{ checkL() }
+		width:				{ checkW }
+		alignment: 			center bottom
+		font:
+			name:				{ getFont() }
+			weight:				bold
+			size:				{ getFontSize(7.5) }
+			color:				{ checkFontClr() }
+		z_index: 			51
+	
+	check_list_2:
+		top:				{ check2T() + check2H() }
+		height:				{ if isbbFront() then checkList2H() }
+		left:				{ checkL() }
+		width:				{ checkW - 2 }
+		render_style: 		hidden
+		z_index: 			52
+
+	check_list_text_2:
+		top:				{ check2T() + check2H() }
+		height:				{ if isbbFront() then checkList2H() }
+		left:				{ checkL() }
+		width:				{ checkW - 2 }
+		alignment: 			center middle shrink-overflow
+		line_height_hard:	0.8
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(7) }
+		z_index: 			52
+
+	check_2:
+		visible: 			{ check2Visible() }
+		top:				{ check2T() + check2H() + checkList2H() + 2 }
+		left:				{ checkL() + (checkW-36)/2 }
+		height:				{ if check2Visible() then 36 }
+		width:				36
+		always_symbol:		true
+		alignment: 			center middle
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(12) }
+		symbol_font:
+			name:				PACG-check
+			size:				{ getFontSize(18) }
+		z_index: 			54
+
+# Check 3	
+	check_header_3:
+		visible: 			{ check2Visible() }
+		top:				{ check3T() }
+		height:				{ if isbbFront() then check3H() }
+		left:				{ checkL() }
+		width:				{ checkW }
+		alignment: 			center bottom
+		font:
+			name:				{ getFont() }
+			weight:				bold
+			size:				{ getFontSize(7.5) }
+			color:				{ checkFontClr() }
+		z_index: 			51
+	
+	check_list_3:
+		visible: 			{ check3Visible() }
+		top:				{ check3T() + check3H() }
+		height:				{ if check3Visible() and isbbFront() then checkList3H() }
+		left:				{ checkL() }
+		width:				{ checkW - 2 }
+		render_style: 		hidden
+		z_index: 			52
+
+	check_list_text_3:
+		top:				{ check3T() + check3H() }
+		height:				{ if isbbFront() then checkList3H() }
+		left:				{ checkL() }
+		width:				{ checkW - 2 }
+		alignment: 			center middle shrink-overflow
+		line_height_hard:	0.8
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(7) }
+		z_index: 			52
+
+	check_3:
+		visible: 			{ check3Visible() }
+		top:				{ check3T() + check3H() + checkList3H() + 2 }
+		left:				{ checkL() + (checkW-36)/2 }
+		height:				{ if check3Visible() and isbbFront() then 36 }
+		width:				36
+		always_symbol:		true
+		alignment: 			center middle
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(12) }
+		symbol_font:
+			name:				PACG-check
+			size:				{ getFontSize(18) }
+		z_index: 			54
+
+	check_list_4:
+		top:				{ check1T() + check1H() }
+		height:				{ if check3Visible() and styling.card_side == "Back" then checkList1H() }
+		left:				{ checkL() }
+		width:				{ checkW - 2 }
+		render_style: 		hidden
+		z_index: 			52
+
+	check_list_text_4:
+		top:				{ check1T() + check1H() }
+		height:				{ if  styling.card_side == "Back" then checkList1H() }
+		left:				{ checkL() }
+		width:				{ checkW - 2 }
+		alignment: 			center middle shrink-overflow
+		line_height_hard:	0.8
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(7) }
+		z_index: 			52
+
+	check_4:
+		visible: 			{ check1Visible() and styling.card_side == "Back" }
+		top:				{ check1T() + check1H() + checkList1H() + 2 }
+		left:				{ checkL() + (checkW-36)/2 }
+		height:				{ if check1Visible() and styling.card_side == "Back" then 36 }
+		width:				36
+		always_symbol:		true
+		alignment: 			center middle
+		font:
+			name:				{ getFont() }
+			size:				{ getFontSize(12) }
+		symbol_font:
+			name:				PACG-check
+			size:				{ getFontSize(18) }
+		z_index: 			54
+
+# POWERS and RECHARGE
+	flavour_text:
+		visible:			{ card.type == "SHIP" and styling.card_side == "Back" }
+		top:				{ getEncT() }
+		width:				{ Width - 80 }
+		left:				{ checkL() + 12 }
+		height:				{ if card.type == "SHIP" and styling.card_side == "Back" then getEncH() }
+		z_index:			52
+		alignment: 			left middle
+		font:
+			name:				{ getAltFont() }
+			size:				{ getFontSize(11) }
+			scale_down_to: 		8
+			
+	bb_powers:
+		visible:			{ isPowersVisible() }
+		top:				{ getbbPowersT() + 24 }
+		height:				{ if isbbFront() and isPowersVisible() then getbbPowersH() - (if (isRechargeVisible() or isSupportHeaderVisible()) then 28 else 40) }
+		left:				{ checkL() + 6 }
+		width:				{ Width - 70 }
+		z_index: 			52
+		alignment: 			left middle
+		font:
+			name:				{ getAltFont() }
+			size:				{ getFontSize(11) }
+			scale_down_to: 		8
+		
+	recharge:
+		visible:			{ isRechargeVisible() or isSupportHeaderVisible() }
+		top:				{ getRechargeT() + 22 }
+		height:				{ if isRechargeVisible() or isSupportHeaderVisible() then getRechargeH() - 38 }
+		left:				{ checkL() + 6 }
+		width:				{ Width - 70 }
+		z_index: 			52
+		alignment: 			left middle
+		font:
+			name:				{ getAltFont() }
+			size:				{ getFontSize(11) }
+			scale_down_to: 		8
+	
+	encountering:
+		visible:			{ isEncVisible() }
+		top:				{ getEncT() + 22 }
+		left:				{ checkL() + 6 }
+		width:				{ Width - 70 }
+		height:				{ if isEncVisible() then getEncH() - 28 }
+		z_index:			52
+		alignment: 			left middle
+		font:
+			name:				{ getAltFont() }
+			size:				{ getFontSize(11) }
+			scale_down_to: 		8
+		
+	commanding_f:
+		visible:			{ isCmdVisible() and styling.card_side == "Front" }
+		top:				{ getCmdT() + 22 }
+		left:				{ checkL() + 6 }
+		width:				{ Width - 70 }
+		height:				{ if isCmdVisible() and styling.card_side == "Front" then getEncH() - 38 }
+		z_index:			52
+		alignment: 			left middle
+		font:
+			name:				{ getAltFont() }
+			size:				{ getFontSize(11) }
+			scale_down_to: 		8
+
+	commanding_b:
+		visible:			{ isCmdVisible() and styling.card_side == "Back" }
+		top:				{ getCmdT() + 22 }
+		left:				{ checkL() + 6 }
+		width:				{ Width - 70 }
+		height:				{ if isCmdVisible() and styling.card_side == "Back" then getEncH() - 38 }
+		z_index:			52
+		alignment: 			left middle
+		font:
+			name:				{ getAltFont() }
+			size:				{ getFontSize(11) }
+			scale_down_to: 		8
+
+	bb_powers_header_1:
+		visible:			{ isSupportHeaderVisible() }
+		top:				{ getbbPowersT() }
+		height:				{ if isSupportHeaderVisible() then headerH }
+		left:				{ checkL() + 6 }
+		width:				{ Width - 66 }
+		z_index: 			52
+		alignment: 			left middle shrink-overflow
+		font:
+			name:			{ getFont() }
+			color:			{ getNameFontColour() }
+			size:			{ getFontSize(11) }
+	bb_powers_header_2:
+		visible:			{ isSupportHeaderVisible() }
+		top:				{ getRechargeT() }
+		height:				{ if isSupportHeaderVisible() then headerH }
+		left:				{ checkL() + 6 }
+		width:				{ Width - 66 }
+		z_index: 			52
+		alignment: 			left middle shrink-overflow
+		font:
+			name:			{ getFont() }
+			color:			{ getNameFontColour() }
+			size:			{ getFontSize(11) }
+
+extra_card_style:
+		
+	bb_cardback:
+		visible:			{ not isbbFront() }
+		top:				0
+		width:				{ Width }
+		left:				0
+		height:				{ Height }
+		image:				{ set.card_back }
+		render_style:		image
+		z_index:			98
+		
+	vhl_type_table:
+		visible:			{ typeVisible() }
+		top:				{ typeTblT }
+		height:				{ typeTblH + 2 }
+		left:				{ checkL() }
+		width:				{ checkW }
+		z_index:			50
+	vhl_type_header:
+		visible:			{ typeVisible() }
+		top:				{ typeTblT }
+		height:				{ typeTblH - typeCellH }
+		left:				{ checkL() }
+		width:				{ checkW }
+		alignment: 			center middle
+		font:
+			name:				{ getFont() }
+			weight: 			bold
+			size:				{ getFontSize(8) }
+			color:				rgb(255,255,255)
+		z_index:			50
+	vhl_type_cell:
+		visible:			{ typeVisible() }
+		top:				{ typeCellT() }
+		height:				{ typeCellH }
+		left:				{ checkL() }
+		width:				{ checkW - 2 }
+		z_index:			50
+	
+# Check to Defeat / Acquire
+# Check 1
+	check_header_1:
+		visible:			{ card.type != "COHORT" }
+		top:				{ check1T() }
+		height:				{ if isbbFront() then check1H() }
+		left:				{ checkL() }
+		width:				{ checkW }
+		alignment: 			center bottom
+		line_height_soft: 	0.8
+		font:
+			name:				{ getFont() }
+			weight:				bold
+			size:				{ getFontSize(7.5) }
+			color:				{ checkFontClr() }
+		z_index: 			91
+	check_table_1:
+		top:				{ check1T() }
+		height:				{ check1H() + (if checkCell1H() != 0 then checkCell1H() + 2) }
+		left:				{ checkL() }
+		width:				{ checkW }
+		z_index: 			50
+	check_cell_1:
+		visible:			{ card.type != "COHORT" }
+		top:				{ check1T() + check1H() }
+		height:				{ checkCell1H() }
+		left:				{ checkL() }
+		width:				{ checkW - 2 }
+		z_index: 			51
+	check_disc_col_1:
+		visible: 			{ check1Visible() }
+		top:				{ check1T() + check1H() + checkList1H() }
+		left:				{ checkL() + (checkW-40)/2  }
+		height:				{ 40 }
+		width:				{ 40 }
+		radius:				20
+		z_index: 			52
+
+# Check 2
+	check_table_2:
+		visible:			{ check2Visible() }
+		top:				{ check2T() }
+		height:				{ check2H() + (if checkCell2H() != 0 then checkCell2H() + 2) }
+		left:				{ checkL() }
+		width:				{ checkW }
+		z_index: 			50
+	check_cell_2:
+		visible:			{ check2Visible() }
+		top:				{ check2T() + check2H() }
+		height:				{ checkCell2H() }
+		left:				{ checkL() }
+		width:				{ checkW - 2 }
+		z_index: 			51
+	check_disc_col_2:
+		visible:			{ check2Visible() }
+		visible: 			{ check2Visible() }
+		top:				{ check2T() + check2H() + checkList2H() }
+		left:				{ checkL() + (checkW-40)/2  }
+		height:				{ 40 }
+		width:				{ 40 }
+		radius:				20
+		z_index: 			52
+
+# Check 3
+	check_table_3:
+		visible:			{ check3Visible() }
+		top:				{ check3T() }
+		height:				{ check3H() + (if checkCell3H() != 0 then checkCell3H() + 2) }
+		left:				{ checkL() }
+		width:				{ checkW }
+		z_index: 			50
+	check_cell_3:
+		visible:			{ check3Visible() }
+		top:				{ check3T() + check3H() }
+		height:				{ checkCell3H() }
+		left:				{ checkL() }
+		width:				{ checkW - 2 }
+		z_index: 			51
+	check_disc_col_3:
+		visible:			{ check3Visible() }
+		visible: 			{ check3Visible() }
+		top:				{ check3T() + check3H() + checkList3H() + 2 }
+		left:				{ checkL() + (checkW-40)/2  }
+		height:				{ 40 }
+		width:				{ 40 }
+		radius:				20
+		z_index: 			52
+
+# POWERS and RECHARGE
+
+	bb_powers_table:
+		visible:			{ isPowersVisible() }
+		top:				{ getbbPowersT() }
+		height:				{ headerH }
+		left:				{ checkL() }
+		width:				{ Width - 60 }
+		z_index: 			51
+	bb_powers_cell:
+		visible:			{ isPowersVisible() }
+		top:				{ getbbPowersT() + headerH }
+		height:				{ getbbPowersH() - headerH }
+		left:				{ checkL() }
+		width:				{ Width - 60 }
+		z_index: 			51
+	bb_powers_header:
+		visible:			{ isPowersVisible() and card.type != "SUPPORT" }
+		top:				{ getbbPowersT() }
+		height:				{ headerH }
+		left:				{ checkL() + 6 }
+		width:				{ Width - 66 }
+		z_index: 			52
+		alignment: 			left middle
+		font:
+			name:			{ getFont() }
+			color:			{ getNameFontColour() }
+			size:			{ getFontSize(11) }
+		
+	recharge_table:
+		visible:			{ isRechargeVisible() or isSupportHeaderVisible() }
+		top:				{ getRechargeT() }
+		height:				{ headerH }
+		left:				{ checkL() }
+		width:				{ Width - 60 }
+		z_index: 			51
+	recharge_cell:
+		visible:			{ isRechargeVisible() or isSupportHeaderVisible() }
+		top:				{ getRechargeT() + headerH }
+		height:				{ getRechargeH() - headerH }
+		left:				{ checkL() }
+		width:				{ Width - 60 }
+		z_index: 			51
+	recharge_header:
+		visible:			{ isRechargeVisible() }
+		top:				{ getRechargeT() }
+		height:				{ headerH }
+		left:				{ checkL() + 6 }
+		width:				{ Width - 66 }
+		z_index: 			52
+		alignment: 			left middle
+		font:
+			name:			{ getFont() }
+			color:			{ getNameFontColour() }
+			size:			{ getFontSize(11) }
+	
+	encountering_table:
+		visible:			{ isEncVisible() }
+		top:				{ getEncT() }
+		height:				{ headerH }
+		left:				{ checkL() }
+		width:				{ Width - 60 }
+		z_index: 			51
+	encountering_cell:
+		visible:			{ isEncVisible() }
+		top:				{ getEncT() + headerH }
+		height:				{ getEncH() - headerH }
+		left:				{ checkL() }
+		width:				{ Width - 60 }
+		z_index: 			51
+	encountering_header:
+		visible:			{ isEncVisible() }
+		top:				{ getEncT() }
+		height:				{ headerH }
+		left:				{ checkL() + 6 }
+		width:				{ Width - 66 }
+		z_index: 			52
+		alignment: 			left middle
+		font:
+			name:			{ getFont() }
+			color:			{ getNameFontColour() }
+			size:			{ getFontSize(11) }
+	
+	commanding_table:
+		visible:			{ isCmdVisible() }
+		top:				{ getCmdT() }
+		height:				{ headerH }
+		left:				{ checkL() }
+		width:				{ Width - 60 }
+		z_index: 			51
+	commanding_cell:
+		visible:			{ isCmdVisible() }
+		top:				{ getCmdT() + headerH }
+		height:				{ getCmdH() - headerH }
+		left:				{ checkL() }
+		width:				{ Width - 60 }
+		z_index: 			51
+	commanding_header:
+		visible:			{ isCmdVisible() }
+		top:				{ getCmdT() }
+		height:				{ headerH }
+		left:				{ checkL() + 6 }
+		width:				{ Width - 66 }
+		z_index: 			52
+		alignment: 			left middle
+		font:
+			name:			{ getFont() }
+			color:			{ getNameFontColour() }
+			size:			{ getFontSize(11) }
+		

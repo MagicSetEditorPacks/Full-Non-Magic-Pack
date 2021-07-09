@@ -1,0 +1,618 @@
+card_style:
+
+# Override Common Styles
+	name:	
+		visible:			{ isbbFront() }
+		height:				{ if isbbFront() then 33 }
+	
+	type:
+		visible:			{ isbbFront() }
+		height:				{ if isbbFront() then 14 }
+		
+	set:
+		visible:			{ isbbFront() }
+		height:				{ if isbbFront() then 19 }
+	
+	artist:
+		visible:			{ isbbFront() }
+		height:				{ if isbbFront() then 10 }
+		
+# cardart conversion to sepia
+# 1. convert the image to greyscale: saturate(card.cardart, amount: -1)
+# 2. combine a sepia tone (cardart3 - rgb(162,138,101) using OVERLAY
+# Thanks to http://gimpguru.org/Tutorials/SepiaToning/
+	cardart:
+		visible: 		{ styling.bb_side != "Back" }
+		top:			{ cardartT() }
+		height:			{ if isbbFront() then cardartH() }
+	cardart2:
+		visible: 		{ styling.bb_side == "Back" and card.type == "SHIP" }
+		left:			16
+		top:			16
+		width:			{ Width - 32 }
+		height:			{ if styling.bb_side == "Back" then card_style.cardart.height }
+		render_style:	image
+		image:			{ saturate(card.cardart, amount: -1) }
+		z_index: 1
+	cardart3:
+		visible: 		{ styling.bb_side == "Back" and card.type == "SHIP" }
+		left:			16
+		top:			16
+		width:			{ Width - 32 }
+		height:			{ if styling.bb_side == "Back" then card_style.cardart.height }
+		mask:			{ invert_image(saturate(card.cardart, amount: -1)) }
+		combine: 		overlay
+		z_index: 		2
+	
+	traits:
+		visible:			{ isbbFront() }
+		height:				{ if isbbFront() then max(15,card_style.traits.content_height) }
+		font:
+			color:				{ if styling.traits_style == "Black" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow_color:		{ if styling.traits_style == "White with Border" then rgb(0,0,0) else "transparent" }
+			shadow_blur:		5
+		
+# Boon and Bane card field
+
+	check_list_1:
+		visible:			{ card.type != "COHORT"}
+		top:				{ check1T() + check1H() }
+		height:				{ if isbbFront() and styling.bb_side == "Front" then checkList1H() }
+		right:				{ checkR() }
+		width:				{ checkW }
+		render_style: 		hidden
+		z_index: 			51
+
+	check_list_text_1:
+		visible:			{ card.type != "COHORT"}
+		top:				{ check1T() + check1H() }
+		height:				{ if isbbFront() and styling.bb_side == "Front" then checkList1H() }
+		right:				{ checkR() - 1 }
+		width:				{ checkW - 2 }
+		alignment: 			center middle shrink-overflow
+		line_height_hard:	0.8
+		font:
+			name:				Dax
+			size:				7
+		z_index: 			51
+	
+	check_1:
+		visible: 			{ check1Visible() }
+		top:				{ check1T() + check1H() + checkList1H() +2 }
+		right:				{ checkDiscR(36) }
+		height:				{ if check1Visible()  and styling.bb_side == "Front" then 36 }
+		width:				36
+		always_symbol:		true
+		alignment: 			center middle
+		font:
+			name:				Dax
+			size:				12
+		symbol_font:
+			name:				PACG-check
+			size:				18
+		z_index: 			54
+
+	check_header_2:
+		visible:			{ check1Visible() and styling.bb_side == "Front" }
+		top:				{ check2T() }
+		height:				{ if isbbFront() and styling.bb_side == "Front" then check2H() }
+		right:				{ checkR() }
+		width:				{ checkW }
+		alignment: 			center bottom
+		# check header 2 is a choice so no: line_height_soft:	0.8
+		font:
+			name:				Dax
+			weight:				bold
+			size:				8
+			color:				{ checkFontClr() }
+		z_index: 			51
+		
+	check_list_2:
+		visible:			{ check2Visible() }
+		top:				{ check2T() + check2H() }
+		height:				{ if isbbFront() then checkList2H() }
+		right:				{ checkR() }
+		width:				{ checkW }
+		render_style: 		hidden
+		z_index: 			51
+
+	check_list_text_2:
+		visible:			{ check2Visible() }
+		top:				{ check2T() + check2H() }
+		height:				{ if isbbFront() then checkList2H() }
+		right:				{ checkR() }
+		width:				{ checkW }
+		alignment: 			center middle shrink-overflow
+		line_height_hard:	0.8
+		font:
+			name:				Dax
+			size:				7
+		z_index: 			51
+
+	check_2:
+		visible: 			{ check2Visible() }
+		top:				{ check2T() + check2H() + checkList2H() + 2}
+		right:				{ checkDiscR(36) }
+		height:				{ if check2Visible() then 36 }
+		width:				36
+		always_symbol:		true
+		alignment: 			center middle
+		font:
+			name:				Dax
+			size:				12
+		symbol_font:
+			name:				PACG-check
+			size:				16
+		z_index: 			54
+
+	check_header_3:
+		visible:			{ check2Visible() }
+		top:				{ check3T() }
+		height:				{ if isbbFront() then check3H() }
+		right:				{ checkR() }
+		width:				{ checkW }
+		alignment: 			center bottom
+		# check header 23 is a choice so no: line_height_soft:	0.8
+		font:
+			name:				Dax
+			weight:				bold
+			size:				8
+			color:				{ checkFontClr() }
+		z_index: 			51
+		
+	check_list_3:
+		visible:			{ check3Visible() }
+		top:				{ check3T() + check3H() }
+		height:				{ if isbbFront() then checkList3H() }
+		right:				{ checkR() }
+		width:				{ checkW }
+		render_style: 		hidden
+		z_index: 			51
+
+	check_list_text_3:
+		visible:			{ check3Visible() }
+		top:				{ check3T() + check3H() }
+		height:				{ if isbbFront() then checkList3H() }
+		right:				{ checkR() }
+		width:				{ checkW }
+		alignment: 			center middle shrink-overflow
+		line_height_hard:	0.8
+		font:
+			name:				Dax
+			size:				7
+		z_index: 			51
+
+	check_3:
+		visible: 			{ check3Visible() }
+		top:				{ check3T() + check3H() + checkList3H() + 2}
+		right:				{ checkDiscR(36) }
+		height:				{ if check2Visible() and isbbFront() then 36 }
+		width:				36
+		always_symbol:		true
+		alignment: 			center middle
+		font:
+			name:				Dax
+			size:				12
+		symbol_font:
+			name:				PACG-check
+			size:				16
+		z_index: 			54
+
+	check_list_4:
+		top:				{ check1T() + check1H() }
+		height:				{ if isbbFront() and styling.bb_side == "Back" then checkList1H() }
+		right:				{ checkR() }
+		width:				{ checkW }
+		render_style: 		hidden
+		z_index: 			51
+
+	check_list_text_4:
+		top:				{ check1T() + check1H() }
+		height:				{ if isbbFront() and styling.bb_side == "Back" then checkList1H() }
+		right:				{ checkR() - 1 }
+		width:				{ checkW - 2 }
+		alignment: 			center middle shrink-overflow
+		line_height_hard:	0.8
+		font:
+			name:				Dax
+			size:				7
+		z_index: 			51
+	
+	check_4:
+		visible: 			{ check1Visible() }
+		top:				{ check1T() + check1H() + checkList1H() +2 }
+		right:				{ checkDiscR(36) }
+		height:				{ if check1Visible()  and styling.bb_side == "Back" then 36 }
+		width:				36
+		always_symbol:		true
+		alignment: 			center middle
+		font:
+			name:				Dax
+			size:				12
+		symbol_font:
+			name:				PACG-check
+			size:				18
+		z_index: 			54
+	vhl_type:
+		visible:			{ typeVisible() }
+		top:				{ typeBoxT() }
+		height:				{ if isbbFront() then typeBoxH }
+		right:				{ checkR() }
+		width:				{ checkW }
+		render_style: 		text
+		popup_style: 		in place
+		alignment: 			center middle
+		font:
+			name:				Dax
+			weight: 			bold
+			size:				8
+			color:				rgb(0,0,0)
+		z_index:			51
+
+	bb_powers:
+		visible:			{ isbbFront() and card.type != "SHIP" }
+		top:				{ getbbPowersT() + 25 }
+		height:				{ if isbbFront() and card.type != "SHIP" then getbbPowersH() - 32 }
+		left:				24
+		width:				{ Width - 48 }
+		alignment: 			left middle
+		font:
+			name:				Dax-regular
+			size:				11
+			scale_down_to:		8
+		z_index: 			52
+
+	recharge:
+		visible:			{ isbbFront() and card.type != "SHIP" }
+		top:				{ getRechargeT() + 20 }
+		height:				{ if isbbFront() and card.type != "SHIP"  then getRechargeH() - 22 }
+		left:				24
+		width:				{ Width - 48 }
+		alignment: 			left middle
+		font:
+			name:				Dax-regular
+			size:				11
+			scale_down_to: 		8
+		z_index: 			52
+
+	encountering:
+		visible:			{ styling.bb_side == "Front" and card.type == "SHIP" }
+		top:				{ getEncT() + 25 }
+		height:				{ if styling.bb_side == "Front" and card.type == "SHIP" then getEncH() - 32 }
+		left:				24
+		width:				{ Width - 48 }
+		alignment: 			left middle
+		font:
+			name:				Dax-regular
+			size:				11
+			scale_down_to:		8
+		z_index: 			52
+	
+	flavour_text:
+		visible:			{ styling.bb_side == "Back" and card.type == "SHIP" }
+		top:				{ cardartT() + cardartH() + 5 }
+		height:				{ if styling.bb_side == "Back" and card.type == "SHIP" then 88 }
+		left:				32
+		width:				{ Width - 64 }
+		alignment: 			left middle
+		z_index: 			52
+		font:
+			name:					Dax-regular
+			size:					11
+			scale_down_to: 			8
+		
+	commanding_f:
+		visible:			{ styling.bb_side == "Front" and card.type == "SHIP" }
+		top:				{ getCmdT() + 25 }
+		height:				{ if styling.bb_side == "Front" and card.type == "SHIP"  then getCmdH() - 32 }
+		left:				24
+		width:				{ Width - 48 }
+		alignment: 			left middle
+		font:
+			name:				Dax-regular
+			size:				11
+			scale_down_to: 		8
+		z_index: 			52
+	
+	commanding_b:
+		visible:			{ styling.bb_side == "Back" and card.type == "SHIP" }
+		top:				{ commanding_bT() + 25 }
+		height:				{ if styling.bb_side == "Back" and card.type == "SHIP" then commanding_bH() - 32 }
+		left:				24
+		width:				{ Width - 48 }
+		alignment: 			left middle
+		font:
+			name:				Dax-regular
+			size:				11
+			scale_down_to: 		8
+		z_index: 			52
+
+	bb_powers_header_1:
+		visible:			{ isSupportHeaderVisible() }
+		top:				{ getbbPowersT() }
+		height:				{ if isSupportHeaderVisible() then 20 }
+		left:				{ 16 }
+		width:				{ Width - 36 }
+		z_index: 			51
+		alignment: 			left middle shrink-overflow
+		padding_left:		6
+		font:
+			name:			Dax
+			size:			11
+			color:			rgb(255,255,255)
+	bb_powers_header_2:
+		visible:			{ isSupportHeaderVisible() }
+		top:				{ getRechargeT() }
+		height:				{ if isSupportHeaderVisible() then 20 }
+		left:				{ 16 }
+		width:				{ Width - 36 }
+		z_index: 			51
+		alignment: 			left middle shrink-overflow
+		padding_left:		6
+		font:
+			name:				Dax
+			color:				rgb(255,255,255)
+			size:				11
+
+extra_card_style:
+		
+# card back
+	bb_card_back:
+		visible:			{ not isbbFront() }
+		top:				0
+		left:				0
+		width:				{ Width }
+		height:				{ Height }
+		render_style:		image
+		image:				{ set.card_back }
+		z_index:			99
+		
+# Type for VILLAIN and HENCHMAN
+	vhl_type_table:
+		visible:			{ typeVisible() }
+		top:				{ typeTblT }
+		height:				{ typeTblH }
+		right:				{ checkR() }
+		width:				{ checkW }
+		z_index:			50
+	vhl_type_header:
+		visible:			{ typeVisible() }
+		top:				{ typeTblT }
+		height:				{ typeTblH }
+		right:				{ checkR() }
+		width:				{ checkW }
+		alignment: 			center middle
+		font:
+			name:				Dax
+			weight: 			bold
+			size:				8
+			color:				rgb(255,255,255)
+		z_index:			50
+	vhl_type_cell:
+		visible:			{ typeVisible() }
+		top:				{ typeBoxT() }
+		height:				{ typeBoxH }
+		right:				{ checkR() }
+		width:				{ checkW }
+		z_index:			50
+
+# CHECKS
+	check_header_1:
+		visible:			{ card.type != "COHORT"}
+		top:				{ check1T() }
+		height:				{ if isbbFront() then check1H() }
+		right:				{ checkR() }
+		width:				{ checkW }
+		alignment: 			center bottom
+		line_height_soft: 	0.8
+		font:
+			name:				Dax
+			weight:				bold
+			size:				7.5
+			color:				{ checkFontClr() }
+		z_index: 			51
+		
+# Check to Defeat / Acquire
+	check_table_1:
+		visible:		{ card.type != "COHORT"}
+		top:			{ check1T() }
+		height:			{ check1H() }
+		right:			{ checkR() }
+		width:			{ checkW }
+		z_index: 		50
+
+	check_cell_1:
+		visible:		{ card.type != "COHORT"}
+		top:			{ check1T() + check1H() }
+		height:			{ checkBox1H() }
+		right:			{ checkR() }
+		width:			{ checkW }
+		z_index: 		50
+
+	check_disc_white_1:
+		visible: 		{ check1Visible() }
+		top:			{ check1T() + check1H() + checkList1H() }
+		right:			{ checkDiscR(40) }
+		height:			40
+		width:			40
+		radius: 		20
+		z_index: 		52
+	check_disc_col_1:
+		visible: 		{ check1Visible() }
+		top:			{ check1T() + check1H() + checkList1H() + 2 }
+		right:			{ checkDiscR(36) }
+		height:			36
+		width:			36
+		radius: 		18
+		z_index: 		53
+
+# Check #2
+	check_table_2:
+		visible:		{ check2Visible() }
+		top:			{ check2T() }
+		height:			{ check2H() }
+		right:			{ checkR() }
+		width:			{ checkW }
+		z_index: 		50
+
+	check_cell_2:
+		visible:		{ check2Visible() }
+		top:			{ check2T() + check2H() }
+		height:			{ checkBox2H() }
+		right:			{ checkR() }
+		width:			{ checkW }
+		z_index: 		50
+
+	check_disc_white_2:
+		visible: 		{ check2Visible() }
+		top:			{ check2T() + check2H() + checkList2H() }
+		right:			{ checkDiscR(40) }
+		height:			40
+		width:			40
+		radius: 		18
+		z_index: 		52
+	check_disc_col_2:
+		visible: 		{ check2Visible() }
+		top:			{ check2T() + check2H() + checkList2H() + 2 }
+		right:			{ checkDiscR(36) }
+		height:			36
+		width:			36
+		radius: 		18
+		z_index: 		53
+
+# Check #3
+	check_table_3:
+		visible:		{ check3Visible() }
+		top:			{ check3T() }
+		height:			{ check3H() }
+		right:			{ checkR() }
+		width:			{ checkW }
+		z_index: 		50
+
+	check_cell_3:
+		visible:		{ check3Visible() }
+		top:			{ check3T() + check3H() }
+		height:			{ checkBox3H() }
+		right:			{ checkR() }
+		width:			{ checkW }
+		z_index: 		50
+
+	check_disc_white_3:
+		visible: 		{ check3Visible() }
+		top:			{ check3T() + check3H() + checkList3H() }
+		right:			{ checkDiscR(40) }
+		height:			40
+		width:			40
+		radius: 		18
+		z_index: 		52
+	check_disc_col_3:
+		visible: 		{ check3Visible() }
+		top:			{ check3T() + check3H() + checkList3H() + 2 }
+		right:			{ checkDiscR(36) }
+		height:			36
+		width:			36
+		radius: 		18
+		z_index: 		53
+
+# POWERS
+	bb_powers_table:
+		visible:		{ styling.bb_side == "Front" and card.type != "SHIP" }
+# adjust for 2pt INFO border
+		top:			{ getbbPowersT() + 2 }
+		height:			{ getbbPowersH() - 4 }
+		left:			{ 16 + 2 }
+		width:			{ Width - 32 - 4 }
+		background_color: "black"
+		alignment: 		left top
+		padding_left:	6
+		padding_top:	-0.5
+		font:
+			name:			Dax
+			size:			11
+			color:			rgb(255,255,255)
+		z_index: 		50
+	
+	bb_powers_cell:
+		visible:		{ styling.bb_side == "Front" and card.type != "SHIP" }
+		top:			{ getbbPowersT() + 20 }
+		height:			{ getbbPowersH() - 22 }
+		left:			18
+		width:			{ Width - 36 }
+		z_index:		51
+	
+# RECHARGE
+	recharge_table:
+# adjust for 2pt INFO border
+		visible: 		{ isRechargeVisible() or isSupportHeaderVisible() }
+		top:			{ getRechargeT() + 2 }
+		height:			{ getRechargeH() - 4 }
+		left:			18
+		width:			{ Width - 36 }
+		background_color: "black"
+		alignment: 		left top
+		padding_left:	6
+		padding_top:	-0.5
+		font:
+			name:			Dax
+			size:			11
+			color:			rgb(255,255,255)
+		z_index: 50
+	
+	recharge_cell:
+		visible:		{ isRechargeVisible() or isSupportHeaderVisible()  }
+		top:			{ getRechargeT() + 20 }
+		height:			{ getRechargeH() - 22 }
+		left:			18
+		width:			{ Width - 36 }
+		z_index:		51
+
+# WHEN ENCOUNTERING
+	encountering_table:
+		visible:		{ styling.bb_side == "Front" and card.type == "SHIP" }
+# adjust for 2pt INFO border
+		top:			{ getEncT() + 2 }
+		height:			{ getEncH() - 4 }
+		left:			{ 16 + 2 }
+		width:			{ Width - 32 - 4 }
+		background_color: "black"
+		alignment: 		left top
+		padding_left:	6
+		padding_top:	-0.5
+		font:
+			name:			Dax
+			size:			11
+			color:			rgb(255,255,255)
+		z_index: 		50
+		
+	encountering_cell:
+		visible:		{ styling.bb_side == "Front" and card.type == "SHIP" }
+		top:			{ getEncT() + 20 }
+		height:			{ getEncH() - 22 }
+		left:			18
+		width:			{ Width - 36 }
+		z_index:		51
+	
+	commanding_table:
+		visible:		{ card.type == "SHIP" }
+# adjust for 2pt INFO border
+		top:			{ getCmdT() + 2 }
+		height:			{ getCmdH() - 4 }
+		left:			{ 16 + 2 }
+		width:			{ Width - 32 - 4 }
+		background_color: "black"
+		alignment: 		left top
+		padding_left:	6
+		padding_top:	-0.5
+		font:
+			name:			Dax
+			size:			11
+			color:			rgb(255,255,255)
+		z_index: 		50
+		
+	commanding_cell:
+		visible:		{ card.type == "SHIP" }
+		top:			{ getCmdT() + 20 }
+		height:			{ getCmdH() - 22 }
+		left:			18
+		width:			{ Width - 36 }
+		z_index:		51

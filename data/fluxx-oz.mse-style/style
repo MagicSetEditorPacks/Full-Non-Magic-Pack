@@ -1,0 +1,34 @@
+﻿mse version: 2.0.0
+game: fluxx
+short name: Oz
+full name: Oz Fluxx
+icon: card-sample.png
+position hint: 012
+installer group: fluxx/styles/oz
+
+version: 8.0.0
+depends on:
+	package: fluxx.mse-game
+	version: 8.0.0
+depends on:
+	package: fluxx-keeper-types.mse-include
+	version: 8.0.0
+depends on:
+	package: fluxx-standard.mse-style
+	version: 8.0.0
+
+card width: 333
+card height: 516
+card dpi: 150
+
+############################################################## Style Scripts
+
+include file: /fluxx-standard.mse-style/scripts
+
+############################################################## Extra style
+
+include file: /fluxx-standard.mse-style/styling
+
+############################################################## Card fields
+
+include file: /fluxx-standard.mse-style/card_style

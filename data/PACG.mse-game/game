@@ -1,0 +1,22 @@
+mse version: 	2.0.0
+short name: 	PACG
+full name: 		Pathfinder Adventure Card Game
+icon: 			PFACG-Logo_180.jpg
+position hint:	00
+version: 		2015-07-14
+installer_group: PACG/Game Files
+
+depends on: 	PACG-common.mse-include 2015-07-14
+
+init script:
+	include file:	/PACG-common.mse-include/script-PACG.mse
+
+# Add cards Scripts and Set fields
+include file:	script-add-cards.mse
+include file:	fields-set.mse
+
+# Fields for different styles 
+include file:	/PACG-common.mse-include/fields-PACG.mse
+include file:	/PACG-common.mse-include/fields-character.mse
+include file:	/PACG-common.mse-include/fields-adventure.mse
+include file:	/PACG-common.mse-include/fields-boonbane.mse

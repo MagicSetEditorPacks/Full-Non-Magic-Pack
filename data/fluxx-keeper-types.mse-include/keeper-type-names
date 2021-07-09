@@ -1,0 +1,23 @@
+﻿# The Keeper type choices
+# Included by a game file
+
+choice:
+	name: none
+	line below: true
+choice:
+	name: official
+	choice: weapon
+	choice: food
+	choice: kotrt
+	choice: martian
+	choice: booty
+	choice: ship
+	choice: device
+	choice: sentient
+	choice: attached
+choice:
+	name: custom
+	choice:
+		name: tbrocks
+		choice: rebel
+		choice: imperial

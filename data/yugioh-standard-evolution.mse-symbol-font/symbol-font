@@ -1,0 +1,54 @@
+﻿mse version: 0.3.8
+version: 2009-11-15
+short name: Evolution
+position hint: 004
+icon: level_icon.png
+installer group: Yugioh/Symbol Fonts/Evolution
+# Symbol font for level symbols
+
+image font size: 16
+horizontal space: 1
+symbol:
+	code: *
+	image: level_icon.png
+	image font size: 30
+symbol:
+	code: ATK
+	image: attack.png
+	image font size: 8
+symbol:
+	code: DEF
+	image: defend.png
+	image font size: 8
+symbol:
+	code: +
+	image: equip.png
+	image font size: 30
+symbol:
+	code: #
+	image: dot.png
+	image font size: 40
+symbol:
+	code: ^
+	image: black_dot.png
+	image font size: 40
+symbol:
+	code: WATER
+	image: water_icon.png
+	image font size: 20
+symbol:
+	code: FIRE
+	image: fire_icon.png
+	image font size: 20
+
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: *
+	item: ATK
+	item: DEF
+	item: +
+	item: #
+	item: ^
+	item: WATER
+	item: FIRE

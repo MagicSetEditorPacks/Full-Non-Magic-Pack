@@ -1,0 +1,35 @@
+mse version:	2.0.0
+short name:		Adventure1
+full name:		Original Adventure cards
+icon:			PZO6000-Sandpoint1_120.jpg
+position hint:	210
+version:		2015-07-14
+installer_group: PACG/Original Styles/Adventure
+
+# Dependencies
+depends on:		PACG.mse-game 2014-05-01
+depends on:		PACG-common.mse-include 2015-07-14
+
+#  Stylesheet
+game:			PACG
+card width:		375
+card height:	525
+card dpi:		150
+card background: rgb(0,0,0)
+
+#  Initialisation
+
+init script:
+	Width := 375
+	Height := 525
+	include file:	script-orig-adv.mse
+	
+include file:	extra-fields-orig-adv.mse
+
+#  Styling Option Menus
+include file:	style-orig-pacg.mse
+include file:	style-orig-adv-common.mse
+include file:	style-orig-adv-path.mse
+include file:	style-orig-adv-adventure.mse
+include file:	style-orig-adv-scenario.mse
+include file:	style-orig-adv-location.mse

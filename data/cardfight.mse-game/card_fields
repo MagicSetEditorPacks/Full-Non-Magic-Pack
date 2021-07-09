@@ -1,0 +1,299 @@
+#################### Card Fields ####################
+
+card field:
+	type: choice
+	name: shape
+	save value: false
+	show statistics: false
+	editable: false
+	choice: normal
+	choice: guardian
+	choice: legion
+	script:
+		stylesheet   # indicate that this value should be updated when the stylesheet changes
+		card_shape() # determined by the style
+
+############################################ Card List fields
+card field:
+	type: text
+	name: card list power
+	icon: stats/power.png
+	position hint: 9
+	script: if card.shape == "guardian" then "0 " else card.power
+	description: The card's power.
+	card list visible: true
+	card list name: power
+	card list column: 3
+	card list width: 30
+	card list alignment: right
+
+card field:
+	type: text
+	name: card list shield
+	icon: stats/toughness.png
+	position hint: 10
+	description: The card's shield number.
+	card list visible: true
+	card list name: shield
+	card list column: 4
+	card list width: 30
+	card list alignment: right
+	script:
+		if card.shieldtype == "guardian" then 15000
+		else if card.shieldtype == "sentinel" then 0
+		else if card.shieldtype == "none" then ""
+		else card.shield
+		
+card field:
+	type: text
+	name: card list trigger
+	icon: stats/card_symbol.png
+	position hint: 11
+	description: The card's trigger.
+	card list visible: true
+	card list name: trigger
+	card list column: 5
+	card list width: 30
+	script: if card.shape == "guardian" then "none"else card.trigger
+
+card field:
+	type: text
+	name: nation
+	icon: stats/nation.png
+	position hint: 6
+	description: The clan's Nation.
+	card list visible: true
+	card list column: 9
+	script: 
+		if card.color == "US" then "United Sanctuary"
+		else if card.color == "DE" then "Dragon Empire"
+		else if card.color == "DZ" then "Dark Zone"
+		else if card.color == "M" then "Magallanica"
+		else if card.color == "Z" then "Zoo"
+		else if card.color == "SG" then "Star Gate"
+		else if card.color == "CE" then "Cray Elemental"
+		else if card.color == "TR" then "Touken Ranbu"
+		else ""
+
+############################################ Card fields
+
+card field:
+	type: color
+	name: bg_color
+	show statistics: false
+	editable: false
+	default: rgb(255,250,250)
+
+card field:
+	type: image
+	name: image
+	show statistics: false
+	description: The card's image.
+
+card field:
+	type: choice
+	name: type
+	icon: stats/card_type.png
+	position hint: 4
+	description: The card's type.
+	choice: unit
+	choice: trigger
+	choice: g-unit
+
+card field:
+	type: text
+	name: name
+	identifying: true
+	script: italic_filter(value)
+	show statistics: false
+	description: The card's name.
+	card list visible: true
+	card list name: Name
+	card list column: 1
+	card list width: 150
+
+card field:
+	type: text
+	name: power
+	show statistics: false
+	script: italic_filter(value)
+	description: The card's power.
+	card list visible: false
+
+card field:
+	type: text
+	name: clan
+	icon: stats/creature_class.png
+	position hint: 7
+	description: The card's clan.
+	card list visible: true
+	card list column: 8
+	
+card field:
+	type: text
+	name: race
+	icon: stats/creature_race.png
+	position hint: 8
+	description: The card's race.
+
+card field:
+	type: choice
+	name: grade
+	icon: stats/casting_cost.png
+	position hint: 2
+	description: The card's grade.
+	choice: 0
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	card list visible: true
+	card list column: 2
+	card list width: 9
+	card list name: grade
+	card list alignment: center
+
+card field:
+	type: choice
+	name: shieldtype
+	icon: stats/shieldtype.png
+	position hint: 12
+	description: The card's shield.
+	choice: none
+	choice: shield
+	choice: sentinel
+	choice: guardian
+	card list visible: true
+	card list name: Shield Type
+	card list column: 6
+
+card field:
+	type: text
+	name: shield
+	show statistics: false
+	description: The card's shield number.
+	card list visible: false
+	
+card field:
+	type: choice
+	name: trigger
+	show statistics: false
+	description: The card's trigger.
+	choice: none
+	choice: heal
+	choice: stand
+	choice: crit
+	choice: draw
+
+card field:
+	type: choice
+	name: skill
+	show statistics: false
+	description: The card's skill.
+	default: default_trigger()
+	choice: boost
+	choice: intercept
+	choice: twindrive
+	choice: tridrive
+	choice: none
+
+card field:
+	type: choice
+	name: color
+	icon: stats/card_color.png
+	position hint: 1
+	description: The clan's color.
+	default: clan_to_color(to_title(card.clan))
+	choice: US
+	choice: DE
+	choice: DZ
+	choice: M
+	choice: Z
+	choice: SG
+	choice: CE
+	choice: TR
+	
+card field:
+	type: choice
+	name: text_box
+	show statistics: false
+	card list visible: false
+	editable: false
+	choice: default
+
+card field:
+	type: text
+	name: text
+	script: text_filter(value)
+	multi line: true
+	show statistics: false
+	card list visible: false
+	description: The card's card effect text.
+	
+card field:
+	type: choice
+	name: flavor_box
+	show statistics: false
+	card list visible: false
+	editable: false
+	choice: default
+
+card field:
+	type: text
+	name: flavor
+	multi line: true
+	show statistics: false
+	card list visible: false
+	description: The card's flavor text.
+	
+card field:
+	type: text
+	name: illustrator
+	icon: stats/illustrator.png
+	position hint: 50
+	description: The card's illustrator.
+
+card field:
+	type: text
+	name: illus line
+	save value: false
+	show statistics: false
+	card list visible: false
+	script:
+		if card.illustrator != "" then forward_editor(prefix: "ILLUST / ", field: card.illustrator)
+		else forward_editor(prefix: "", field: card.illustrator)
+	description: The card's illustrator.
+	
+############################### Card sorting / numbering
+card field:
+	type: text
+	name: set code
+	editable: false
+	save value: false
+	script: set.set_code + (if set.set_code == "" then "No. " else "/") + card_number() + set.set_language
+	show statistics: false
+	
+card field:
+	type: text
+	name: card number
+	save value: false
+	script:	card_number()
+	card list visible: true
+	card list column: 7
+	card list width: 9
+	card list name: #
+	card list alignment: right
+	editable: false
+	show statistics: false
+
+############################################### Rarity	
+card field:
+	type: text
+	name: rarity
+	icon: stats/rarity.png
+	position hint: 51
+	editable: true
+	save value: true
+	card list visible: true
+	card list column: 6
+	show statistics: true

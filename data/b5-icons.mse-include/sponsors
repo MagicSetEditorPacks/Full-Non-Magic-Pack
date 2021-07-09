@@ -1,0 +1,19 @@
+# Watermark images
+
+choice images:
+	sponsor Any:					/B5-icons.mse-include/sponsor_any.png
+	sponsor Diplomacy:				/B5-icons.mse-include/sponsor_diplomacy.png
+	sponsor Technology: 				/B5-icons.mse-include/sponsor_technology.png
+	sponsor Faith:					/B5-icons.mse-include/sponsor_faith.png
+	sponsor Intrigue:				/B5-icons.mse-include/sponsor_intrigue.png
+	sponsor Military:				/B5-icons.mse-include/sponsor_military.png
+	hybrid DiplomacyFaith:				/B5-icons.mse-include/hybrid_df.png
+	hybrid DiplomacyTechnology:			/B5-icons.mse-include/hybrid_dt.png
+	hybrid TechnologyFaith:				/B5-icons.mse-include/hybrid_tf.png
+	hybrid TechnologyIntrigue:			/B5-icons.mse-include/hybrid_ti.png
+	hybrid FaithIntrigue:				/B5-icons.mse-include/hybrid_fi.png
+	hybrid FaithMilitary:				/B5-icons.mse-include/hybrid_fm.png
+	hybrid IntrigueDiplomacy:			/B5-icons.mse-include/hybrid_id.png
+	hybrid IntrigueMilitary:			/B5-icons.mse-include/hybrid_im.png
+	hybrid MilitaryDiplomacy:			/B5-icons.mse-include/hybrid_md.png
+	hybrid MilitaryTechnology:			/B5-icons.mse-include/hybrid_mt.png

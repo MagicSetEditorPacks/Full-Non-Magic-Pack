@@ -1,0 +1,51 @@
+mse version:	2.0.0
+version:		2014.05
+icon:			0.png
+image font size: 150
+installer_group: PACG/Symbol Fonts/PACG-Check
+
+insert symbol menu:
+	item:
+		type: code
+	item:	0
+	item:	1
+	item:	2
+	item:	3
+	item:	4
+	item:	5
+	item:	6
+	item:	7
+	item:	8
+	item:	9
+
+symbol:
+	code:	0
+	image:	0.png
+symbol:
+	code:	1
+	image:	1.png
+symbol:
+	code:	2
+	image:	2.png
+symbol:
+	code:	3
+	image:	3.png
+symbol:
+	code:	4
+	image:	4.png
+symbol:
+	code:	5
+	image:	5.png
+symbol:
+	code:	6
+	image:	6.png
+symbol:
+	code:	7
+	image:	7.png
+symbol:
+	code:	8
+	image:	8.png
+symbol:
+	code:	9
+	image:	9.png
+

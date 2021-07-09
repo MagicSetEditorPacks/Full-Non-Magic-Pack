@@ -1,0 +1,9 @@
+mse version: 2.0.0
+full name: Fluxx, Bar icons
+version: 1.0.0
+installer group: fluxx/include files/bar icons
+
+# This file doesn't do anything, other files in this directory can be included
+# in game/style files:
+#    bar-icons      Includes references to the bar icon images, to be used in a style file
+#    bar-icon-names Includes Bar icon choices, to be used in the game file

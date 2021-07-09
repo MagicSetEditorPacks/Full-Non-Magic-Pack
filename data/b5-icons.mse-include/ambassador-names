@@ -1,0 +1,9 @@
+# The watermark choices
+# Included by a game file
+
+choice:
+	name: none
+	line below: true
+choice:
+	name: ambassador
+	choice: ambassador

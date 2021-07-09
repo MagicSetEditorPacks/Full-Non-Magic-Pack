@@ -1,0 +1,393 @@
+card_style:
+
+# DECK table
+	deck monster:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(1) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ if isLocFront() then deckH }
+		width:				{ deckW2 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+		z_index: 			52
+	deck barrier:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(2) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ if isLocFront() then deckH }
+		width:				{ deckW2 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+		z_index: 			52
+	deck weapon:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(3) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ if isLocFront() then deckH }
+		width:				{ deckW2 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+		z_index: 			52
+	deck spell:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(4) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ if isLocFront() then deckH }
+		width:				{ deckW2 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+		z_index: 			52
+	deck armor:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(5) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ if isLocFront() then deckH }
+		width:				{ deckW2 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+		z_index: 			52
+	deck item:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(6) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ if isLocFront() then deckH }
+		width:				{ deckW2 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+		z_index: 			52
+	deck ally:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(7) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ if isLocFront() then deckH }
+		width:				{ deckW2 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+		z_index: 			52
+	deck blessing:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(8) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ if isLocFront() then deckH }
+		width:				{ deckW2 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+		z_index: 			52
+
+	atl:
+		visible: 			{ atlVisible() }
+		top:				{ atlTblT() + 16 + 2 }
+		left:				{ 26 }
+		height:				{ if atlVisible() then atlTblH() - 18 - 4 }
+		width:				{ Width - 52 }
+		alignment: 			middle
+		z_index: 			52
+		font:
+			name:				Dax-regular
+			size:				11
+			scale_down_to: 		8
+	wc:
+		visible: 			{ isLocFront() }
+		top:				{ atlTblT() + atlTblH() + 14 + 2 }
+		left:				{ 26 }
+		height:				{ if isLocFront() then wcTblH() - 16 - 4 }
+		width:				{ Width - 52 }
+		alignment: 			middle
+		z_index: 			52
+		font:
+			name:				Dax-regular
+			size:				11
+			scale_down_to: 		8
+
+	wpc:
+		visible: 			{ wpcVisible() }
+		top:				{ wpcTblT() + 18 }
+		left:				{ 26 }
+		height:				{ if wpcVisible() then  wpcTblH() - 18 - 4 }
+		width:				{ Width - 52 }
+		alignment: 			middle
+		z_index: 			52
+		font:
+			name:				Dax-regular
+			size:				11
+			scale_down_to: 		8
+
+#Card back
+	closed_rules:
+		visible: 			{ isLocBack() }
+		top:				426
+		height:				{ if isLocBack() then locH }
+		left:				16
+		width:				{ Width - 32 }
+		render_style:		hidden
+		z_index: 			52
+	flavour_box:
+		mask:				{ if card.closed_rules != "" then "/PACG-common.mse-include/res-orig/locationflavourmask.png" }
+	flavour_text:
+		height: 			{ if card.closed_rules != "" then (176 / 2) - 10 else advFlavourTextH() }
+
+extra_card_style:
+#Deck Table
+	deck_table:
+		visible:			{ isLocFront() }
+		top:				{ deckCellT(0) }
+		left:				{ deckCellL - 2 }
+		height:				{ deckTblH() }
+		width:				{ deckW1 + deckW2 + 6 }
+		z_index:			50
+	deck_header:
+		visible:			{ isLocFront() }
+		top:				{ deckCellT(0) + 2 }
+		left:				{ deckCellL }
+		height:				{ deckH }
+		width:				{ deckW1 + deckW2 + 1 }
+		alignment: 			center middle
+		font:
+			name:				Dax
+			size:				10
+			color:				rgb(255,255,255)
+		z_index:			51
+#info cells - 2pt border
+	deck_cell_a1:
+		visible:			{ isLocFront() }
+		top:				{ deckCellT(1) + 2 }
+		left:				{ deckCellL + 2 }
+		height:				{ deckH - 4 }
+		width:				{ deckW1 - 4 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+			color:				getDarkColor()
+		z_index:			51
+	deck_cell_a2:
+		visible:			{ isLocFront() }
+		top:				{ deckCellT(2) + 2 }
+		left:				{ deckCellL + 2 }
+		height:				{ deckH - 4 }
+		width:				{ deckW1 - 4 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+			color:				getDarkColor()
+		z_index:			51
+	deck_cell_a3:
+		visible:			{ isLocFront() }
+		top:				{ deckCellT(3) + 2 }
+		left:				{ deckCellL + 2 }
+		height:				{ deckH - 4 }
+		width:				{ deckW1 - 4 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+			color:				getDarkColor()
+		z_index:			51
+	deck_cell_a4:
+		visible:			{ isLocFront() }
+		top:				{ deckCellT(4) + 2 }
+		left:				{ deckCellL + 2 }
+		height:				{ deckH - 4 }
+		width:				{ deckW1 - 4 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+			color:				getDarkColor()
+		z_index: 			51
+	deck_cell_a5:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(5) + 2 }
+		left:				{ deckCellL + 2 }
+		height:				{ deckH - 4 }
+		width:				{ deckW1 - 4 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+			color:				getDarkColor()
+		z_index:			51
+	deck_cell_a6:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(6) + 2 }
+		left:				{ deckCellL + 2 }
+		height:				{ deckH - 4 }
+		width:				{ deckW1 - 4 }
+		alignment:			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+			color:				getDarkColor()
+		z_index: 			51
+	deck_cell_a7:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(7) + 2 }
+		left:				{ deckCellL + 2 }
+		height:				{ deckH - 4 }
+		width:				{ deckW1 - 4 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+			color:				getDarkColor()
+		z_index:			51
+	deck_cell_a8:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(8) + 2 }
+		left:				{ deckCellL + 2 }
+		height:				{ deckH - 4 }
+		width:				{ deckW1 - 4 }
+		alignment: 			center middle
+		font:
+			name:				Dax-regular
+			size:				10
+			color:				getDarkColor()
+		z_index:			51
+	
+#blank cells (column 2)
+	deck_cell_b1:
+		visible:			{ isLocFront() }
+		top:				{ deckCellT(1) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ deckH }
+		width:				{ deckW2 }
+		z_index:			51
+	deck_cell_b2:
+		visible:			{ isLocFront() }
+		top:				{ deckCellT(2) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ deckH }
+		width:				{ deckW2 }
+		z_index:			51
+	deck_cell_b3:
+		visible:			{ isLocFront() }
+		top:				{ deckCellT(3) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ deckH }
+		width:				{ deckW2 }
+		z_index: 			51
+	deck_cell_b4:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(4) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ deckH }
+		width:				{ deckW2 }
+		z_index: 			51
+	deck_cell_b5:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(5) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ deckH }
+		width:				{ deckW2 }
+		z_index:			51
+	deck_cell_b6:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(6) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ deckH }
+		width:				{ deckW2 }
+		z_index:			51
+	deck_cell_b7:
+		visible:			{ isLocFront() }
+		top:				{ deckCellT(7) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ deckH }
+		width:				{ deckW2 }
+		z_index:			51
+	deck_cell_b8:
+		visible: 			{ isLocFront() }
+		top:				{ deckCellT(8) }
+		left:				{ deckCellL + deckW1 + 2 }
+		height:				{ deckH }
+		width:				{ deckW2 }
+		z_index:			51
+
+
+#INFO fields - 2pt border
+#atl	At this Location
+#wc		When Closing
+#wpc	When permanently closed
+	atl_table:
+		visible:	 		{ atlVisible() }
+		top:				{ atlTblT() + 2 }
+		left:				{ 16 + 2 }
+		height:				{ atlTblH() - 4 }
+		width:				{ Width - 36 }
+		background_color: 	rgb(0,0,0)
+		padding_left:		8
+		padding_top:		-2
+		alignment: 			left top
+		font:
+			name:				Dax
+			size:				11
+			color:				rgb(255,255,255)
+		z_index: 			50
+	wc_table:
+		visible: 			{ isLocFront() }
+		top:				{ atlTblT() + atlTblH() }
+		left:				{ 16 + 2 }
+		height:				{ wcTblH() - 4 }
+		width:				{ Width - 36 }
+		background_color: 	rgb(0,0,0)
+		padding_left:		8
+		padding_top:		-2
+		alignment: 			left top
+		font:
+			name:				Dax
+			size:				11
+			color:				rgb(255,255,255)
+		z_index: 			50
+	wpc_table:
+		visible: 			{ wpcVisible() }
+		top:				{ wpcTblT() + 2 }
+		left:				{ 16 + 2 }
+		height:				{ wpcTblH() - 4 }
+		width:				{ Width - 36 }
+		background_color: 	rgb(0,0,0)
+		padding_left:		8
+		padding_top:		-2
+		alignment: 			left top
+		font:
+			name:				Dax
+			size:				11
+			color:				rgb(255,255,255)
+		z_index: 			50
+
+	atl_cell:
+		visible: 			{ atlVisible() }
+		top:				{ atlTblT() + 16 }
+		left:				{ 18 }
+		height:				{ atlTblH() - 18 }
+		width:				{ Width - 36 }
+		z_index: 			51
+	wc_cell:
+		visible: 			{ isLocFront() }
+		top:				{ atlTblT() + atlTblH() + 14 }
+		left:				{ 18 }
+		height:				{ wcTblH() - 16 }
+		width:				{ Width - 36 }
+		z_index: 			51
+	wpc_cell:
+		visible: 			{ wpcVisible() }
+		top:				{ wpcTblT() + 16 }
+		left:				{ 18 }
+		height:				{ wpcTblH() - 18 }
+		width:				{ Width - 36 }
+		z_index: 			51

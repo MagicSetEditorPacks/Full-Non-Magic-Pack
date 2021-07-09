@@ -1,0 +1,212 @@
+card style:
+	############################# Background stuff
+	type:
+		left:	0
+		top:	0
+		width:	333
+		height:	516
+		z index: -2
+		popup style: in place
+		render style: image
+		choice images:
+			new rule:  new rule.png
+			action:    action.png
+			goal:      goal.png
+			ungoal:    ungoal.png
+			keeper:    keeper.png
+			creeper:   creeper.png
+			meta rule: meta rule.png
+			surprise:  surprise.png
+	
+	############################# Name Line
+	name:
+		left: 23
+		top: 474
+		width:
+			{ if is_goal() then 316
+			  else              380 }
+		height: 35
+		z index: 1
+		angle: 90
+		alignment: middle right stretch-overflow
+		font:
+			name: { bar_font() }
+			size: 20
+			weight: { name_weight() }
+			color:
+				{ if is_keeper() then        rgb(88,128,61)
+				  else if is_new_rule() then rgb(102,67,0)
+				  else                       "white" }
+	name 2:
+		left: 312
+		top: 94
+		width: 232
+		height: 30
+		z index: 1
+		angle: 270
+		visible: { warning_capable() or is_surprise() }
+		alignment: middle left stretch-overflow
+		font:
+			name: { name_font() }
+			size: 16
+			weight: { name_weight() }
+			color: { if is_new_rule() then rgb(102,67,0) else "white" }
+	
+	############################# Image
+	image:
+		left: 74
+		top:
+			{ if is_kreeper() then
+				if card_style.rule_text.content_height<57 then     167
+				else min(110+card_style.rule_text.content_height, 214)
+			  else if is_goal() then                                   117
+			  else if is_new_rule() then                               65 }
+		width:
+			{ if is_kreeper() then       230
+			  else if is_goal() then     207
+			  else if is_new_rule() then 193 }
+		height:
+			{ if is_kreeper() then       230
+			  else if is_goal() then     184
+			  else if is_new_rule() then 146 }
+		z index: 2
+		visible: { not (is_meta() or is_goal()) or (is_goal() and styling.goal_images!="none") }
+		mask:
+			{ if is_goal() then          "goal-mask.png"
+			  else if is_new_rule() then "rule-mask.png" }
+	image 2:
+		left: 74
+		top: { if is_goal() then 301 else 0 }
+		width: { if is_goal() then 207 else 0 }
+		height: { if is_goal() then 184 else 0 }
+		z index: 1
+		visible: { is_goal() and styling.goal_images=="two" }
+		mask: goal-mask2.png
+	
+	############################# Text box
+	rule text:
+		left: 74
+		top:
+			{ if is_spell() or is_meta() then               110
+			  else if is_goal() then
+				if styling.goal_images=="none" then     160
+				else if styling.goal_images=="one" then 302
+				else                                    0
+			  else if is_new_rule() then                    212
+			  else if is_kreeper() then                     110 }
+		width:
+			{ if is_new_rule() or is_meta() then 193
+			  else if is_spell() then            193
+			  else if is_goal() then             207
+			  else if is_kreeper() then          230 }
+		height:
+			{ if is_spell() or is_meta() then               366
+			  else if is_goal() then
+				if styling.goal_images=="none" then     302
+				else if styling.goal_images=="one" then 160
+				else                                    0
+			  else if is_new_rule() then                    264
+			  else if is_kreeper() then                     103 }
+		z index: 3
+		font:
+			name: { text_font() }
+			size: 14
+			scale down to: 10
+			color: black
+		alignment: top left
+		line height hard: 1.5
+		line height line: 1.5
+	rule text 2:
+		left: 74
+		top:
+			{ if card_style.rule_text.content_height<57 then       398
+			  else   min(341+card_style.rule_text.content_height, 446) }
+		width: 230
+		height: 16
+		z index: 2
+		visible: { is_kreeper() and styling.keeper_style=="top and bottom" }
+		font:
+			name: { text_font() }
+			size: 14
+			scale down to: 10
+			color: black
+		alignment: top center
+		line height hard: 1.5
+		line height line: 1.5
+
+############################################################## Extra card fields
+
+############################# Corner images
+extra card field:
+	type: choice
+	name: corner 1
+	choice: image
+	show statistics: false
+	editable: false
+extra card field:
+	type: choice
+	name: corner 2
+	choice: image
+	show statistics: false
+	editable: false
+extra card field:
+	type: choice
+	name: corner 3
+	choice: image
+	show statistics: false
+	editable: false
+extra card field:
+	type: choice
+	name: corner 4
+	choice: image
+	show statistics: false
+	editable: false
+
+############################################################## Extra card field styles
+
+extra card style:
+	############################# Corner images
+	corner 1:
+		left: 22
+		top: 22
+		width: 61
+		height: 61
+		z index: 3
+		visible: { is_kreeper() or is_goal() }
+		render style: image
+		mask: corner.png
+		choice images:
+			image: { card.image }
+	corner 2:
+		left: 251
+		top: 22
+		width: 61
+		height: 61
+		z index: 3
+		visible: { is_kreeper() or is_goal() }
+		render style: image
+		mask: corner.png
+		choice images:
+			image: { card.image }
+	corner 3:
+		left: 22
+		top: 87
+		width: 61
+		height: 61
+		z index: 3
+		visible: { is_goal() }
+		render style: image
+		mask: corner.png
+		choice images:
+			image: { card.image_2 }
+	corner 4:
+		left: 251
+		top: 87
+		width: 61
+		height: 61
+		z index: 3
+		visible: { is_goal() }
+		render style: image
+		mask: corner.png
+		choice images:
+			image: { card.image_2 }

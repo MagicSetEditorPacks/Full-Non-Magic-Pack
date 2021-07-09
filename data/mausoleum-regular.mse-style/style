@@ -1,0 +1,186 @@
+mse version: 0.3.7
+game: mausoleum
+short name: Mausoleum
+full name: Mausoleum
+position hint: 001
+icon: cardsample.png
+installer group: mausoleum/regular cards
+
+version: 2008-10-24
+depends on:
+	package: mausoleum.mse-game
+	version: 2008-10-23
+
+card width: 308
+card height: 432
+card dpi: 150
+
+##############################################################Card Fields
+card style:
+	type:
+		left: 0
+		top: 0
+		height: 432
+		width: 308
+		z index: 0
+		render style: image
+		popup style: in place
+		choice images:
+			accident: accident.png
+			incident: incident.png
+			grave: grave.png
+			heir: heir.png
+	name:
+		left:
+			{ if card.type == "heir" then 75
+			else if card.type == "incident" then 60
+			else if card.type == "accident" then 70
+			else if card.type == "grave" then 70
+			else 0 }
+		top:
+			{ if card.type == "heir" then 70
+			else if card.type == "incident" then 110
+			else if card.type == "accident" then 90
+			else if card.type == "grave" then 60
+			else 0 }
+		width:
+			{ if card.type == "heir" then 158
+			else if card.type == "incident" then 188
+			else if card.type == "accident" then 168
+			else if card.type == "grave" then 168
+			else 1 }
+		height:
+			{ if card.type == "heir" then 100
+			else if card.type == "incident" then 100
+			else if card.type == "accident" then 150
+			else if card.type == "grave" then 100
+			else 1 }
+		z index: 1
+		alignment: top center
+		font:
+			name: Bernhard Modern BT
+			size:
+				{ if card.type == "heir" then 24
+				else if card.type == "incident" then 28
+				else if card.type == "accident" then 28
+				else if card.type == "grave" then 24
+				else 1 }
+			color: rgb(0,0,0)
+	price:
+		left:
+			{ if card.type == "heir" then 80
+			else if card.type == "grave" then 70
+			else 0 }
+		top:
+			{ if card.type == "heir" then 170
+			else if card.type == "incident" then 500
+			else if card.type == "accident" then 500
+			else if card.type == "grave" then 160
+			else 0 }
+		width:
+			{ if card.type == "heir" then 148
+			else if card.type == "grave" then 168
+			else 1 }
+		height:
+			{ if card.type == "heir" then 100
+			else if card.type == "grave" then 100
+			else 1 }
+		z index: 1
+		alignment: middle center
+		font:
+			name: Bernhard Modern BT
+			size:
+				{ if card.type == "heir" then 50
+				else if card.type == "grave" then 50
+				else 1 }
+			color: rgb(0,0,0)
+	text:
+		left:
+			{ if card.type == "heir" then 40
+			else if card.type == "incident" then 54
+			else if card.type == "accident" then 65
+			else if card.type == "grave" then 65
+			else 0 }
+		top:
+			{ if card.type == "heir" then 265
+			else if card.type == "incident" then 210
+			else if card.type == "accident" then 240
+			else if card.type == "grave" then 260
+			else 0 }
+		width:
+			{ if card.type == "heir" then 228
+			else if card.type == "incident" then 200
+			else if card.type == "accident" then 178
+			else if card.type == "grave" then 178
+			else 1 }
+		height:
+			{ if card.type == "heir" then 145
+			else if card.type == "incident" then 120
+			else if card.type == "accident" then 160
+			else if card.type == "grave" then 120
+			else 1 }
+		z index: 1
+		alignment: top center
+		font:
+			name: Bernhard Modern BT
+			size: 12
+			color: rgb(0,0,0)
+	card number:
+		left: 217
+		top: 336
+		width: 91
+		height: 91
+		z index: 1
+		alignment: middle center
+		font:
+			name: Bernhard Modern BT
+			size: 32
+			color: rgb(0,0,0)
+	image:
+		left: -2
+		top: -2
+		width: 92
+		height: 91
+		z index: 1
+		visible: { card.type != "grave"}
+		mask: image_mask.png
+	image 2:
+		left: 201
+		top: -2
+		width: 92
+		height: 91
+		z index: 1
+		visible: { card.type != "grave" }
+		mask: image_mask.png
+		render style: image
+		choice images:
+			default: {card.image}
+	image 3:
+		left: -3
+		top: 324
+		width: 92
+		height: 91
+		z index: 1
+		visible: { card.type != "grave" }
+		mask: image_mask.png
+		render style: image
+		choice images:
+			default: {card.image}
+extra card field:
+	type: text
+	name: pound
+	editable: false
+	save value: false
+	script: "#"
+extra card style:
+	pound:
+		left: { if card.card_number < "10" then 162 else 152 }
+		top: 361
+		width: 91
+		height: 91
+		z index: 1
+		alignment: top right
+		font:
+			name: Bernhard Modern BT
+			size: 18
+			color: rgb(0,0,0)

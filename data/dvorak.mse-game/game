@@ -1,0 +1,225 @@
+﻿mse version: 0.3.6
+short name: Dvorak
+full name: Dvorak
+installer group: Dvorak/Game Files
+icon: icon.png
+position hint: 13
+
+version: 2008-5-19
+
+#By: Zaratustra
+#Updated by: Pichoro
+############################################################## Functions & filters
+## Copied and Pasted from vs.mse-game, with a few modifications
+# General functions
+init script:
+	text_filter := 
+		# step 1 : remove all automatic tags
+		tag_remove_rule(tag: "<sym-auto>") +
+		tag_remove_rule(tag: "<i-auto>")   +
+		replace_rule(
+			match: "~|~THIS~|CARDNAME",
+			in_context: "(^|[[:space:]]|\\()<match>",
+			replace: "<atom-cardname></atom-cardname>"
+			) +
+		replace_rule(
+			match:"Action:",
+			replace: "<atom><b-auto>&</b-auto></atom>"
+			)+
+		# step 2 : fill in atom fields
+		tag_contents_rule(
+			tag: "<atom-cardname>",
+			contents: { if card.name=="" then "CARDNAME" else card.name }
+			)
+	
+	# the flavor text filter
+	flavor_text_filter :=
+		# step 1 : remove italic tags
+		tag_remove_rule(tag: "<i-flavor>") +
+		# step 2 : surround by <i> tags
+		{ "<i-flavor>" + input + "</i-flavor>" };
+	
+	# Determine type of card
+	card_type := {
+		if      card.super_type == "action"   then "action"
+		else if card.super_type == "Action"   then "action"
+		else if card.super_type == "thing"    then "thing"
+		else if card.super_type == "Thing"    then "thing"
+		else                                     "rule"
+	}
+	
+	separator_script := {
+		if card.sub_type == "" then ""
+		else " - "
+	}
+	
+############################################################## Set fields
+set field:
+	type: text
+	name: title
+	description: This information will not appear on the card.
+set field:
+	type: text
+	name: code
+	description: Recommended only 3 Capital digits. Will appear before card number. ex: LOB-XX101
+set field:
+	type: text
+	name: language
+	description: Recommended 2 - 3 Captital digits. Will appear before the card number, after the code. ex: XXX-EN101
+set field:
+	type: text
+	name: description
+	multi line: true
+	description: This information will not appear on the card.
+set field:
+	type: text
+	name: edition
+	description: Editting this will set 1 edition for all the cards and will appear in the edition bar below the picture. ex-> LIMITED EDITION
+set field:
+	type: text
+	name: copyright
+	description: Copyright information. This will not appear on the card.
+set field:
+	type: text
+	name: designer
+	description: Designer(s) of the set.
+set field:
+	type: text
+	name: date
+	description: Date
+set field:
+	type: text
+	name: players
+	description: Players
+set field:
+	type: boolean
+	name: Extended Card Info
+	initial: no
+	description: Show set code and set language with card number
+############################################################## Card fields
+############################# Background stuff
+card field:
+	type: choice
+	name: card type
+	choice: action
+	choice: thing
+	choice: rule
+	default: card_type()
+############################# Name line
+card field:
+	type: text
+	name: name
+	identifying: true
+	show statistics: false
+	card list visible: true
+	card list name: Name
+	card list column: 1
+	card list width: 150
+	description: The name of the card
+card field:
+	type: text
+	name: value
+	card list visible: true
+	card list name: Value
+	card list column: 2
+	card list alignment: right
+	card list width: 50
+	description: The value of the card
+card field:
+	type: text
+	name: super type
+	editable: false
+card field:
+	type: text
+	name: sub type
+card field:
+	type: text
+	name: type
+	script:
+		# Either just supertype, or subtype - supertype
+		combined_editor(
+			field1: card.super_type,
+			separator: " — ",
+			field2: card.sub_type,
+			grey_until_needed: true,
+			hide_when_both_empty: true,
+			type_over1: " -",
+			type_over2: "-"
+		)
+	card list visible: true
+	card list name: Type
+	card list column: 3
+	card list width: 150
+	description: The type of this card, type - to go the sub type
+############################# Image
+card field:
+	type: image
+	name: image
+	show statistics: false
+############################# Edition and Card ID
+card field:
+	type: text
+	name: number
+	script:
+		set.code
+		+ "-" +
+		set.language +
+		position(
+			of: card
+			in: set
+			order_by: {
+				card.name
+			})
+
+	card list visible: true
+	card list name: #
+	card list column: 4
+	card list width: 50
+	editable: false
+############################# Text box
+card field:
+	type: text
+	name: rule text
+	script: text_filter(input: value, card_name: card.name)
+	editable: false
+	show statistics: false
+card field:
+	type: text
+	name: flavor text
+	script: flavor_text_filter(value)
+	editable: false
+	show statistics: false
+card field:
+	type: text
+	name: text
+	multi line: true
+	save value: false
+	show statistics: false
+	script:
+		combined_editor(field1: card.rule_text, separator: "<line>\n", field2: card.flavor_text)
+############################# Copyright stuff
+card field:
+	type: text
+	name: gamecode
+card field:
+	type: text
+	name: copyright
+	default: set.copyright
+card list color script:
+	input := card.card_type
+	if      input == "action" then rgb(255,0,0)
+	else if input == "thing"  then rgb(0,0,255)
+	else if input == "rule" then rgb(0,0,0)
+	else rgb(0,0,0)
+############################ Automatic Text Replacements
+auto replace:
+	match: --
+	replace: —
+auto replace:
+	# note the spaces
+	match:
+		 - 
+	replace:
+		 — 
+############################# Keywords
+has keywords: false

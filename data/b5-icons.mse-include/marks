@@ -1,0 +1,10 @@
+# Watermark images
+
+choice images:
+	mark Babylon 5:				/B5-icons.mse-include/b5.png
+	mark Vorlon:				/B5-icons.mse-include/vorlon.png
+	mark Shadow:				/B5-icons.mse-include/shadow.png
+	mark Strife:				/B5-icons.mse-include/strife.png
+	mark Psi:				/B5-icons.mse-include/psi.png
+	mark Destiny:				/B5-icons.mse-include/destiny.png
+	mark Doom:				/B5-icons.mse-include/doom.png

@@ -1,0 +1,36 @@
+mse version:	2.0.0
+short name:		Character1
+full name:		Original Character Cards
+icon:			PZO6000-Valeros_180.jpeg
+position hint:	230
+version:		2015-07-14
+installer_group: PACG/Original Styles/Character
+
+#  Stylesheet
+game:			PACG
+card width:		375
+card height:	525
+card dpi:		150
+card background: rgb(0,0,0)
+
+# Dependencies
+depends on:	PACG.mse-game 2014-05-01
+depends on:	PACG-common.mse-include 2015-07-14
+depends on:	PACG-symbol.mse-symbol-font 2014-05
+
+#  Initialisation
+init script:
+	Width := 375
+	Height := 525
+	include file:	script-orig-char.mse
+	
+include file:	extra-fields-orig-char.mse
+
+
+#  Card Styling
+include file:	style-orig-pacg.mse
+include file:	style-orig-charcommon.mse
+include file:	style-orig-charfront.mse
+include file:	style-orig-charback.mse
+include file:	style-orig-token.mse
+include file:	style-orig-powers.mse

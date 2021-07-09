@@ -1,0 +1,1135 @@
+﻿mse version: 2.0.0
+game: animayhem
+full name: BlankSpace
+short name: BS Design
+installer group: Ani-Mayhem/Templates/BS Design
+icon: icon.png
+position hint: 002
+version: 2014-01-29
+
+depends on:
+	package: animayhem.mse-game
+	version: 2009-08-03
+depends on:
+	package: animayhem-simplified-symbols.mse-symbol-font
+	version: 2009-07-22
+
+card width: 375
+card height: 523
+card dpi: 150
+
+#By: Blank Space
+#Fonts used:
+#Morpheus
+#Pterra
+#Arial
+################################################## Style Scripts
+init script:
+	
+	is_character := { contains(card.background, match: "character") }
+	is_disaster := { contains(card.background, match: "disaster") }
+	is_item := { contains(card.background, match: "item") }
+	is_power := { contains(card.background, match: "power") }
+	is_combat := { contains(card.background, match: "combat") }
+	is_haven := { contains(card.background, match: "haven") }
+	is_location := { contains(card.background, match: "location") }
+
+	is_transforming := { contains(card.background, match: "transforming") }
+	is_transforming_character := { is_transforming() and is_character() }
+	is_transforming_disaster := { is_transforming() and is_disaster() }
+	
+	is_place := { is_haven() or is_location() }
+
+	is_dimensional := { contains(card.special_category, match:"dimensional") }
+	is_dimensional2 := { contains(card.special_category2, match:"dimensional") }
+	
+	is_planetary := { contains(card.special_category, match:"planetary") }
+	is_planetary2 := { contains(card.special_category2, match:"planetary") }
+	
+	is_science := { contains(card.special_category, match:"science") }
+	is_science2 := { contains(card.special_category2, match:"science") }
+	
+	is_female := { contains(card.gender, match:"female") }
+	is_female2 := { contains(card.gender2, match:"female") }
+	
+	is_male := { contains(card.gender, match:"male") }
+	is_male2 := { contains(card.gender2, match:"male") }
+	
+	has_type_icon := { is_disaster() or is_power() or is_combat() }
+	has_two_pictures := { is_transforming() or is_combat() }
+
+################################################## Extra Style Options
+styling field:
+	type: boolean
+	name: foil
+	description: Should the cards be foiled?
+	initial: no
+################################################## Card Fields
+card style:
+	
+	#----------------<Background>--------------------
+	background:
+		left: 0
+		top: 0
+		width: 375
+		height: 523
+		z index: -1
+		render style: image
+		popup style: in place
+		choice images:
+			character standard: character.jpg
+			character transforming: charactertransforms.jpg
+			combat: combat.jpg
+			disaster standard: disaster.jpg
+			disaster transforming: disastertransforms.jpg
+			haven: haven.jpg
+			item: item.jpg
+			location: location.jpg
+			power: effect.jpg
+
+	#------------------<Name>-------------------------
+	name:
+		left:
+			script: if is_item() then 20
+			else 25
+		top:
+			script: if is_item() then 215
+			else if has_two_pictures() then 25
+			else 20
+		width:
+			script: if is_item() then 189
+			else 295
+		height:
+			script: if is_item() then 20
+			else 20
+		angle: 
+			script: if is_item() then 90
+		z index: 0
+		alignment: center middle
+		font:
+			name: Morpheus
+			color: rgb(0,0,0)
+			weight: bold
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script:
+					if card_style.name.content_lines == 1 then 20
+					else 13
+			scale down to: 6
+	name2:
+		left:
+			script: if has_two_pictures() then 350
+			else -10
+		top:
+			script: if has_two_pictures() then 498
+			else -10
+		width:
+			script: if has_two_pictures() then 295
+		height:
+			script: if has_two_pictures() then 20
+		angle: 180
+		z index: 0
+		visible: { has_two_pictures() }
+		alignment: center middle
+		font:
+			name: Morpheus
+			color: rgb(0,0,0)
+			weight: bold
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if card_style.name2.content_lines == 1 then 20
+				else 13
+			scale down to: 6
+	
+	#----------------------<Picture>------------------
+	picture:
+		left:
+			script: if is_item() then 25
+			else 17
+		top:
+			script: if is_item() then 496
+			else if has_two_pictures() then 159
+			else 45
+		width:
+			script: if is_item() then 281
+			else if has_two_pictures() then 227
+			else 341
+		height:
+			script: if is_item() then 325
+			else if has_two_pictures() then 205
+			else 281
+		angle:
+			script: if is_item() then 90
+		mask:
+			script: if is_item() then "mask_item.png"
+			else if has_two_pictures() then "mask_combat1.png"
+			else "mask_standard.png"
+	picture2:
+		left:
+			script: if has_two_pictures() then 358
+			else -10
+		top:
+			script: if has_two_pictures() then 364
+			else -10
+		width:
+			script: if has_two_pictures() then 227
+		height:
+			script: if has_two_pictures() then 205
+		angle: 180
+		mask:
+			script: if has_two_pictures() then "mask_combat2.png"
+		visible: { has_two_pictures() }
+	
+	#---------------------<Type Icon>----------------------
+	type_icon:
+		left:
+			script: if has_type_icon() then 320
+			else -10
+		top:
+			script: if not has_type_icon() then -10
+			else if has_two_pictures() then 20
+			else 15
+		width:
+			script: if has_type_icon() then 35
+		height:
+			script: if has_type_icon() then 35
+		z index: 1
+		visible: { has_type_icon() }
+		render style: image
+		popup style: in place
+		choice images:
+			combat battle: combatIcon.png
+			combat charm: seductionIcon.png
+			disaster major: majordisasterIcon.png
+			disaster minor: minordisasterIcon.png
+			power enhancement: enhancementIcon.png
+			power equipment: equipmentIcon.png
+			power flash: flasheffectIcon.png
+			power global: globaleffectIcon.png
+	type_icon2:
+		left:
+			script: if is_transforming_disaster() or is_combat() then 55
+			else -10
+		top:
+			script: if is_transforming_disaster() or is_combat() then 503
+			else -10
+		width:
+			script: if is_transforming_disaster() or is_combat() then 35
+		height:
+			script: if is_transforming_disaster() or is_combat() then 35
+		z index: 1
+		visible: { is_transforming_disaster() or is_combat() }
+		angle: 180
+		render style: image
+		popup style: in place
+		choice images:
+			combat battle: combatIcon.png
+			combat charm: seductionIcon.png
+			disaster major: majordisasterIcon.png
+			disaster minor: minordisasterIcon.png
+			power enhancement: enhancementIcon.png
+			power equipment: equipmentIcon.png
+			power flash: flasheffectIcon.png
+			power global: globaleffectIcon.png
+	
+	#----------------------------<Special Icon>-----------------------
+	haven_icon:
+		left:
+			script: if is_haven() then 320
+			else -10
+		top:
+			script: if is_haven() then 20
+			else -10
+		width:
+			script: if is_haven() then 35
+		height:
+			script: if is_haven() then 35
+		z index: 1
+		visible: { is_haven() }
+		render style: image
+		choice images:
+			haven: havenIcon.png
+	special_category:
+		left:
+			script: if is_transforming_disaster() then 65
+			else if is_item() or is_location() then 320
+			else if is_combat() then -10
+			else 25
+		top:
+			script: if is_transforming() then 150
+			else if is_item() then 210
+			else if is_combat() then -10
+			else if is_location() then 20
+			else 40
+		width:
+			script: if not is_combat() then 35
+		height:
+			script: if not is_combat() then 35
+		z index: 1
+		visible: { not is_combat() }
+		angle:
+			script: if is_item() then 90
+		render style: image
+		popup style: in place
+		choice images:
+			dimensional: dimensionalIcon.png
+			planetary: planetaryIcon.png
+			science: scienceIcon.png
+	special_category2:
+		left:
+			script: if is_transforming_disaster() then 310
+			else if is_transforming() then 350
+			else -10
+		top:
+			script: if is_transforming() then 373
+			else -10
+		width:
+			script: if is_transforming() then 35
+		height:
+			script: if is_transforming() then 35
+		z index: 1
+		visible: { is_transforming() }
+		angle: 180
+		render style: image
+		popup style: in place
+		choice images:
+			dimensional: dimensionalIcon.png
+			planetary: planetaryIcon.png
+			science: scienceIcon.png
+	
+	#----------------------------<Gender Icon>------------------------
+	gender:
+		left:
+			script: if is_female() and is_transforming_disaster() then 25
+			else if is_female() and is_item() then 305
+			else if is_female() then 320
+			else if is_transforming_disaster() then 20
+			else if is_item() then 300
+			else if is_combat() then -10
+			else 315
+		top:
+			script: if is_character() then 20
+			else if is_item() then 55
+			else if is_transforming() then 150
+			else if is_combat() then -10
+			else 463
+		width:
+			script: if is_female() then 35
+			else if not is_combat() then 40
+		height: 
+			script: if is_female() then 50
+			else if not is_combat() then 45
+		z index: 1
+		visible: { not is_combat() }
+		angle:
+			script: if is_item() then 90
+		render style: image
+		popup style: in place
+		choice images:
+			female: femaleIcon.png
+			male: maleIcon.png
+	gender2:
+		left:
+			script:	if is_female2() and is_transforming_character() then 55
+			else if is_female2() and is_transforming() then 350
+			else if is_transforming_character() then 60
+			else if is_transforming() then 355
+			else -10
+		top:
+			script:	if is_transforming_character() then 503
+			else if is_transforming() then 373
+			else -10
+		width:
+			script: if is_transforming() and is_female2() then 35
+			else if is_transforming() then 40
+		height:
+			script: if is_transforming() and is_female2() then 50
+			else if is_transforming() then 45
+		z index: 1
+		visible: { is_transforming() }
+		angle: 180
+		render style: image
+		popup style: in place
+		choice images:
+			female: femaleIcon.png
+			male: maleIcon.png
+	
+	#-----------------------------<Card Text>------------------------------
+	skills_text:
+		left:
+			script: if is_transforming_character() then 20
+			else if is_character() then 35
+			else -10
+		top:
+			script: if is_transforming_character() then 55
+			else if is_character() then 350
+			else -10
+		width:
+			script: if is_character() then 320
+		height:
+			script: if is_character() then 45
+		z index: 0
+		visible: { is_character() }
+		alignment: center middle
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if card_style.skills_text.content_lines == 1 then 20
+				else 13
+			scale down to: 6
+	skills_text2:
+		left:
+			script: if is_transforming_character() then 355
+			else -10
+		top:
+			script: if is_transforming_character() then 468
+			else -10
+		width:
+			script: if is_transforming_character() then 320
+		height:
+			script: if is_transforming_character() then 45
+		z index: 0
+		visible: { is_transforming_character() }
+		alignment: center middle
+		angle: 180
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if card_style.skills_text2.content_lines == 1 then 20
+				else 13
+			scale down to: 6
+	
+	text:
+		left:
+			script: if has_two_pictures() then 20
+			else if is_item() then 50
+			else 35
+		top:
+			script: if is_transforming_character() then 100
+			else if is_character() then 395
+			else if has_two_pictures() then 55
+			else if is_item() then 210
+			else 350
+		width:
+			script: if is_item() then 190
+			else 320
+		height:
+			script: if is_transforming_character() then 45
+			else if is_character() then 97
+			else if has_two_pictures() then 90
+			else if is_item() then 295
+			else 142
+		angle:
+			script: if is_item() then 90
+		z index: 0
+		alignment: center middle
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if card_style.text.content_lines == 1 then 20
+				else 13
+			scale down to: 6
+		symbol font:
+			name: animayhem-simplified-symbols
+			size:
+				script: if card_style.text.content_lines == 1 then 20
+				else 13
+			scale down to: 6
+			alignment: middle center
+		line height hard: 1.2
+		line height line: 1.5
+		line height soft: 0.9
+		line height hard max: 1.3
+		line height line max: 1.6
+	text2:
+		left:
+			script: if has_two_pictures() then 355
+			else -10
+		top:
+			script: if is_transforming_character() then 423
+			else if has_two_pictures() then 468
+			else -10
+		width:
+			script: if has_two_pictures() then 320
+		height:
+			script: if is_transforming_character() then 45
+			else if has_two_pictures() then 90
+		angle: 180
+		z index: 0
+		visible: { has_two_pictures() }
+		alignment: center middle
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if card_style.text2.content_lines == 1 then 20
+				else 13
+			scale down to: 6
+		symbol font:
+			name: animayhem-simplified-symbols
+			size:
+				script: if card_style.text2.content_lines == 1 then 20
+				else 13
+			scale down to: 6
+			alignment: middle center
+		line height hard: 1.2
+		line height line: 1.5
+		line height soft: 0.9
+		line height hard max: 1.3
+		line height line max: 1.6
+	
+	#----------------------------<Legal Text>-------------------------------
+	legal:
+		left:
+			script: if has_two_pictures() then 357
+			else 25
+		top:
+			script: if has_two_pictures() then 72
+			else 495
+		width: 325
+		height: 10
+		z index: 3
+		angle:
+			script: if has_two_pictures() then 270
+		alignment: bottom left
+		font:
+			name: Arial
+			color:
+				script: if is_item() then rgb(0,0,0)
+				else rgb(255,255,255)
+			weight: normal
+			size: 6
+	legal2:
+		left:
+			script: if has_two_pictures() then 18
+			else -10
+		top:
+			script: if has_two_pictures() then 451
+			else -10
+		width:
+			script: if has_two_pictures() then 325
+		height:
+			script: if has_two_pictures() then 10
+		z index: 3
+		visible: { has_two_pictures() }
+		angle: 90
+		alignment: bottom left
+		font:
+			name: Arial
+			color:
+				script: if is_item() then rgb(0,0,0)
+				else rgb(255,255,255)
+			weight: normal
+			size: 6
+	
+	#----------------------------<Ability Scores>---------------------------
+	attack:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category == "blank")
+				or is_combat() then 87
+			else if is_transforming() then 134
+			else if is_place() then 146
+			else if is_item() then 50
+			else 99
+		top:
+			script: if has_two_pictures() then 145
+			else if is_item() then 233
+			else 324
+		width: 23
+		height: 25
+		z index: 2
+		angle:
+			script: if is_item() then 90
+		alignment: center middle
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if length(to_text(card.attack)) <= 1 then 13
+				else 9
+			scale down to: 6
+	attack2:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category2 == "blank")
+				or is_combat() then 288
+			else if is_transforming() then 241
+			else -10
+		top:
+			script: if has_two_pictures() then 378
+			else -10
+		width:
+			script: if has_two_pictures() then 23
+		height:
+			script: if has_two_pictures() then 25
+		z index: 2
+		visible: { has_two_pictures() }
+		alignment: center middle
+		angle: 180
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if length(to_text(card.attack2)) <= 5 then 13
+				else 9
+			scale down to: 6
+	defense:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category == "blank")
+				or is_combat() then 134
+			else if is_transforming() then 181
+			else if is_place() then 240
+			else if is_item() then 114
+			else 146
+		top:
+			script: if has_two_pictures() then 145
+			else if is_item() then 233
+			else 324
+		width: 23
+		height: 25
+		z index: 2
+		angle:
+			script: if is_item() then 90
+		alignment: center middle
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if length(to_text(card.defense)) <= 1 then 13
+				else 9
+			scale down to: 6
+	defense2:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category2 == "blank")
+				or is_combat() then 241
+			else if is_transforming() then 194
+			else -10
+		top:
+			script: if has_two_pictures() then 378
+			else -10
+		width:
+			script: if has_two_pictures() then 23
+		height:
+			script: if has_two_pictures() then 25
+		z index: 2
+		visible: { has_two_pictures() }
+		alignment: center middle
+		angle: 180
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if length(to_text(card.defense2)) <= 1 then 13
+				else 9
+			scale down to: 6
+	charm:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category == "blank")
+				or is_combat() then 181
+			else if is_transforming() then 228
+			else if is_item() then 178
+			else if is_place() then -10
+			else 193
+		top:
+			script: if has_two_pictures() then 145
+			else if is_item() then 233
+			else if is_place() then -10
+			else 324
+		width:
+			script: if not is_place() then 23
+		height:
+			script: if not is_place() then 25
+		z index: 2
+		visible: { not is_place() }
+		angle:
+			script: if is_item() then 90
+		alignment: center middle
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if length(to_text(card.charm)) <= 1 then 13
+				else 9
+			scale down to: 6
+	charm2:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category2 == "blank")
+				or is_combat() then 194
+			else if is_transforming() then 147
+			else -10
+		top:
+			script: if has_two_pictures() then 378
+			else -10
+		width:
+			script: if has_two_pictures() then 23
+		height:
+			script: if has_two_pictures() then 25
+		z index: 2
+		visible: { has_two_pictures() }
+		alignment: center middle
+		angle: 180
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if length(to_text(card.charm2)) <= 1 then 13
+				else 9
+			scale down to: 6
+	energy:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category == "blank")
+				or is_combat() then 228
+			else if is_transforming() then 275
+			else if is_item() then 236
+			else if is_place() then -10
+			else 240
+		top:
+			script: if has_two_pictures() then 145
+			else if is_item() then 233
+			else if is_place() then -10
+			else 324
+		width:
+			script: if not is_place() then 23
+		height:
+			script: if not is_place() then 25
+		z index: 2
+		visible: { not is_place() }
+		angle:
+			script: if is_item() then 90
+		alignment: center middle
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if length(to_text(card.energy)) <= 1 then 13
+				else 9
+			scale down to: 6
+	energy2:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category2 == "blank")
+				or is_combat() then 147
+			else if is_transforming() then 100
+			else -10
+		top:
+			script: if has_two_pictures() then 378
+			else -10
+		width:
+			script: if has_two_pictures() then 23
+		height:
+			script: if has_two_pictures() then 25
+		z index: 2
+		visible: { has_two_pictures() }
+		alignment: center middle
+		angle: 180
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if length(to_text(card.energy2)) <= 1 then 13
+				else 9
+			scale down to: 6
+	movement:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category == "blank")
+				or is_combat() then 275
+			else if is_transforming() then 322
+			else if is_item() then 306
+			else if is_place() then -10
+			else 287
+		top:
+			script: if has_two_pictures() then 145
+			else if is_item() then 233
+			else if is_place() then -10
+			else 324
+		width:
+			script: if not is_place() then 23
+		height:
+			script: if not is_place() then 25
+		z index: 2
+		visible: { not is_place() }
+		angle:
+			script: if is_item() then 90
+		alignment: center middle
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if length(to_text(card.movement)) <= 1 then 13
+				else 9
+			scale down to: 6
+	movement2:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category2 == "blank")
+				or is_combat() then 100
+			else if is_transforming() then 53
+			else -10
+		top:
+			script: if has_two_pictures() then 378
+			else -10
+		width:
+			script: if has_two_pictures() then 23
+		height:
+			script: if has_two_pictures() then 25
+		z index: 2
+		visible: { has_two_pictures() }
+		alignment: center middle
+		angle: 180
+		font:
+			name: Pterra
+			color: rgb(0,0,0)
+			weight: normal
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			size:
+				script: if length(to_text(card.movement2)) <= 1 then 13
+				else 9
+			scale down to: 6
+	
+########################Extra Card Fields
+extra card field:
+	type: choice
+	name: attack_field
+	save value: false
+	editable: false
+	script: "attack"
+extra card field:
+	type: choice
+	name: attack_field2
+	save value: false
+	editable: false
+	script: "attack"
+extra card field:
+	type: choice
+	name: defense_field
+	save value: false
+	editable: false
+	script: "defense"
+extra card field:
+	type: choice
+	name: defense_field2
+	save value: false
+	editable: false
+	script: "defense"
+extra card field:
+	type: choice
+	name: charm_field
+	save value: false
+	editable: false
+	script: "charm"
+extra card field:
+	type: choice
+	name: charm_field2
+	save value: false
+	editable: false
+	script: "charm"
+extra card field:
+	type: choice
+	name: energy_field
+	save value: false
+	editable: false
+	script: "energy"
+extra card field:
+	type: choice
+	name: energy_field2
+	save value: false
+	editable: false
+	script: "energy"
+extra card field:
+	type: choice
+	name: move_field
+	save value: false
+	editable: false
+	script: "move"
+extra card field:
+	type: choice
+	name: move_field2
+	save value: false
+	editable: false
+	script: "move"
+extra card field:
+	type: choice
+	name: foil
+	save value: false
+	editable: false
+	script: "foil"
+
+extra card style:
+	attack_field:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category == "blank")
+				or is_combat() then 65
+			else if is_transforming() then 112
+			else if is_place() then 124
+			else if is_item() then 50
+			else 77
+		top:
+			script: if has_two_pictures() then 145
+			else if is_item() then 255
+			else 324
+		width: 45
+		height: 25
+		z index: 1
+		angle:
+			script: if is_item() then 90
+		visible: { card.attack != "" }
+		render style: image
+		choice images:
+			attack: attackbutton.png
+	attack_field2:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category2 == "blank")
+				or is_combat() then 310
+			else if is_transforming() then 263
+			else -10
+		top:
+			script: if has_two_pictures() then 378
+			else -10
+		width:
+			script: if has_two_pictures() then 45
+		height:
+			script: if has_two_pictures() then 25
+		z index: 1
+		angle: 180
+		visible: { card.attack2 != "" and has_two_pictures() }
+		render style: image
+		choice images:
+			attack: attackbutton.png
+	defense_field:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category == "blank")
+				or is_combat() then 112
+			else if is_transforming() then 159
+			else if is_place() then 218
+			else if is_item() then 114
+			else 124
+		top:
+			script: if has_two_pictures() then 145
+			else if is_item() then 255
+			else 324
+		width: 45
+		height: 25
+		z index: 1
+		angle:
+			script: if is_item() then 90
+		visible: { card.defense != "" }
+		render style: image
+		choice images:
+			defense: defensebutton.png
+	defense_field2:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category2 == "blank")
+				or is_combat() then 263
+			else if is_transforming() then 216
+			else -10
+		top:
+			script: if has_two_pictures() then 378
+			else -10
+		width:
+			script: if has_two_pictures() then 45
+		height:
+			script: if has_two_pictures() then 25
+		z index: 1
+		angle: 180
+		visible: { card.defense2 != "" and has_two_pictures() }
+		render style: image
+		choice images:
+			defense: defensebutton.png
+	charm_field:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category == "blank")
+				or is_combat() then 159
+			else if is_transforming() then 206
+			else if is_item() then 178
+			else if is_place() then -10
+			else 171
+		top:
+			script: if has_two_pictures() then 145
+			else if is_item() then 255
+			else if is_place() then -10
+			else 324
+		width:
+			script: if not is_place() then 45
+		height:
+			script: if not is_place() then 25
+		z index: 1
+		angle:
+			script: if is_item() then 90
+		visible: { card.charm != "" and not is_place() }
+		render style: image
+		choice images:
+			charm: charmbutton.png
+	charm_field2:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category2 == "blank")
+				or is_combat() then 216
+			else if is_transforming() then 169
+			else -10
+		top:
+			script: if has_two_pictures() then 378
+			else -10
+		width:
+			script: if has_two_pictures() then 45
+		height:
+			script: if has_two_pictures() then 25
+		z index: 1
+		angle: 180
+		visible: { card.charm2 != "" and has_two_pictures() }
+		render style: image
+		choice images:
+			charm: charmbutton.png
+	energy_field:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category == "blank")
+				or is_combat() then 206
+			else if is_transforming() then 253
+			else if is_item() then 236
+			else if is_place() then -10
+			else 218
+		top:
+			script: if has_two_pictures() then 145
+			else if is_item() then 255
+			else if is_place() then -10
+			else 324
+		width:
+			script: if not is_place() then 45
+		height:
+			script: if not is_place() then 25
+		z index: 1
+		angle:
+			script: if is_item() then 90
+		visible: { card.energy != "" and not is_place() }
+		render style: image
+		choice images:
+			energy: energybutton.png
+	energy_field2:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category2 == "blank")
+				or is_combat() then 169
+			else if is_transforming() then 122
+			else -10
+		top:
+			script: if has_two_pictures() then 378
+			else -10
+		width:
+			script: if has_two_pictures() then 45
+		height:
+			script: if has_two_pictures() then 25
+		z index: 1
+		angle: 180
+		visible: { card.energy2 != "" and has_two_pictures() }
+		render style: image
+		choice images:
+			energy: energybutton.png
+	move_field:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category == "blank")
+				or is_combat() then 253
+			else if is_transforming() then 300
+			else if is_item() then 306
+			else if is_place() then -10
+			else 265
+		top:
+			script: if has_two_pictures() then 145
+			else if is_item() then 255
+			else if is_place() then -10
+			else 324
+		width:
+			script: if not is_place() then 45
+		height:
+			script: if not is_place() then 25
+		z index: 1
+		angle:
+			script: if is_item() then 90
+		visible: { card.movement != "" and not is_place() }
+		render style: image
+		choice images:
+			move: movebutton.png
+	move_field2:
+		left:
+			script: if is_transforming() and (is_character() or card.special_category2 == "blank")
+				or is_combat() then 122
+			else if is_transforming() then 75
+			else -10
+		top:
+			script: if has_two_pictures() then 378
+			else -10
+		width:
+			script: if has_two_pictures() then 45
+		height:
+			script: if has_two_pictures() then 25
+		z index: 1
+		angle: 180
+		visible: { card.movement2 != "" and has_two_pictures() }
+		render style: image
+		choice images:
+			move: movebutton.png
+	foil:
+		left: 0
+		top: 0
+		width: 375
+		height: 523
+		z index: 5
+		render style: image
+		popup style: in place
+		visible: { styling.foil }
+		choice images:
+			foil: foil.png

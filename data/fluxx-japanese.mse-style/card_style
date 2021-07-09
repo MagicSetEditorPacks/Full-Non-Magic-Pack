@@ -1,0 +1,147 @@
+card style:
+	############################# Background stuff
+	type:
+		left:	0
+		top:	0
+		width:	333
+		height:	516
+		z index: -2
+		popup style: in place
+		render style: image
+		choice images:
+			new rule:  new rule.png
+			action:    action.png
+			goal:      goal.png
+			ungoal:    ungoal.png
+			keeper:    keeper.png
+			creeper:   creeper.png
+			meta rule: meta rule.png
+			surprise:  surprise.png
+	
+	############################# Name Line
+	name:
+		left:	21
+		top:	71
+		width:	32
+		height:	414
+		z index: 1
+		alignment: top center stretch-overflow
+		direction: vertical
+		font:
+			name: { bar_font() }
+			weight: { name_weight() }
+			size: 24
+			scale down to: 16
+			color: black
+	name 2:
+		left: 72
+		top: 182
+		width: 229
+		height: 35
+		z index: 1
+		alignment: bottom center
+		font:
+			name: { name_font() }
+			weight: { name_weight() }
+			size: 22
+			scale down to: 16
+			color: { if is_new_rule() then "black" else "white"}
+	
+	############################# Image
+	image:
+		left:
+			{ if is_kreeper() and styling.keeper_style=="left" then 186
+			  else                                                  63 }
+		top:
+			{ if is_kreeper() and styling.keeper_style!="top and bottom" then 221
+			  else                      221 + card_style.rule_text.content_height }
+		width:
+			{ if is_kreeper() and styling.keeper_style!="top and bottom" then 122
+			  else if is_goal() and styling.goal_images=="two" then           122
+			  else                                                            245 }
+		height:
+			{ if is_kreeper() then
+				if styling.keeper_style!="top and bottom" then                          241
+				else if card.rule_text_2!="" then 234 - card_style.rule_text.content_height
+				else                              244 - card_style.rule_text.content_height
+			  else                                    244 - card_style.rule_text.content_height }
+		z index: 2
+		visible: { not (is_spell() or is_meta()) }
+		default:  /fluxx.mse-game/default-image.png
+	image 2:
+		left:
+			{ if is_kreeper() and styling.keeper_style=="left" then   186
+			  else if is_goal() and styling.goal_images=="two" then   186
+			  else                                                    63 }
+		top:
+			{ if is_kreeper() and styling.keeper_style!="top and bottom" then 221
+			  else                      221 + card_style.rule_text.content_height }
+		width:
+			{ if is_kreeper() and styling.keeper_style!="top and bottom" then 122
+			  else if is_goal() and styling.goal_images=="two" then           122
+			  else                                                            245 }
+		height:
+			{ if is_kreeper() then
+				if styling.keeper_style!="top and bottom" then                          241
+				else if card.rule_text_2!="" then 234 - card_style.rule_text.content_height
+				else                              244 - card_style.rule_text.content_height
+			  else                                    244 - card_style.rule_text.content_height }
+		z index: 1
+		visible: { not (is_spell() or is_meta()) }
+		default:  /fluxx.mse-game/default-image.png
+	
+	############################# Text box
+	rule text:
+		left:
+			{ if is_kreeper() and styling.keeper_style=="right" then 185
+			  else                                                   63 }
+		top: 221
+		width:
+			{ if is_kreeper() and styling.keeper_style!="top and bottom" then 123
+			  else                                                            245 }
+		height:
+			{ if is_spell() or is_meta() then                                      244
+			  else if is_kreeper() and styling.keeper_style!="top and bottom" then 244
+			  else              max(60, min(card_style.rule_text.content_height, 244)) }
+		z index: 2
+		font:
+			name: { text_font() }
+			size: 14
+			scale down to: 10
+			color: black
+		alignment:
+			{ if is_kreeper() and styling.keeper_style!="top and bottom" then "middle left"
+			  else                                                            "top left" }
+		padding left: 2
+		padding top: 2
+		padding right: 2
+		padding bottom: 2
+		line height hard: 1.5
+		line height line: 1.5
+	rule text 2:
+		left: 63
+		top: 455
+		width: 245
+		height: 14
+		z index: 2
+		visible: { is_kreeper() and styling.keeper_style=="top and bottom" }
+		font:
+			name: { text_font() }
+			size: 14
+			scale down to: 10
+			color: black
+		alignment: top center
+		line height hard: 1.5
+		line height line: 1.5
+	
+	############################# Keeper type icon
+	keeper type:
+		left: 214
+		top: 108
+		width: 97
+		height: 68
+		z index: 0
+		visible: { is_keeper() }
+		render style: image
+		alignment: bottom right
+		include file: /fluxx-keeper-types.mse-include/keeper-types

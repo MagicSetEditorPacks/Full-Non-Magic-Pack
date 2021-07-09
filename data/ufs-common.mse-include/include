@@ -1,0 +1,7 @@
+mse version: 0.3.6
+full name: UFS System Symbols
+version: 2008-05-25
+
+# This file doesn't do anything, other files in this directory can be included
+# in game/style files:
+#    watermarks		Includes references to the watermark images, to be used in a style file

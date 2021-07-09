@@ -1,0 +1,294 @@
+﻿mse version: 0.3.8
+short name: Star Wars
+full name: Star Wars TCG
+installer group: star wars tcg/game files
+icon: card-back.png
+position hint: 41
+
+version: 2009-10-03
+
+# Author : CAOC
+############################################################## Functions & filters
+# General functions
+init script:
+	############### Type of card
+	is_unidad := {
+		card.card_type == "character" or 
+	        card.card_type == "ground" or
+	        card.card_type == "space" or
+	        card.card_type == "character-unique" or
+	        card.card_type == "ground-unique" or
+	        card.card_type == "space-unique"
+	}
+	
+
+	is_nunidad := {
+	        card.card_type == "battle" or
+	        card.card_type == "mission" or
+	        card.card_type == "equipment"
+	}
+
+	is_location := {
+	        card.card_type == "location-multi" or
+	        card.card_type == "location-character" or
+	        card.card_type == "location-ground" or
+	        card.card_type == "location-space"
+	}
+
+	############### Determine Card Position
+	
+	type_sort := {
+		type := card.card_type
+		if contains(type, match:"character-unique") then "2"
+		else if contains(type, match:"character") then "1"
+		else if contains(type, match:"ground-unique") then "4"
+		else if contains(type, match:"ground") then "3"
+		else if contains(type, match:"space-unique") then "6"
+		else if contains(type, match:"space") then "5"
+		else if contains(type, match:"battle") then "7"
+		else if contains(type, match:"mission") then "8"
+		else if contains(type, match:"equipment") then "9"
+		else if contains(type, match:"location-multi") then "10"
+		else if contains(type, match:"location-character") then "11"
+		else if contains(type, match:"location-ground") then "12"
+		else if contains(type, match:"location-space") then "13"
+		else "0"
+	}
+
+	card_number := {
+		position(
+			of: card
+			in: set
+			order_by: {type_sort(value)}
+		) +1
+	}
+	
+	card_count := {
+		number_of_items(in: set)
+	}
+	
+	flavor:=remove_tag@(tag: "<i-flavor>")+{"<i-flavor>"+input+"</i-flavor>"}+curly_quotes
+
+############################################################## Set fields
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: text
+	name: artist
+set field:
+	type: text
+	name: copyright
+############################# Default style
+default set style:
+	title:
+		padding left: 2
+		font:
+			size: 16
+############################################################## Card fields
+############################# Background stuff
+card field:
+	type: choice
+	name: card type
+	choice: 
+		name: unit
+		choice: character
+		choice: character-unique
+		choice: ground
+		choice: ground-unique
+		choice: space
+		choice: space-unique
+	choice: battle
+	choice: mission
+	choice: equipment
+	choice:
+		name: location
+		choice: location-multi
+		choice: location-character
+		choice: location-ground
+		choice: location-space
+	description: The background of the card.
+############################# Name line
+card field:
+	type: text
+	name: name
+	identifying: true
+	show statistics: false
+	card list visible: true
+	card list column: 1
+	card list width: 150
+	description: The name of the card.
+############################# Image
+card field:
+	type: image
+	name: image
+	show statistics: false
+	description: The art of the card.
+############################# Card type
+card field:
+	type: text
+	name: type
+	card list visible: true
+	card list column: 8
+	multi line: true
+	description: The type of the card.
+############################# Text box
+card field:
+	type: text
+	name: textbox
+	script:
+		combined_editor( 
+			field1: card.effects,
+			separator: "<line>\n</line>"
+			field2: card.flavor
+			soft_before_empty: true
+		)
+	description: Card effects and flavor text.
+	multi line: true
+###Textbox fields
+card field:
+	type: text
+	name: effects
+	description: Card effect text
+	show statistics: false
+	multi line: true
+	card list visible: true
+	card list column: 5
+card field:
+	type: text
+	name: flavor
+	show statistics: false
+	script: flavor(value)
+	description: Card flavor text
+	multi line: true
+############################# Cost
+card field:
+	type: text
+	name: cost
+	card list visible: true
+	card list column: 3
+	card list width: 150
+	description: The cost of the card.
+############################# Speed
+card field:
+	type: text
+	name: speed
+	card list visible: true
+	card list column: 3
+	card list width: 150
+	description: The speed of the card.
+############################# Power
+card field:
+	type: text
+	name: power
+	card list visible: true
+	card list column: 3
+	card list width: 150
+	description: The power of the card.
+############################# Healt
+card field:
+	type: text
+	name: health
+	card list visible: true
+	card list column: 3
+	card list width: 150
+	description: The health of the card.
+############################# Alignment
+card field:
+	type: choice
+	name: alignment
+	choice: light
+	choice: dark
+	choice: neutral
+	card list visible: true
+	card list column: 3
+	card list width: 150
+	description: The alignment of the card.
+############################# Rarity
+card field:
+	type: choice
+	name: rarity
+	choice: common
+	choice: uncommon
+	choice: rare
+	card list visible: true
+	card list column: 3
+	card list width: 150
+	description: The rarity of the card.
+############################# Unique
+card field:
+	type: text
+	name: unique
+	card list visible: true
+	card list column: 3
+	card list width: 150
+	description: The uniqueness of the card.
+############################# Edition and Card ID
+card field:
+	type: text
+	name: number
+	card list visible: true
+	card list column: 9
+	card list width: 55
+	save value: false
+	show statistics: false
+	script: card_number() + "/" + card_count()
+############################# Symbol
+card field:
+	type: image
+	name: symbol
+	show statistics: false
+	description: The symbol of the card.
+############################################################## Card pack items
+pack type:
+	name: card
+	filter: card.name != ""
+pack type:
+	name: common
+	filter: card.rarity == "common"
+pack type:
+	name: uncommon
+	filter: card.rarity == "uncommon"
+pack type:
+	name: rare
+	filter: card.rarity == "rare"
+############################################################## Card packs
+pack type:
+	name: booster pack
+	item:
+		name: rare
+		amount: 1
+	item:
+		name: uncommon
+		amount: 3
+	item:
+		name: common
+		amount: 7
+pack type:
+	name: mini booster pack
+	item:
+		name: card
+		amount: 5
+pack type:
+	name: additional card
+	item:
+		name: card
+pack type:
+	name: additional common
+	item:
+		name: common
+pack type:
+	name: additional uncommon
+	item:
+		name: uncommon
+pack type:
+	name: additional rare
+	item:
+		name: rare

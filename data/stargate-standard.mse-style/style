@@ -1,0 +1,309 @@
+mse version: 2.0.0
+game: stargate
+short name: stargate
+full name: stargate standard
+installer group: stargate/standard
+icon: card-sample.png
+
+version: 2014-02-01
+depends on:
+	package: stargate.mse-game
+	version: 2010-09-23
+
+card width: 375
+card height: 525
+card dpi: 150
+############################################################## Extra style
+############################################################## Scripts
+init script:
+	is_character_sgc := { contains(card.type, match: "character sgc") }
+	is_character_tokra := { contains(card.type, match: "character tokra") }
+	is_character_ancient := { contains(card.type, match: "character ancient") }
+	is_character_asgard := { contains(card.type, match: "character asgard") }
+	is_character_atlantis := { contains(card.type, match: "character atlantis") }
+	is_character_nid := { contains(card.type, match: "character nid") }
+	is_character_russian := { contains(card.type, match: "character russian") }
+	is_character_jaffa := { contains(card.type, match: "character jaffa") }
+	is_character_generic := { contains(card.type, match: "character generic") }
+	
+	is_gear_event_sgc := { contains(card.type, match: "gear event sgc") }
+	is_gear_event_tokra := { contains(card.type, match: "gear event tokra") }
+	is_gear_event_ancient := { contains(card.type, match: "gear event ancient") }
+	is_gear_event_asgard := { contains(card.type, match: "gear event asgard") }
+	is_gear_event_atlantis := { contains(card.type, match: "gear event atlantis") }
+	is_gear_event_nid := { contains(card.type, match: "gear event nid") }
+	is_gear_event_russian := { contains(card.type, match: "gear event russian") }
+	is_gear_event_jaffa := { contains(card.type, match: "gear event jaffa") }
+	is_gear_event_wraith := { contains(card.type, match: "gear event wraith") }
+	is_gear_event_generic := { contains(card.type, match: "gear event generic") }
+	is_adversary_political := { contains(card.type, match: "adversary political") }
+	is_adversary_jaffa := { contains(card.type, match: "adversary jaffa") }
+	is_adversary_goauld := { contains(card.type, match: "adversary goauld") }
+	is_adversary_replicator := { contains(card.type, match: "adversary replicator") }
+	is_adversary_ori := { contains(card.type, match: "adversary ori") }
+	is_adversary_wraith := { contains(card.type, match: "adversary wraith") }
+	is_adversary_generic := { contains(card.type, match: "adversary generic") }
+	is_obstacle_political := { contains(card.type, match: "obstacle political") }
+	is_obstacle_jaffa := { contains(card.type, match: "obstacle jaffa") }
+	is_obstacle_goauld := { contains(card.type, match: "obstacle goauld") }
+	is_obstacle_replicator := { contains(card.type, match: "obstacle replicator") }
+	is_obstacle_ori := { contains(card.type, match: "obstacle ori") }
+	is_obstacle_wraith := { contains(card.type, match: "obstacle wraith") }
+	is_obstacle_Disease := { contains(card.type, match: "obstacle Disease") }
+	is_obstacle_generic := { contains(card.type, match: "obstacle generic") }
+	is_ship_sgc := { contains(card.type, match: "ship sgc") }
+	is_ship_tokra := { contains(card.type, match: "ship tokra") }
+	is_ship_ancient := { contains(card.type, match: "ship ancient") }
+	is_ship_asgard := { contains(card.type, match: "ship asgard") }
+	is_ship_atlantis := { contains(card.type, match: "ship atlantis") }
+	is_ship_nid := { contains(card.type, match: "ship nid") }
+	is_ship_russian := { contains(card.type, match: "ship russian") }
+	is_ship_hjaffa := { contains(card.type, match: "ship hjaffa") }
+	is_ship_vjaffa := { contains(card.type, match: "ship vjaffa") }
+	is_ship_ori := { contains(card.type, match: "ship ori") }
+	is_ship_goauld := { contains(card.type, match: "ship goauld") }
+	is_ship_replicator := { contains(card.type, match: "ship replicator") }
+	is_ship_wraith := { contains(card.type, match: "ship wraith") }
+	is_ship_hgeneric := { contains(card.type, match: "ship hgeneric") }
+	is_ship_vgeneric := { contains(card.type, match: "ship vgeneric") }
+############################################################## Card fields
+card style:
+	type:
+		left:	0
+		top:	0
+		width:	375
+		height:	525
+		z index: 0
+		render style: image
+		popup style: in place
+		choice images:
+			character sgc: character_sgc.jpg
+			character tokra: character_tok'ra.jpg
+			character ancient: character_ancient.jpg
+			character asgard: character_asgard.jpg
+			character atlantis: character_atlantis.jpg
+			character nid: character_nid.jpg
+			character russian: character_russian.jpg
+			character jaffa: character_jaffa.jpg
+			character generic: character_generic.jpg
+			gear event sgc: gear_event_sgc.jpg
+			gear event tokra: gear_event_tok'ra.jpg
+			gear event ancient: gear_event_ancient.jpg
+			gear event asgard: gear_event_asgard.jpg
+			gear event atlantis: gear_event_atlantis.jpg
+			gear event nid: gear_event_nid.jpg
+			gear event russian: gear_event_russian.jpg
+			gear event jaffa: gear_event_jaffa.jpg
+			gear event wraith: gear_event_wraith.jpg
+			gear event generic: gear_event_generic.jpg
+			adversary political: adversary_political.jpg
+			adversary jaffa: adversary_jaffa.jpg
+			adversary goauld: adversary_goa'uld.jpg
+			adversary replicator: adversary_replicator.jpg
+			adversary ori: adversary_ori.jpg
+			adversary wraith: adversary_wraith.jpg
+			adversary generic: adversary_generic.jpg
+			obstacle political: obstacle_political.jpg
+			obstacle jaffa: obstacle_jaffa.jpg
+			obstacle goauld: obstacle_goa'uld.jpg
+			obstacle replicator: obstacle_replicator.jpg
+			obstacle ori: obstacle_ori.jpg
+			obstacle wraith: obstacle_wraith.jpg
+			obstacle Disease: obstacle_Disease.jpg
+			obstacle generic: obstacle_generic.jpg
+			ship sgc: ship_sgc.jpg
+			ship tokra: ship_tok'ra.jpg
+			ship ancient: ship_ancient.jpg
+			ship asgard: ship_asgard.jpg
+			ship atlantis: ship_atlantis.jpg
+			ship nid: ship_nid.jpg
+			ship russian: ship_russian.jpg
+			ship hjaffa: ship_hjaffa.jpg
+			ship vjaffa: ship_vjaffa.jpg
+			ship ori: ship_ori.jpg
+			ship goauld: ship_goa'uld.jpg
+			ship replicator: ship_replicator.jpg
+			ship wraith: ship_wraith.jpg
+			ship hgeneric: ship_hgeneric.jpg
+			ship vgeneric: ship_vgeneric.jpg
+	image:
+		left: 0
+		top: 60
+		width: 375
+		height: 229
+		z index: 1
+		mask: 
+			script:
+				if card.type == "character sgc" then "character_sgc_mask.png"
+				else if card.type == "character tokra" then "character_tok'ra_mask.png"
+				else if card.type == "character ancient" then "character_ancient_mask.png"
+				else if card.type == "character asgard" then "character_asgard_mask.png"
+				else if card.type == "character atlantis" then "character_atlantis_mask.png"
+				else if card.type == "character nid" then "character_nid_mask.png"
+				else if card.type == "character russian" then "character_russian_mask.png"
+				else if card.type == "character jaffa" then "character_jaffa_mask.png"
+				else if card.type == "character generic" then "character_generic_mask.png"
+				else if card.type == "gear event sgc" then "gear_event_sgc_mask.png"
+				else if card.type == "gear event tokra" then "gear_event_tok'ra_mask.png"
+				else if card.type == "gear event ancient" then "gear_event_ancient_mask.png"
+				else if card.type == "gear event asgard" then "gear_event_asgard_mask.png"
+				else if card.type == "gear event atlantis" then "gear_event_atlantis_mask.png"
+				else if card.type == "gear event nid" then "gear_event_nid_mask.png"
+				else if card.type == "gear event russian" then "gear_event_russian_mask.png"
+				else if card.type == "gear event jaffa" then "gear_event_jaffa_mask.png"
+				else if card.type == "gear event wraith" then "gear_event_wraith_mask.png"
+				else if card.type == "gear event generic" then "gear_event_generic_mask.png"
+				else if card.type == "adversary political" then "adversary_political_mask.png"
+				else if card.type == "adversary jaffa" then "adversary_jaffa_mask.png"
+				else if card.type == "adversary goauld" then "adversary_goa'uld_mask.png"
+				else if card.type == "adversary replicator" then "adversary_replicator_mask.png"
+				else if card.type == "adversary ori" then "adversary_ori_mask.png"
+				else if card.type == "adversary wraith" then "adversary_wraith_mask.png"
+				else if card.type == "adversary generic" then "adversary_generic_mask.png"
+				else if card.type == "obstacle political" then "obstacle_political_mask.png"
+				else if card.type == "obstacle jaffa" then "obstacle_jaffa_mask.png"
+				else if card.type == "obstacle goauld" then "obstacle_goa'uld_mask.png"
+				else if card.type == "obstacle replicator" then "obstacle_replicator_mask.png"
+				else if card.type == "obstacle ori" then "obstacle_ori_mask.png"
+				else if card.type == "obstacle wraith" then "obstacle_wraith_mask.png"
+				else if card.type == "obstacle disease" then "obstacle_disease_mask.png"
+				else if card.type == "obstacle generic" then "obstacle_generic_mask.png"
+				else if card.type == "ship sgc" then "ship_sgc_mask.png"
+				else if card.type == "ship tokra" then "ship_tok'ra_mask.png"
+				else if card.type == "ship ancient" then "ship_ancient_mask.png"
+				else if card.type == "ship asgard" then "ship_asgard_mask.png"
+				else if card.type == "ship atlantis" then "ship_atlantis_mask.png"
+				else if card.type == "ship nid" then "ship_nid_mask.png"
+				else if card.type == "ship russian" then "ship_russian_mask.png"
+				else if card.type == "ship hjaffa" then "ship_hjaffa_mask.png"
+				else if card.type == "ship vjaffa" then "ship_vjaffa_mask.png"
+				else if card.type == "ship ori" then "ship_ori_mask.png"
+				else if card.type == "ship goauld" then "ship_goa'uld_mask.png"
+				else if card.type == "ship replicator" then "ship_replicator_mask.png"
+				else if card.type == "ship wraith" then "ship_wraith_mask.png"
+				else if card.type == "ship hgeneric" then "ship_hgeneric_mask.png"
+				else if card.type == "ship vgeneric" then "ship_vgeneric_mask.png"
+				else nil
+		default: black.png
+	skill1:
+		left: 40
+		top:  100
+		width: 20
+		height: 25
+		z index: 3
+		alignment: middle center
+		font:
+			name: BelweStd-Bold
+			size: 15
+			color: black
+	skill2:
+		left: 40
+		top:  145
+		width: 20
+		height: 25
+		z index: 3
+		alignment: middle center
+		font:
+			name: BelweStd-Bold
+			size: 15
+			color: black
+	skill3:
+		left: 40
+		top: 193
+		width: 20
+		height: 25
+		z index: 3
+		alignment: middle center
+		font:
+			name: BelweStd-Bold
+			size: 15
+			color: black
+	skill4:
+		left: 40
+		top:  240
+		width: 20
+		height: 25
+		z index: 3
+		alignment: middle center
+		font:
+			name: BelweStd-Bold
+			size: 15
+			color: black
+	fpower:
+		left: 35
+		top:  260
+		width: 20
+		height: 25
+		z index: 3
+		alignment: middle center
+		font:
+			name: BelweStd-Bold
+			size: 15
+			color: black
+	rcost:
+		left: 330
+		top:  260
+		width: 20
+		height: 25
+		z index: 3
+		alignment: middle center
+		font:
+			name: BelweStd-Bold
+			size: 15
+			color: black
+	cost:
+		left: 20
+		top:  30
+		width: 25
+		height: 25
+		z index: 1
+		alignment: middle center
+		font:
+			name: BelweStd-Bold
+			size: 15
+			color: black
+	name:
+		left: 82
+		top : 13
+		width: 276
+		height: 25
+		alignment: middle shrink-overflow
+		z index: 1
+		font:
+			name: BelweStd-Bold
+			size: 15
+			color: black
+	subname
+		left:82
+		top:38
+		width:250
+		height:23
+		alignment: middle shrink-overflow
+		z index: 1
+		font:
+			name: BelweStd-Bold
+			size: 13
+			color: black
+	subtype:
+		left: 50
+		top : 307
+		width: 280
+		height: 18
+		alignment: center shrink-overflow
+		z index: 1
+		font:
+			name: BelweStd-Bold
+			size: 15
+			color: black
+	gametext:
+		left: 15
+		top: 335
+		width: 345
+		height: 170
+		z index: 1
+		alignment: top left
+		font:
+			name: TradeGothic LT CondEighteen
+			size: 15
+			scale down to: 6
+			color: black

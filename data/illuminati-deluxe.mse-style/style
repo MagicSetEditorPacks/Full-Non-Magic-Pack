@@ -1,0 +1,614 @@
+﻿mse version: 2.0.0
+game: illuminati
+short name: deluxe
+full name: Illuminati Cards
+installer group: illuminati/deluxe cards
+icon: card-sample.png
+position hint: 01
+version: 2014-03-03
+
+depends on:
+	package: illuminati.mse-game
+	version: 2014-03-03
+
+card width: 560
+card height: 390
+card dpi: 150
+
+init script:
+	darkbg := { is_illuminati() or is_goal() }
+	is_horizontal := { is_group() or is_illuminati() or is_special() }
+	is_vertical := { is_artifact() or is_nwo() or is_goal() }
+
+	currenttextcolor := {
+		if chosen(styling.font_color, choice: "normal") then
+			if darkbg() then "rgb(225,225,100)" else "rgb(0,0,0)"
+		else if darkbg() then "rgb(225,225,100)" else "rgb(255,255,255)"
+	}
+
+	########## Colored fields
+
+	blackfield := { recolor_image( "colorfield.png", color: rgb(0,0,0)) }
+	whitefield := { recolor_image( "colorfield.png", color: rgb(255,255,255)) }
+	grayfield := { recolor_image( "colorfield.png", color: rgb(80,80,80)) }
+
+	redfield := { recolor_image( "colorfield.png", color: rgb(240,50,40)) }
+	bluefield := { recolor_image( "colorfield.png", color: rgb(16,150,225)) }
+	yellowfield := { recolor_image( "colorfield.png", color: rgb(250,225,16)) }
+
+	redfade := { recolor_image( "colorfade.png", color: rgb(240,50,40)) }
+	bluefade := { recolor_image( "colorfade.png", color: rgb(16,150,225)) }
+	yellowfade := { recolor_image( "colorfade.png", color: rgb(250,225,16)) }
+
+	########## Placing arrows
+
+	arrowimage := { 
+		if chosen(choice: "none") then nil
+		else recolor_image( rotate("arrow.png", angle: arrowdirection()), color: arrowcolor() )
+	}
+
+	arrowdirection := {
+		if chosen(choice: "out") then (
+			if siding == "top" then 0
+			else if siding == "left" then 90
+			else if siding == "bottom" then 180
+			else if siding == "right" then 270
+		)
+		else if chosen(choice: "in") then (
+			if siding == "top" then 180
+			else if siding == "left" then 270
+			else if siding == "bottom" then 0
+			else if siding == "right" then 90
+		)
+	}
+
+	arrowcolor := {
+		if chosen(choice: "gold") then rgb(225,225,100)
+		else if chosen(choice: "white") then rgb(255,255,255)
+		else rgb(0,0,0)
+	}
+
+	########## Placing the Name
+
+	name_top := {
+		if arrowsallowed() then 72
+		else if is_special() then 36
+		else if is_artifact() then 350
+		else if is_nwo() then 350
+		else if is_goal() then 350
+	}
+	name_left := {
+		if arrowsallowed() then 72
+		else if is_special() then 40
+		else if is_artifact() then 32
+		else if is_nwo() then 62
+		else if is_goal() then 60
+	}
+	name_height := { max(30, card_style.name.content_height) }
+	name_width := {
+		if arrowsallowed() then 416
+		else if is_special() then 480
+		else if is_artifact() then 310
+		else if is_nwo() then 310
+		else if is_goal() then 310
+	}
+
+	########## Placing the Rules Text
+
+	rules_bottom := {
+		if is_group() then 220
+		else if is_illuminati() then 220
+		else if is_special() then 354
+		else if is_artifact() then 350
+		else if is_nwo() then 350
+		else if is_goal() then 350
+	}
+	rules_left := {
+		if is_group() then 72
+		else if is_illuminati() then 72
+		else if is_special() and styling.special_alignment == "left" then 36
+		else if is_special() and styling.special_alignment == "right" then 306
+		else if is_special() and styling.special_alignment == "bottom" then 36
+		else if is_artifact() then 484
+		else if is_nwo() then 520
+		else if is_goal() then 520
+	}
+	rules_height := {
+		if is_group() then ( 144 - name_height() )
+		else if is_illuminati() then ( 144 - name_height() )
+		else if is_special() and styling.special_alignment == "bottom" then 78
+		else if is_special() then ( 298 - name_height() )
+		else if is_artifact() then max(96, card_style.rules.content_height)
+		else if is_nwo() then max(98, card_style.rules.content_height)
+		else if is_goal() then max(104, card_style.rules.content_height)
+	}
+	rules_width := {
+		if is_group() then 416
+		else if is_illuminati() then 416
+		else if is_special() and styling.special_alignment == "bottom" then 488
+		else if is_special() then 218
+		else if is_artifact() then 310
+		else if is_nwo() then 310
+		else if is_goal() then 310
+	}
+	rules_alignment := {
+		if arrowsallowed() then "top center"
+		else if is_special() then "middle left"
+		else if is_artifact() then "middle center"
+		else if is_nwo() then "middle center"
+		else if is_goal() then "middle center"
+	}
+
+	########## Placing the Picture
+
+	picture_top := {
+		if arrowsallowed() then ( 80 + name_height() + card_style.rules.content_height )
+		else if is_special() then ( 44 + name_height() )
+		else if is_artifact() then 350
+		else if is_nwo() then 350
+		else if is_goal() then 350
+	}
+	picture_bottom := {
+		if arrowsallowed() then 326
+		else if is_special() and styling.special_alignment == "bottom" then 268
+		else if is_special() then 350
+		else if is_artifact() then (794 - name_height() - rules_height())
+		else if is_nwo() then (796 - name_height() - rules_height())
+		else if is_goal() then (802 - name_height() - rules_height())
+	}
+	picture_width := {
+		if is_horizontal() then (picture_bottom() - picture_top())
+		else 310
+	}
+	picture_left := {
+		if is_horizontal() then (
+			(560 - picture_width()) / 2 + (
+				if arrowsallowed() then 0
+				else if is_special() and styling.special_alignment == "left" then 120
+				else if is_special() and styling.special_alignment == "right" then (-120)
+				else if is_special() and styling.special_alignment == "bottom" then 0
+			)
+		)
+		else if is_artifact() then (36 + name_height())
+		else if is_nwo() then (70 + name_height())
+		else if is_goal() then (64 + name_height())
+	}
+	picture_right := {
+		if is_horizontal() then (
+			(560 + picture_width()) / 2 + (
+				if arrowsallowed() then 0
+				else if is_special() and styling.special_alignment == "left" then 120
+				else if is_special() and styling.special_alignment == "right" then (-120)
+				else if is_special() and styling.special_alignment == "bottom" then 0
+			)
+		)
+		else if is_artifact() then (name_height() + 346)
+		else if is_nwo() then (name_height() + 380)
+		else if is_goal() then (name_height() + 374)
+	}
+	picture_mask := {
+		if styling.center_image == "none" then blackfield()
+		else if styling.center_image == "square" then whitefield()
+		else if styling.center_image == "circle" then "maskcircle.png"
+		else if styling.center_image == "fuzzy square" then "maskfuzzysquare.png"
+		else if styling.center_image == "fuzzy circle" then "maskfuzzycircle.png"
+		else if styling.center_image == "triangle" then "masktriangle.png"
+		else if styling.center_image == "inverted triangle" then "maskinvtriangle.png"
+	}
+
+	########## Other Styling controls
+
+	fader_image := {
+		if darkbg() then blackfield()
+		else if is_nwo() and card.nwo_color == "red" then rotate(redfade(), angle: -90)
+		else if is_nwo() and card.nwo_color == "blue" then rotate(bluefade(), angle: -90)
+		else if is_nwo() and card.nwo_color == "yellow" then rotate(yellowfade(), angle: -90)
+		else whitefield()
+	}
+
+	name_plate_image := {
+		if is_special() then blackfield()
+		else if card.nwo_color == "red" then redfield()
+		else if card.nwo_color == "blue" then bluefield()
+		else if card.nwo_color == "yellow" then yellowfield()
+	}
+
+	showattributes := {
+		( if chosen(card.attributes, choice: "government") then "\nGovernment" )
+		+ ( if chosen(card.attributes, choice: "communist") then "\nCommunist" )
+		+ ( if chosen(card.attributes, choice: "corporate") then "\nCorporate" )
+		+ ( if chosen(card.attributes, choice: "liberal") then "\nLiberal" )
+		+ ( if chosen(card.attributes, choice: "conservative") then "\nConservative" )
+		+ ( if chosen(card.attributes, choice: "straight") then "\nStraight" )
+		+ ( if chosen(card.attributes, choice: "weird") then "\nWeird" )
+		+ ( if chosen(card.attributes, choice: "peaceful") then "\nPeaceful" )
+		+ ( if chosen(card.attributes, choice: "violent") then "\nViolent" )
+		+ ( if chosen(card.attributes, choice: "criminal") then "\nCriminal" )
+		+ ( if chosen(card.attributes, choice: "fanatic") then "\nFanatic" )
+	}
+
+	pow_bottom := {
+		if resallowed() and incallowed() then 306
+		else if resallowed() or incallowed() then 326
+		else 346
+	}
+
+styling field:
+	type: boolean
+	name: fade
+	initial: yes
+	description: Large background pictures fade out for easier reading.
+styling field:
+	type: choice
+	name: font color
+	choice: normal
+	choice: inverted
+	initial: normal
+	description: Reverse the default font colors for easier reading.
+styling field:
+	type: choice
+	name: center image
+	choice: none
+	choice: square
+	choice: circle
+	choice: fuzzy square
+	choice: fuzzy circle
+	choice: triangle
+	choice: inverted triangle
+	initial: circle
+	description: Shape of the image in the center of the card.
+styling field:
+	type: choice
+	name: special alignment
+	choice: left
+	choice: right
+	choice: bottom
+	initial: left
+	description: Text on special cards goes on this side.
+card style:
+	card type:
+		top: 0
+		left: 0
+		width: 560
+		height: 390
+		z index: 9
+		popup style: in place
+		render style: image
+		image: { if darkbg() then whitefield() else blackfield() }
+		mask: maskborder.png
+	background:
+		top: { if is_vertical() then 390 else 0 }
+		left: 0
+		width: { if is_vertical() then 390 else 560 }
+		height: { if is_vertical() then 560 else 390 }
+		z index: 1
+		angle: { if is_vertical() then 90 else 0 }
+		default: { if darkbg() then blackfield() else whitefield() }
+		mask: { if styling.fade then grayfield() else whitefield() }
+	nwo color:
+		top: 82
+		left: 40
+		height: { if is_nwo() then 16 else 0 }
+		width: 48
+		z index: 99
+		angle: 90
+		popup style: in place
+		render style: hidden
+	name:
+		top: { name_top() }
+		left: { name_left() }
+		height: { name_height() }
+		width: { name_width() }
+		z index: 5
+		angle: { if is_vertical() then 90 else 0 }
+		alignment: center top
+		font:
+			name: Eurostile
+			italic name: EurostileObl-Normal
+			size: 20
+			weight: bold
+			color: { if is_special() then rgb(255,255,255) else if is_nwo() then rgb(0,0,0) else currenttextcolor() }
+	rules:
+		bottom: { rules_bottom() }
+		left: { rules_left() }
+		height: { rules_height() }
+		width: { rules_width() }
+		z index: 4
+		angle: { if is_vertical() then 90 else 0 }
+		alignment: { rules_alignment() }
+		font:
+			name: Eurostile
+			italic name: EurostileObl-Normal
+			size: { if is_horizontal() then 16 else 12 }
+			scale down to: 8
+			color: { if is_special() then rgb(0,0,0) else currenttextcolor() }
+		line height hard: 1.25
+	picture:
+		top: { picture_top() }
+		bottom: { picture_bottom() }
+		left: { picture_left() }
+		right: { picture_right() }
+		z index: 2
+		angle: { if is_vertical() then 90 else 0 }
+		default: { if darkbg() then blackfield() else whitefield() }
+		mask: { picture_mask() }
+	########## Stats
+	all power:
+		bottom: { if is_illuminati() then 332 else pow_bottom() }
+		left: { if is_illuminati() then ( 92 - max(16, (card_style.all_power.content_width/2)) ) else 92 }
+		width: { max(32, card_style.all_power.content_width) }
+		height: { if is_illuminati() then 32 else if arrowsallowed() and powallowed() then 20 else 0 }
+		z index: 5
+		alignment: { if is_illuminati() then "top center" else "top left" }
+		font:
+			name: Eurostile
+			size: { if is_illuminati() then 20 else 14 }
+			weight: bold
+			color: { currenttextcolor() }
+	resistance:
+		bottom: { if is_artifact() then 252 else if incallowed() then 326 else 346 }
+		left: { if is_artifact() then 528 else 130 }
+		width: { max(12, card_style.resistance.content_width) }
+		height: { if (is_group() or is_artifact()) and resallowed() then 20 else 0 }
+		z index: 5
+		alignment: top left
+		angle: { if is_vertical() then 90 else 0 }
+		font:
+			name: Eurostile
+			size: 14
+			weight: bold
+			color: { currenttextcolor() }
+	income:
+		bottom: { if is_illuminati() then 332 else 346 }
+		left: { if is_illuminati() then ( 470 - max(12, (card_style.income.content_width/2)) ) else 100 }
+		width: { max(24, card_style.income.content_width) }
+		height: { if is_illuminati() then 32 else if arrowsallowed() and incallowed() then 20 else 0 }
+		z index: 5
+		alignment: { if is_illuminati() then "top center" else "top left" }
+		font:
+			name: Eurostile
+			size: { if is_illuminati() then 20 else 14 }
+			weight: bold
+			color: { currenttextcolor() }
+	select stats:
+		bottom: { if is_artifact() then 350 else 346 }
+		left: { if is_artifact() then 528 else 32 }
+		width: { if is_artifact() then 120 else 120 }
+		height: { if is_artifact() then 40 else if is_group() then 60 else 0 }
+		z index: 4
+		angle: { if is_vertical() then 90 else 0 }
+		popup style: in place
+		render style: hidden
+	attributes:
+		bottom: { if is_group() then 346 else 40 }
+		right: { if is_group() then 528 else 528 }
+		width: 120
+		height: { if is_group() then 120 else if is_artifact() then 40 else 0 }
+		z index: 4
+		angle: { if is_vertical() then 90 else 0 }
+		popup style: in place
+		render style: hidden
+	########## Arrows
+	top arrow:
+		top: 32
+		left: 255
+		width: 50
+		height: { if arrowsallowed() then 24 else 0 }
+		z index: 8
+		render style: image
+		image: { arrowimage(card.top_arrow, siding: "top") }
+	left arrow:
+		top: 170
+		left: 32
+		width: { if arrowsallowed() then 24 else 0 }
+		height: 50
+		z index: 8
+		render style: image
+		image: { arrowimage(card.left_arrow, siding: "left") }
+	right arrow:
+		top: 170
+		right: 528
+		width: { if arrowsallowed() then 24 else 0 }
+		height: 50
+		z index: 8
+		render style: image
+		image: { arrowimage(card.right_arrow, siding: "right") }
+	bottom arrow:
+		bottom: 358
+		left: 255
+		width: 50
+		height: { if arrowsallowed() then 24 else 0 }
+		z index: 8
+		render style: image
+		image: { arrowimage(card.bottom_arrow, siding: "bottom") }
+	########## Artists
+	artist1:
+		bottom: { if is_horizontal() then 370 else 350}
+		left: { if is_horizontal() then 38 else 540 }
+		height: 10
+		width: { if is_horizontal() then 200 else 310 }
+		z index: 4
+		angle: { if is_vertical() then 90 else 0 }
+		alignment: middle center
+		font:
+			name: Eurostile
+			size: 8
+			color: { currenttextcolor() }
+	artist2:
+		bottom: 370
+		right: 524
+		height: { if is_horizontal() then 10 else 0 }
+		width: 200
+		z index: 4
+		alignment: middle center
+		font:
+			name: Eurostile
+			size: 8
+			color: { currenttextcolor() }
+########## Special image fields
+extra card field:
+	type: image
+	name: fader
+	editable: false
+extra card field:
+	type: choice
+	name: name plate
+	choice: npi
+	initial: npi
+	editable: false
+extra card field:
+	type: choice
+	name: name plate border
+	choice: npbi
+	initial: npbi
+	editable: false
+extra card field:
+	type: choice
+	name: rules plate
+	choice: rpi
+	initial: rpi
+	editable: false
+extra card field:
+	type: choice
+	name: rules plate border
+	choice: rpbi
+	initial: rpbi
+	editable: false
+########## Display fields for stats
+extra card field:
+	type: text
+	name: power text
+	editable: false
+	default: if is_illuminati() then "POWER" else "Power:"
+extra card field:
+	type: text
+	name: resistance text
+	editable: false
+	default: "Resistance:"
+extra card field:
+	type: text
+	name: income text
+	editable: false
+	default: if is_illuminati() then "INCOME" else "Income:"
+extra card field:
+	type: text
+	name: attributes text
+	editable: false
+	script: showattributes()
+extra card field:
+	type: text
+	name: type text
+	editable: false
+	default: if is_artifact() then "Artifact " else if is_nwo() then "NWO " else "Special Goal "
+	script: if is_artifact() then "Artifact " else if is_nwo() then "NWO " else "Special Goal "
+extra card style:
+	fader:
+		top: { if is_vertical() then 390 else 0 }
+		left: 0
+		width: { if is_vertical() then 390 else 560 }
+		height: { if is_vertical() then 560 else 390 }
+		z index: 0
+		angle: { if is_vertical() then 90 else 0 }
+		default: { fader_image() }
+	name plate:
+		top: { if is_nwo() then 390 else 32 }
+		left: { if is_nwo() then 34 else 0 }
+		width: { if is_nwo() then 390 else 560 }
+		height: { 8 + name_height() + (if is_nwo() then 24) }
+		z index: 4
+		angle: { if is_vertical() then 90 else 0 }
+		visible: { is_special() or is_nwo() }
+		render style: image
+		image: { name_plate_image() }
+	name plate border:
+		top: 390
+		left: 32
+		width: 390
+		height: { name_height() + 36 }
+		z index: 2
+		angle: { if is_vertical() then 90 else 0 }
+		visible: { is_nwo() }
+		render style: image
+		image: { blackfield() }
+	rules plate:
+		bottom: { if styling.special_alignment == "bottom" then (rules_bottom() + 2) else 390 }
+		left: { if styling.special_alignment == "bottom" then 0 else (rules_left() - 2) }
+		height: { if styling.special_alignment == "bottom" then (rules_height() + 4) else 390 }
+		width: { if styling.special_alignment == "bottom" then 560 else (rules_width() + 4) }
+		z index: 3
+		visible: { is_special() }
+		render style: image
+		image: { yellowfield() }
+	rules plate border:
+		bottom: { if styling.special_alignment == "bottom" then (rules_bottom() + 4) else 390 }
+		left: { if styling.special_alignment == "bottom" then 0 else (rules_left() - 4) }
+		height: { if styling.special_alignment == "bottom" then (rules_height() + 8) else 390 }
+		width: { if styling.special_alignment == "bottom" then 560 else (rules_width() + 8) }
+		z index: 2
+		angle: { if is_vertical() then 90 else 0 }
+		visible: { is_special() }
+		render style: image
+		image: { blackfield() }
+	power text:
+		bottom: { if is_illuminati() then 302 else pow_bottom() }
+		left: { if is_illuminati() then 60 else 32 }
+		width: 120
+		height: { if arrowsallowed() and powallowed() then 20 else 0 }
+		z index: 3
+		alignment: top left
+		font:
+			name: Eurostile
+			size: { if is_illuminati() then 14 else 14 }
+			weight: bold
+			color: { currenttextcolor() }
+	resistance text:
+		bottom: { if is_artifact() then 350 else if incallowed() then 326 else 346 }
+		left: { if is_artifact() then 528 else 32 }
+		width: 120
+		height: { if (is_group() or is_artifact()) and resallowed() then 20 else 0 }
+		z index: 3
+		angle: { if is_vertical() then 90 else 0 }
+		alignment: top left
+		font:
+			name: Eurostile
+			size: 14
+			weight: bold
+			color: { currenttextcolor() }
+	income text:
+		bottom: { if is_illuminati() then 302 else 346 }
+		left: { if is_illuminati() then 436 else 32 }
+		width: 120
+		height: { if arrowsallowed() and incallowed() then 20 else 0 }
+		z index: 3
+		alignment: top left
+		font:
+			name: Eurostile
+			size: { if is_illuminati() then 14 else 14 }
+			weight: bold
+			color: { currenttextcolor() }
+	attributes text:
+		bottom: { if is_group() then 346 else 40 }
+		right: { if is_group() then 528 else 528 }
+		width: 120
+		height: { if is_group() then 120 else if is_artifact() then 40 else 0 }
+		z index: 3
+		angle: { if is_vertical() then 90 else 0 }
+		alignment: right bottom
+		font:
+			name: Eurostile
+			size: 14
+			weight: bold
+			color: { currenttextcolor() }
+	type text:
+		bottom: { if is_nwo() then 152 else if is_goal() then 237 else if is_artifact() then 350 }
+		left: { if is_nwo() then 58 else if is_goal() then 56 else if (is_artifact() and resallowed()) then 508 else 528 }
+		height: { if is_vertical() then 20 else 0 }
+		width: 120
+		z index: 4
+		angle: { if is_vertical() then 90 else 0 }
+		alignment: { if is_nwo() then "top right" else "top left" }
+		font:
+			name: EurostileObl-Normal
+			size: 14
+			weight: bold
+			color: { if is_nwo() then rgb(0,0,0) else currenttextcolor() }

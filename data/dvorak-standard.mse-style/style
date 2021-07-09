@@ -1,0 +1,139 @@
+mse version: 0.3.6
+game: dvorak
+short name: Standard
+full name: Standard
+installer group: Dvorak/Standard
+icon: card-sample.png
+position hint: 001
+
+version: 2008-5-19
+depends on:
+	package: dvorak.mse-game
+	version: 2008-5-14
+
+card background: white
+card width: 375
+card height: 523
+card dpi: 300
+
+############################################################## Extra scripts
+############################################################## Set info fields
+set info style:
+	title:
+		padding left: 2
+		font:
+			size: 16
+############################################################## Extra style
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	card type:
+		left:	0
+		top:	0
+		width:	375
+		height:	523
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			action:	       card-action.png
+			thing:	   	   card-thing.png
+			rule:	 	   card-general.png
+	############################# Name line
+	name:
+		left: 37
+		top : 31
+		width: 260
+		height: 35
+		alignment: middle
+		padding bottom: 0
+		z index: 2
+		font:
+			name: MatrixBoldSmallCaps
+			size: 14
+			color: 
+				script: rgb(0,0,0)
+	value:
+		left: 300
+		top : 32
+		width: 35
+		height: 35
+		z index: 2
+		alignment: middle right
+		font:
+			name: MatrixBoldSmallCaps
+			size: 14
+			color: 
+				script: rgb(0,0,0)
+	type:
+		left: 45
+		top : 78
+		height: 25
+		width: 285
+		z index: 2
+		alignment: center
+		font:
+			name: MatrixBoldSmallCaps
+			size: 14
+	############################# Image
+	image:
+		left:	53
+		top:	114
+		width: 267
+		height:	221
+		z index: 1
+	############################# Edition and Card ID
+	number:
+		left: 210
+		top : 342
+		width: 120
+		height: 28
+		z index: 2
+		alignment: top right
+		font:
+			name: Times New Roman
+			size: 8
+			color: rgb(0,0,0)
+	############################# Text box
+	text:
+		left: 31
+		top : 358
+		width: 311
+		height: 142
+		font:
+			name: Times New Roman
+			italic name: Times New Roman Italic
+			size: 9
+			scale down to: 4
+			color: rgb(0,0,0)
+		alignment: middle left
+		z index: 3
+		padding left:   6
+		padding top:    2
+		padding right:  4
+		padding bottom: 2
+		line height hard: 1.2
+		line height line: 1.5
+	############################# Copyright stuff
+	gamecode:
+		left: 15
+		top : 499
+		width: 100
+		height: 18
+		alignment: top left
+		z index: 2
+		font:
+			name: Times New Roman
+			size: 8
+			color: rgb(0,0,0)
+	copyright:
+		left: 195
+		top : 499
+		width: 150
+		height: 18
+		z index: 2
+		alignment: top right
+		font: 
+			name: Times New Roman
+			size: 8
+			color: rgb(0,0,0)

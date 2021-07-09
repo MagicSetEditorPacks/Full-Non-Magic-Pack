@@ -1,0 +1,444 @@
+# Card Stylesheet Qualifiers
+isAdventureStyle := 	{ substring(stylesheet.short_name, end: 3) == "Adv" }
+isCharacterStyle := 	{ substring(stylesheet.short_name, end: 3) == "Cha" }
+isBoonBaneStyle :=		{ substring(stylesheet.short_name, end: 3) == "Boo" }
+
+# Sorting scripts
+
+sort_type :=	{
+	if card.type == "ADVENTURE PATH" then "A"
+	else if card.type == "ADVENTURE" then "B"
+	else if card.type == "SCENARIO" then "C"
+	else if card.type == "LOCATION" then "D"
+	else if card.type == "VILLAIN" then "E"
+	else if card.type == "HENCHMAN" then "F"
+	else if card.type == "BARRIER" then "G"
+	else if card.type == "SHIP" then "H"
+	else if card.type == "WEAPON" then "I"
+	else if card.type == "SPELL" then "J"
+	else if card.type == "ARMOR" then "K"
+	else if card.type == "ITEM" then "L"
+	else if card.type == "ALLY" then "M"
+	else if card.type == "BLESSING" then "N"
+	else if card.type == "LOOT" then "O"
+	else if card.type == "SUPPORT" then "P"
+	else if card.type == "COHORT" then "Q"
+	else "Z"
+}
+
+sort_set :=	{
+	if card.set == "BASE" then "A"
+	else if card.set == "CHARACTER" then "B"
+	else if card.set == "SPECIAL" then "C"
+	else "Z" + to_string(card.set)
+}
+
+# multiple choice scripts to require single choices from specific lists
+card_type_requirements := {
+	if isCharacterStyle() then
+		"CHARACTER"
+	else if isAdventureStyle() then 
+		require_exclusive_choice(
+			choice1: "ADVENTURE PATH",
+			choice2: "ADVENTURE", 
+			choice3: "SCENARIO", 
+			choice4: "LOCATION",
+			remove_choice(
+				choice1: "CHARACTER", 
+				choice2: "TOKEN", 
+				choice3: "ROLE",
+				choice4: "VILLAIN",
+				choice5: "HENCHMAN",
+				choice6: "MONSTER",
+				choice7: "BARRIER",
+				choice8: "WEAPON",
+				choice9: "SPELL",
+				choice10: "ARMOR",
+				choice11: "ITEM",
+				choice12: "ALLY",
+				choice13: "LOOT",
+				choice14: "BLESSING",
+				choice15: "SHIP",
+				choice16: "SUPPORT",
+				choice17: "COHORT",
+				card.type
+			)
+		)
+	else
+		require_exclusive_choice(
+			choice1: "VILLAIN",
+			choice2: "HENCHMAN",
+			choice3: "MONSTER",
+			choice4: "BARRIER",
+			choice5: "WEAPON",
+			choice6: "SPELL",
+			choice7: "ARMOR",
+			choice8: "ITEM",
+			choice9: "ALLY",
+			choice10: "LOOT",
+			choice11: "BLESSING",
+			choice12: "SHIP",
+			choice13: "SUPPORT",
+			choice14: "COHORT",
+			remove_choice(
+				choice1: "CHARACTER", 
+				choice2: "TOKEN", 
+				choice3: "ROLE",
+				choice4: "ADVENTURE PATH",
+				choice5: "ADVENTURE", 
+				choice6: "SCENARIO", 
+				choice7: "LOCATION",
+				card.type
+			)
+		)
+}
+
+card_list_requirements := { 
+	require_exclusive_choice(choice1: "None", choice2: "Use Cohort", card.cohort_choice) }
+# COLOR scripts
+getDarkColour :=		{ cardColour[ getCardType() + "Dk"] }
+getBannerDarkColour := 	{
+	if card.type == "VILLAIN"
+		or card.type == "MONSTER"
+		or card.type == "HENCHMAN" then "white"
+	else getDarkColour()
+}
+
+getLightColour :=		{ cardColour[ getCardType() + "Lt"] }
+getBannerLightColour := {
+	if card.type == "HENCHMAN" or card.type == "VILLAIN" then getDarkColour()
+	else if card.type == "MONSTER" then getMidColour()
+	else getLightColour()
+}
+
+getMidColour := 		{ cardColour[ getCardType() + "Md"] }
+getNameFontColour := 	{ nameFontColour[ getCardType() ] }
+getShadowColour := 		{ nameShadowColour[ getCardType() ] }
+
+
+#===========================#
+#     BOON BANE Scripts     #
+#===========================#
+
+vhl_card_type_requirements := {
+	if isBoonBaneStyle() then
+		(if isVillainHenchman() then
+			require_exclusive_choice(
+				choice1: "MONSTER",
+				choice2: "BARRIER",
+				remove_choice(
+					choice1: "WEAPON",
+					choice2: "SPELL",
+					choice3: "ARMOR",
+					choice4: "ITEM",
+					choice5: "ALLY",
+					choice6: "BLESSING",
+					choice7: "SHIP",
+					choice8: "LOOT",
+					choice9: "SUPPORT",
+					choice10: "COHORT",
+					card.vhl_type
+				)
+			)
+		else
+			require_exclusive_choice(				
+				choice1: "WEAPON",
+				choice2: "SPELL",
+				choice3: "ARMOR",
+				choice4: "ITEM",
+				choice5: "ALLY",
+				choice6: "BLESSING",
+				choice7: "SHIP",
+				choice8: "LOOT",
+				choice9: "SUPPORT",
+				choice10: "COHORT",
+				remove_choice(
+					choice1: "MONSTER",
+					choice2: "BARRIER",
+					card.vhl_type
+				)
+			)
+		)
+	else
+		require_exclusive_choice(
+			choice1:	""
+			remove_choice(
+				choice1: "MONSTER",
+				choice2: "BARRIER",
+				choice3: "SHIP",
+				choice4: "WEAPON",
+				choice5: "SPELL",
+				choice6: "ARMOR",
+				choice7: "ITEM",
+				choice8: "ALLY",
+				choice9: "BLESSING",
+				choice10: "LOOT",
+				choice11: "SUPPORT",
+				choice12: "COHORT",
+				card.vhl_type
+			)
+		)
+}
+
+check_list_requirements :=	{
+	if card.type == "LOOT" or card.type == "COHORT" or (card.type == "BLESSING" and card.name == "BLESSING OF THE GODS") then "NONE"
+	else require_choice ( choices: input, input )
+}
+
+check_header_requirements := {
+	if card.type == "LOOT" or card.type == "COHORT" or (card.type == "BLESSING" and card.name == "BLESSING OF THE GODS") then ""
+	else require_choice ( choices: input, input )
+}
+
+getFont :=		{ set.card_font }
+getAltFont := 	{ if set.card_font = "Dax" then "Dax-regular" else set.card_font }
+getFontSize :=	{ input * font_size_multiplier[set.card_font_size] }
+font_size_multiplier :=  [
+"smallest (40%)":	0.4
+"smaller (60%)":	0.6
+"small (80%)":		0.8
+"normal (100%)":	1
+"large (120%)":		1.2
+"larger (140%)":	1.40
+"largest (160%)":	1.60
+]
+
+setT :=			{ Height - setHW() - 11 }
+setR :=			{ if set.banner_position == "Right" then Width - 11 else 11 + setHW() }
+setHW :=		{ 26 }
+setA :=			{ 0 }
+
+bannerTextL := 	{ if set.banner_position == "Right" then Width - 8 else 8 }
+bannerTextT := 	{ if set.banner_position == "Right" then 40 else Height - 40 }
+bannerTextW := 	{ Height - 80 }
+bannerTextA := 	{ if set.banner_position == "Right" then 270 else 90 }
+bannerTextAlign := { "center middle shrink-overflow" }
+
+topTextL :=		{ if set.banner_position == "Right" then 18 else 42 }
+topTextT :=		{ 8 }
+topTextW :=		{ Width - 58 }
+topTextA :=		{ 0 }
+topTextAlign := { "left middle shrink-overflow" }
+
+# getCardType Overridden for Character Cards to source card style (Character Front/Back Token Front/Back Role 1/2)
+getCardType := 			{ replace(match: " ", replace: "", to_title(card.type) ) }
+
+
+# Border Scripts (Original Styling)
+getBorderDkTypeMask :=	{ "/PACG-common.mse-include/res-orig/borderdk_mask" + typeMask[ getCardType() ] + ".png" }
+getBorderLtTypeMask := 	{ "/PACG-common.mse-include/res-orig/borderlt_mask" + typeMask[ getCardType() ] + ".png" }
+
+getBorderTypeWidth := 	{ 
+	min(card_style.type_text.content_width + 32, 125) 
+}
+
+
+# Placeholder script - to be overridden 
+# TODO move to extra_card_field to remove this requirement
+getCheckInfo := 		{ "CHECK TO " + if getMainType()=="Bane" then "DEFEAT" else "ACQUIRE" }
+
+# Predominately to differentiate between Boon and Bane cards
+getMainType := 			{
+	if card.type == "" then 
+		(if stylesheet.short_name == "Character" then "Character"
+		else if stylesheet.short_name == "Adventure" then "Adventure"
+		else "Bane")
+	else getMainType_Col[ getCardType() ]
+}
+
+isVillainHenchman := 	{ card.type == "VILLAIN" or card.type == "HENCHMAN" }
+
+vhl_type_default := 	{
+	if isVillainHenchman() then "MONSTER"
+	else if isBoonBaneStyle() and card.type == "LOOT" then "ITEM"
+	else ""
+}
+
+logo_top	:= 2
+logo_width	:= 195
+logo_height	:= 37
+
+#===========================#
+#        COLLECTIONS        #
+#===========================#
+
+getMainType_Col := 	[
+#Character
+	Character:			"Character"
+	Token:				"Character"
+	Role:				"Character"
+#Adventure
+	AdventurePath: 		"Adventure"
+	Adventure:			"Adventure"
+	Scenario:			"Adventure"
+	Location:			"Adventure"
+#Bane
+	Villain:			"Bane"
+	Henchman:			"Bane"
+	Monster:			"Bane"
+	Barrier:			"Bane"
+	Ship:				"Bane"
+#Boon	
+	Weapon:				"Boon"
+	Spell:				"Boon"
+	Armor:				"Boon"
+	Item:				"Boon"
+	Ally:				"Boon"
+	Loot:				"Boon"
+	Blessing:			"Boon"
+	Support:			"Boon"
+	Cohort:				"Boon"
+]
+
+nameShadowColour := [
+	Character:			rgb(60,60,60)
+	Token:				rgb(60,60,60)
+	Role:				rgb(60,60,60)
+	Adventure:			rgb(60,60,60)
+	AdventurePath:		rgb(60,60,60)
+	Scenario:			rgb(78,48,0)
+	Location:			rgb(60,60,60)
+	Villain:			rgb(60,60,60)
+	Henchman:			rgb(60,60,60)
+	Monster:			rgb(60,60,60)
+	Ship:				rgb(60,60,60)
+	Barrier:			"transparent"
+	Weapon:				"transparent"
+	Spell:				"transparent"
+	Armor:				"transparent"
+	Item:				"transparent"
+	Ally:				"transparent"
+	Loot:				"transparent"
+	Blessing:			"transparent"
+	Support:			"transparent"
+	Cohort:				"transparent"
+	Custom:				"transparent"
+]
+
+nameFontColour := 	[
+	Character:			rgb(255,255,255)
+	Token:				rgb(255,255,255)
+	Role:				rgb(255,255,255)
+	Adventure:			rgb(255,255,255)
+	AdventurePath:		rgb(255,255,255)
+	Scenario:			rgb(255,255,255)
+	Location:			rgb(255,255,255)
+	Villain:			rgb(255,255,255)
+	Henchman:			rgb(255,255,255)
+	Monster:			rgb(255,255,255)
+	Barrier:			rgb(0,0,0)
+	Ship:				rgb(255,255,255)
+	Weapon:				rgb(0,0,0)
+	Spell:				rgb(0,0,0)
+	Armor:				rgb(0,0,0)
+	Item:				rgb(0,0,0)
+	Ally:				rgb(0,0,0)
+	Loot:				rgb(0,0,0)
+	Blessing:			rgb(0,0,0)
+	Support:			rgb(0,0,0)
+	Cohort:				rgb(0,0,0)
+	Custom:				rgb(0,0,0)
+]
+
+# TODO Can this be scripted to alter tone from a base colour..?
+cardColour := 		[
+	CharacterDk:		rgb(84,118,27)
+	CharacterLt:		rgb(136,186,111)
+	CharacterMd:		rgb(136,186,111)
+	RoleDk:				rgb(84,118,27)
+	RoleLt:				rgb(136,186,111)
+	RoleMd:				rgb(136,186,111)
+# Alt. Colours for Blue ROLE cards
+#	RoleDk:				rgb(48,113,168)
+#	RoleLt:				rgb(187,210,234)	
+#	RoleMd:				rgb(128,177,217)
+	TokenDk:			rgb(157,191,34)
+	TokenLt:			rgb(213,229,135)
+	TokenMd:			rgb(213,229,135)
+	LocationDk:			rgb(173,153,120)
+	LocationLt:			rgb(211,194,177)
+	LocationMd:			rgb(211,194,177)
+	AdventureLt:		rgb(220,184,122)
+	AdventureDk:		rgb(142,123,80)
+	AdventureMd:		rgb(221,192,141)
+	AdventurePathLt:	rgb(171,129,105)
+	AdventurePathDk:	rgb(114,68,44)
+	AdventurePathMd:	rgb(195,117,81)
+	ScenarioDk:			rgb(202,148,48)
+	ScenarioLt:			rgb(226,193,139)
+	ScenarioMd:			rgb(210,177,107)
+	BarrierDk: 			rgb(243,190,25)
+	BarrierLt: 			rgb(252,237,180)
+	BarrierMd: 			rgb(247,219,148)
+	ShipDk:				rgb(140,114,107)
+	ShipLt:				rgb(197,184,179)
+	ShipMd:				rgb(197,184,179)
+	HenchmanDk: 		rgb(232,29,38)
+	HenchmanLt: 		rgb(246,150,124)
+	HenchmanMd: 		rgb(246,150,124)
+	MonsterDk: 			rgb(254,105,35)
+	MonsterMd:			rgb(243,131,73)
+	MonsterLt: 			rgb(251,175,126)
+	VillainDk: 			rgb(147,68,75)
+	VillainLt: 			rgb(202,148,143)
+	VillainMd: 			rgb(202,148,143)
+	AllyDk: 			rgb(104,155,206)
+	AllyLt: 			rgb(223,228,224)
+	AllyMd: 			rgb(173,203,234)
+	ArmorDk: 			rgb(151,156,162)
+	ArmorLt: 			rgb(227,226,230)
+	ArmorMd: 			rgb(172,178,183)
+	BlessingDk: 		rgb(155,192,214)
+	BlessingLt: 		rgb(239,246,252)
+	BlessingMd: 		rgb(204,219,239)
+	ItemDk: 			rgb(134,150,181)
+	ItemLt: 			rgb(199,206,225)
+	ItemMd: 			rgb(195,196,219)
+	LootDk: 			rgb(139,146,152)
+	LootLt: 			rgb(202,213,222)
+	LootMd: 			rgb(155,165,171)
+	SpellDk: 			rgb(183,160,196)
+	SpellLt: 			rgb(236,234,248)
+	SpellMd: 			rgb(211,198,214)
+	WeaponDk: 			rgb(123,131,126)
+	WeaponLt: 			rgb(190,190,190)
+	WeaponMd: 			rgb(184,184,184)
+	SupportDk: 			rgb(139,146,152)
+	SupportLt: 			rgb(202,213,222)
+	SupportMd: 			rgb(155,165,171)
+	CohortLt:			rgb(211,202,185)
+	CohortMd:			rgb(190,183,176)
+	CohortDk:			rgb(127,114,108)
+	CustomLt:			rgb(128,128,128)
+	CustomMd:			rgb(96,96,96)
+	CustomDk:			rgb(64,64,64)
+]
+
+typeMask := 		[
+#Character
+	Character:			1
+	Token:				1
+	Role:				1
+#Adventure
+	Adventure:			1
+	AdventurePath:		1
+	Scenario:			1
+	Location:			3
+#Bane
+	Villain:			1
+	Henchman:			1
+	Monster:			3
+	Barrier:			2
+	Ship:				6
+#Boon
+	Weapon:				2
+	Spell:				2
+	Armor:				2
+	Item:				2
+	Ally:				2
+	Loot:				2
+	Blessing:			2
+	Support:			2
+	Cohort:				2
+	Custom:				2
+]

@@ -1,0 +1,2036 @@
+﻿mse version: 2.0.0
+full name: Pokémon
+short name: Pokemon
+icon: Cardback.jpg
+position hint: 10
+
+version: 2018-07-18
+
+#By: Imp Elemental Spirit Guide
+##############################################################
+# Special thanks to
+# -https://pkmncards.com/ & their community
+#       for all of the scans I required to do this project
+#       they have a patreon page: https://www.patreon.com/pkmncards/memberships
+# -aschefield101 at DeviantArt
+#       various Sun-Moon Icons and the templates I started with for the Sun-Moon borders
+# -metagross101 at DeviantArt
+#       various portions and icons used in the Diamond, Pearl, and Platinum templates
+# -Karite Kita Neko at DeviantArt
+#	for the Classic Metal Background
+#	for the Water Background
+# -Artfreakwiu
+#	for the text_filter script
+# -pichoro
+#       for various additional help and scripts used within the document
+##############################################################
+##############################################################
+# Work list
+# Not currently planning on doing, will if deemed important enought, if others want to feel free and if reasonable quality I will include.
+# All Card Faces
+#   -Add foiling
+#	-Foil variations were overwhelming for me to understand (especially given my dislike of foils to begin with)
+#	-Need someone who understands to help me.
+# Neo Card Face Style Template
+#   -Baby Pokemon
+#	-Add some sort of styling option to allow 2-4 evolution types from a single baby like on Tyrogue
+# E-Card Face Style Template
+#   -Baby Pokemon
+#	-Add some sort of styling option to allow 2-4 evolution types from a single baby like on Tyrogue and Buried Fossil
+#   -Extra Backs
+#	-Make a Fossil background like found on Buried Fossil
+############################################################## Functions & filters
+# General functions
+init script:
+	#############All of the following scripts were modified by equations from Artfreakwiu's work on the classic pokemon template I thank him and those who helped him profusely
+	############################################################## Sorting mana symbols
+	
+	sort_index := { 
+		if card.card_type=="Pokemon"
+			then if card.card_color_1=="Grass"							then "AB"
+			else if card.card_color_1=="Fire"							then "AC"
+			else if card.card_color_1=="Water"							then "AD"
+			else if card.card_color_1=="Lightning"							then "AE"
+			else if card.card_color_1=="Fighting"							then "AF"
+			else if card.card_color_1=="Psychic"							then "AG"
+			else if card.card_color_1=="Dark"							then "AH"
+			else if card.card_color_1=="Metal"							then "AI"
+			else if card.card_color_1=="Fairy"							then "AJ"
+			else if	card.card_color_1=="Colorless"							then "AK"
+			else if card.card_color_1=="Dragon"							then "AL"
+			else if card.card_color_1=="User Defined"						then "AM"
+			else											"T"
+		else if card.card_type=="Dual-Type"
+			then if card.card_color_1=="Grass" or card.card_color_2=="Grass"
+				then if card.card_color_1=="Fire" or card.card_color_2=="Fire"			then "BC"
+				else if card.card_color_1=="Water" or card.card_color_2=="Water"		then "BD"
+				else if card.card_color_1=="Lightning" or card.card_color_2=="Lightning"	then "BE"
+				else if card.card_color_1=="Fighting" or card.card_color_2=="Fighting"		then "BF"
+				else if card.card_color_1=="Psychic" or card.card_color_2=="Psychic"		then "BG"
+				else if card.card_color_1=="Dark" or card.card_color_2=="Dark"			then "BH"
+				else if card.card_color_1=="Metal" or card.card_color_2=="Metal"		then "BI"
+				else if card.card_color_1=="Fairy" or card.card_color_2=="Fairy"		then "BJ"
+				else if card.card_color_1=="Colorless" or card.card_color_2=="Colorless"	then "BK"
+				else if card.card_color_1=="Dragon" or card.card_color_2=="Dragon"		then "BL"
+				else if card.card_color_1=="User Defined" or card.card_color_2=="User Defined"	then "BM"
+				else										"BB"
+			else if card.card_color_1=="Fire" or card.card_color_2=="Fire"
+				then if card.card_color_1=="Water" or card.card_color_2=="Water"		then "CD"
+				else if card.card_color_1=="Lightning" or card.card_color_2=="Lightning"	then "CE"
+				else if card.card_color_1=="Fighting" or card.card_color_2=="Fighting"		then "CF"
+				else if card.card_color_1=="Psychic" or card.card_color_2=="Psychic"		then "CG"
+				else if card.card_color_1=="Dark" or card.card_color_2=="Dark"			then "CH"
+				else if card.card_color_1=="Metal" or card.card_color_2=="Metal"		then "CI"
+				else if card.card_color_1=="Fairy" or card.card_color_2=="Fairy"		then "CJ"
+				else if card.card_color_1=="Colorless" or card.card_color_2=="Colorless"	then "CK"
+				else if card.card_color_1=="Dragon" or card.card_color_2=="Dragon"		then "CL"
+				else if card.card_color_1=="User Defined" or card.card_color_2=="User Defined"	then "CM"
+				else										"CC"
+			else if card.card_color_1=="Water" or card.card_color_2=="Water"
+				then if card.card_color_1=="Lightning" or card.card_color_2=="Lightning"		then "DE"
+				else if card.card_color_1=="Fighting" or card.card_color_2=="Fighting"		then "DF"
+				else if card.card_color_1=="Psychic" or card.card_color_2=="Psychic"		then "DG"
+				else if card.card_color_1=="Dark" or card.card_color_2=="Dark"			then "DH"
+				else if card.card_color_1=="Metal" or card.card_color_2=="Metal"		then "DI"
+				else if card.card_color_1=="Fairy" or card.card_color_2=="Fairy"		then "DJ"
+				else if card.card_color_1=="Colorless" or card.card_color_2=="Colorless"	then "DK"
+				else if card.card_color_1=="Dragon" or card.card_color_2=="Dragon"		then "DL"
+				else if card.card_color_1=="User Defined" or card.card_color_2=="User Defined"	then "DM"
+				else										"DD"
+			else if card.card_color_1=="Lightning" or card.card_color_2=="Lightning"
+				then if card.card_color_1=="Fighting" or card.card_color_2=="Fighting"		then "EF"
+				else if card.card_color_1=="Psychic" or card.card_color_2=="Psychic"		then "EG"
+				else if card.card_color_1=="Dark" or card.card_color_2=="Dark"			then "EH"
+				else if card.card_color_1=="Metal" or card.card_color_2=="Metal"		then "EI"
+				else if card.card_color_1=="Fairy" or card.card_color_2=="Fairy"		then "EJ"
+				else if card.card_color_1=="Colorless" or card.card_color_2=="Colorless"	then "EK"
+				else if card.card_color_1=="Dragon" or card.card_color_2=="Dragon"		then "EL"
+				else if card.card_color_1=="User Defined" or card.card_color_2=="User Defined"	then "EM"
+				else										"EE"
+			else if card.card_color_1=="Fighting" or card.card_color_2=="Fighting"
+				then if card.card_color_1=="Psychic" or card.card_color_2=="Psychic"		then "FG"
+				else if card.card_color_1=="Dark" or card.card_color_2=="Dark"			then "FH"
+				else if card.card_color_1=="Metal" or card.card_color_2=="Metal"		then "FI"
+				else if card.card_color_1=="Fairy" or card.card_color_2=="Fairy"		then "FJ"
+				else if card.card_color_1=="Colorless" or card.card_color_2=="Colorless"	then "FK"
+				else if card.card_color_1=="Dragon" or card.card_color_2=="Dragon"		then "FL"
+				else if card.card_color_1=="User Defined" or card.card_color_2=="User Defined"	then "FM"
+				else										"FF"
+			else if card.card_color_1=="Psychic" or card.card_color_2=="Psychic"
+				then if card.card_color_1=="Dark" or card.card_color_2=="Dark"			then "GH"
+				else if card.card_color_1=="Metal" or card.card_color_2=="Metal"		then "GI"
+				else if card.card_color_1=="Fairy" or card.card_color_2=="Fairy"		then "GJ"
+				else if card.card_color_1=="Colorless" or card.card_color_2=="Colorless"	then "GK"
+				else if card.card_color_1=="Dragon" or card.card_color_2=="Dragon"		then "GL"
+				else if card.card_color_1=="User Defined" or card.card_color_2=="User Defined"	then "GM"
+				else										"GG"
+			else if card.card_color_1=="Dark" or card.card_color_2=="Dark"
+				then if card.card_color_1=="Metal" or card.card_color_2=="Metal"		then "HI"
+				else if card.card_color_1=="Fairy" or card.card_color_2=="Fairy"		then "HJ"
+				else if card.card_color_1=="Colorless" or card.card_color_2=="Colorless"	then "HK"
+				else if card.card_color_1=="Dragon" or card.card_color_2=="Dragon"		then "HL"
+				else if card.card_color_1=="User Defined" or card.card_color_2=="User Defined"	then "HM"
+				else										"HH"
+			else if card.card_color_1=="Metal" or card.card_color_2=="Metal"
+				then if card.card_color_1=="Fairy" or card.card_color_2=="Fairy"		then "IJ"
+				else if card.card_color_1=="Colorless" or card.card_color_2=="Colorless"	then "IK"
+				else if card.card_color_1=="Dragon" or card.card_color_2=="Dragon"		then "IL"
+				else if card.card_color_1=="User Defined" or card.card_color_2=="User Defined"	then "IM"
+				else										"II"
+			else if card.card_color_1=="Fairy" or card.card_color_2=="Fairy"
+				then if card.card_color_1=="Colorless" or card.card_color_2=="Colorless"	then "JK"
+				else if card.card_color_1=="Dragon" or card.card_color_2=="Dragon"		then "JL"
+				else if card.card_color_1=="User Defined" or card.card_color_2=="User Defined"	then "JM"
+				else										"JJ"
+			else if card.card_color_1=="Colorless" or card.card_color_2=="Colorless"
+				then if card.card_color_1=="Dragon" or card.card_color_2=="Dragon"		then "KL"
+				else if card.card_color_1=="User Defined" or card.card_color_2=="User Defined"	then "KM"
+				else										"KK"
+			else if card.card_color_1=="Dragon" or card.card_color_2=="Dragon"
+				then if card.card_color_1=="User Defined" or card.card_color_2=="User Defined"	then "LM"
+				else										"LL"
+			else if card.card_color_1=="User Defined" and card.card_color_2=="User Defined"		then "MM"
+			else											"T"
+		else if card.card_type=="Trainer"
+			then if card.trainer=="Item"								then "QA"
+			else if card.trainer=="Tool"								then "QB"
+			else if card.trainer=="Stadium"								then "QC"
+			else if card.trainer=="Supporter"							then "QD"
+			else if card.trainer=="User Defined"							then "QE"
+			else											"T"
+		else if card.card_type=="Energy"
+			then if card.energy_type=="Special"							then "RA"
+			else if card.energy_type=="Basic"
+				then if card.card_color_1=="Grass"						then "RB"
+				else if card.card_color_1=="Fire"						then "RC"
+				else if card.card_color_1=="Water"						then "RD"
+				else if card.card_color_1=="Lightning"						then "RE"
+				else if card.card_color_1=="Fighting"						then "RF"
+				else if card.card_color_1=="Psychic"						then "RG"
+				else if card.card_color_1=="Dark"						then "RH"
+				else if card.card_color_1=="Metal"						then "RI"
+				else if card.card_color_1=="Fairy"						then "RJ"
+				else if	card.card_color_1=="Colorless"						then "RK"
+				else if card.card_color_1=="Dragon"						then "RL"
+				else if card.card_color_1=="User Defined"					then "RM"
+				else										"T"
+			else											"T"
+		else												"T"
+	}
+	text_filter := 
+		# step 1 : remove all automatic tags
+		remove_tag@(tag: "<sym-auto>") +
+		remove_tag@(tag: "<i-auto>")   +
+		remove_tag@(tag: "<b-auto>")   +
+		remove_tag@(tag: "<nospellcheck") +
+		# step 3 : expand shortcut words ~ and CARDNAME
+		replace@(
+			match: "~|~THIS~|CARDNAME",
+			in_context: "(^|[[:space:]])<match>",
+			replace: "<atom-cardname>&</atom-cardname>"
+			) +
+		# step 4 : fill in atom fields
+		tag_contents@(
+			tag: "<atom-cardname>",
+			contents: { if card.name=="" then "CARDNAME" else card.name }
+			) +	# add symbols to text
+		# step 5a : longdash
+		replace@(
+			match: "--",
+			replace: "—")+
+		# step 5b : trademark symbol
+		replace@(
+			match: "[:(:]TM[:):]",
+			replace: "™")+
+		# step 5c : copyright symbol
+		replace@(
+			match: "[:(:]C[:):]",
+			replace: "©")+
+		# step 5d : small alpha symbol
+		replace@(
+			match: "[:(:]a[:):]",
+			replace: "α")+
+		# step 5e : large delta symbol
+		replace@(
+			match: "[:(:]D[:):]",
+			replace: "Δ")+
+		# step 5f : large omega symbol
+		replace@(
+			match: "[:(:]O[:):]",
+			replace: "Ω")+
+		# step 5g : large theta symbol
+		replace@(
+			match: "[:(:]T[:):]",
+			replace: "θ")+
+		# step 5h : small beta symbol
+		replace@(
+			match: "[:(:]b[:):]",
+			replace: "β")+
+		# step 5i : small gamma symbol
+		replace@(
+			match: "[:(:]g[:):]",
+			replace: "γ")+
+		# step 5j : small delta symbol
+		replace@(
+			match: "[:(:]d[:):]",
+			replace: "δ")+
+		# step 5k : male symbol for nidoran
+		replace@(
+			match: "[:(:]ML[:):]",
+			replace: "♂")+
+		# step 5l : female symbol for nidoran
+		replace@(
+			match: "[:(:]FM[:):]",
+			replace: "♀")+
+		# step 5m
+		replace@(
+			match: "Pokemon",
+			replace: "Pokémon")+
+		# step 5m
+		replace@(
+			match: "[:(:]M[:):]",
+			replace: "‰")+
+		# step 5n
+		replace@(
+			match: "[:(:]EX[:):]",
+			replace: "‱")+
+		# step 7b : pokemon becomes pokémon
+		replace@(
+			match: "pokemon",
+			replace: "pokémon")
+	######################The Following equations are used to set the background texture for Basic Energy, They are not Style dependent with the core sets so I'm putting them here.
+	basic_energy_suffix := { if card.basic_texture=="Default" then "Classic"
+		else to_string(card.basic_texture) }
+	basic_energy_meld := { if basic_energy_suffix()=="SmStars" or basic_energy_suffix()=="LgStars" or basic_energy_suffix()=="Lightning"
+			then if ((basic_energy_suffix()=="Lightning" or basic_energy_suffix()=="LgStars") and card.card_color_1=="Lightning") or ((basic_energy_suffix()=="SmStars" or basic_energy_suffix()=="LgStars") and card.card_color_1=="Colorless") then "back"
+			else "mix"
+		else if basic_energy_suffix()=="Classic" or basic_energy_suffix()=="Capsule" or basic_energy_suffix()=="BW"
+			then if card.card_color_1=="Grass" or card.card_color_1=="Fighting" or card.card_color_1=="Dark" then "mask"
+			else "blend"
+		else if basic_energy_suffix()=="Generations" then "Generations"
+		else if basic_energy_suffix()=="SunMoon"
+			then if card.card_color_1=="Colorless" or card.card_color_1=="Dragon" or card.card_color_1=="User Defined" then "recolor"
+			else "back"
+		else if basic_energy_suffix()=="Special"
+			then if card.card_color_1=="Dark" then "back"
+			else "recolor"
+		else "image" }
+	basic_energy_left := { if basic_energy_suffix()=="Special" then 148 
+		else if basic_energy_suffix()=="SmStars" then 109
+		else if basic_energy_suffix()=="LgStars" then 75
+		else if basic_energy_suffix()=="Lightning" then 75
+		else if basic_energy_suffix()=="SunMoon" then 87
+		else if contains(card.basic_user_image_type, match: "Centered")
+			then if contains(card.basic_user_image_type, match: "Triburst") then 87
+			else 88
+		else if contains(card.basic_user_image_type, match: "Sunburst") and not(contains(card.basic_user_image_type, match: "Triburst")) then 86
+		else 94 }
+	basic_energy_top := { if basic_energy_suffix()=="Special" then 372 
+		else if basic_energy_suffix()=="SmStars" then 244
+		else if basic_energy_suffix()=="LgStars" then 214
+		else if basic_energy_suffix()=="Lightning" then 218
+		else if basic_energy_suffix()=="SunMoon" then 161
+		else if contains(card.basic_user_image_type, match: "Centered")
+			then if contains(card.basic_user_image_type, match: "Triburst") then 160
+			else 160
+		else if contains(card.basic_user_image_type, match: "Sunburst") and not(contains(card.basic_user_image_type, match: "Triburst")) then 233
+		else 233 } 
+	basic_energy_width := { if basic_energy_suffix()=="Special" then 74 
+		else if basic_energy_suffix()=="SmStars" then 144
+		else if basic_energy_suffix()=="LgStars" then 220
+		else if basic_energy_suffix()=="Lightning" then 217
+		else if basic_energy_suffix()=="SunMoon" then 190
+		else if contains(card.basic_user_image_type, match: "Centered")
+			then if contains(card.basic_user_image_type, match: "Triburst") then 197
+			else 190
+		else if contains(card.basic_user_image_type, match: "Sunburst") and not(contains(card.basic_user_image_type, match: "Triburst")) then 190
+		else 180 }
+	basic_color := { if is_pokemon()
+				then if card.card_color_1=="Grass" then			rgb(106,164,22)
+				else if card.card_color_1=="Fire" then			rgb(231,47,23)
+				else if card.card_color_1=="Water" then			rgb(1,170,229)
+				else if card.card_color_1=="Lightning" then		rgb(250,200,1)
+				else if card.card_color_1=="Fighting" then		rgb(185,96,43)
+				else if card.card_color_1=="Psychic" then		rgb(134,75,152)
+				else if card.card_color_1=="Dark" then			rgb(6,69,82)
+				else if card.card_color_1=="Metal" then			rgb(115,115,117)
+				else if card.card_color_1=="Fairy" then			rgb(220,0,70)
+				else if card.card_color_1=="Dragon" then		rgb(109,103,31)
+				else if card.card_color_1=="Colorless" then		rgb(211,210,206)
+				else							card.energy_color_1
+			else if is_energy()
+				then if basic_energy_meld()=="Generations" or basic_energy_meld()=="image"
+					then if card.card_color_1=="Grass" then			rgb(33,178,77)
+					else if card.card_color_1=="Fire" then			rgb(236,28,54)
+					else if card.card_color_1=="Water" then			rgb(1,177,234)
+					else if card.card_color_1=="Lightning" then		rgb(255,213,4)
+					else if card.card_color_1=="Fighting" then		rgb(177,84,50)
+					else if card.card_color_1=="Psychic" then		rgb(128,100,174)
+					else if card.card_color_1=="Dark" then			rgb(45,104,120)
+					else if card.card_color_1=="Metal"
+						then if card.metal_texture=="Nintendo" then	rgb(203,207,208)
+						else						rgb(128,128,128)
+					else if card.card_color_1=="Fairy" then			rgb(231,77,141)
+					else if card.card_color_1=="Dragon" then		rgb(168,122,47)
+					else if card.card_color_1=="Colorless" then		rgb(203,207,208)
+					else							card.energy_color_1
+				else if card.card_color_1=="Grass" then				rgb(21,165,57)
+					else if card.card_color_1=="Fire"
+						then if basic_energy_meld()=="mix" then		rgb(231,23,25)
+						else						rgb(239,56,56)
+					else if card.card_color_1=="Water" then			rgb(0,141,212)
+					else if card.card_color_1=="Lightning"
+						then if basic_energy_meld()=="mix" then		rgb(255,217,1)
+						else if basic_energy_suffix()=="Special" then	rgb(255,229,1)
+						else						rgb(252,199,57)
+					else if card.card_color_1=="Fighting" then		rgb(198,85,30)
+					else if card.card_color_1=="Psychic" then		rgb(123,68,152)
+					else if card.card_color_1=="Dark"
+						then if basic_energy_suffix()=="LgStars" then	rgb(72,128,151)
+						else						rgb(6,69,82)
+					else if card.card_color_1=="Metal"
+						then if basic_energy_meld()=="mix" and (card.metal_texture=="Nintendo" or card.metal_texture=="Wizards") then	rgb(128,128,128)
+						else if basic_energy_suffix()=="SmStars" or basic_energy_suffix()=="Lightning" then	rgb(115,115,117)
+						else						rgb(151,150,145)
+					else if card.card_color_1=="Fairy" then			rgb(218,50,113)
+					else if card.card_color_1=="Dragon"
+						then if basic_energy_suffix()=="LgStars" then	rgb(168,122,47)
+						else						rgb(122,88,34)
+					else if card.card_color_1=="Colorless" then		rgb(211,210,206)
+					else							card.energy_color_1
+				else								card.energy_color_1 }
+	basic_color_2 := { if is_pokemon()
+				then if card.card_color_2=="Grass" then			rgb(106,164,22)
+				else if card.card_color_2=="Fire" then			rgb(231,47,23)
+				else if card.card_color_2=="Water" then			rgb(1,170,229)
+				else if card.card_color_2=="Lightning" then		rgb(250,200,1)
+				else if card.card_color_2=="Fighting" then		rgb(185,96,43)
+				else if card.card_color_2=="Psychic" then		rgb(134,75,152)
+				else if card.card_color_2=="Dark" then			rgb(6,69,82)
+				else if card.card_color_2=="Metal" then			rgb(115,115,117)
+				else if card.card_color_2=="Fairy" then			rgb(220,0,70)
+				else if card.card_color_2=="Dragon" then		rgb(109,103,31)
+				else if card.card_color_2=="Colorless" then		rgb(211,210,206)
+				else							card.energy_color_2
+			else if is_energy()
+				then if basic_energy_meld()=="Generations"
+					then if card.card_color_1=="Grass" then			rgb(145,200,73)
+					else if card.card_color_1=="Fire" then			rgb(248,145,42)
+					else if card.card_color_1=="Water" then			rgb(158,219,238)
+					else if card.card_color_1=="Lightning" then		rgb(245,242,163)
+					else if card.card_color_1=="Fighting" then		rgb(238,155,77)
+					else if card.card_color_1=="Psychic" then		rgb(196,139,190)
+					else if card.card_color_1=="Dark" then			rgb(113,159,156)
+					else if card.card_color_1=="Metal"
+						then if card.metal_texture=="Nintendo" then	rgb(245,248,245)
+						else						rgb(160,160,160)
+					else if card.card_color_1=="Fairy" then			rgb(236,150,187)
+					else if card.card_color_1=="Dragon" then		rgb(220,149,31)
+					else if card.card_color_1=="Colorless" then		rgb(245,248,245)
+					else							card.energy_color_2 }
+	basic_color_3 := { if is_pokemon()
+				then if card.card_color_3=="Grass" then			rgb(106,164,22)
+				else if card.card_color_3=="Fire" then			rgb(231,47,23)
+				else if card.card_color_3=="Water" then			rgb(1,170,229)
+				else if card.card_color_3=="Lightning" then		rgb(250,200,1)
+				else if card.card_color_3=="Fighting" then		rgb(185,96,43)
+				else if card.card_color_3=="Psychic" then		rgb(134,75,152)
+				else if card.card_color_3=="Dark" then			rgb(6,69,82)
+				else if card.card_color_3=="Metal" then			rgb(115,115,117)
+				else if card.card_color_3=="Fairy" then			rgb(220,0,70)
+				else if card.card_color_3=="Dragon" then		rgb(109,103,31)
+				else if card.card_color_3=="Colorless" then		rgb(211,210,206)
+				else							card.energy_color_3
+			else if is_energy()
+				then if basic_energy_meld()=="Generations"
+					then if card.card_color_1=="Grass" then			rgb(5,104,57)
+					else if card.card_color_1=="Fire" then			rgb(146,37,42)
+					else if card.card_color_1=="Water" then			rgb(0,105,153)
+					else if card.card_color_1=="Lightning" then		rgb(248,149,30)
+					else if card.card_color_1=="Fighting" then		rgb(103,49,37)
+					else if card.card_color_1=="Psychic" then		rgb(96,46,145)
+					else if card.card_color_1=="Dark" then			rgb(17,55,74)
+					else if card.card_color_1=="Metal"
+						then if card.metal_texture=="Nintendo" then	rgb(123,114,107)
+						else						rgb(90,90,90)
+					else if card.card_color_1=="Fairy" then			rgb(165,40,98)
+					else if card.card_color_1=="Dragon" then		rgb(122,88,34)
+					else if card.card_color_1=="Colorless" then		rgb(123,114,107)
+					else							card.energy_color_3 }
+	######################My scripts begin here
+	############### These equations are expected to be replaced within the different styles but they needed to be represented here in order to incorporate with the game files card fields
+	rule_text_filter_1 := { text_filter() }
+	rule_text_filter_2 := { text_filter() }
+	rule_text_filter_3 := { text_filter() }
+	name_text_filter := { text_filter() }
+	hp_text_filter := { text_filter() }
+	np_text_filter_1 := { text_filter() }
+	np_text_filter_2 := { text_filter() }
+	title_rem_1 := { "title reminder 1" }
+	title_rem_2 := { "title reminder 2" }
+	title_rem_3 := { "title reminder 3" }
+	evolution_rem_1 := { "Evolves from" }
+	evolution_rem_2 := { "evolution reminder 2" }
+	special_rem_1 := { "special reminder 1" }
+	special_rem_2 := { "special reminder 2" }
+	ability_rem_1 := { "ability reminder 1" }
+	ability_rem_2 := { "ability reminder 2" }
+	rule_rem_1 := { "rule reminder 1" }
+	# Only pass numbers
+	only_numbers := filter_text@(match: "[0-9]")
+	######################Equations designed to streamline changing from one template to another
+	stage_default := { "Basic" }
+	cost_new_1_placekeep := { to_upper() }
+	cost_new_2_placekeep := { to_upper() }
+	cost_new_3_placekeep := { to_upper() }
+	cost_classic_1_placekeep := { to_upper() }
+	cost_classic_2_placekeep := { to_upper() }
+	cost_classic_3_placekeep := { to_upper() }
+	is_restored := { true }
+	######################Background colors for the Fade Art Setting
+	texture_color_1 := { if card.card_color_1=="Grass" then	rgb(160,255,23)
+		else if card.card_color_1=="Fire" then		rgb(255,97,19)
+		else if card.card_color_1=="Water" then		rgb(51,195,255)
+		else if card.card_color_1=="Lightning" then	rgb(255,223,9)
+		else if card.card_color_1=="Fighting" then	rgb(207,126,45)
+		else if card.card_color_1=="Psychic" then	rgb(170,43,255)
+		else if card.card_color_1=="Dark" then		rgb(5,25,25)
+		else if card.card_color_1=="Metal" then		rgb(120,120,120)
+		else if card.card_color_1=="Fairy" then		rgb(255,15,111)
+		else if card.card_color_1=="Colorless" then	rgb(255,255,255)
+		else if card.card_color_1=="Dragon" then	rgb(113,117,47)
+		else card.energy_color_1 }
+	texture_color_2 := { if card.card_color_2=="Grass" then	rgb(160,255,23)
+		else if card.card_color_2=="Fire" then		rgb(255,97,19)
+		else if card.card_color_2=="Water" then		rgb(51,195,255)
+		else if card.card_color_2=="Lightning" then	rgb(255,223,9)
+		else if card.card_color_2=="Fighting" then	rgb(207,126,45)
+		else if card.card_color_2=="Psychic" then	rgb(170,43,255)
+		else if card.card_color_2=="Dark" then		rgb(5,25,25)
+		else if card.card_color_2=="Metal" then		rgb(120,120,120)
+		else if card.card_color_2=="Fairy" then		rgb(255,15,111)
+		else if card.card_color_2=="Colorless" then	rgb(255,255,255)
+		else if card.card_color_2=="Dragon" then	rgb(113,117,47)
+		else card.energy_color_2 }
+	texture_color_3 := { if card.card_color_3=="Grass" then	rgb(160,255,23)
+		else if card.card_color_3=="Fire" then		rgb(255,97,19)
+		else if card.card_color_3=="Water" then		rgb(51,195,255)
+		else if card.card_color_3=="Lightning" then	rgb(255,223,9)
+		else if card.card_color_3=="Fighting" then	rgb(207,126,45)
+		else if card.card_color_3=="Psychic" then	rgb(170,43,255)
+		else if card.card_color_3=="Dark" then		rgb(5,25,25)
+		else if card.card_color_3=="Metal" then		rgb(120,120,120)
+		else if card.card_color_3=="Fairy" then		rgb(255,15,111)
+		else if card.card_color_3=="Colorless" then	rgb(255,255,255)
+		else if card.card_color_3=="Dragon" then	rgb(113,117,47)
+		else card.energy_color_3 }
+	######################Filters to remove portions of symbol text and make it easier to 
+	weakness_filter := { to_upper() } +
+		replace@(match: "X", replace: "×")
+	resistance_filter := { to_upper() } +
+		replace@(match: "X", replace: "×")
+	############### Correctly label the color text
+	color_text_1 := { if card.card_color_1=="Grass" then		"G"
+			else if card.card_color_1=="Fire" then		"R"
+			else if card.card_color_1=="Water" then		"W"
+			else if card.card_color_1=="Lightning" then	"L"
+			else if card.card_color_1=="Fighting" then	"F"
+			else if card.card_color_1=="Psychic" then	"P"
+			else if card.card_color_1=="Colorless" then	"C"
+			else if card.card_color_1=="Dark" then		"D"
+			else if card.card_color_1=="Metal" then		"M"
+			else if card.card_color_1=="Dragon" then	"O"
+			else if card.card_color_1=="Fairy" then		"Y"
+			else						" "
+	}
+	color_text_2 := { if card.card_color_2=="Grass" then		"G"
+			else if card.card_color_2=="Fire" then		"R"
+			else if card.card_color_2=="Water" then		"W"
+			else if card.card_color_2=="Lightning" then	"L"
+			else if card.card_color_2=="Fighting" then	"F"
+			else if card.card_color_2=="Psychic" then	"P"
+			else if card.card_color_2=="Colorless" then	"C"
+			else if card.card_color_2=="Dark" then		"D"
+			else if card.card_color_2=="Metal" then		"M"
+			else if card.card_color_2=="Dragon" then	"O"
+			else if card.card_color_2=="Fairy" then		"Y"
+			else						" "
+	}
+	############### Type of cardt
+	is_trainer := { card.card_type == "Trainer" }
+	is_pokemon := { card.card_type == "Pokemon" or card.card_type == "Dual-Type" }
+	is_energy := { card.card_type == "Energy" }
+	############### Static Text info
+	weak_text := { "weakness" }
+	res_text := { "resistance" }
+	ret_text := { "retreat cost" }
+	############### Sort for display type for the chart
+	sort_color := { 
+		if card.card_type=="Pokemon"
+			then if card.card_color_1=="Grass" then					"grass"
+			else if card.card_color_1=="Fire" then					"fire"
+			else if card.card_color_1=="Water" then					"water"
+			else if card.card_color_1=="Lightning" then				"lightning"
+			else if card.card_color_1=="Fighting" then				"fighting"
+			else if card.card_color_1=="Psychic" then				"psychic"
+			else if card.card_color_1=="Dark" then					"dark"
+			else if card.card_color_1=="Metal" then					"metal"
+			else if card.card_color_1=="Fairy" then					"fairy"
+			else if card.card_color_1=="Dragon" then				"dragon"
+			else if card.card_color_1=="Colorless" then				"colorless"
+			else									"user defined"
+		else if card.card_type=="Dual-Type"
+			then if card.card_color_2=="Grass"
+				then if card.card_color_1=="Grass" then				"grass"
+				else if card.card_color_1=="Fire" then				"grass-fire"
+				else if card.card_color_1=="Water" then				"grass-water"
+				else if card.card_color_1=="Lightning" then			"grass-lightning"
+				else if card.card_color_1=="Fighting" then			"grass-fighting"
+				else if card.card_color_1=="Psychic" then			"grass-psychic"
+				else if card.card_color_1=="Dark" then				"grass-dark"
+				else if card.card_color_1=="Metal" then				"grass-metal"
+				else if card.card_color_1=="Fairy" then				"grass-fairy"
+				else if card.card_color_1=="Dragon" then			"grass-dragon"
+				else if card.card_color_1=="Colorless" then			"grass-colorless"
+				else								"user defined-grass"
+			else if card.card_color_2=="Fire"
+				then if card.card_color_1=="Grass" then				"grass-fire"
+				else if card.card_color_1=="Fire" then				"fire"
+				else if card.card_color_1=="Water" then				"fire-water"
+				else if card.card_color_1=="Lightning" then			"fire-lightning"
+				else if card.card_color_1=="Fighting" then			"fire-fighting"
+				else if card.card_color_1=="Psychic" then			"fire-psychic"
+				else if card.card_color_1=="Dark" then				"fire-dark"
+				else if card.card_color_1=="Metal" then				"fire-metal"
+				else if card.card_color_1=="Fairy" then				"fire-fairy"
+				else if card.card_color_1=="Dragon" then			"fire-dragon"
+				else if card.card_color_1=="Colorless" then			"fire-colorless"
+				else								"user defined-fire"
+			else if card.card_color_2=="Water"
+				then if card.card_color_1=="Grass" then				"grass-water"
+				else if card.card_color_1=="Fire" then				"fire-water"
+				else if card.card_color_1=="Water" then				"water"
+				else if card.card_color_1=="Lightning" then			"water-lightning"
+				else if card.card_color_1=="Fighting" then			"water-fighting"
+				else if card.card_color_1=="Psychic" then			"water-psychic"
+				else if card.card_color_1=="Dark" then				"water-dark"
+				else if card.card_color_1=="Metal" then				"water-metal"
+				else if card.card_color_1=="Fairy" then				"water-fairy"
+				else if card.card_color_1=="Dragon" then			"water-dragon"
+				else if card.card_color_1=="Colorless" then			"water-colorless"
+				else								"user defined-water"
+			else if card.card_color_2=="Lightning"
+				then if card.card_color_1=="Grass" then				"grass-lightning"
+				else if card.card_color_1=="Fire" then				"fire-lightning"
+				else if card.card_color_1=="Water" then				"water-lightning"
+				else if card.card_color_1=="Lightning" then			"lightning"
+				else if card.card_color_1=="Fighting" then			"lightning-fighting"
+				else if card.card_color_1=="Psychic" then			"lightning-psychic"
+				else if card.card_color_1=="Dark" then				"lightning-dark"
+				else if card.card_color_1=="Metal" then				"lightning-metal"
+				else if card.card_color_1=="Fairy" then				"lightning-fairy"
+				else if card.card_color_1=="Dragon" then			"lightning-dragon"
+				else if card.card_color_1=="Colorless" then			"lightning-colorless"
+				else								"user defined-lightning"
+			else if card.card_color_2=="Fighting"
+				then if card.card_color_1=="Grass" then				"grass-fighting"
+				else if card.card_color_1=="Fire" then				"fire-fighting"
+				else if card.card_color_1=="Water" then				"water-fighting"
+				else if card.card_color_1=="Lightning" then			"lightning-fighting"
+				else if card.card_color_1=="Fighting" then			"fighting"
+				else if card.card_color_1=="Psychic" then			"fighting-psychic"
+				else if card.card_color_1=="Dark" then				"fighting-dark"
+				else if card.card_color_1=="Metal" then				"fighting-metal"
+				else if card.card_color_1=="Fairy" then				"fighting-fairy"
+				else if card.card_color_1=="Dragon" then			"fighting-dragon"
+				else if card.card_color_1=="Colorless" then			"fighting-colorless"
+				else								"user defined-fighting"
+			else if card.card_color_2=="pyschic"
+				then if card.card_color_1=="Grass" then				"grass-psychic"
+				else if card.card_color_1=="Fire" then				"fire-psychic"
+				else if card.card_color_1=="Water" then				"water-psychic"
+				else if card.card_color_1=="Lightning" then			"lightning-psychic"
+				else if card.card_color_1=="Fighting" then			"fighting-psychic"
+				else if card.card_color_1=="Psychic" then			"psychic"
+				else if card.card_color_1=="Dark" then				"psychic-dark"
+				else if card.card_color_1=="Metal" then				"psychic-metal"
+				else if card.card_color_1=="Fairy" then				"psychic-fairy"
+				else if card.card_color_1=="Dragon" then			"psychic-dragon"
+				else if card.card_color_1=="Colorless" then			"psychic-colorless"
+				else								"user defined-psychic"
+			else if card.card_color_2=="Dark"
+				then if card.card_color_1=="Grass" then				"grass-dark"
+				else if card.card_color_1=="Fire" then				"fire-dark"
+				else if card.card_color_1=="Water" then				"water-dark"
+				else if card.card_color_1=="Lightning" then			"lightning-dark"
+				else if card.card_color_1=="Fighting" then			"fighting-dark"
+				else if card.card_color_1=="Psychic" then			"psychic-dark"
+				else if card.card_color_1=="Dark" then				"dark"
+				else if card.card_color_1=="Metal" then				"dark-metal"
+				else if card.card_color_1=="Fairy" then				"dark-fairy"
+				else if card.card_color_1=="Dragon" then			"dark-dragon"
+				else if card.card_color_1=="Colorless" then			"dark-colorless"
+				else								"user defined-dark"
+			else if card.card_color_2=="Metal"
+				then if card.card_color_1=="Grass" then				"grass-metal"
+				else if card.card_color_1=="Fire" then				"fire-metal"
+				else if card.card_color_1=="Water" then				"water-metal"
+				else if card.card_color_1=="Lightning" then			"lightning-metal"
+				else if card.card_color_1=="Fighting" then			"fighting-metal"
+				else if card.card_color_1=="Psychic" then			"psychic-metal"
+				else if card.card_color_1=="Dark" then				"dark-metal"
+				else if card.card_color_1=="Metal" then				"metal"
+				else if card.card_color_1=="Fairy" then				"metal-fairy"
+				else if card.card_color_1=="Dragon" then			"metal-dragon"
+				else if card.card_color_1=="Colorless" then			"metal-colorless"
+				else								"user defined-metal"
+			else if card.card_color_2=="Fairy"
+				then if card.card_color_1=="Grass" then				"grass-fairy"
+				else if card.card_color_1=="Fire" then				"fire-fairy"
+				else if card.card_color_1=="Water" then				"water-fairy"
+				else if card.card_color_1=="Lightning" then			"lightning-fairy"
+				else if card.card_color_1=="Fighting" then			"fighting-fairy"
+				else if card.card_color_1=="Psychic" then			"psychic-fairy"
+				else if card.card_color_1=="Dark" then				"dark-fairy"
+				else if card.card_color_1=="Metal" then				"metal-fairy"
+				else if card.card_color_1=="Fairy" then				"fairy"
+				else if card.card_color_1=="Dragon" then			"fairy-dragon"
+				else if card.card_color_1=="Colorless" then			"fairy-colorless"
+				else								"user defined-fairy"
+			else if card.card_color_2=="Dragon"
+				then if card.card_color_1=="Grass" then				"grass-dragon"
+				else if card.card_color_1=="Fire" then				"fire-dragon"
+				else if card.card_color_1=="Water" then				"water-dragon"
+				else if card.card_color_1=="Lightning" then			"lightning-dragon"
+				else if card.card_color_1=="Fighting" then			"fighting-dragon"
+				else if card.card_color_1=="Psychic" then			"psychic-dragon"
+				else if card.card_color_1=="Dark" then				"dark-dragon"
+				else if card.card_color_1=="Metal" then				"metal-dragon"
+				else if card.card_color_1=="Fairy" then				"fairy-dragon"
+				else if card.card_color_1=="Dragon" then			"dragon"
+				else if card.card_color_1=="Colorless" then			"dragon-colorless"
+				else								"user defined-dragon"
+			else if card.card_color_2=="Colorless"
+				then if card.card_color_1=="Grass" then				"grass-colorless"
+				else if card.card_color_1=="Fire" then				"fire-colorless"
+				else if card.card_color_1=="Water" then				"water-colorless"
+				else if card.card_color_1=="Lightning" then			"lightning-colorless"
+				else if card.card_color_1=="Fighting" then			"fighting-colorless"
+				else if card.card_color_1=="Psychic" then			"psychic-colorless"
+				else if card.card_color_1=="Dark" then				"dark-colorless"
+				else if card.card_color_1=="Metal" then				"metal-colorless"
+				else if card.card_color_1=="Fairy" then				"fairy-colorless"
+				else if card.card_color_1=="Dragon" then			"dragon-colorless"
+				else if card.card_color_1=="Colorless" then			"colorless"
+				else								"user defined-colorless"
+			else if card.card_color_1=="Grass" then					"user defined-grass"
+			else if card.card_color_1=="Fire" then					"user defined-fire"
+			else if card.card_color_1=="Water" then					"user defined-water"
+			else if card.card_color_1=="Lightning" then				"user defined-lightning"
+			else if card.card_color_1=="Fighting" then				"user defined-fighting"
+			else if card.card_color_1=="Psychic" then				"user defined-psychic"
+			else if card.card_color_1=="Dark" then					"user defined-dark"
+			else if card.card_color_1=="Metal" then					"user defined-metal"
+			else if card.card_color_1=="Fairy" then					"user defined-fairy"
+			else if card.card_color_1=="Dragon" then				"user defined-dragon"
+			else if card.card_color_1=="Colorless" then				"user defined-colorless"
+			else									"user defined"
+		else if card.card_type=="Trainer" then						"trainer"
+		else										"energy"
+	}
+############################################################## Set fields
+set field:
+	type: text
+	name: title
+	description: This information will not appear on the card.
+	script: text_filter(value)
+set field:
+	type: text
+	name: description
+	multi line: true
+	description: This information will not appear on the card.
+	script: text_filter(value)
+set field:
+	type: multiple choice
+	name: visibility options
+	description: List of options used for all cards in the set
+	choice: Visible Copyright on all cards
+	choice: Visible Rarity symbol on all cards
+	choice: Visible Card Numbers on all cards
+	choice: Visible Set Symbol
+	choice: User image for set symbol
+	initial: Visible Copyright on all cards, Visible Rarity symbol on all cards, Visible Card Numbers on all cards, Visible Set Symbol
+set field:
+	type: text
+	name: artist
+	description: The primary artist of all set artwork
+	script: text_filter(value)
+set field:
+	type: text
+	name: copyright
+	description: The copyright information for the set
+	script: text_filter(value)
+set field:
+	type: symbol
+	name: symbol
+	description: The symbol for this set, double click to edit
+set field:
+	type: color
+	name: set symbol fill color
+	description: color for the fill of the set symbol
+	initial: rgb(0,0,0)
+set field:
+	type: boolean
+	name: include border on set symbol
+	initial: no
+set field:
+	type: color
+	name: set symbol border color
+	description: color for the border of the set symbol
+	initial: rgb(255,255,255)
+set field:
+	type: image
+	name: symbol image
+############################# Default style
+default set style:
+	title:
+		padding left: 2
+		font:
+			size: 16
+	visibility options:
+		render style: checklist
+		direction: vertical
+	copyright:
+		visible: { contains(set.visibility_options, match: "Visible Copyright on all cards") }
+	symbol:
+		visible: { contains(set.visibility_options, match: "Visible Set Symbol") and not(contains(set.visibility_options, match: "User image for set symbol")) }
+		variation:
+			name: common
+			border radius: 0.00
+			fill type: solid
+			fill color:   rgb(0,0,0)
+			border color: rgb(0,0,0)
+	set symbol fill color:
+		visible: { contains(set.visibility_options, match: "Visible Set Symbol") and not(contains(set.visibility_options, match: "User image for set symbol")) }
+	include border on set symbol:
+		visible: { contains(set.visibility_options, match: "Visible Set Symbol") and not(contains(set.visibility_options, match: "User image for set symbol")) }
+	set symbol border color:
+		visible: { contains(set.visibility_options, match: "Visible Set Symbol") and not(contains(set.visibility_options, match: "User image for set symbol")) and set.include_border_on_set_symbol }
+	symbol image:
+		visible: { contains(set.visibility_options, match: "Visible Set Symbol") and contains(set.visibility_options, match: "User image for set symbol") }
+############################################################## Card fields
+############################ Card List Choices-These fields are only displayed on the card-list columns and combine the other types to keep internal integrity
+card field:
+	type: choice
+	name: card list color
+	card list visible: true
+	card list column: 3
+	card list width: 100
+	card list name: color
+	show statistics: true
+	script: sort_color(value)
+	choice: grass
+	choice: grass-fire
+	choice: grass-water
+	choice: grass-lightning
+	choice: grass-fighting
+	choice: grass-psychic
+	choice: grass-dark
+	choice: grass-metal
+	choice: grass-fairy
+	choice: grass-colorless
+	choice: grass-dragon
+	choice: fire
+	choice: fire-water
+	choice: fire-lightning
+	choice: fire-fighting
+	choice: fire-psychic
+	choice: fire-dark
+	choice: fire-metal
+	choice: fire-fairy
+	choice: fire-dragon
+	choice: fire-colorless
+	choice: water
+	choice: water-lightning
+	choice: water-fighting
+	choice: water-psychic
+	choice: water-dark
+	choice: water-metal
+	choice: water-fairy
+	choice: water-dragon
+	choice: water-colorless
+	choice: lightning
+	choice: lightning-fighting
+	choice: lightning-psychic
+	choice: lightning-dark
+	choice: lightning-metal
+	choice: lightning-fairy
+	choice: lightning-dragon
+	choice: lightning-colorless
+	choice: fighting
+	choice: fighting-psychic
+	choice: fighting-dark
+	choice: fighting-metal
+	choice: fighting-fairy
+	choice: fighting-dragon
+	choice: fighting-colorless
+	choice: psychic
+	choice: psychic-dark
+	choice: psychic-metal
+	choice: psychic-fairy
+	choice: psychic-dragon
+	choice: psychic-colorless
+	choice: dark
+	choice: dark-metal
+	choice: dark-fairy
+	choice: dark-dragon
+	choice: dark-colorless
+	choice: metal
+	choice: metal-fairy
+	choice: metal-dragon
+	choice: metal-colorless
+	choice: fairy
+	choice: fairy-dragon
+	choice: fairy-colorless
+	choice: dragon
+	choice: dragon-colorless
+	choice: colorless
+	choice: trainer
+	choice: energy
+	choice: user defined-grass
+	choice: user defined-water
+	choice: user defined-fire
+	choice: user defined-lightning
+	choice: user defined-fighting
+	choice: user defined-psychic
+	choice: user defined-dark
+	choice: user defined-dragon
+	choice: user defined-metal
+	choice: user defined-fairy
+	choice: user defined-colorless
+	choice colors cardlist:
+		grass			: rgb(121,206,0)
+		fire			: rgb(255,97,19)
+		water			: rgb(51,195,255)
+		lightning		: rgb(255,223,9)
+		fighting		: rgb(184,91,0)
+		psychic			: rgb(170,43,255)
+		dark			: rgb(0,0,0)
+		metal			: rgb(128,128,128)
+		fairy			: rgb(255,59,151)
+		dragon			: rgb(113,117,47)
+		colorless		: rgb(200,200,200)
+		grass-fire		: rgb(255,215,145)
+		grass-water		: rgb(255,215,145)
+		grass-lightning		: rgb(255,215,145)
+		grass-fighting		: rgb(255,215,145)
+		grass-psychic		: rgb(255,215,145)
+		grass-dark		: rgb(255,215,145)
+		grass-metal		: rgb(255,215,145)
+		grass-fairy		: rgb(255,215,145)
+		grass-colorless		: rgb(255,215,145)
+		grass-dragon		: rgb(255,215,145)
+		fire-water		: rgb(255,215,145)
+		fire-lightning		: rgb(255,215,145)
+		fire-fighting		: rgb(255,215,145)
+		fire-psychic		: rgb(255,215,145)
+		fire-dark		: rgb(255,215,145)
+		fire-metal		: rgb(255,215,145)
+		fire-fairy		: rgb(255,215,145)
+		fire-dragon		: rgb(255,215,145)
+		fire-colorless		: rgb(255,215,145)
+		water-lightning		: rgb(255,215,145)
+		water-fighting		: rgb(255,215,145)
+		water-psychic		: rgb(255,215,145)
+		water-dark		: rgb(255,215,145)
+		water-metal		: rgb(255,215,145)
+		water-fairy		: rgb(255,215,145)
+		water-dragon		: rgb(255,215,145)
+		water-colorless		: rgb(255,215,145)
+		lightning-fighting	: rgb(255,215,145)
+		lightning-psychic	: rgb(255,215,145)
+		lightning-dark		: rgb(255,215,145)
+		lightning-metal		: rgb(255,215,145)
+		lightning-fairy		: rgb(255,215,145)
+		lightning-dragon	: rgb(255,215,145)
+		lightning-colorless	: rgb(255,215,145)
+		fighting-psychic	: rgb(255,215,145)
+		fighting-dark		: rgb(255,215,145)
+		fighting-metal		: rgb(255,215,145)
+		fighting-fairy		: rgb(255,215,145)
+		fighting-dragon		: rgb(255,215,145)
+		fighting-colorless	: rgb(255,215,145)
+		psychic-dark		: rgb(255,215,145)
+		psychic-metal		: rgb(255,215,145)
+		psychic-fairy		: rgb(255,215,145)
+		psychic-dragon		: rgb(255,215,145)
+		psychic-colorless	: rgb(255,215,145)
+		dark-metal		: rgb(255,215,145)
+		dark-fairy		: rgb(255,215,145)
+		dark-dragon		: rgb(255,215,145)
+		dark-colorless		: rgb(255,215,145)
+		metal-fairy		: rgb(255,215,145)
+		metal-dragon		: rgb(255,215,145)
+		metal-colorless		: rgb(255,215,145)
+		fairy-dragon		: rgb(255,215,145)
+		fairy-colorless		: rgb(255,215,145)
+		dragon-colorless	: rgb(255,215,145)
+		user defined-grass	: rgb(0,0,0)
+		user defined-fire	: rgb(0,0,0)
+		user defined-water	: rgb(0,0,0)
+		user defined-lightning	: rgb(0,0,0)
+		user defined-fighting	: rgb(0,0,0)
+		user defined-psychic	: rgb(0,0,0)
+		user defined-dark	: rgb(0,0,0)
+		user defined-dragon	: rgb(0,0,0)
+		user defined-metal	: rgb(0,0,0)
+		user defined-fairy	: rgb(0,0,0)
+		user defined-colorless	: rgb(0,0,0)
+		trainer			: rgb(0,17,178)
+		energy			: rgb(255,169,33)
+############################# Choice Fields for Basic Template Type
+card field:
+	type: choice
+	name: card type
+	show statistics: true
+	description: Card types pokemon/dual type pokemon/trainers/energy
+	card list visible: true
+	card list column: 3
+	card list width: 100
+	card list name: type
+	description: Card Type
+	initial: Pokemon
+	choice: Pokemon
+	choice: Dual-Type
+	choice: Trainer
+	choice: Energy
+############################# Choice Fields for Pokemon & Dual Pokemon Type
+card field:
+	type: choice
+	name: card color 1
+	show statistics: false
+	card list allow: false
+	description: Card Color/Energy Type
+	initial: Grass
+	choice: Grass
+	choice: Fire
+	choice: Water
+	choice: Lightning
+	choice: Fighting
+	choice: Psychic
+	choice: Colorless
+	choice: Dark
+	choice: Metal
+	choice: Dragon
+	choice: Fairy
+	choice: User Defined
+	#script: card_color_filter(value)
+card field:
+	type: choice
+	name: card color 2
+	show statistics: false
+	card list allow: false
+	description: Card Color/Energy Type 2 for Dual Type Pokemon
+	initial: Grass
+	choice: Grass
+	choice: Fire
+	choice: Water
+	choice: Lightning
+	choice: Fighting
+	choice: Psychic
+	choice: Colorless
+	choice: Dark
+	choice: Metal
+	choice: Dragon
+	choice: Fairy
+	choice: User Defined
+	#script: card_color_filter(value)
+card field:
+	type: choice
+	name: card color 3
+	show statistics: false
+	card list allow: false
+	description: Card Color/Energy Type only used by toolkit
+	initial: Grass
+	choice: Grass
+	choice: Fire
+	choice: Water
+	choice: Lightning
+	choice: Fighting
+	choice: Psychic
+	choice: Colorless
+	choice: Dark
+	choice: Metal
+	choice: Dragon
+	choice: Fairy
+	choice: User Defined
+	#script: card_color_filter(value)
+card field:
+	type: choice
+	name: texture type 1
+	show statistics: false
+	description: Texture Type
+	initial: Default
+	choice: Default
+	choice: Wizards
+	choice: Nintendo
+	choice: Color
+	choice: SunMoon
+	choice: ISG
+	choice: User Image
+	description: vintage of the pokemon texture fields
+card field:
+	type: choice
+	name: texture type 2
+	show statistics: false
+	description: Texture Type 2 for Dual Type Pokemon
+	initial: Default
+	choice: Default
+	choice: Wizards
+	choice: Nintendo
+	choice: Color
+	choice: SunMoon
+	choice: ISG
+	choice: User Image
+	description: vintage of the pokemon texture fields
+card field:
+	type: choice
+	name: texture type 3
+	show statistics: false
+	description: Texture Type only used by toolkit
+	initial: Default
+	choice: Default
+	choice: Wizards
+	choice: Nintendo
+	choice: Color
+	choice: SunMoon
+	choice: User Image
+	description: vintage of the pokemon texture fields
+card field:
+	type: choice
+	name: texture type 4
+	show statistics: false
+	description: Texture Type only used by toolkit
+	initial: Default
+	choice: Default
+	choice: Wizards
+	choice: Nintendo
+	choice: Color
+	choice: SunMoon
+	choice: User Image
+	description: vintage of the pokemon texture fields
+card field:
+	type: choice
+	name: stage restored
+	show statistics: false
+	description: Pokemon Stage Type
+	default: stage_default(value)
+	choice: Restored
+	choice: Basic
+	choice: Stage 1
+	choice: Stage 2
+card field:
+	type: choice
+	name: stage levelup
+	show statistics: false
+	description: Pokemon Stage Type
+	default: stage_default(value)
+	choice: Basic
+	choice: Stage 1
+	choice: Stage 2
+	choice: Level Up
+card field:
+	type: choice
+	name: stage baby
+	show statistics: false
+	description: Pokemon Stage Type
+	default: stage_default(value)
+	choice: Baby
+	choice: Basic
+	choice: Stage 1
+	choice: Stage 2
+card field:
+	type: choice
+	name: stage base
+	show statistics: false
+	description: Pokemon Stage Type
+	default: stage_default(value)
+	choice: Basic
+	choice: Stage 1
+	choice: Stage 2
+card field:
+	type: choice
+	name: color texture 1
+	show statistics: false
+	description: Texture for user driven colored pokemon textures
+	initial: Standard Classic
+	choice: Standard Classic
+	choice: Psychic Starburst
+	choice: Water Bubbles
+	choice: Color
+	choice: SunMoon Dark
+	choice: SunMoon Light
+	choice: User Image
+card field:
+	type: choice
+	name: color texture 2
+	show statistics: false
+	description: Texture for user driven dual type texture 2
+	initial: Standard Classic
+	choice: Standard Classic
+	choice: Psychic Starburst
+	choice: Water Bubbles
+	choice: Color
+	choice: SunMoon Dark
+	choice: SunMoon Light
+	choice: User Image
+card field:
+	type: choice
+	name: color texture 3
+	show statistics: false
+	description: Texture for user driven used by toolkit only
+	initial: Standard Classic
+	choice: Standard Classic
+	choice: Psychic Starburst
+	choice: Water Bubbles
+	choice: Color
+	choice: SunMoon Dark
+	choice: SunMoon Light
+	choice: User Image
+card field:
+	type: choice
+	name: dual blend type
+	show statistics: false
+	description: Blend for mixing left and right pokemon types for dual type pokemon
+	initial: Steam Siege
+	choice: Steam Siege
+	choice: Metal EX Series
+	choice: Dark EX Series
+card field:
+	type: choice
+	name: dual blend sideways
+	show statistics: false
+	description: Blend for mixing left and right pokemon types for sideways dual type pokemon
+	initial: BREAK
+	choice: BREAK
+	choice: Legend Top
+	choice: Legend Bottom
+############################# Choice Fields for Trainers
+card field:
+	type: choice
+	name: trainer
+	show statistics: false
+	card list allow: false
+	description: Trainer Type
+	initial: Item
+	choice: Item
+	choice: Tool
+	choice: Supporter
+	choice: Stadium
+	choice: User Defined
+############################# Choice Fields for Energy
+card field:
+	type: choice
+	name: energy type
+	description: Energy Type
+	show statistics: false
+	initial: Special
+	choice: Special
+	choice: Basic
+card field:
+	type: choice
+	name: basic texture
+	show statistics: false
+	description: Textures used for basic energy
+	initial: Default
+	choice: Default
+	choice: Classic
+	choice: SmStars
+	choice: LgStars
+	choice: Lightning
+	choice: Capsule
+	choice: BW
+	choice: Generations
+	choice: SunMoon
+	choice: Special
+	choice: User Image
+card field:
+	type: multiple choice
+	name: basic user image type
+	show statistics: false
+	description: Multiple choice options for choosing the white watermarks used for user image basic energy types
+	choice: Monocolor
+	choice: Triburst
+	choice: Sunburst
+	choice: Centered
+card field:
+	type: choice
+	name: metal texture
+	show statistics: false
+	description: Texture overlay used for metal basic energy textures
+	initial: Color
+	choice: Color
+	choice: Nintendo
+	choice: Wizards
+
+############################# User driven images
+card field:
+	type: image
+	name: card image
+	show statistics: false
+	card list visible: true
+	card list column: 1
+	card list width: 25
+	card list name: image
+	description: The card artwork
+card field:
+	type: image
+	name: card popout
+	card list allow: false
+	show statistics: false
+	description: Artwork that overlays all frames on the card to allow "popout" images
+
+card field:
+	type: image
+	name: background pic 1
+	card list allow: false
+	show statistics: false
+	description: Texture image for user driven basic energy, pokemon, & dual type color/energy type
+card field:
+	type: image
+	name: background pic 2
+	card list allow: false
+	show statistics: false
+	description: Texture image for user driven dual type color/energy type 2
+
+card field:
+	type: image
+	name: energy orb pic 1
+	card list allow: false
+	show statistics: false
+	description: Orb image used for user driven basic energy, pokemon, & dual type color/energy type
+card field:
+	type: image
+	name: energy orb pic 2
+	card list allow: false
+	show statistics: false
+	description: Orb image used for user driven dual type color/energy type 2
+
+card field:
+	type: image
+	name: evolution pic
+	card list allow: false
+	show statistics: false
+	description: Pokemon image used within the evolution pokemon frames to show the pokemon this card came from
+
+card field:
+	type: image
+	name: gym leader pic
+	card list allow: false
+	show statistics: false
+	description: Gym Leader image used for user driven pokemon teams
+card field:
+	type: image
+	name: team watermark
+	card list allow: false
+	show statistics: false
+	description: Watermark image used for user driven pokemon teams
+card field:
+	type: image
+	name: team logo
+	card list allow: false
+	show statistics: false
+	description: Logo image used for user driven pokemon teams
+
+############################# User driven colors
+card field:
+	type: color
+	name: energy color 1
+	show statistics: false
+	card list allow: false
+	description: Color used for user driven pokemon texture, dual type texture 1, & basic energy
+	initial: rgb(128,128,128)
+card field:
+	type: color
+	name: energy color 2
+	show statistics: false
+	card list allow: false
+	description: Color used for user driven dual type texture 2 & basic energy generations texture
+	initial: rgb(160,160,160)
+card field:
+	type: color
+	name: energy color 3
+	show statistics: false
+	card list allow: false
+	description: Color used for user driven basic energy generations texture
+	initial: rgb(90,90,90)
+
+############################# Special Choice Fields
+card field:
+	type: choice
+	name: rarity
+	choice: common
+	choice: uncommon
+	choice: rare
+	choice: extra rare
+	show statistics: true
+	initial: common
+	card list visible: true
+	card list column: 5
+	card list width: 75
+	card list name: rarity
+	description: The rarity of the card
+card field:
+	type: choice
+	name: place
+	show statistics: false
+	card list allow: false
+	initial: 1st
+	choice: 1st
+	choice: 2nd
+	choice: 3rd
+	choice: 4th
+	choice: 5th
+	choice: 6th
+	choice: 7th
+	choice: 8th
+
+############################# User Input Text Fields
+card field:
+	type: text
+	name: card name
+	card list allow: false
+	script: name_text_filter(value)
+	description: The name of the card
+card field:
+	type: text
+	name: hp
+	show statistics: false
+	script: hp_text_filter(value)
+	description: The HP of the card and for Neo Card face Trainers the (Goldenrod Game Corner) text
+
+card field:
+	type: text
+	name: copyright
+	script: text_filter(value)
+	default: set.copyright
+	card list allow: false
+	show statistics: false
+	description: Card copyright
+card field:
+	type: text
+	name: illustrator
+	script: text_filter(value)
+	show statistics: false
+	card list visible: true
+	card list column: 7
+	card list width: 150
+	card list name: artist
+	default: set.artist
+	description: Card Artist Name
+
+########Rules and Attack Text
+########It was necessary to separate the rules text for pokemon from trainers & energy because of text shrinkage
+card field:
+	type: text
+	name: rule np 1
+	script: np_text_filter_1(value)
+	show statistics: false
+	card list allow: false
+	multi line: true
+	description: 1st rule text for trainers and energy cards
+card field:
+	type: text
+	name: rule np 2
+	script: np_text_filter_2(value)
+	show statistics: false
+	card list allow: false
+	multi line: true
+	description: 2nd rule text for trainers and energy cards
+
+########Attack Cost fields / Attack Damage fields / Attack Name fields (attack #) / & Attack Rule Text Fields for Pokemon
+########Classic faces need multi-line text, new faces don't
+card field:
+	type: text
+	name: cost new 1
+	card list allow: false
+	show statistics: false
+	script: cost_new_1_placekeep(value)
+	description: 1st attack's modern attack costs (no symbol line breaks)
+card field:
+	type: text
+	name: cost classic 1
+	show statistics: false
+	card list allow: false
+	multi line: true
+	script: cost_classic_1_placekeep(value)
+	description: 1st attack's classic attack costs (symbol line breaks)
+card field:
+	type: text
+	name: attack 1
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	description: 1st attack's name
+card field:
+	type: text
+	name: damage 1
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	description: 1st attack's damage
+card field:
+	type: text
+	name: rule text 1
+	show statistics: false
+	card list allow: false
+	multi line: true
+	script: rule_text_filter_1(value)
+	description: 1st attack's rule text
+card field:
+	type: text
+	name: rule reminder 1
+	show statistics: false
+	card list allow: false
+	multi line: true
+	description: 1st attack's rule text, inbedded text
+	save value: false
+	default: rule_rem_1()
+	editable: false
+card field:
+	type: text
+	name: cost new 2
+	card list allow: false
+	show statistics: false
+	script: cost_new_2_placekeep(value)
+	description: 2nd attack's modern attack costs (no symbol line breaks)
+card field:
+	type: text
+	name: cost classic 2
+	show statistics: false
+	card list allow: false
+	multi line: true
+	script: cost_classic_2_placekeep(value)
+	description: 2nd attack's classic attack costs (symbol line breaks)
+card field:
+	type: text
+	name: attack 2
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	description: 2nd attack's name
+card field:
+	type: text
+	name: damage 2
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	description: 2nd attack's damage
+card field:
+	type: text
+	name: rule text 2
+	show statistics: false
+	script: rule_text_filter_2(value)
+	card list allow: false
+	multi line: true
+	description: 2nd attack's rule text
+card field:
+	type: text
+	name: cost new 3
+	card list allow: false
+	show statistics: false
+	script: cost_new_3_placekeep(value)
+	description: 3rd attack's modern attack costs (no symbol line breaks)
+card field:
+	type: text
+	name: cost classic 3
+	show statistics: false
+	card list allow: false
+	multi line: true
+	script: cost_classic_3_placekeep(value)
+	description: 3rd attack's classic attack costs (symbol line breaks)
+card field:
+	type: text
+	name: attack 3
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	description: 3rd attack's name
+card field:
+	type: text
+	name: damage 3
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	description: 3rd attack's damage
+card field:
+	type: text
+	name: rule text 3
+	show statistics: false
+	script: rule_text_filter_3(value)
+	card list allow: false
+	multi line: true
+	description: 3rd attack's rule text
+
+########Weakness, Resistance, & Retreat Cost
+card field:
+	type: text
+	name: weakness
+	script: weakness_filter(value)
+	show statistics: false
+card field:
+	type: text
+	name: resistance
+	script: resistance_filter(value)
+	show statistics: false
+card field:
+	type: text
+	name: retreat cost
+	script: to_upper(value)
+	show statistics: false
+	description: Retreat Cost & Special Energy Production
+card field:
+	type: text
+	name: ability energy
+	script: to_upper(value)
+	show statistics: false
+	description: Used for fields defining energy only aspects of abilities
+
+########Flavor Text & Pokedex Text & Added Ability Texts
+########Pokedex Text Entry (SM,BW,HGSS,DPP,Neo/Classic) and ID Entry (EX,E-Card)	
+card field:
+	type: text
+	name: pokedex text 1
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+########Special Code Text (EX)	
+card field:
+	type: text
+	name: pokedex text 2
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+########Ancient Evolution Ability Title (BW) and Baby Pokemon (counts as Basic) (Classic/Neo)
+card field:
+	type: text
+	name: ability text 1
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+card field:
+	type: text
+	name: ability reminder 1
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	save value: false
+	default: ability_rem_1()
+	editable: false
+########Shiny ability text (Classic/Neo)
+card field:
+	type: text
+	name: ability text 2
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+card field:
+	type: text
+	name: ability reminder 2
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	save value: false
+	default: ability_rem_2()
+	editable: false
+########Flavor Text (SM,BW,HGSS,DPP,Neo/Classic)	
+card field:
+	type: text
+	name: flavor text
+	script: text_filter(value)
+	show statistics: false
+	card list allow: false
+	multi line: true
+########Ancient Evolution Ability Rules (BW)	
+card field:
+	type: text
+	name: ability rule text 1
+	script: text_filter(value)
+	show statistics: false
+	card list allow: false
+	multi line: true
+
+############################# Non-User Input Fields that Coincide with User Input Fields dependent upon using automated reminder text
+########Trainer Title and Stage Title (BW,EX,E-Card,Neo/Classic) and Level Text (DPP) and GX Reminder Title (SM)	
+card field:
+	type: text
+	name: title text 1
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+card field:
+	type: text
+	name: title reminder 1
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	save value: false
+	default: title_rem_1()
+	editable: false
+########Trainer Title 2 and Stage Title 2 (Neo/Classic) and EX Reminder Title (BW) and Carried Tool Title (DPP) and Delta Species Reminder Text (EX) and Prism Star Reminder Title (SM)	
+card field:
+	type: text
+	name: title text 2
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+card field:
+	type: text
+	name: title reminder 2
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	save value: false
+	default: title_rem_2()
+	editable: false
+########M Reminder Title (BW)
+card field:
+	type: text
+	name: title text 3
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+card field:
+	type: text
+	name: title reminder 3
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	save value: false
+	default: title_rem_3()
+	editable: false
+########Evolution Reminder Text (SM,BW,HGSS,DPP,EX,E-Card,Neo/Classic)	
+card field:
+	type: text
+	name: evolution entry
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	description: Name of the pokemon this card evolved from
+card field:
+	type: text
+	name: evolution text 1
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+card field:
+	type: text
+	name: evolution reminder 1
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	save value: false
+	default: evolution_rem_1()
+	editable: false
+	description: "Evolves from "...
+########Evolution Reminder Text 2 (BW,E-Card,Neo/Classic) and Arceus Reminder Text (DPP) and Dual Pokemon Reminder Text (EX)	
+card field:
+	type: text
+	name: evolution text 2
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+card field:
+	type: text
+	name: evolution reminder 2
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	save value: false
+	default: evolution_rem_2()
+	editable: false
+	description: Neo/Classic/E-Card "Put ~ on the Stage 1 card/Basic Pokemon"
+########Trainer Reminder Text and GX Rule Text (SM) and EX Rule Text (BW,EX) and Baby Rule Text (E-Card,Neo/Classic) and Lv X Rule Text (DPP)	
+card field:
+	type: text
+	name: special rule text 1
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	multi line: true
+card field:
+	type: text
+	name: special rule reminder 1
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	save value: false
+	default: special_rem_1()
+	editable: false
+	multi line: true
+########Mega Rule Text (BW) and Carried Item Rule Text (DPP) and Star Rule Text (EX)	
+card field:
+	type: text
+	name: special rule text 2
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	multi line: true
+card field:
+	type: text
+	name: special rule reminder 2
+	script: text_filter(value)
+	card list allow: false
+	show statistics: false
+	save value: false
+	default: special_rem_2()
+	editable: false
+	multi line: true
+
+############################# Non-User Input Choice Fields for Images
+card field:
+	type: choice
+	name: background
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: background
+	description: background image for black text and energy and trainers
+card field:
+	type: choice
+	name: background 2
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: background
+	description: background image for white text
+card field:
+	type: choice
+	name: window
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: window
+	description: image window frame
+card field:
+	type: choice
+	name: image overlay
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: image overlay
+	description: framework overlaying the image
+card field:
+	type: choice
+	name: border
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: base
+	description: border
+card field:
+	type: choice
+	name: border overlay
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: border overlay
+	description: framewrok overlaying the border
+card field:
+	type: choice
+	name: text popout image
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: background
+	description: Image that allows two-tone text to popout of the image
+card field:
+	type: choice
+	name: blank image
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: blank image
+	description: Image providing a blank slate to hide what is behind
+############################# Non-User Input Text Fields
+card field:
+	type: text
+	name: weakoverlay
+	show statistics: false
+	default: weak_text()
+	card list allow: false
+	save value: false
+	editable: false
+	description: the word WEAKNESS on pokemon
+card field:
+	type: text
+	name: resoverlay
+	show statistics: false
+	default: res_text()
+	card list allow: false
+	save value: false
+	editable: false
+	description: the word RESISTANCE on pokemon
+card field:
+	type: text
+	name: retoverlay
+	show statistics: false
+	default: ret_text()
+	card list allow: false
+	save value: false
+	editable: false
+	description: the word RETREAT COST on pokemon
+	multi line: true
+
+card field:
+	type: text
+	name: color text 1
+	show statistics: false
+	default: color_text_1()
+	card list allow: false
+	save value: false
+	editable: false
+	description: Energy Icon for Pokemon Energy Type
+card field:
+	type: text
+	name: color text 2
+	show statistics: false
+	default: color_text_2()
+	card list allow: false
+	save value: false
+	editable: false
+	description: Energy Icon for Dual Type Energy Type 2 & Large Icon for Basic Energy
+card field:
+	type: text
+	name: color text 1 dup
+	show statistics: false
+	default: color_text_1()
+	card list allow: false
+	save value: false
+	editable: false
+	description: Duplicate of color text to allow usage for basic energy
+
+############################# Special Fields
+card field:
+	type: choice
+	name: set symbol
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	choice: set symbol
+	description: field to display the input set symbol
+card field:
+	type: choice
+	name: set
+	show statistics: false
+	choice: common
+	initial: common
+	editable: false
+card field:
+	type: text
+	name: card number
+	save value: false
+	script:
+		position(
+			of: card
+			in: set
+			order_by: { sort_index() + card.card_name }
+			) + 1
+		+ "/" +
+		number_of_items(in: set)
+	card list visible: true
+	card list column: 8
+	card list width: 50
+	card list name: #
+	card list alignment: right
+	editable: false
+	show statistics: false
+############################# It personally seems riduculous to enter name: in the name field and problematic on a programming level, but as the export codes apparently expect this I was forced to add this extra variable
+card field:
+	type: text
+	name: name
+	identifying: true
+	show statistics: false
+	card list visible: true
+	card list column: 2
+	card list width: 150
+	card list name: name
+	editable: false
+	default: card.card_name
+	description: The name of the card
+############################# Fields for testing, remove upon publish
+card field:
+	type: choice
+	name: combine tester 1
+	show statistics: false
+	card list allow: false
+	choice: normal
+	choice: add
+	choice: subtract
+	choice: stamp
+	choice: difference
+	choice: negation
+	choice: multiply
+	choice: darken
+	choice: lighten
+	choice: color dodge
+	choice: color burn
+	choice: screen
+	choice: overlay
+	choice: hard light
+	choice: soft light
+	choice: reflect
+	choice: glow
+	choice: freeze
+	choice: heat
+	choice: and
+	choice: or
+	choice: xor
+	choice: shadow
+	choice: symmetric overlay
+card field:
+	type: choice
+	name: combine tester 2
+	show statistics: false
+	card list allow: false
+	choice: normal
+	choice: add
+	choice: subtract
+	choice: stamp
+	choice: difference
+	choice: negation
+	choice: multiply
+	choice: darken
+	choice: lighten
+	choice: color dodge
+	choice: color burn
+	choice: screen
+	choice: overlay
+	choice: hard light
+	choice: soft light
+	choice: reflect
+	choice: glow
+	choice: freeze
+	choice: heat
+	choice: and
+	choice: or
+	choice: xor
+	choice: shadow
+	choice: symmetric overlay
+############################################################## Card pack items
+pack type:
+	name: energy
+	filter: contains(card.card_color_1, match:"energy")
+pack type:
+	name: common
+	filter: card.rarity == "common"
+pack type:
+	name: uncommon
+	filter: card.rarity == "uncommon"
+pack type:
+	name: rare
+	filter: card.rarity == "rare"
+############################################################## Card packs
+pack type:
+	name: booster pack
+	item:
+		name: energy
+		amount: 1
+	item:
+		name: common
+		amount: 6
+	item:
+		name: uncommon
+		amount: 3
+	item:
+		name: rare
+		amount: 1
+pack type:
+	name: additional energy
+	item:
+		name: energy
+pack type:
+	name: additional common
+	item:
+		name: common
+pack type:
+	name: additional uncommon
+	item:
+		name: uncommon
+pack type:
+	name: additional rare
+	item:
+		name: rare
+############################################################## Keywords
+############################# Keyword rules
+
+has keywords: false

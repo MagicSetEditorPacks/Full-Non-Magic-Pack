@@ -1,0 +1,17 @@
+﻿set field:
+	type: text
+	name: title
+	description: The name of this set.
+	identifying: true
+
+set field:
+	type: text
+	name: description
+	multi line: true
+	description: Some information about this set.
+
+set field:
+	type: boolean
+	name: opposites
+	initial: no
+	description: Allow a group to have opposing alignments.

@@ -1,0 +1,29 @@
+#Token Styling
+
+card style:
+	flavour_box:
+		visible: 			{ isTokenBack() }
+		top:				300
+		left:				42
+		width:				{ Width - 58 }
+		height:				{ if isTokenBack() then Height - 300 - 16 }
+		render_style:		image
+		image:				{ set_mask(image: "/PACG-common.mse-include/res/background.png", mask: "/PACG-common.mse-include/res/fade_mask.png") }
+		z_index: 			51
+	
+	flavour_text:
+		visible: 			{ isTokenBack() }
+		top:				310
+		left:				42
+		width:				{ Width - 58 }
+		height:				{ if isTokenBack() then Height - 300 - 40 }
+		alignment: 			justify middle
+		padding_left:		2
+		padding_right:		2
+		padding_top:		2
+		padding_bottom:		2
+		font:
+			name:				{ getAltFont() }
+			size:				{ getFontSize(12) }
+			scale_down_to: 		8
+		z_index: 			52

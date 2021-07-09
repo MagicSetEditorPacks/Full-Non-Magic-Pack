@@ -1,0 +1,238 @@
+﻿card field:
+	type: choice
+	name: card type
+	choice: group
+	choice: illuminati
+	choice: special
+	choice: artifact
+	choice: nwo
+	choice: goal
+	initial: group
+	card list visible: true
+	card list column: 2
+	card list width: 128
+	sort script: sort_card_type()
+
+card field:
+	type: text
+	name: name
+	identifying: true
+	multi line: true
+	show statistics: false
+	# script: to_title(value)
+	card list visible: true
+	card list column: 1
+	card list width: 256
+	show statistics: false
+
+card field:
+	type: text
+	name: rules
+	multi line: true
+	show statistics: false
+
+card field:
+	type: image
+	name: background
+	show statistics: false
+
+card field:
+	type: image
+	name: picture
+	show statistics: false
+
+card field:
+	type: multiple choice
+	name: top arrow
+	choice:
+		name: none
+		line below: true
+	choice:
+		name: out
+		type: radio
+	choice:
+		name: in
+		type: radio
+		line below: true
+	choice:
+		name: black
+		type: radio
+	choice:
+		name: white
+		type: radio
+	choice:
+		name: gold
+		type: radio
+	default: defaultarrow(siding: "top")
+	script: verifyarrow(value)
+
+card field:
+	type: multiple choice
+	name: left arrow
+	choice:
+		name: none
+		line below: true
+	choice:
+		name: out
+		type: radio
+	choice:
+		name: in
+		type: radio
+		line below: true
+	choice:
+		name: black
+		type: radio
+	choice:
+		name: white
+		type: radio
+	choice:
+		name: gold
+		type: radio
+	default: defaultarrow(siding: "left")
+	script: verifyarrow(value)
+
+card field:
+	type: multiple choice
+	name: right arrow
+	choice:
+		name: none
+		line below: true
+	choice:
+		name: out
+		type: radio
+	choice:
+		name: in
+		type: radio
+		line below: true
+	choice:
+		name: black
+		type: radio
+	choice:
+		name: white
+		type: radio
+	choice:
+		name: gold
+		type: radio
+	default: defaultarrow(siding: "right")
+	script: verifyarrow(value)
+
+card field:
+	type: multiple choice
+	name: bottom arrow
+	choice:
+		name: none
+		line below: true
+	choice:
+		name: out
+		type: radio
+	choice:
+		name: in
+		type: radio
+		line below: true
+	choice:
+		name: black
+		type: radio
+	choice:
+		name: white
+		type: radio
+	choice:
+		name: gold
+		type: radio
+	default: defaultarrow(siding: "bottom")
+	script: verifyarrow(value)
+
+card field:
+	type: multiple choice
+	name: select stats
+	choice: power
+	choice: resistance
+	choice: income
+	default: default_select_stats()
+	script: verify_select_stats()
+
+card field:
+	type: text
+	name: power
+
+card field:
+	type: text
+	name: global power
+
+card field:
+	type: text
+	name: all power
+	save value: false
+	show statistics: false
+	script: 
+		combined_editor(
+			field1: card.power,
+			separator: "/",
+			field2: card.global_power,
+			soft_before_empty: true,
+			hide_when_empty: true
+		)
+
+card field:
+	type: text
+	name: resistance
+
+card field:
+	type: text
+	name: income
+
+card field:
+	type: multiple choice
+	name: attributes
+	choice:
+		name: government
+		type: radio
+	choice:
+		name: communist
+		type: radio
+	choice:
+		name: corporate
+		type: radio
+		line below: true
+	choice:
+		name: liberal
+		type: radio
+	choice:
+		name: conservative
+		type: radio
+		line below: true
+	choice:
+		name: straight
+		type: radio
+	choice:
+		name: weird
+		type: radio
+		line below: true
+	choice:
+		name: peaceful
+		type: radio
+	choice:
+		name: violent
+		type: radio
+		line below: true
+	choice: criminal
+	choice: fanatic
+	script: verifyattributes(value)
+
+card field:
+	type: choice
+	name: nwo color
+	choice: red
+	choice: blue
+	choice: yellow
+	initial: red
+	show statistics: false
+
+card field:
+	type: text
+	name: artist1
+	show statistics: false
+
+card field:
+	type: text
+	name: artist2
+	show statistics: false

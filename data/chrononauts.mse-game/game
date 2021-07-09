@@ -1,0 +1,349 @@
+﻿mse version: 0.3.8
+full name: Chrononauts
+icon: card-back.png
+version: 2.1.0
+position hint: 18
+installer group: chrononauts/game files
+
+############################################################## Functions & filters
+
+# General functions
+init script:
+	#Scripts to check for card types
+	is_linchpin := { card.type == "linchpin" }
+	is_ripplepoint := { card.type == "ripplepoint" }
+	is_timeline := { is_linchpin() or is_ripplepoint() }
+	is_id := { card.type == "id" }
+	is_mission := { card.type == "mission" }
+	is_patch := { card.type == "patch" }
+	is_inverter := { card.type == "inverter" }
+	is_artifact := { card.type == "artifact" }
+	is_gadget := { card.type == "gadget" }
+	is_keeper := { is_artifact() or is_gadget() }
+	is_action := { card.type == "action" }
+	is_timewarp := { card.type == "timewarp" }
+	is_spell := { is_action() or is_timewarp() }
+	is_deck := { is_patch() or is_inverter() or is_keeper() or is_spell() }
+	
+	# script for setting card type (to be overridden in style files)
+	type_script := { "linchpin" }
+	# script for sorting
+	sort_script := {
+		if is_timeline() then      "AA" + card.year1
+		else if is_mission() then  "AB" + card.name
+		else if is_id() then       "AC" + card.name
+		else if is_patch() then    "BA" + card.year1
+		else if is_artifact() then "BB" + card.name
+		else if is_gadget() then   "BC" + card.name
+		else if is_inverter() then "BD" + card.name
+		else if is_action() then   "BE" + card.name
+		else if is_timewarp() then "BF" + card.name
+		else                       "C" + card.name
+	};
+	
+	#character filter for name lines
+	name_filter :=
+		replace_rule(match: "AE", replace: "Æ") +
+		curly_quotes
+	
+	#character filter for copyright line
+	copyright_filter :=
+		# step 1 : trademark symbol
+		replace_rule(match: "TM", replace: "™") +
+		# step 2 : copyright symbol
+		replace_rule(match: "CR|\\(C\\)", replace: "©")
+	
+	#list creation functions
+	create_list :=
+		replace_rule(match: "\\*", replace: "• ") +
+		curly_quotes
+
+############################################################## Set fields
+
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: text
+	name: artist
+set field:
+	type: text
+	name: copyright
+	script: copyright_filter(value)
+set field:
+	type: image
+	name: icon
+
+############################# Default style
+
+default set style:
+	title:
+		padding left: 2
+		font:
+			size: 16
+	icon:
+		width: 24
+		height: 24
+
+############################################################## Card fields
+
+############################# Card Type
+card field:
+	type: choice
+	name: type
+	script: type_script(card.type)
+	choice: linchpin
+	choice: ripplepoint
+	choice: mission
+	choice: id
+	choice: patch
+	choice: artifact
+	choice: gadget
+	choice: inverter
+	choice: action
+	choice: timewarp
+	card list visible: true
+	card list column: 2
+	choice colors:
+		linchpin	: rgb(0,0,0)
+		ripplepoint	: rgb(152,175,254)
+		mission		: rgb(255,194,104)
+		id		: rgb(51,73,101)
+		patch		: rgb(239,116,70)
+		artifact	: rgb(163,212,110)
+		gadget		: rgb(72,106,88)
+		inverter	: rgb(255,217,62)
+		action		: rgb(48,108,148)
+		timewarp	: rgb(168,67,117)
+	choice colors cardlist:
+		linchpin	: rgb(0,0,0)
+		ripplepoint	: rgb(152,175,254)
+		mission		: rgb(255,194,104)
+		id		: rgb(51,73,101)
+		patch		: rgb(239,116,70)
+		artifact	: rgb(163,212,110)
+		gadget		: rgb(72,106,88)
+		inverter	: rgb(255,217,62)
+		action		: rgb(48,108,148)
+		timewarp	: rgb(168,67,117)
+	icon: stats/type.png
+	description: The type of the card
+
+############################# Year Fields
+card field:
+	type: text
+	name: year1
+	show statistics: false
+	description: Year for timeline/ID cards
+card field:
+	type: text
+	name: year2
+	script:
+		if not is_id() then card.year1
+		else                card.year2
+	show statistics: false
+	description: Year for timeline/ID cards
+card field:
+	type: text
+	name: year3
+	script:
+		if is_ripplepoint()   then card.year1
+		else if is_linchpin() then card.year1 + "'"
+		else                       card.year3
+	show statistics: false
+	description: Year for ID cards and alternate history side of linchpins
+card field:
+	type: text
+	name: year4
+	script:
+		if is_linchpin() then card.year1 + "'"
+	show statistics: false
+	description: Year for alternate history side of linchpins
+	# only on linchpins
+
+############################# Date
+card field:
+	type: text
+	name: date
+	show statistics: false
+	description: The date for timeline cards
+
+############################# Name Fields
+card field:
+	type: text
+	name: full name
+	identifying: true
+	script:
+		if is_linchpin() then card.name + "/" + card.name2
+		else                  card.name
+	show statistics: false
+	card list visible: true
+	card list column: 1
+	card list width: 150
+	description: The full name of the card
+card field:
+	type: text
+	name: name
+	script: name_filter(card.name)
+	multi line: true
+	show statistics: false
+	description: The name of the card
+card field:
+	type: text
+	name: name2
+	script: name_filter(card.name2)
+	multi line: true
+	show statistics: false
+	description: The other name of the card
+
+############################# Text Fields
+card field:
+	type: text
+	name: text1
+	multi line: true
+	script: curly_quotes(card.text1)
+	show statistics: false
+	description: Card text
+card field:
+	type: text
+	name: text2
+	multi line: true
+	script: curly_quotes(card.text2)
+	show statistics: false
+	description: More card text
+card field:
+	type: text
+	name: list
+	multi line: true
+	show statistics: false
+	script: create_list(card.list)
+	description: field for lists
+	# only on missions and actions
+
+############################# Image Fields
+card field:
+	type: image
+	name: image
+	show statistics: false
+	description: Card image
+card field:
+	type: image
+	name: image2
+	show statistics: false
+	description: Another card image
+
+############################# Timeline Position
+card field:
+	type: text
+	name: placement
+	show statistics: false
+	description: The timeline placement of the card. e.g. "A-1"
+
+############################# Year List
+card field:
+	type: text
+	name: year list
+	multi line: true
+	show statistics: false
+	description: List of years rippled by a Linchpin
+
+############################# Set Symbol
+card field:
+	type: choice
+	name: icon
+	choice: none
+	choice: set icon
+	show statistics: false
+	description: The set icon
+
+############################# Year Name (ID) Fields
+card field:
+	type: text
+	name: year name1
+	show statistics: false
+	multi line: true
+	script: name_filter(card.year_name1)
+	description: Name corresponding to year 1
+	# only on ids
+card field:
+	type: text
+	name: year name2
+	show statistics: false
+	multi line: true
+	script: name_filter(card.year_name2)
+	description: Name corresponding to year 2
+	# only on ids
+card field:
+	type: text
+	name: year name3
+	show statistics: false
+	multi line: true
+	script: name_filter(card.year_name3)
+	description: Name corresponding to year 3
+	# only on ids
+
+############################# Artifact/Gadget Fields
+card field:
+	type: text
+	name: quip
+	show statistics: false
+	description: An amusing bit of text or Artifact recovery text
+
+############################# Patch Fields
+card field:
+	type: text
+	name: note
+	multi line: true
+	editable: false
+	script: "Note: " + replace(card.year1, match: "[[:alpha:]]", replace: "") + " is a Nexus. Check for viablility before installing this Patch."
+	show statistics: false
+	description: Unstable Patch note
+card field:
+	type: choice
+	name: patch type
+	choice: normal
+	choice: unstable
+	choice: terminal
+	show statistics: false
+	description: What kind of patch
+
+############################# Action Fields
+card field:
+	type: text
+	name: bonus
+	show statistics: false
+	description: Bonus text header
+	
+############################# Card sorting / numbering
+card field:
+	type: text
+	name: card number
+	save value: false
+	script:
+		position(
+			of: card
+			in: set
+			order_by: { sort_script() }
+			) + 1
+		+ "/" +
+		number_of_items(in: set)
+	card list visible: true
+	card list column: 3
+	card list width: 50
+	card list name: #
+	card list alignment: right
+	editable: false
+	show statistics: false
+
+############################################################## Keywords
+
+############################# Keyword rules
+
+has keywords: false

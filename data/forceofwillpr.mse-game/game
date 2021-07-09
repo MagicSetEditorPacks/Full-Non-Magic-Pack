@@ -1,0 +1,530 @@
+﻿mse version: 2.0.0
+version: 2018-08-07
+short name: Force of Will PR
+full name: Force of Will Promotional
+icon: icon.png
+position hint: 23
+installer group: fowpr/game
+
+init script: include file: script
+
+card field:
+	type: image
+	name: card_art
+	description: The card art
+	show statistics: false
+	editable: true
+	
+card field:
+	type: image
+	name: card_background
+	description: The card's foreground art
+	show statistics: false
+	editable: true
+
+card field:
+	type: image
+	name: layer
+	description: The card borders
+	show statistics: false
+	editable: false
+	
+card field:
+	type: choice
+	name: secret_frame
+	description: I'm mad
+	choice: default
+	show statistics: false
+	
+card field:
+	type: text
+	name: card_name
+	description: The name of the card
+	card list column: 1
+	card list visible: true
+	card list width: 100
+	card list alignment: left
+
+card field:
+	type: choice
+	name: color
+	description: The card's color
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	choice: GB
+	choice: RB
+	choice: RG
+	choice: RU
+	choice: UB
+	choice: UG
+	choice: WB
+	choice: WG
+	choice: WR
+	choice: WU
+	card list visible: true
+	card list width: 100
+	card list alignment: center
+
+card field:
+	type: multiple choice
+	name: color2
+	description: The card's color
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	card list visible: true
+	card list width: 100
+	card list alignment: center
+
+card field:
+	type: choice
+	name: color3
+	description: The card's color
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	card list visible: true
+	card list width: 100
+	card list alignment: center
+	
+card field:
+	type: choice
+	name: color_img1
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	editable: false
+	script: ci_value(num: 1)
+	
+card field:
+	type: choice
+	name: color_img2
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	editable: false
+	script: ci_value(num: 2)
+	
+card field:
+	type: choice
+	name: color_img3
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	editable: false
+	script: ci_value(num: 3)
+	
+card field:
+	type: choice
+	name: color_img4
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	editable: false
+	script: ci_value(num: 4)
+	
+card field:
+	type: choice
+	name: color_img5
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	editable: false
+	script: ci_value(num: 5)
+	
+card field:
+	type: choice
+	name: color_img6
+	choice: none
+	choice: void
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	editable: false
+	script: ci_value(num: 6)
+	
+card field:
+	type: choice
+	name: lapis_type_void
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_type_white
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_type_red
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_type_blue
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_type_green
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_type_black
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_type_stone
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_void
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_white
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_red
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_blue
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_green
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_black
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: choice
+	name: lapis_name_stone
+	show statistics: false
+	editable: false
+	choice: default
+	
+card field:
+	type: text
+	name: race
+	description: The race of the card
+	
+card field:
+	type: text
+	name: ATK
+	description: The ATK of the card
+	card list column: 2
+	card list visible: true
+	card list width: 100
+	card list alignment: center
+	
+card field:
+	type: text
+	name: DEF
+	description: The DEF of the card
+	card list column: 3
+	card list visible: true
+	card list width: 100
+	card list alignment: center
+	
+card field:
+	type: choice
+	name: canbattle
+	description: Does this card have ATK/DEF or can it not battle?
+	choice: atkdef
+	choice: cannotbattle
+	
+card field:
+	type: text
+	name: artist
+	description: The artist of the art
+
+card field:
+	type: text
+	name: card_id
+	editable: false
+	save value: false
+	identifying: true
+	script: card_serial()
+	description: Serial of the card
+	description: The ID of the card
+	show statistics: false
+	
+card field:
+	type: text
+	name: rules
+	description: Rules text
+	script: text_filter(input: value, card_name: card.card_name) #Delete this line if you don't want automatic symbols
+	multi line: true
+	tab index: 10
+	show statistics: false
+
+card field:
+	type: text
+	name: flavor
+	description: The flavor of the card.
+	multi line: true
+	tab index: 11
+	show statistics: false
+
+card field:
+	type: choice
+	name: cardtype
+	description: Type of card
+	choice: ruler
+	choice: jruler
+	choice: resonator
+	choice: spell
+	choice: rune
+	choice: regalia
+	choice: stone
+	choice: tokenResonator
+	choice: tokenOther
+	
+card field:
+	type: choice
+	name: srborder
+	description: Do you want your SR to have a foreground?
+	choice: No
+	choice: Yes
+	
+card field:
+	type: choice
+	name: rarity
+	description: Determines the card border for Resonators and Spells
+	choice: C
+	choice: U
+	choice: R
+	choice: SR
+	choice: JR
+	choice: AR
+	choice: T
+
+card field:
+	type: choice
+	name: resStatColor
+	description: The matches the card's color. Transparent section where ATK/DEF go for Resonators
+	choice: default
+	editable: false
+	
+card field:
+	type: choice
+	name: spellStatColor
+	description: The matches the card's color. Transparent section where type go for Spells
+	choice: default
+	editable: false
+	
+card field:
+	type: choice
+	name: topBarColor
+	description: The matches the card's color. Transparent section for the card name
+	choice: default
+	
+card field:
+	type: choice
+	name: jrulerbutton
+	description: Badge of honor for cards strong enough to call themselves a Ruler or J-Ruler
+	choice: default
+	editable: false
+	
+card field:
+	type: choice
+	name: costwheel1
+	description: Cost Wheel
+	choice: blank
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	choice: void
+	choice: moon
+	choice: time
+	
+	
+card field:
+	type: choice
+	name: costwheel2
+	description: Cost Wheel
+	choice: blank
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	choice: void
+	choice: moon
+	choice: time
+
+card field:
+	type: choice
+	name: costwheel3
+	description: Cost Wheel
+	choice: blank
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	choice: void
+	choice: moon
+	choice: time
+	
+card field:
+	type: choice
+	name: costwheel4
+	description: Cost Wheel
+	choice: blank
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	choice: void
+	choice: moon
+	choice: time
+	
+card field:
+	type: choice
+	name: costwheel5
+	description: Cost Wheel
+	choice: blank
+	choice: white
+	choice: red
+	choice: blue
+	choice: green
+	choice: black
+	choice: void
+	choice: moon
+	choice: time
+	
+card field:
+	type: choice
+	name: colorless_cost
+	description: The colorless cost of the card
+	description: Cost Wheel
+	choice: none
+	choice: zero
+	choice: one
+	choice: two
+	choice: three
+	choice: four
+	choice: five
+	choice: six
+	choice: seven
+	choice: eight
+	choice: nine
+	choice: X
+	choice: XX
+
+card field:
+	type: text
+	name: copyright
+	multi line: false
+	editable: false
+	save value: false
+	identifying: true
+	script: card_copyright()
+	description: Copyright information (editable in SET INFO)
+	show statistics: false
+	
+card field:
+	type: choice
+	name: wheeltype
+	description: The card's cost wheel graphic
+	choice: Normal
+	choice: Quickcast
+	choice: Inverse
+	choice: Will of Hope
+	choice: Will of Despair
+
+card field:
+	type: text
+	name: divinity
+	description: For runes only!
+	script: divinity_function(divinityInput: card.divinity)
+	
+#### set fields
+
+set field:
+	type: text
+	name: set name
+	description: The name of the set.
+set field:
+	type: text
+	name: set id
+	description: The 3-letter reference of the series.
+set field:
+	type: text
+	name: copyright
+	description: Copyright information that shows at the bottom of all cards.

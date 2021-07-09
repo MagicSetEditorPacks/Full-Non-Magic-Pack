@@ -1,0 +1,138 @@
+mse version: 0.3.6
+game: dvorak
+short name: Black
+full name: BlackDvorak
+installer group: Dvorak/black style
+icon: card.png
+position hint: 002
+
+version: 2013-08-12
+depends on:
+	package: dvorak.mse-game
+	version: 2008-5-19
+
+card width: 300
+card height: 400
+card dpi: 300
+############################################################## Extra scripts
+############################################################## Set info fields
+set info style:
+	title:
+		padding left: 2
+		font:
+			size: 16
+############################################################## Extra style
+styling field:
+	type: choice
+	name: font
+	description: Which font should be used for the card?
+	initial: Mighty Zeo 2.0
+	choice: Mighty Zeo 2.0
+	choice: Arial
+	choice: Times New Roman
+	choice: Boopee
+	choice: GriffosFont
+styling field:
+	type: color
+	name: font color
+	description: What colour should be used for the text?
+	initial: rgb(255,255,255)
+############################################################## Card fields
+card style:
+	image:
+		left: 10
+		right: 290
+		top: 80
+		height: 200
+		z index: 1
+	name:
+		left: 10
+		right: {if card.value=="" then 290 else 260}
+		top: 10
+		bottom: 70
+		alignment: {if card.value=="" then "center middle" else "left middle"}
+		z index: 2
+		padding left: 4
+		font:
+			name: {styling.font}
+			size: 24
+			color: {styling.font_color}
+			scale down to: 10
+	value:
+		right: 290
+		width: 30
+		top: 10
+		bottom: 70
+		z index: 3
+		alignment: middle right
+		font:
+			name: {styling.font}
+			size: 20
+			color: {styling.font_color}
+			weight: bold
+	sub type:
+		left: 10
+		right: 290
+		top: 290
+		height: 20
+		z index: 3
+		alignment: center middle shrink-overflow
+		font:
+			name: {styling.font}
+			size: 16
+			color: {styling.font_color}
+			weight: bold
+	text:
+		top: {if card.sub_type=="" then 290 else 315}
+		bottom: {if set.Extended_Card_Info then 380 else 390}
+		left: 10
+		right: 290
+		z index: 2
+		padding left: 4
+		padding right: 4
+		padding top: 4
+		padding bottom: 4
+		alignment: center middle
+		line height hard: 1.2
+		line height line: 1.4
+		font:
+			name: {styling.font}
+			size: 18
+			scale down to: 8
+			color: {styling.font_color}
+	gamecode:
+		top: 382
+		bottom: 392
+		left: 10
+		width: 93
+		alignment: left middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 8
+			color: {styling.font_color}
+		visible: {set.Extended_Card_Info}
+	copyright:
+		top: 382
+		bottom: 392
+		right: 290
+		width: 183
+		alignment: right middle shrink-overflow
+		font:
+			name: Times New Roman
+			size: 8
+			color: {styling.font_color}
+		visible: {set.Extended_Card_Info}
+extra card field:
+	type: color
+	name: bg
+	default: rgb(0,0,0)
+	show statistics: false
+	save value: true
+extra card style:
+	bg:
+		left: 0
+		top: 0
+		width: 300
+		height: 400
+		radius: 5
+		z index: -3

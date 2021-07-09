@@ -1,0 +1,257 @@
+mse version: 2.0.0
+game: yugioh
+short name: Bandai
+installer group: Yugioh/Bandai style
+icon: card-sample.png
+position hint: 02
+
+version: 2014-01-26
+depends on:
+	package: yugioh.mse-game
+	version: 2008-05-14
+depends on:
+	package: yugioh-bandai-levels.mse-symbol-font
+	version: 2007-12-19
+depends on:
+	package: yugioh-text-replacements.mse-symbol-font
+	version: 2007-09-23
+
+card width: 375
+card height: 523
+card dpi: 300
+############################################################## Extra scripts
+############################################################## Extra style
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	card type:
+		left:	0
+		top:	0
+		width:	375
+		height:	523
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			normal monster:	   card-monster.jpg
+			effect monster:	   card-monster.jpg
+			ritual monster:	   card-monster.jpg
+			synchro monster: card-monster.jpg
+			fusion monster:	   card-monster.jpg
+			token monster:	   card-monster.jpg
+			obelisk: 	   card-monster.jpg
+			slifer: 	   card-monster.jpg
+			ra:	 	   card-monster.jpg
+			legendary dragons: card-player.jpg
+			spell card:	   card-non-monster.jpg
+			trap card:	   card-non-monster.jpg
+	############################# Name line
+	name:
+		left: 45
+		top : 28
+		width: 255
+		height: 35
+		alignment: bottom left shrink-overflow
+		padding left:   0
+		padding top:    0
+		padding right:  0
+		padding bottom: 0
+		z index: 2
+		font:
+			name: MatrixRegularSmallCaps
+			size: 24
+			color: 
+				script: if card.card_type=="legendary dragons"	then	rgb(255,0,0)
+				else							rgb(255,255,255)
+	attribute:
+		left: 302
+		top : 32
+		width: 35
+		height: 35
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			earth: earth.png
+			water: water.png
+			fire: fire.png
+			wind: wind.png
+			light: light.png
+			dark: dark.png
+			divine: divine.png
+			spell: spell.png
+			trap: trap.png
+	level:
+		left: 45
+		top : 96
+		height: 25
+		width: 285
+		z index: 4
+		alignment: middle center
+		font:
+			name: MatrixRegularSmallCaps
+			italic name: Matrix
+			size: 18
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-bandai-levels
+			alignment: middle center
+			scale down to: 1
+			size: 8
+		always symbol: true
+	############################# Image
+	image:
+		left:	60
+		top:	109
+		width: 255
+		height:	303
+		z index: 1
+	############################# Card type
+	monster type:
+		left: 60
+		top : 
+			script: if is_nmonster() then 420 else 70
+		width: 252
+		height: 14
+		alignment: top center
+		z index: 3
+		font:
+			name: MatrixRegularSmallCaps
+			italic name: Matrix
+			size: 10
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 3
+	############################# Edition and Card ID
+	number:
+		left: 230
+		top : 415
+		width: 120
+		height: 28
+		z index: 2
+		alignment: top right
+		font:
+			name: Arial
+			size: 8
+			color: rgb(0,0,0)
+	############################# Text box
+	############################# Attack/Defense
+	attack:
+		left:	243
+		top:	435
+		width:	92
+		height:	24
+		z index: 2
+		alignment: right middle
+		font:
+			name: MatrixRegularSmallCaps
+			size: 20
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 12
+		visible:
+			script: if is_nmonster()			then	false
+			else	if card.card_type=="legendary dragons"	then	false
+			else							true
+	defense:
+		z index: 4
+		left:	243
+		top:	473
+		width:	92
+		height:	24
+		z index: 2
+		alignment: right middle
+		font:
+			name: MatrixRegularSmallCaps
+			size: 20
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 12
+		visible:
+			script: if is_nmonster()			then	false
+			else	if card.card_type=="legendary dragons"	then	false
+			else							true
+	############################# Card sorting / numbering
+	############################# Copyright stuff
+############################################################## Extra card fields
+extra card field:
+	type: text
+	name: rules stuff
+	multi line: true
+	show statistics: false
+	script: text_filter(value)
+extra card field:
+	type: text
+	name: flavor stuff
+	multi line: true
+	show statistics: false
+	script: flavor_text_filter(value)
+extra card style:
+	rules stuff:
+		left: 30
+		top : 440
+		width: 
+			script: if is_nmonster() then 315
+			else			      130
+		height: 50
+		font:
+			name: Palatino Linotype
+			italic name: Palatino Linotype Italic
+			size: 8
+			scale down to: 4
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 8
+		alignment:	top left
+		z index: 3
+		padding left:   2
+		padding top:    2
+		padding right:  -3
+		padding bottom: 0
+		line height hard: 1.0
+		line height line: 1.0
+		line height soft: 0.9
+		line height hard max: 1.2
+		line height line max: 1.2
+	flavor stuff:
+		left: 
+			script: if card.card_type=="legendary dragons" then 197
+			else						     60
+		top : 
+			script: if card.card_type=="legendary dragons" then 430
+			else						     80
+		width: 
+			script: if card.card_type=="legendary dragons" then 138
+			else						    252
+		height: 
+			script: if card.card_type=="legendary dragons" then 70
+			else						    20
+		font:
+			name: Palatino Linotype
+			italic name: Palatino Linotype Italic
+			size: 8
+			scale down to: 4
+			color: rgb(0,0,0)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 8
+		alignment:	top left
+		z index: 2
+		padding left:   2
+		padding top:    2
+		padding right:  -3
+		padding bottom: 0
+		line height hard: 1.0
+		line height line: 1.0
+		line height soft: 0.9
+		line height hard max: 1.2
+		line height line max: 1.2

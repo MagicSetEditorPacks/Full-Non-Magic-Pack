@@ -1,0 +1,351 @@
+mse version: 0.3.6
+game: yugioh
+short name: Comic
+installer group: Yugioh/Comic
+icon: card-sample.png
+position hint: 04
+
+version: 2008-05-19
+depends on:
+	package: yugioh.mse-game
+	version: 2008-05-14
+depends on:
+	package: yugioh-standard-levels.mse-symbol-font
+	version: 2007-09-23
+depends on:
+	package: yugioh-text-replacements.mse-symbol-font
+	version: 2008-01-04
+
+card background: white
+card width: 375
+card height: 523
+card dpi: 600
+
+############################################################## Extra scripts
+############################################################## Extra style
+styling field:
+	type: choice
+	name: cardname font
+	description: Use Matrix or MatrixBoldSmallCaps for the cardname font?
+	initial: MatrixRegularSmallCaps
+	choice: MatrixBoldSmallCaps
+	choice: Matrix
+	choice: ManuskriptGotisch
+	choice: Japanese
+	choice: MatrixRegularSmallCaps
+styling field:
+	type: choice
+	name: foil image
+	description: What foil should be on the cards?
+	initial: none
+	choice: none
+	choice: holo image
+	choice: secret holo image
+	choice: parallel holo image
+styling field:
+	type: choice
+	name: foil name
+	description: What color foil should be used on the name?
+	initial: normal
+	choice: normal
+	choice: silver
+	choice: gold
+styling field:
+	type: choice
+	name: edition font
+	description: Which font should be used on the edition?
+	initial: normal
+	choice: normal
+	choice: Venus Rising
+styling style:
+	foil image:
+		render style: text
+	foil name:
+		render style: text
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	card type:
+		left:	0
+		top:	0
+		width:	375
+		height:	523
+		z index: -2
+		render style: image
+		popup style: in place
+		image: card.jpg
+	foils:
+		left:	{ if styling.foil_image=="parallel holo image" then 0 else 60}
+		top:	{ if styling.foil_image=="parallel holo image" then 0 else 100}
+		width: { if styling.foil_image=="parallel holo image" then 375 else 253}
+		height:	{ if styling.foil_image=="parallel holo image" then 523 else 279}
+		z index: 5
+		visible: { styling.foil_image!="none" }
+		render style: image
+		popup style: in place
+		image: 
+			script:	if styling.foil_image=="parallel holo image" then "parallelfoil.png" else
+				if styling.foil_image=="secret holo image" then "secretfoil.png" else "superfoil.png"
+	############################# Background stuff
+	############################# Name line
+	name:
+		left: 23
+		top : 28
+		width: 287
+		height: 35
+		alignment: bottom shrink-overflow
+		padding left:   0
+		padding top:    0
+		padding right:  0
+		padding bottom: 0
+		z index: 2
+		font:
+			name: 
+				{ if styling.cardname_font == "ManuskriptGotisch" then "ManuskriptGotisch"
+				else if styling.cardname_font == "MatrixBoldSmallCaps" then "MatrixBoldSmallCaps"
+				else if styling.cardname_font == "Japanese" then "DFGMaruGothic-Md"
+				else if styling.cardname_font == "MatrixRegularSmallCaps" then "MatrixRegularSmallCaps"
+				else "Matrix" }
+			size: 
+				{ if styling.cardname_font == "ManuskriptGotisch" then 20
+				else if styling.cardname_font == "MatrixBoldSmallCaps" then 24
+				else 24 }
+			color: 
+				script: if styling.foil_name=="silver"		then	rgb(230,230,230)
+				else	if styling.foil_name=="gold"		then	rgb(216,199,53)
+				else					rgb(0,0,255)
+	attribute:
+		left: 312
+		top : 28
+		width: 35
+		height: 35
+		z index: 2
+		render style: image
+		popup style: in place
+		choice images:
+			earth: earth.png
+			water: water.png
+			fire: fire.png
+			wind: wind.png
+			light: light.png
+			dark: dark.png
+			divine: divine.png
+			spell: spell.png
+			trap: trap.png
+	level:
+		left: 45
+		top : 64
+		height: 25
+		width: 285
+		z index: 4
+		alignment: middle right
+		font:
+			name: 
+				{ if styling.cardname_font == "Japanese" then "DFGMaruGothic-Md"
+				else "MatrixBoldSmallCaps" }
+			italic name: Matrix
+			size: 
+				{ if styling.cardname_font == "Japanese" then 15
+				else 18 }
+			color: 
+				script: if styling.foil_name=="silver"		then	rgb(230,230,230)
+				else	if styling.foil_name=="gold"		then	rgb(216,199,53)
+				else					rgb(0,0,255)
+		symbol font:
+			name: yugioh-standard-levels
+			alignment: middle center
+			scale down to: 1
+			size: 8
+		always symbol: true
+	############################# Image
+	image:
+		left:	60
+		top:	100
+		width: 	253
+		height:	279
+		z index: 1
+
+	############################# Card type
+	monster type:
+		left: 23
+		top :409
+		width: 200
+		height: 16
+		alignment: bottom shrink-overflow
+		z index: 3
+		font:
+			name: 
+				{ if styling.cardname_font == "Japanese" then "DFGMaruGothic-Md"
+				else "MatrixBoldSmallCaps" }
+			italic name: Matrix
+			size: 
+				{ if styling.cardname_font == "Japanese" then 9
+				else 12 }
+			weight: bold
+			color: 
+				script: if styling.foil_name=="silver"		then	rgb(230,230,230)
+				else	if styling.foil_name=="gold"		then	rgb(216,199,53)
+				else					rgb(0,0,255)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 3
+		visible: script: if is_nmonster() then false else true
+	############################# Edition and Card ID
+	number:
+		left: 230
+		top : 390
+		width: 120
+		height: 28
+		z index: 2
+		alignment: top right
+		font:
+			name: Arial
+			size: 8
+			color: 
+				script: if styling.foil_name=="silver"		then	rgb(230,230,230)
+				else	if styling.foil_name=="gold"		then	rgb(216,199,53)
+				else					rgb(0,0,255)
+	edition:
+		left: 30
+		top: 
+				{ if styling.edition_font == "Venus Rising" then 391
+				else 390 }
+		width: 120
+		height: 12
+		z index: 2
+		font:
+			name: 
+				{ if styling.edition_font == "Venus Rising" then "Venus Rising"
+				else "Arial" }
+
+			size: 8
+			color: 
+				script: if styling.foil_name=="silver"		then	rgb(230,230,230)
+				else	if styling.foil_name=="gold"		then	rgb(216,199,53)
+				else					rgb(0,0,255)
+	############################# Text box
+	rule text:
+		left: 23
+		top : 
+			script: if is_nmonster()		    then 410
+			else			 425
+		width: 
+			script: if is_nmonster()		    then 320
+			else			 200
+		height: 75
+		font:
+			name: 
+				{ if styling.cardname_font == "Japanese" then "DFTFLeiSho-W7"
+				else "Palatino Linotype" }
+			italic name: Palatino Linotype Italic
+			size: 8
+			scale down to: 4
+			color: 
+				script: if styling.foil_name=="silver"		then	rgb(230,230,230)
+				else	if styling.foil_name=="gold"		then	rgb(216,199,53)
+				else					rgb(0,0,255)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			size: 8
+		alignment:	top left
+		z index: 3
+		padding left:   2
+		padding top:    2
+		padding right:  -3
+		padding bottom: 0
+		line height hard: 1.0
+		line height line: 1.0
+		line height soft: 0.9
+		line height hard max: 1.2
+		line height line max: 1.2
+	############################# Attack/Defense
+	attack:
+		z index: 4
+		left:	224
+		top:	425
+		width:	122
+		height:	24
+		z index: 2
+		alignment: right middle shrink-overflow
+		font:
+			name: 
+				{ if styling.cardname_font == "Japanese" then "DFGMaruGothic-Md"
+				else "MatrixBoldSmallCaps" }
+			size: 20
+			weight: bold
+			color: 
+				script: if styling.foil_name=="silver"		then	rgb(230,230,230)
+				else	if styling.foil_name=="gold"		then	rgb(216,199,53)
+				else					rgb(0,0,255)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			scale down to: 1
+			size: 20
+		visible:
+			script: if is_nmonster()			then	false
+			else					true
+	defense:
+		z index: 4
+		left:	224
+		top:	455
+		width:	122
+		height:	24
+		z index: 2
+		alignment: right middle shrink-overflow
+		font:
+			name: 
+				{ if styling.cardname_font == "Japanese" then "DFGMaruGothic-Md"
+				else "MatrixBoldSmallCaps" }
+			size: 20
+			weight: bold
+			color: 
+				script: if styling.foil_name=="silver"		then	rgb(230,230,230)
+				else	if styling.foil_name=="gold"		then	rgb(216,199,53)
+				else					rgb(0,0,255)
+		symbol font:
+			name: yugioh-text-replacements
+			alignment: middle center
+			scale down to: 1
+			size: 20
+		visible:
+			script: if is_nmonster()			then	false
+			else					true
+	############################# Card sorting / numbering
+	############################# Copyright stuff
+	gamecode:
+		left: 21
+		top : 
+				{ if styling.cardname_font ==  "Japanese" then 494
+				else 492 }
+		width: 100
+		height: 18
+		alignment: top left
+		z index: 2
+		font:
+			name: 
+				{ if styling.cardname_font == "Japanese" then "DFGMaruGothic-Md"
+				else "Arial" }
+			size: 
+				{ if styling.cardname_font ==  "Japanese" then 6.5
+				else 8 }
+			color: rgb(255,255,255)
+	copyright:
+		left: 193
+		top : 
+				{ if styling.cardname_font ==  "Japanese" then 494
+				else 492 }
+		width: 150
+		height: 18
+		z index: 2
+		alignment: top right
+		font: 
+			name: 
+				{ if styling.cardname_font == "Japanese" then "DFGMaruGothic-Md"
+				else "Palatino Linotype" }
+			size: 
+				{ if styling.cardname_font ==  "Japanese" then 6.5
+				else 8 }
+			color: rgb(255,255,255)

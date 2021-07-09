@@ -1,0 +1,17 @@
+mse version: 0.3.8
+short name:  Cardfight
+full name: Cardfight!! Vanguard
+icon: icon.png
+position hint: 2
+installer group: cardfight/game/Cardfight Vanguard game
+
+version: 2018-02-15
+
+init script: include file: script
+
+include file: card_fields
+include file: set_fields
+include file: keywords
+include file: statistics
+include file: packs
+include file: add_cards_scripts

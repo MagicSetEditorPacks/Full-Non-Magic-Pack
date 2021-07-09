@@ -1,0 +1,486 @@
+﻿mse version: 0.3.8
+full name: Babylon 5
+short name: B5
+installer group: Babylon 5/Game Files
+icon: card-back.png
+position hint: 19
+
+version: 2010-08-27
+depends on:
+	package: b5-icons.mse-include
+	version: 2008-05-14
+depends on:
+	package: b5-actual-marks.mse-include
+	version: 2008-05-14
+
+############################################################## Functions & filters
+# General functions
+init script:
+	############################################################## Sorting mana symbols
+	# Like mana filter, only also allow tap symbols:
+	influence_sort := sort_rule(order: "JRY(ADTFIM)X[0123456789]")
+	influence_filter := to_upper + {influence_sort()}
+	influence_filter_t := replace_rule(               # Remove [] used for forcing mana symbols
+				match: "[\\[\\]]",
+				replace: ""
+			) + {influence_filter()}
+	
+	############################################################## The text box
+	
+	# add symbols to text
+	symbol_filter :=
+		# step 5a : add arrow
+		replace_rule(
+			match: ">>>",
+			replace: "<sym-auto>&</sym-auto>" )
+	
+	symbol_context :=
+		"(?ix)				# case insensitive, ignore whitespace
+		 (^|[[:space:]\"(“'])		# start of a word
+		 (  <match>:			# G: something
+		 |  <match>,			# G, tap: something
+		 |  <match>[ ]can[ ]be[ ]pay
+		 |  (pays?|additional|costs?|the	# pay X. creatures cost 1 less. pay an additional G.
+		    |adds?|pay(ed)?[ ](with|using)
+		    )
+		    ([ ]either)?			 # pay either X or Y
+		    ([ ]<sym[^>]*>[JRYADTFIMX0-9/|]+</sym[^>]*>,)* # pay X, Y or Z
+		    ([ ]<sym[^>]*>[JRYADTFIMX0-9/|]+</sym[^>]*>[ ](and|or|and/or))* # pay X or Y
+		    [ ]<match> 
+		    ([,.)]|$				# (end of word)
+		    |[ ][^ .,]*$			# still typing...
+		    |[ ]( or | and | in | less | more | to ) # or next word is ...
+		    )
+		    )
+		 |  <param-cost>[ ]*<match></param-cost>		# keyword argument that is declared as cost
+		 |  <param-cost><match>,		# keyword argument that is declared as cost
+		 ";
+	
+	text_filter :=
+		# step 1 : remove all automatic tags
+		tag_remove_rule(tag: "<sym-auto>") +
+		tag_remove_rule(tag: "<i-auto>")   +
+		tag_remove_rule(tag: "<b-auto>")   +
+		# step 2 : reminder text for keywords
+		expand_keywords@(
+			condition: {
+				correct_case
+			}
+			default_expand: {
+				chosen(choice:if correct_case then mode else "lower case", set.automatic_reminder_text)
+			},
+			combine:        {
+				if mode == "actual" or mode == "custom" then "<b-auto>{keyword}</b-auto>"
+				else "<b-auto>{keyword}</b-auto>" + (if expand then "<atom-reminder-{mode}> ({process_english_hints(reminder)})</atom-reminder-{mode}>") }
+			) +
+		# step 2b : move action keywords' reminder text to the end of the line
+		replace_rule(
+			match: "(<atom-reminder-b5action>(?:(?!<kw-).)*</atom-reminder-b5action></kw[^>]*>)(((?!<atom-reminder| ?<kw-)[^\n(])+)",
+			replace: "\\2\\1"
+			) +
+		# step 2c : remove duplicate reminder text
+		replace_rule(
+			match: "(<atom-reminder-[^>]*>[^)]+[)]</atom-reminder-[^>]*>)([^\n]+)\\1"
+			replace: "\\2\\1"
+			) +
+		# step 3a : expand shortcut words ~ and CARDNAME
+		replace_rule(
+			match: "CARDNAME",
+			in_context: "(^|[[:space:]]|\\()<match>", # TODO: Allow any punctuation before
+			replace: "<atom-cardname></atom-cardname>"
+			) +
+		# step 3b : fill in atom fields
+		tag_contents_rule(
+			tag: "<atom-cardname>",
+			contents: { if card_name=="" then "CARDNAME" else card_name }
+			) +
+		# step 4 : explict non mana symbols
+		replace_rule(
+			match: "\\][JRYADTFIMX0-9/|]+\\[",
+			replace: {"<nosym>" + influence_filter_t() + "</nosym>"} ) +
+		# step 5 : symbols
+		symbol_filter +
+		# step 5a : add mana & tap symbols
+		replace_rule(
+			match: "[JRYADTFIMX0-9/|]+",
+			in_context: symbol_context,
+			replace: {"<sym-auto>" + influence_filter_t() + "</sym-auto>"} ) +
+		# step 5b : add explict mana symbols
+		replace_rule(
+			match: "\\[[JRYADTFIMX0-9/|]+\\]",
+			replace: {"<sym>" + influence_filter_t() + "</sym>"} ) +
+		# step 6a : Bold keywords without reminder text
+		replace_rule(
+		 	match: "<kw[^>]*>[^<]+</kw-a>",
+	 		replace: "<b-auto>&</b-auto>") +
+		# step 6b : Bold keywords with reminder text
+		replace_rule(
+		 	match: "<kw[^>]*>[^<]+</kw-A>",
+	 		replace: "<b-auto>&</b-auto>") +
+		# step 7 : italic reminder text
+		replace_rule(
+		 	match: "[(]([^)\n]|[(][^)\n]*[)])*[)]?",
+			in_context: "(^|[[:space:]])<match>|<atom-keyword><match></",
+		 	replace: "<i-auto>&</i-auto>") +
+		# step 8 : automatic capitalization
+		replace_rule(
+			match: "[a-z]",
+			in_context: "[(](<param-[a-z]*>)?<match>[^)]|[ ]*: <param-cost><match>|—<match>| — <match>",
+			replace: to_upper) +
+		curly_quotes
+	
+	############################################################## Other boxes
+		
+	space_to_wltags := replace_rule(match:"( +|<soft> </soft>)",
+	                                replace:{"</word-list-{list_type}>{_1}<word-list-{list_type}>"})
+	
+	############################################################## Determine card type
+	
+	# Names of card types
+	card_type := {
+		if      contains(input, match:"Enhancement") then "enhancement"
+		else if contains(input, match:"Agenda") then "agenda"
+		else if contains(input, match:"Aftermath") then "aftermath"
+		else if contains(input, match:"Conflict") then "conflict"
+		else if contains(input, match:"Contingency") then "contingency"
+		else if contains(input, match:"Event") then "event"
+		else if contains(input, match:"Fleet") then "fleet"
+		else if contains(input, match:"Group") then "group"
+		else if contains(input, match:"Limitation") then "limitation"
+		else if contains(input, match:"Location") then "location"
+		else if contains(input, match:"Nexus") then "nexus"
+		else if contains(input, match:"Centauri") then "centauri"
+		else if contains(input, match:"Drakh") then "drakh"
+		else if contains(input, match:"Human") then "human"
+		else if contains(input, match:"Minbari") then "minbari"
+		else if contains(input, match:"Narn") then "narn"
+		else if contains(input, match:"Neutral") then "neutral"
+		else if contains(input, match:"Non-Aligned") then "non-aligned"
+		else if contains(input, match:"Shadow") then "shadow"
+		else if contains(input, match:"Vorlon") then "vorlon"
+		else if contains(input, match:"Character") then "character"
+		else                     "agenda"
+	}
+	
+	############################################################## Utilities for keywords
+	# replaces — correctly
+	add := "" # default is nothing
+	separate_words := remove_tags + replace_rule(match:" ", replace: " and/or ")
+	for_mana_costs := format_cost := {
+		if input.separator_before == "—" and contains(input.param, match: " ") then (
+			if contains(input.param, match:",") then (
+				if match(match: "^[JRYADTFIMX0-9/|]+,", input.param) then
+					"{add}<param-cost>{combined_cost(input.param)}</param-cost>"
+				else "<param-cost>{combined_cost(input.param)}</param-cost>"
+			) else
+				"<param-cost>{alternative_cost(input.param)}</param-cost>"
+		) else
+			"{add}<param-mana>{input.param}</param-mana>"
+	}
+	alternative_cost := replace_rule(match:"^[A-Z]", replace: { to_lower() })
+	combined_cost := replace_rule(match:", [A-Z]", replace: { to_lower() })+
+		replace_rule(match:",", replace:" and")+
+		replace_rule(match:"^[JRYADTFIMX0-9/|]", in_context: "(^|[[:space:]])<match>", replace: "<sym-auto>&</sym-auto>")+
+		replace_rule(match:"^[A-Z]", replace: { to_lower() })
+	long_dash := replace_rule(match:"-", replace:"—")
+	# Utilities for keywords
+	contains_target := match_rule(match:"(?i)([^a-z]|^)target([^a-z]|$)")
+	is_targeted := { contains_target(card.rule_text) }
+	
+############################################################## Set fields
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+	identifying: true
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: info
+	name: Defaults and Automation
+set field:
+	type: multiple choice
+	name: automatic reminder text
+	choice: actual
+	choice: custom
+	choice: remindered
+	choice: action
+	initial: custom, remindered, action
+	script:
+		if value = "b5new" then "remindered"
+		else if value = "b5action" then "action"
+		else if value = "b5actual" then "actual"
+		else value
+	description: For which kinds of keywords should reminder text be added by default? Note: you can enable/disable reminder text by right clicking the keyword.
+############################################################## Card fields
+############################# Background stuff
+card field:
+	type: choice
+	name: card type
+	choice: agenda
+	choice: aftermath
+	choice: character
+	choice: conflict
+	choice: contingency
+	choice: enhancement
+	choice: event
+	choice: fleet
+	choice: group
+	choice: limitation
+	choice: location
+	choice: nexus
+	choice: centauri
+	choice: drakh
+	choice: human
+	choice: minbari
+	choice: narn
+	choice: neutral
+	choice: non-aligned
+	choice: shadow
+	choice: vorlon
+	default: card_type(card.type)
+	script: to_lower(value)
+	description: The frame of the card
+############################# Name line
+card field:
+	type: text
+	name: name
+	card list visible: false
+	identifying: true
+	description: The name of the card
+	show statistics: false
+card field:
+	type: text
+	name: full name
+	save value: false
+	show statistics: false
+	editable: false
+	card list visible: true
+	card list name: Name
+	card list column: 1
+	description: The name of the card
+	script: card.name
+card field:
+	type: choice
+	name: ambassador
+	include file: /b5-icons.mse-include/ambassador-names
+	card list visible: true
+	description: Whether this is an ambassador or not
+############################# Image
+card field:
+	type: image
+	name: image
+	show statistics: false
+	description: The image of the card
+############################# Card type
+card field:
+	type: text
+	name: type
+	card list visible: true
+	card list column: 2
+	description: The type of this card, type - to go the sub type
+############################# Text box
+card field:
+	type: text
+	name: rule text
+	show statistics: false
+	multi line: true
+	script: text_filter(input: value, card_name: card.name)
+	description: The rules text of the card
+############################ Mark box
+card field:
+	type: choice
+	name: mark1
+	include file: /b5-icons.mse-include/mark-names
+card field:
+	type: choice
+	name: mark2
+	include file: /b5-icons.mse-include/mark-names
+card field:
+	type: choice
+	name: mark3
+	include file: /b5-icons.mse-include/mark-names
+card field:
+	type: choice
+	name: mark4
+	include file: /b5-icons.mse-include/mark-names
+card field:
+	type: choice
+	name: mark5
+	include file: /b5-icons.mse-include/mark-names
+card field:
+	type: choice
+	name: marka1
+	include file: /b5-actual-marks.mse-include/mark-names
+card field:
+	type: choice
+	name: marka2
+	include file: /b5-actual-marks.mse-include/mark-names
+card field:
+	type: choice
+	name: marka3
+	include file: /b5-actual-marks.mse-include/mark-names
+############################ Race box
+card field:
+	type: choice
+	name: race1
+	include file: /b5-icons.mse-include/race-names
+card field:
+	type: choice
+	name: race2
+	include file: /b5-icons.mse-include/race-names
+############################ Sponsor box
+card field:
+	type: choice
+	name: sponsor1
+	include file: /b5-icons.mse-include/sponsor-names
+card field:
+	type: choice
+	name: sponsor2
+	include file: /b5-icons.mse-include/sponsor-names
+card field:
+	type: choice
+	name: sponsor3
+	include file: /b5-icons.mse-include/sponsor-names
+############################# Influence
+card field:
+	type: text
+	name: influence
+############################# Influence
+card field:
+	type: text
+	name: construction
+############################# Abilities
+card field:
+	type: text
+	name: diplomacy
+card field:
+	type: text
+	name: technology
+card field:
+	type: text
+	name: faith
+card field:
+	type: text
+	name: intrigue
+card field:
+	type: text
+	name: military
+card field:
+	type: text
+	name: psi
+############################################################## Auto replace
+auto replace:
+	match: ~
+	replace: CARDNAME
+auto replace:
+	match: --
+	replace: —
+auto replace:
+	# note the spaces
+	match:
+		 - 
+	replace:
+		 — 
+############################################################## Card pack items
+pack type:
+	name: card
+	filter: card.name != ""
+############################################################## Card packs
+pack type:
+	name: booster pack
+	item:
+		name: card
+		amount: 8
+pack type:
+	name: additional card
+	item:
+		name: card
+############################################################## Keywords	
+############################# Keyword rules
+has keywords: true
+
+keyword mode:
+	name: actual
+	description: The actual keywords - they have no reminder text.
+keyword mode:
+	is default: true
+	name: custom
+	description: Custom keywords without reminder text.
+keyword mode:
+	name: remindered
+	description: Custom keywords with reminder text.
+keyword mode:
+	name: action
+	description: Custom keywords with reminder text that appears at the end of a sentence.
+keyword parameter type:
+	name: number
+	match: [X0-9]+
+	refer script:
+		name: normal
+		description: (1,2,3)
+		script: \{{input}\}
+	refer script:
+		name: as words
+		description: (one, two, three)
+		script: \{english_number({input})\}
+	refer script:
+		name: as words, use "a" for 1
+		description: (a, two, three)
+		script: \{english_number_a({input})\}
+	refer script:
+		name: as words, use "" for 1
+		description: (, two, three)
+		script: \{english_number_multiple({input})\}
+	refer script:
+		name: as ordinal words
+		description: (first, second, third)
+		script: \{english_number_ordinal({input})\}
+keyword parameter type:
+	name: cost
+	match: [ ][JRYADTFIMX0-9/|]*|[-—][^(\n]*
+	separator before is: [ —-]
+	separator after is: [.]
+	optional: false
+	refer script:
+		name: normal
+		description: When using mana only costs, doesn't include anything extra in the reminder text
+		script: \{{input}\}
+	refer script:
+		name: add "pay an additional " for mana costs
+		description: When using mana only costs, words the reminder text as "pay an additional <cost>"
+		script: \{for_mana_costs(add:"pay an additional ", {input})\}
+	refer script:
+		name: add "pay " for mana costs
+		description: When using mana only costs, words the reminder text as "pay <cost>"
+		script: \{for_mana_costs(add:"pay ", {input})\}
+	separator script: long_dash()
+keyword parameter type:
+	name: name
+	match: [^(.:;\n—]+
+	refer script:
+		name: normal
+		description: No changes made.
+		script: \{{input}\}
+	refer script:
+		name: singular
+		description: Removes plurality from words.
+		script: \{english_singular({input})\}
+	refer script:
+		name: separate words
+		description: Changes spaces to " and/or ". "Elf Warrior" becomes "Elf and/or Warrior".
+		script: \{separate_words({input})\}
+keyword parameter type:
+	name: prefix
+	description: Prefix for things like "<something>walk"
+	optional: false
+	match: [A-Z][A-Z,a-z’ ]*
+	example: Forest
+keyword parameter type:
+	name: a
+	match: [ ]*|[ an?]*
+############################# All Babylon 5 keywords

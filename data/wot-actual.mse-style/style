@@ -1,0 +1,263 @@
+﻿mse version: 0.3.6
+game: wot
+short name: wot
+full name: Wheel of Time
+icon: card-sample.png
+installer group: Wheel of Time/Standard
+position hint: 001
+
+version: 2008-06-25
+depends on:
+	package: wot.mse-game
+	version: 2008-06-23
+depends on:
+	package: wot-actual-small.mse-symbol-font
+	version: 2008-06-23
+depends on:
+	package: wot-actual-text.mse-symbol-font
+	version: 2008-06-23
+
+card background: white
+card width: 750
+card height: 1050
+card dpi: 600
+
+############################################################## Extra scripts
+############################################################## Set info fields
+############################################################## Extra style options
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	card type:
+		left:	0
+		top:	0
+		width:	750
+		height:	1050
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			Character:	Character.jpg
+			Event:		Event.jpg
+			Challenge:	Challenge.jpg
+			Advantage:	Advantage.jpg
+			Troop: 		Troop.jpg
+	############################# Name line
+	name:
+		left: 145
+		top : 50
+		width: 533
+		height: 76
+		alignment: bottom center shrink-overflow
+		padding bottom: 0
+		z index: 1
+		font:
+			name: Gismonda
+			size: 45
+			color: rgb(0,0,0)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 4
+			shadow displacement y: 4
+	############################# Image
+	image:
+		left:	100
+		top:	129
+		width:	603
+		height:	437
+		z index: 1
+		mask: imagemask_standard.png
+	############################# Card type
+	type:
+		left: 156
+		top : 552
+		width: 477
+		height: 40
+		alignment: top center shrink-overflow
+		z index: 2
+		font:
+			name: Times New Roman
+			size: 30
+			color: rgb(255,255,255)
+			separator color: rgb(128,128,128)
+	############################# Text box
+	rule text:
+		left: 90
+		top : 605
+		width: 600
+		height: 300
+		font:
+			name: Times New Roman
+			size: 25
+			scale down to: 6
+			color: rgb(0,0,0)
+		alignment: middle center
+		z index: 3
+		symbol font:
+			name: wot-actual-text
+			size: 290
+		padding left:   6
+		padding right:  4
+		line height hard: 1.2
+		line height line: 1.5
+		line height soft: 0.9
+		line height hard max: 1.3
+		line height line max: 1.6
+	############################# Text box
+	fluff text:
+		left: 65
+		top : { 785 + ( card_style.rule_text.content_height / 2 ) }
+		width: { 625 - card_style.cost.content_width }
+		height: { 220 - ( card_style.rule_text.content_height / 2 ) }
+		font:
+			name: Times New Roman Italic
+			size: 16
+			scale down to: 6
+			color: rgb(0,0,0)
+		alignment: middle center
+		z index: 2
+	############################# Resource Cost
+	cost:
+		right: 690
+		top: 947
+		width: { if (max(60, card_style.cost.content_width) + 5) > 480 then 480 else (max(60, card_style.cost.content_width) + 5) }
+		height: 60
+		z index: 5
+		alignment: right middle
+		symbol font:
+			name: wot-actual-text
+			size: 400
+			scale down to: 400
+		always symbol: true
+	############################# Abilities
+	politics:
+		z index: 4
+		left:	63
+		top:	178
+		width:	27
+		height:	43
+		alignment: center middle shrink-overflow
+		symbol font:
+			name: wot-actual-small
+			size: 25
+			alignment: bottom center
+		always symbol: true
+	intrigue:
+		z index: 4
+		left:	63
+		top:	263
+		width:	27
+		height:	43
+		alignment: center middle shrink-overflow
+		symbol font:
+			name: wot-actual-small
+			size: 25
+			alignment: bottom center
+		always symbol: true
+	one power:
+		z index: 4
+		left:	63
+		top:	344
+		width:	27
+		height:	43
+		alignment: center middle shrink-overflow
+		symbol font:
+			name: wot-actual-small
+			size: 25
+			alignment: bottom center
+		always symbol: true
+	combat:
+		z index: 4
+		left:	63
+		top:	433
+		width:	27
+		height:	43
+		alignment: center middle shrink-overflow
+		symbol font:
+			name: wot-actual-small
+			size: 25
+			alignment: bottom center
+		always symbol: true
+	############################# Card sorting / numbering
+	############################# Copyright stuff
+############################################################## Extra card fields
+extra card field:
+	type: choice
+	name: politics box
+	editable: false
+	save value: false
+	choice: politics
+extra card field:
+	type: choice
+	name: intrigue box
+	editable: false
+	save value: false
+	choice: intrigue
+extra card field:
+	type: choice
+	name: one power box
+	editable: false
+	save value: false
+	choice: one power
+extra card field:
+	type: choice
+	name: combat box
+	editable: false
+	save value: false
+	choice: combat
+extra card field:
+	type: choice
+	name: sep
+	editable: false
+	save value: false
+	choice: WoT
+extra card style:
+	politics box:
+		left:	44
+		top:	168
+		width:	55
+		height:	55
+		z index: 3
+		render style: image
+		visible: { card.politics !="" }
+		choice images:
+			politics: ability_politics.png
+	intrigue box:
+		left:	44
+		top:	252
+		width:	55
+		height:	55
+		z index: 3
+		render style: image
+		visible: { card.intrigue !="" }
+		choice images:
+			intrigue: ability_intrigue.png
+	one power box:
+		left:	44
+		top:	335
+		width:	55
+		height:	55
+		z index: 3
+		render style: image
+		visible: { card.one_power !="" }
+		choice images:
+			one power: ability_one_power.png
+	combat box:
+		left:	44
+		top:	420
+		width:	55
+		height:	55
+		z index: 3
+		render style: image
+		visible: { card.combat !="" }
+		choice images:
+			combat: ability_combat.png
+	sep:
+		left: 0
+		right: 750
+		height: 20
+		bottom: { ( 880 + ( card_style.rule_text.content_height / 4 ) ) - ( card_style.fluff_text.content_height / 2 ) }
+		#bottom: { 905 - ( card_style.fluff_text.content_height / 2 ) }
+		z index: 1
+		render style: image
+		choice images:
+			WoT: separator.png

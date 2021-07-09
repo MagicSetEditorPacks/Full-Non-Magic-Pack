@@ -1,0 +1,143 @@
+# Set Name
+set_field:
+	type:			text
+	name:			set_name
+	default:		""
+	description:	Set Name
+
+# Display the set name on the banner (left or right) or top of the card (Alt style only)
+set_field:
+	type:			choice
+	name:			name_position
+	choice:			Banner
+	choice:			Top
+	initial:		Top
+	description:	Put the card name at the top or on the Banner (swaps with Type)
+
+# Place the banner on the left or right of the card (Alt style only)
+set_field:
+	type:			choice
+	name:			banner_position
+	choice:			Left
+	choice:			Right
+	initial:		Left
+	description:	Put the Banner on the Left or Right of the Card (Boon and Bane only)
+
+# Font for all cards (Alt style only)
+set_field:
+	type:			choice
+	name:			card_font
+	choice:			Dax
+	choice:			Arial
+	choice:			Calibri
+	choice:			Chiller
+	choice:			Matrix
+	choice:			Signika
+	choice:			Times New Roman
+	choice:			Papyrus
+	initial:		Signika
+	description:	Choose the card font
+
+# Font size (Alt style only)
+set_field:
+	type:			choice
+	name:			card_font_size
+	choice:			smallest (40%)
+	choice:			smaller (60%)
+	choice:			small (80%)
+	choice:			normal (100%)
+	choice:			large (120%)
+	choice:			larger (140%)
+	choice:			largest (160%)
+	initial:		normal (100%)
+	description:	Adjust font size if not using Dax
+	
+# Sample test box, only to view font and size set above (Alt style only)
+set_field:
+	type:			text
+	name:			sample
+	default:		"Sample Text"
+	save_value:		false
+	description:	Sample text for Font, size and style
+
+# Community use text
+set_field:
+	type:			text
+	name:			community_use_policy
+	multi_line:		true
+	script:			"This card set uses trademarks and/or copyrights owned by Paizo Inc., which are used under Paizo's Community Use Policy. We are expressly prohibited from charging you to use or access this content. This card set is not published, endorsed, or specifically approved by Paizo Inc. For more information about Paizo's Community Use Policy, please visit paizo.com/communityuse. For more information about Paizo Inc. and Paizo products, please visit paizo.com."
+	editable:		false
+	save_value:		false
+# Card community use text
+set_field:
+	type:			text
+	name:			card_community_use
+	script:			"This fan creation uses the Paizo Community Use Policy: paizo.com/communityuse"
+	editable:		false
+	save_value:		false
+# Card Copyright text
+set_field:
+	type:			text
+	name:			set_copyright
+	default:		"(C) 2013 Paizo Publishing, LLC."
+#	default:		"This fan creation uses the Paizo Community Use Policy: paizo.com/communityuse"
+	editable:		false
+	save_value:		false
+	description:	Copyright Info
+
+# Custom Logo (e.g. Skull and Shackles) option
+set_field:
+	type:			boolean
+	name:			use_custom_logo
+	initial:		no
+	description:	Use custom Logo (below)
+# Custom Logo (default is Rise of the Runelords - community use)
+set_field:	
+	type:			image
+	name:			custom_logo
+	description:	Adventure Path Logo as shown on the cards (195px * 37px)
+
+# Use Icon \ Custom Icon (Original Style Only)
+set_field:
+	type:			boolean
+	name:			use_custom_icon
+	initial:		no
+	description:	Use custom icon (below)
+# Custom Icon (Original Style only)
+set_field:
+	type:			image
+	name:			custom_icon
+	description:	Adventure path Icon as shown on the cards (27px * 27px)
+	
+set_field:
+	type:			image
+	name:			card_back
+	description:	Card Back for Boons and Banes
+
+# Styling options	
+default_set_style:
+	set_copyright:
+		visible:	false
+	
+	card_community_use:
+		visible:	false
+		
+	custom_logo:
+		width:		{ 195 }
+		height:		{ 37 }
+		default:	{ "/PACG-common.mse-include/res/RiseOfTheRunelords-Horizontal.png" }
+	custom_icon:
+		width:		{ 27 }
+		height:		{ 27 }
+		default:	{ "/PACG-common.mse-include/res-orig/Sihedron.png" }
+	card_back:
+		width:		{ 375 }
+		height:		{ 525 }
+		default:	{ "/PACG-common.mse-include/res/CardBack.png" }
+	
+	sample:	
+		alignment:	left middle
+		font:
+			name:		{ getFont() }
+			size:		{ getFontSize(12) }
+	

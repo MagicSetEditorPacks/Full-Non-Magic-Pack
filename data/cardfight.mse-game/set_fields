@@ -1,0 +1,87 @@
+
+############# Set fields #############
+
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+	identifying: true
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: text
+	name: set clans
+	description: Name the clans featured in this set, separated with a ,
+set field:
+	type: text
+	name: copyright
+set field:
+	type: text
+	name: set code
+	description: Typically, a four letter code for the set.
+set field:
+	type: text
+	name: set language
+	description: Typically, a two letter code for the language the set is in.
+set field:
+	type: info
+	name: Defaults and Automation
+set field:
+	type: boolean
+	name: nation flags
+	description: Should the cards have flags representing their nation?
+	initial: yes
+set field:
+	type: choice
+	name: default color style
+	description: Shold the cards in this set as default use the old ore the new version of the color images?
+	choice: new
+	choice: old
+	initial: new
+set field:
+	type: multiple choice
+	name: automatic reminder text
+	choice: core
+	choice: unique
+	choice: symbol
+	choice: pseudo
+	choice: action
+	choice: custom
+	choice: lower case
+	initial: core, unique, symbol, pseudo, action, custom
+	# Convert from older mse versions
+	script:
+		if value = "yes" then "core, pseudo, action, custom"
+		else if value = "no" then ""
+		else value
+	description: For which kinds of keywords should reminder text be added by default? Note: you can enable/disable reminder text by right clicking the keyword.
+set field:
+	type: choice
+	name: card language
+	description: Language for the cards
+	choice: English
+	initial: English
+	#TODO: More languages may be added in updates
+set field:
+	type: boolean
+	name: mark errors
+	description: Marks errors on cards, for example wording and spelling errors, non unique card names, etc.
+
+############################# Default style
+
+default set style:
+	title:
+		padding left: 2
+		font:
+			size: 16
+	automatic reminder text:
+		render style: checklist
+		direction: vertical
+	card language:
+		render style: both
+		choice images:
+			English:  /cardfight.mse-game/icons/language-en.png

@@ -1,0 +1,31 @@
+mse version: 0.3.8
+version: 2009-10-02
+short name: SW TCG Syms
+installer group: star wars tcg/symbols
+position hint: 001
+icon: pilot.png
+
+# Autor: CAOC
+#########Font
+image font size: 36
+horizontal space: 1
+
+symbol:
+	code: *P
+	image: pilot.png
+symbol:
+	code: T:
+	image: tap.png
+symbol:
+	code: *A
+	image: activate.png
+symbol:
+	code: *p
+	image: pilotbonus.png
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: *P
+	item: T:
+	item: *A
+	item: *p

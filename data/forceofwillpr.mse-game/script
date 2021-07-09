@@ -1,0 +1,358 @@
+﻿ceil :=
+{
+	if input > to_int(input) then to_int(input) +1
+	else input
+}
+card_rules_height :=
+{
+	ceil(set.stylesheet.card_style.rules.content_height)
+}
+card_flavor_height :=
+{
+	ceil(set.stylesheet.card_style.flavor.content_height)
+}
+card_color :=
+{
+	if style == "Lapis Cluster" and (color == "GB" or color == "RB" or color == "RG" or color == "RU" or color == "UB" or color == "UG" or color == "WB" or color == "WG" or color == "WR" or color == "WU") then input := "color/blank.png"
+	else if style == "Lapis Cluster" then input := "color/" + color + "-fa.png"
+}
+jrulerbutton :=
+{
+	if type == "jruler" then input := "jruler_btn.png"
+	else if type == "ruler" then input := "ruler_btn.png"
+}
+card_background :=
+{
+	if wheel == "Inverse" and type != "regalia" then input := "reiya_resonator_inverse_ass.png"
+	else if type == "resonator" and (rarity == "SR" or rarity == "AR") and style == "Lapis Cluster" then input := "lapis_SRresonator_ass2.png"
+	else if type == "stone" and style == "Lapis Cluster" then input := ""
+	else if type == "resonator" and rarity == "R" and style == "Lapis Cluster" then input := "lapis_nonFA.png"
+	else if type == "resonator" and (rarity == "U" or rarity == "C") and style == "Lapis Cluster" then input := "lapis_nonFA.png"
+	else if type == "spell" and (rarity == "SR" or rarity == "AR") and style == "Lapis Cluster" then input := "lapis_SRresonator_ass2.png"
+	else if type == "spell" and rarity == "R" and style == "Lapis Cluster" then input := "lapis_nonFA.png"
+	else if type == "spell" and (rarity == "U" or rarity == "C") and style == "Lapis Cluster" then input := "lapis_nonFA.png"
+	else if type == "rune" and (rarity == "SR" or rarity == "AR") and style == "Lapis Cluster" then input := "lapis_SRresonator_ass2.png"
+	else if type == "rune" and rarity == "R" and style == "Lapis Cluster" then input := "lapis_nonFA.png"
+	else if type == "rune" and (rarity == "U" or rarity == "C") and style == "Lapis Cluster" then input := "lapis_nonFA.png"
+	else if type == "jruler" and style == "Lapis Cluster" then input := "lapis_jruler_ass2.png"
+	else if type == "ruler" and style == "Lapis Cluster" then input := "lapis_jruler_ass2.png"
+	else if wheel == "Inverse" and type == "regalia" and style == "Lapis Cluster" then input := "reiya_reg_inv_empty.png"
+	else if type == "regalia" and style == "Lapis Cluster" then input := "lapis_reg_empty.png"
+}
+card_outline :=
+{
+	if type == "resonator" and fullart == "enabled" and rarity != "SR" then input := "lapis_FAresonator.png"
+	else if type == "resonator" and fullart == "enabled" and rarity == "SR" then input := "lapis_FASRresonator.png"
+	else if type == "rune" and fullart == "enabled" and rarity != "SR" then input := "lapis_FAresonator.png"
+	else if type == "rune" and fullart == "enabled" and rarity == "SR" then input := "lapis_FASRresonator.png"
+	else if type == "jruler" and fullart == "enabled" and rarity != "AR" and battle == "cannotbattle" then input := ""
+	else if type == "jruler" and fullart == "enabled" and rarity != "AR" then input := "lapis_FAjruler.png"
+	else if fullart == "enabled" then input := ""
+	else if type == "ruler" and rarity != "AR" then input := "lapis_ruler_empty.png"
+	else if type == "jruler" and rarity != "AR" and battle == "cannotbattle" then input := "lapis_ruler_empty.png"
+	else if type == "jruler" and rarity != "AR" then input := "lapis_jruler_empty.png"
+	else if type == "resonator" and rarity == "SR" then input := "lapis_SRresonator_empty.png"
+	else if type == "resonator" and rarity == "R" then input := "lapis_Rresonator_empty.png"
+	else if type == "resonator" and (rarity == "U" or rarity == "C") then input := "lapis_CUresonator_empty.png"
+	else if type == "spell" and rarity == "SR" then input := "lapis_SRspell_empty.png"
+	else if type == "spell" and rarity == "R" then input := "lapis_Rspell_empty.png"
+	else if type == "spell" and (rarity == "U" or rarity == "C") then input := "lapis_CUspell_empty.png"
+	else if type == "rune" and rarity == "SR" then input := "lapis_SRresonator_empty.png"
+	else if type == "rune" and rarity == "R" then input := "lapis_Rresonator_empty.png"
+	else if type == "rune" and (rarity == "U" or rarity == "C") then input := "lapis_CUresonator_empty.png"
+	else if type == "tokenResonator" and rarity == "T" then input := "lapis_CUresonator_empty.png"
+	else if type == "tokenOther" and rarity == "T" then input := "lapis_CUspell_empty.png"
+	else if type == "stone" then input := ""
+}
+card_assets :=
+{
+	if type == "resonator" and rarity == "SR" and style == "Lapis Cluster" then input := "lapis_SRresonator_ass.png"
+	else if type == "rune" and rarity == "SR" and style == "Lapis Cluster" then input := "lapis_SRresonator_ass.png"
+	else if type == "stone" and style == "Lapis Cluster" then input := "lapis_Rresonator_ass.png"
+	else if type == "resonator" and style == "Lapis Cluster" then input := "lapis_Rresonator_ass.png"
+	else if type == "tokenResonator" and style == "Lapis Cluster" then input := "lapis_Rresonator_ass.png"
+	else if type == "spell" and rarity == "SR" and style == "Lapis Cluster" then input := "lapis_SRresonator_ass.png"
+	else if type == "spell" and style == "Lapis Cluster" then input := "lapis_Rresonator_ass.png"
+	else if type == "rune" and style == "Lapis Cluster" then input := "lapis_Rresonator_ass.png"
+	else if type == "tokenOther" and style == "Lapis Cluster" then input := "lapis_Rresonator_ass.png"
+	else if type == "jruler" and style == "Lapis Cluster" then input := "lapis_SRresonator_ass.png"
+	else if type == "ruler" and style == "Lapis Cluster" then input := "lapis_SRresonator_ass.png"
+	else if type == "regalia" and style == "Lapis Cluster" then input := "lapis_SRresonator_ass.png"
+}
+card_cost :=
+{
+	if type == "jruler" and style == "Lapis Cluster" then input := ""
+	else if type == "ruler" and style == "Lapis Cluster" then input := ""
+	else if type == "stone" and style == "Lapis Cluster" then input := "lapis_stone_ass.png"
+	else if rarity != "SR" then input := ""
+	else if rarity == "SR" and style == "Lapis Cluster" then input := ""
+	else if type == "resonator" then input := rarity + "resonator_ass2.png"
+	else if type == "spell" then input := rarity + "spell_ass2.png"
+	else if type == "rune" then input := rarity + "resonator_ass2.png"
+	else if type == "regalia" then input := ""
+	else if type == "stone" then input := ""
+}
+AR :=
+{
+	if rarity != "AR" then input := ""
+	else if type == "ruler" and style == "Lapis Cluster" then input := "lapis_ruler_empty_AR.png"
+	else if type == "jruler" and style == "Lapis Cluster" then input := "lapis_jruler_empty_AR.png"
+}
+card_mask :=
+{
+	if type == "ruler" then input := "ruler_mask.png"
+	else if type == "jruler" then input := "jruler_mask.png"
+}
+wheel_visible_check :=
+{
+	if type == "ruler" then input := false
+	else if type == "jruler" then input := false
+	else if type == "resonator" then input := true
+	else if type == "spell" then input := true
+	else if type == "rune" then input := true
+	else if type == "regalia" then input := true
+	else if type == "stone" then input := false
+}
+top_bar_masking :=
+{
+	if checker != "None" then input := masked_blend(light: "bars/mask.png", dark: "bars/lapis_" + color + ".png", mask: "bars/mask.png")
+	else input := "bars/lapis_transparent.png"
+}
+font_color_changer :=
+{
+	if style == "Lapis Cluster" and type != "regalia" then input := "rgb(255,255,255)"
+	else if type == "regalia" then input := "rgb(222,178,0)"
+}
+shield :=
+{
+	if style == "Lapis Cluster" and type == "resonator" and rarity == "SR" then input := "lapis_SRresonator_cover.png"
+	else if style == "Lapis Cluster" and type == "resonator" then input := "lapis_Rresonator_cover.png"
+	else if style == "Lapis Cluster" and type == "rune" and rarity == "SR" then input := "lapis_SRresonator_cover.png"
+	else if style == "Lapis Cluster" and type == "rune" then input := "lapis_Rresonator_cover.png"
+	else if style == "Lapis Cluster" and type == "jruler" then input := "lapis_Rresonator_cover.png"
+	else if style == "Lapis Cluster" and type == "tokenResonator" then input := "lapis_Rresonator_cover.png"
+}
+flavor_font :=
+{
+	if query == "size" and style == "Alice Cluster" then input := 13
+	else if query == "size" and style == "Lapis Cluster" then input := 13.9
+}
+card_rules_flavor_gap :=
+{
+	if ceil(set.stylesheet.card_style.flavor.content_height) == 0 then 0
+	else if ceil(set.stylesheet.card_style.flavor.content_height) != 0 and style == "Lapis Cluster" then 10
+	else if ceil(set.stylesheet.card_style.flavor.content_height) != 0 then 12
+}
+sr_skittles :=
+{
+	input := 1
+}
+
+card_serial :=
+{
+	input := set.set_id + "-" + to_string(card_number(), format: ".3d") + " " + card.rarity
+}
+
+card_copyright :=
+{
+	input := set.copyright
+}
+
+card_number :=
+{
+	position (
+		of: card
+		in: set
+		order_by: { color_sort() + type_sort() + sort_name(card.card_name) }
+	) + 1
+}
+color_sort :=
+{
+	if styling.card_format == "Lapis Cluster" then color := card.color2
+	
+	if color == "white" then "A"
+	else if color == "red" then "B"
+	else if color == "blue" then "C"
+	else if color == "green" then "D"
+	else if color == "black" then "E"
+	else if color != "" and color != "void" then "F"
+	else if color == "void" then "G"
+	else if color == "" then "H"
+}
+type_sort :=
+{
+	if card.cardtype == "ruler" then "A"
+	else if card.cardtype == "jruler" then "B"
+	else if card.cardtype == "regalia" then "D"
+	else if card.cardtype == "stone" then "E"
+	else if card.cardtype == "tokenResonator" or card.cardtype == "tokenOther" then "F"
+	else "C"
+}
+
+sort_name :=
+	# Remove "The", "A", and "And" at the beginning
+	replace@(match: "^(The|An?) ", replace: "") +
+	# Remove commas and apostrophes
+	replace@(match: "(,|'|’)", replace: "") +
+	# Remove bold and italic tags
+	replace@(match: "(<b>|<i>|</b>|</i>)", replace: "") +
+	# Make lowercase
+	to_lower
+
+ci_visible :=
+{
+	if num <= count_chosen(card.color2) then true
+	else false
+}
+
+ci_value :=
+{
+	split := split_text(match: ", ", card.color2)
+	if num <= count_chosen(card.color2) then split[num - 1]
+	else "none"
+}
+
+type_bar :=
+{
+	if card.cardtype == "stone" then ""
+	else if chosen(choice: "void", card.color2) and color != "void" then set_mask(image: "bars/lapis_" + color + ".png", mask: "bars/lapis_bar_gradient_clear.png")
+	else if chosen(choice: "void", card.color2) and color == "void" then set_mask(image: "bars/lapis_" + color + ".png", mask: "bars/lapis_bar_gradient_full.png")
+	else if count_chosen(card.color2) == 1 and chosen(choice: color, card.color2) then set_mask(image: "bars/lapis_" + color + ".png", mask: "bars/lapis_bar_gradient_full.png")
+	else if chosen(choice: color, card.color2) then (
+		pos := 0
+		for each k:v in split_text(match: ", ", card.color2) do (
+			if v == color then pos := k + 1
+		)
+		set_mask(image: "bars/lapis_" + color + ".png", mask: "bars/lapis_bar_gradient_" + count_chosen(card.color2) + "_" + pos + ".png")
+	)
+	else set_mask(image: "bars/lapis_" + color + ".png", mask: "bars/lapis_bar_gradient_clear.png")
+}
+
+type_bar_token :=
+{
+	if card.cardtype == "stone" then ""
+	else if chosen(choice: "void", card.color2) and color != "void" then set_mask(image: "bars/lapis_" + color + "_u.png", mask: "bars/lapis_bar_gradient_clear.png")
+	else if chosen(choice: "void", card.color2) and color == "void" then set_mask(image: "bars/lapis_" + color + "_u.png", mask: "bars/lapis_bar_gradient_full.png")
+	else if count_chosen(card.color2) == 1 and chosen(choice: color, card.color2) then set_mask(image: "bars/lapis_" + color + "_u.png", mask: "bars/lapis_bar_gradient_full.png")
+	else if chosen(choice: color, card.color2) then (
+		pos := 0
+		for each k:v in split_text(match: ", ", card.color2) do (
+			if v == color then pos := k + 1
+		)
+		set_mask(image: "bars/lapis_" + color + "_u.png", mask: "bars/lapis_bar_gradient_" + count_chosen(card.color2) + "_" + pos + ".png")
+	)
+	else set_mask(image: "bars/lapis_" + color + "_u.png", mask: "bars/lapis_bar_gradient_clear.png")
+}
+
+lapis_enable :=
+{
+	if styling.card_format == "Lapis Cluster" then "yes"
+	else "no"
+}
+
+card_rules_height :=
+{
+	ceil(set.stylesheet.card_style.rules.content_height)
+}
+
+wheel :=
+{
+	if wheel == "Inverse" then input := ""
+	else if type == "resonator" and rarity == "SR" and wheel == "Quickcast" then input := "lapis_sr_QCwheel.png"
+	else if type == "resonator" and (rarity == "SR" or rarity == "AR") and style == "Lapis Cluster" then input := "lapis_sr_wheel.png"
+	else if type == "rune" and rarity == "SR" and wheel == "Quickcast" then input := "lapis_sr_QCwheel.png"
+	else if type == "rune" and (rarity == "SR" or rarity == "AR") and style == "Lapis Cluster" then input := "lapis_sr_wheel.png"
+	else if type == "stone" and style == "Lapis Cluster" then input := ""
+	else if type == "resonator" and rarity != "SR" and wheel == "Quickcast" then input := "lapis_cur_QCwheel.png"
+	else if type == "resonator" and rarity == "R" and style == "Lapis Cluster" then input := "lapis_cur_wheel.png"
+	else if type == "resonator" and (rarity == "U" or rarity == "C") and style == "Lapis Cluster" then input := "lapis_cur_wheel.png"
+	else if type == "spell" and rarity == "SR" and wheel == "Quickcast" then input := "lapis_sr_QCwheel.png"
+	else if type == "spell" and (rarity == "SR" or rarity == "AR") and style == "Lapis Cluster" then input := "lapis_sr_wheel.png"
+	else if type == "spell" and rarity != "SR" and wheel == "Quickcast" then input := "lapis_cur_QCwheel.png"
+	else if type == "spell" and rarity == "R" and style == "Lapis Cluster" then input := "lapis_cur_wheel.png"
+	else if type == "spell" and (rarity == "U" or rarity == "C") and style == "Lapis Cluster" then input := "lapis_cur_wheel.png"
+	else if type == "rune" and rarity != "SR" and wheel == "Quickcast" then input := "lapis_cur_QCwheel.png"
+	else if type == "rune" and rarity == "R" and style == "Lapis Cluster" then input := "lapis_cur_wheel.png"
+	else if type == "rune" and (rarity == "U" or rarity == "C") and style == "Lapis Cluster" then input := "lapis_cur_wheel.png"
+	else if type == "regalia" and style == "Lapis Cluster" then input := "lapis_reg_wheel.png"
+}
+
+divinity_function :=
+{
+ 	if (contains(divinityInput, match:"Divinity ") == false) then input := "Divinity "
+	else input := divinityInput
+}
+
+artist_function :=
+{
+ 	if (contains(artistInput, match:"Illust/") == false) then input := "Illust/"
+	else input := artistInput
+}
+
+mana_sort       := sort_text@(order: "WRUGBVMI[0123456789]X")
+mana_sort_word       := sort_text@(order: "mixed(awakening|barrier|bloodlust|continuous|energize|enter|eternal|evolution|explode|firststrike|flying|force|imperishable|incarnation|inheritance|limit|pierce|precision|quickcast|remnant|resonance|seal|stealth|swiftness|targetattack|torrent|willofdespair|willofhope|crest|drain|grimoire|legend|mobilize|null)")
+mana_filter := to_upper + {
+	mana_sort()
+}
+# Like mana filter, only also allow tap symbols:
+tap_filter := sort_text@(order: "<TQ>")
+mana_filter_t := replace@(               # Remove [] used for forcing mana symbols
+			match: "[\\[\\]]",
+			replace: ""
+		) + { mana_filter() + tap_filter() }
+mana_filter_t_word := replace@(               # Remove [] used for forcing mana symbols
+			match: "[\\[\\]]",
+			replace: ""
+		) + { mana_sort_word() }
+
+mana_context :=
+	"(?ix)				# case insensitive, ignore whitespace
+	 (^|[[:space:]\"(“'])		# start of a word
+	 (  <match>:			# G: something
+	 |  <match>,			# G, tap: something. On the line below, these catch symbols that can be proceeded by mana symbols
+	 |	(<sym>crest</sym>|<sym>rune</sym>|<sym>barrier</sym>|<sym>inheritance</sym>|<sym>evolution</sym>|<sym>incarnation</sym>|<sym>judgment</sym>|<sym>j-activate</sym>|<sym>mobilize</sym>|<sym>energize</sym>|<sym>awakening</sym>)[ ]?<match>
+	 |  <match>[ ]can[ ]be[ ]pay
+	 |  (produce|pays?|pays?[ ]an[ ]additional|costs|the	# pay X. creatures cost 1 less. pay an additional G.
+	    |adds?|pay(ed)?[ ](with|using)
+	    )
+	    ([ ]either)?			 # pay either X or Y
+	    ([ ](<sym[^>]*>)?[WRUGBVMIX0-9]+(</sym[^>]*>)?,)* # pay X, Y or Z
+	    ([ ](<sym[^>]*>)?[WRUGBVMIX0-9]+(</sym[^>]*>)?[ ](and|or|and/or|life))* # pay X or Y
+	    [ ]<match>
+	    ([,.)]|$				# (end of word)
+	    |[ ][^ .,]*$			# still typing...
+	    |[ ]( or | and | in | less | more | to ) # or next word is ...
+	    )
+	    )
+	 |  <param-mana><match></param-mana>		# keyword argument that is declared as mana
+	 |  <param-cost>[ ]*<match></param-cost>	# keyword argument that is declared as cost
+	 |  <param-cost><match>,			# keyword argument that is declared as cost
+	 ";
+
+text_filter :=
+	# step 1 : remove all automatic tags
+	remove_tag@(tag: "<sym-auto>") +
+	remove_tag@(tag: "<i-auto>")   +
+	remove_tag@(tag: "<b-auto>")   +
+	remove_tag@(tag: "<error-spelling") +
+	remove_tag@(tag: "<nospellcheck") +
+	replace@(
+		match: " > ",
+		replace: {" <sym-auto>></sym-auto> "} ) +
+	replace@(
+		match: "null - ",
+		replace: {"<sym-auto>null</sym-auto> - "} ) +
+	# step 2 : add mana & tap symbols
+	replace@(
+		match: "\\b[WRUGBVMIXYZ0-9T]+\\b",
+		in_context: mana_context,
+		replace: {"<sym-auto>" + mana_filter_t() + "</sym-auto>"} ) +
+	# step 3 : convert whole words into symbols that don't use mana costs
+	replace@(
+		match: "\\b(bane|bloodlust|continuous|divinity|eternal|explode|firststrike|flying|force|imperishable|limit|pierce|precision|quickcast|remnant|resonance|seal|stealth|swiftness|targetattack|torrent|willofdespair|willofhope|drain|grimoire|legend|null)+\\b",
+		replace: {"<sym-auto>" + mana_filter_t_word() + "</sym-auto>"} ) +
+	# step 4 : the rest (mimic line 313)
+	replace@(
+		match: "\\b(awakening|barrier|energize|evolution|incarnation|inheritance|crest|mobilize)+\\b",
+		replace: {"<sym>" + mana_filter_t_word() + "</sym>"} )
+	

@@ -1,0 +1,33 @@
+mse version: 0.3.6
+version: 2016-08-01
+short name: greek
+position hint: 001
+icon: Alpha.png
+# Symbol font for energy
+
+image font size: 58
+horizontal space: 2
+vertical space: 2
+symbol:
+	code: A
+	image: Alpha.png
+	image font size: 58
+symbol:
+	code: D
+	image: Delta.png
+	image font size: 60
+symbol:
+	code: O
+	image: Omega.png
+	image font size: 60
+symbol:
+	code: T
+	image: Theta.png
+	image font size: 60
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: A
+	item: D
+	item: O
+	item: T

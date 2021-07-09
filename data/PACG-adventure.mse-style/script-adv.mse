@@ -1,0 +1,283 @@
+# 1. COMMON Scripts
+
+# Style Override Scripts
+
+# These override the scripts defined in 
+# \PACG-common-alt\
+
+setT :=			{ if isLandscape() then Height - setHW() - 11 else Height - setHW() - 11 }
+setR :=			{ if isLandscape() then Width - 11 - setHW() else 11 + setHW() }
+setA :=			{ if isLandscape() then 90 }
+
+bannerTextL := 	{ if isLandscape() then Width - 40 else 8 }
+bannerTextT := 	{ if isLandscape() then Height - 8 else Height - 40 }
+bannerTextW := 	{ if isLandscape() then Width - 80 else Height - 80 }
+bannerTextA := 	{ if isLandscape() then 180 else 90 }
+advAngle :=		{ if isLandscape() then 90 }
+
+topTextL :=		{ if isLandscape() then 8 else 42 }
+topTextT :=		{ if isLandscape() then Height - 42 else 8 }
+topTextW :=		{ if isLandscape() then Height - 58 else Width - 58 }
+topTextA :=		{ if isLandscape() then 90 }
+
+# Card TYPE and SIDE qualifiers. Use != "Back" as default / initial is "Front" and sometimes registers as ""
+
+isAPFront :=	{ styling.card_side != "Back" and card.type == "ADVENTURE PATH" }
+isAPBack :=		{ styling.card_side == "Back" and card.type == "ADVENTURE PATH" }
+
+isAdvFront :=	{ styling.card_side != "Back" and card.type == "ADVENTURE" }
+isAdvBack :=	{ styling.card_side == "Back" and card.type == "ADVENTURE" }
+
+isLocFront :=	{ styling.card_side != "Back" and card.type == "LOCATION" }
+isLocBack :=	{ styling.card_side == "Back" and card.type == "LOCATION" }
+
+isScenFront :=	{ styling.card_side != "Back" and card.type == "SCENARIO" }
+isScenBack :=	{ styling.card_side == "Back" and card.type == "SCENARIO" }
+
+isLandscape :=	{ 
+	if card.type == "ADVENTURE" then
+		contains( to_upper(remove_choice(choice: "Adventure Path", styling.landscape_cards)), match: "ADVENTURE" )
+	else 
+		contains( to_upper(styling.landscape_cards), match: card.type ) 
+}
+
+# Useful Sizing for scripts below
+headerH :=		{ 18 }
+cardArtW :=		{ (Width - 58) * ((Width - 36)/310) }
+landscapeTblW := { Height - 42 - ((Width - 58) * ((Width - 36)/310)) + 30 }
+
+# REWARD
+
+# Landscape:
+# ADVENTURE PATH - RHS
+# ADVENTURE - Across bottom
+rewardT :=		{ 
+	if isLandscape() then 
+		(if not isAPFront() then Height - 42
+		else Height - landscapeTblW() - 44  )
+	else Height - rewardCellH() - headerH() - 33
+}
+rewardW :=		{ if isLandscape() then rewardT() - 18 else Width - 60 }	
+rewardH	:=		{ if isLandscape() then Width - rewardL() - 18 else Height - rewardT() - 18 }
+rewardL :=		{ if isLandscape() then Width - rewardCellH() - headerH() - 33 else 42 }
+rewardA :=		{ if isLandscape() then 90 }
+rewardCellH :=	{ max(headerH(), card_style.reward.content_height) }
+
+# FLAVOUR
+flavourL :=		{ 
+	if isScenBack() then
+#		(if isLandscape() then locationL() + locationH()
+#		else 40 )
+		40
+	else
+		(if isLandscape() then 42 else 40)
+}
+flavourW :=		{ if isLandscape() then Height - 310 - 16 else Width - 60 }
+flavourT :=		{ 
+	if isScenBack() then
+		(if isLandscape() then Height - 42
+		else locationT() + locationH() )
+	else
+		(if isLandscape() then Height - 42 else 290)
+}
+flavourH :=		{ 
+	if isScenBack() then 
+		(if isLandscape() then locationL() - 40
+		else Height - locationT() - locationH() - 28 )
+	else 
+		if isLocBack() then
+			( (if isLandscape() then Width - 40 - 16 else Height - 290 - 16)
+			 - (if card.closed_rules = "WHEN PERMANENTLY CLOSED" then wpcH() )
+			 - (if card.closed_rules = "AT THIS LOCATION" then atlH() )
+			)
+		else
+			(if isLandscape() then Width - 40 - 28 else Height - 290 - 30)
+}
+flavourA := 	{ if isLandscape() then 90 }
+
+# 2. ADVENTURE PATH 
+
+adventureT :=	{ if isLandscape() then Height - 42 else 310 - (adventureH()/2) }
+adventureH :=	{ if isLandscape() then (headerH() * 1.5) + (6 * (adventureCellH() + 2)) else headerH() + (3 * (adventureCellH() + 2) ) }
+adventureW := 	{ if isLandscape() then landscapeTblW() else Width - 62 }
+adventureL :=	{ if isLandscape() then 40 else 42 }
+adventureA :=	{ if isLandscape() then 90 }
+adventureCellH := { if isLandscape() then 14 else 14 }
+adventureCellT := { adventureT() + (if not isLandscape() then headerH() + ( (input mod 3) * (adventureCellH() + 2)) ) }
+adventureCellL := { adventureL() + (if isLandscape() then (1.5 * headerH()) + ( input * (adventureCellH() + 2)) else (input div 3) * ((adventureW() / 2) + 1)  )}
+adventureCellW := { if isLandscape() then adventureW() else (adventureW() / 2) - 1 }
+
+duringapT :=	{ if isLandscape() then Height - 42 else adventureT() + adventureH() - 2 }
+duringapH :=	{ if isLandscape() then Width - duringapL() - 28 else rewardT() - duringapT() }
+duringapL :=	{ if isLandscape() then adventureL() + adventureH() else 42 }
+duringapW := 	{ if isLandscape() then landscapeTblW() else Width - 62 }
+duringapA :=	{ if isLandscape() then 90 }
+
+
+# 3. ADVENTURE
+
+scenarioT :=	{ if isLandscape() then Height - 42 else 310 }
+scenarioH :=	{ 
+	if isLandscape() then 1.5 * scenarioCellH() 
+		+ (scenarioCellH() + 2)
+		+ (if card.scenario_2 != "" then scenarioCellH() + 2)
+		+ (if card.scenario_3 != "" then scenarioCellH() + 2)
+		+ (if card.scenario_4 != "" then scenarioCellH() + 2)
+		+ (if card.scenario_5 != "" then scenarioCellH() + 2)
+	else rewardT() - scenarioT()
+	}
+scenarioW :=	{ if isLandscape() then landscapeTblW() else Width - 62 }
+scenarioL :=	{ if isLandscape() then 40 else 42 }
+scenarioA :=	{ if isLandscape() then 90 }
+scenarioCellH :=	{ 20 }
+scenarioCellL := { 
+	if isLandscape() then scenarioL() + (1.5 * headerH()) + 2 + (input * (scenarioCellH() + 2)) else 42
+}
+scenarioCellT := {
+	if isLandscape() then Height - 42 else scenarioT() + headerH() + 2 + (input * (scenarioCellH() + 2))
+}
+
+
+# 4. SCENARIO
+
+# Front
+villainT :=		{ if isLandscape() then Height - 42 else 310 - villainH() + headerH() }
+villainH :=		{ 
+	headerH() + (2 * henchmanH() )
+	+ (if card.henchmen_2 != "" then henchmanH() + 2)
+	+ (if card.henchmen_3 != "" then henchmanH() + 2)
+	+ (if card.henchmen_4 != "" then henchmanH() + 2)
+}
+villainW := 	{ if isLandscape() then landscapeTblW() else Width - 62 }
+villainL :=		{ if isLandscape() then 40 else 42 }
+villainA :=		{ if isLandscape() then 90 }
+
+henchmanH :=	{ 14 }
+henchmanT :=	{ if isLandscape() then villainT() else villainT() + headerH() + ( input * (henchmanH() + 2) ) }
+henchmanL :=	{ if isLandscape() then villainL() + headerH() + ( input * (henchmanH() + 2) ) else villainL() }
+
+duringScenT :=	{ if isLandscape() then Height - 42 else villainT() + villainH() + 2 }
+duringScenH :=	{ if isLandscape() then rewardL() - duringScenL() else rewardT() - duringScenT() }
+duringScenW :=	{ if isLandscape() then landscapeTblW() else Width - 62 }
+duringScenL :=	{ if isLandscape() then villainL() + villainH() else 42 }
+duringScenA :=	{ if isLandscape() then 90 }
+
+# Back
+locationCellH := { 16 }
+locationCellT := { locationT() + (if isLandscape() then - ((input div 4) * ((locationW() / 2) + 1)) else headerH() + ( (input mod 4) * (locationCellH() + 2)) ) }
+locationCellL := { locationL() + (if isLandscape() then headerH() + ( (input mod 4) * (locationCellH() + 2)) else (input div 4) * ((locationW() / 2) + 1)  )}
+locationCellW := { (locationW() / 2) - 1 }
+
+locationT :=	{ if isLandscape() then Height - 42 else 265 }
+locationH :=	{ headerH() + (4 * (locationCellH() + 2)) }
+locationW := 	{ Width - 62 }
+# locationL :=	{ if isLandscape() then 40 else 42 }
+locationL :=	{ if isLandscape() then Width - locationH() - 42 else 42 }
+locationA :=	{ if isLandscape() then 90 }
+
+anchoredT :=	{ if isLandscape() then locationT() - locationW() + anchoredW() else locationT() + 1 }
+anchoredL :=	{ if isLandscape() then locationL() + 1 else locationL() + locationW() - anchoredW() }
+anchoredH :=	{ locationCellH() - 2 }
+anchoredW :=	{ locationCellH() - 2 }
+anchoredA :=	{ locationA() }
+
+# 5. LOCATION
+
+# Front
+deckT :=		{ if isLandscape() then 30 + deckW() else atlT() - deckH() - 10 }
+deckH :=		{ headerH() + (8 * ( deckCellH()+2 )) }
+deckL :=		{ if isLandscape() then Width - deckH() - 18 else Width - deckW() - 16 }
+deckW :=		{ deckCellW(col: 0) + deckCellW(col: 1) + 4 }
+deckA :=		{ if isLandscape() then 90 }
+
+deckCellT :=	{ if isLandscape() then 30 + (if col == 0 then deckW() -2 else deckCellW(col: 2) ) else deckT() + headerH() + (row * (deckCellH() + 2)) }
+deckCellH :=	{ 12 }
+deckCellL :=	{ if isLandscape() then deckL() + headerH() + (row * (deckCellH() + 2)) else Width - 16 - (if col == 0 then deckW() - 2 else deckCellW(col: 1) ) }
+deckCellW :=	{ if col == 0 then 64 else 46 }
+
+
+atlT :=			{ 
+	if isLandscape() then 
+		Height - 42
+	else
+		if isLocFront() then 310 else Height - atlH() - 16
+}
+atlH :=			{ 
+	if isLocFront() then 
+		(if isLandscape() then 
+			headerH() + (atlRowRatio() * ( Width - 40 - 16 - 14 - wpcH() - (2 *  headerH() ) ) ) 
+		else
+			headerH() + (atlRowRatio() * ( Height - 310 - 16 - 14 - wpcH() - (2 * headerH() ) ) )
+		)
+	else 
+		max(20,card_style.atl.content_height) + headerH() + 16 + 14
+}
+atlL :=			{ 
+	if isLandscape() then 
+		if isLocFront() then 40 else Width - atlH() - 16
+	else 
+		42
+}
+atlW :=			{
+	if isLandscape() then 
+		(if isLocFront() then landscapeTblW() else Height - 310 - 16)
+	else 
+		Width - 62 
+}
+atlA :=			{ if isLandscape() then 90 }
+
+wcT :=			{ if isLandscape() then Height - 42 else atlT() + atlH() }
+wcH :=			{ if isLandscape() then wpcL() - atlL() - atlH() else wpcT() - atlT() - atlH() }
+wcL :=			{ if isLandscape() then atlL() + atlH() else 42 }
+wcW :=			{ if isLandscape() then landscapeTblW() else Width - 62 }
+wcA :=			{ if isLandscape() then 90 }
+
+wpcT :=			{ if isLandscape() then Height - 42 else Height - wpcH() - 16 }
+wpcH :=			{ max(20,card_style.wpc.content_height) + headerH() + 16 + 14 }
+wpcL :=			{ if isLandscape() then Width - wpcH() - 16 else 42 }
+wpcW :=			{ 
+	if isLandscape() then 
+		(if isLocFront() then landscapeTblW() else Height - 310 - 16)
+	else 
+		Width - 62 
+}
+wpcA :=			{ if isLandscape() then 90 }
+
+atlRowRatio :=	{ atlRows() / ( atlRows() + wcRows() ) }
+atlRows :=		{ max(1, card_style.atl.content_lines) }
+wcRows :=		{ max(1, card_style.wc.content_lines) }
+
+
+# 1 column locationtable landscape
+#locationCellT := { locationT() + (if not isLandscape() then headerH() + ( (input mod 4) * (locationCellH() + 2)) ) }
+#locationCellL := { locationL() + (if isLandscape() then headerH() + ( input * (locationCellH() + 2)) else (input div 4) * ((locationW() / 2) + 1)  )}
+#locationCellW := { if isLandscape() then locationW() else (locationW() / 2) - 1 }
+#locationH :=	{ if isLandscape() then headerH() + (8 * (locationCellH() + 2)) else headerH() + (4 * (locationCellH() + 2) ) }
+#locationW := 	{ if isLandscape() then landscapeTblW() else Width - 62 }
+
+
+
+# With Optional Banner Side
+#bannerTextL := {
+#	if isLandscape() then 
+#		(if set.banner_position == "Right" then 40 else Width - 40)
+#	else 
+#		(if set.banner_position == "Right" then Width - 8 else 8)
+#}
+#bannerTextT := {
+#	if isLandscape() then
+#		(if set.banner_position == "Right" then 8 else Height - 8)
+#	else
+#		(if set.banner_position == "Right" then 40 else Height - 40)
+#}
+#bannerTextW := {
+#	if isLandscape() then Width - 80 
+#	else Height - 80
+#}
+#bannerTextA := {
+#	if isLandscape() then
+#		(if set.banner_position == "Right" then 0 else 180)
+#	else
+#		(if set.banner_position == "Right" then 270 else 90)
+#}
+#

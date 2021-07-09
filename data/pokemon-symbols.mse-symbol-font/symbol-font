@@ -1,0 +1,120 @@
+﻿mse version: 2.0.0
+installer group: pokemon/symbol-font
+short name: popup style
+version: 0.44
+position hint: 002
+icon: ability.png
+
+image font size: 135
+horizontal space: 0
+
+depends on: pokemon.mse-game
+depends on: pokemon-new.mse-style
+
+symbol:
+	code: A!
+	image: ability.png
+	regex: true
+symbol:
+	code: C
+	image: colorless.png
+	regex: true
+symbol:
+	code: W
+	image: water.png
+	regex: true
+symbol:
+	code: F
+	image: fighting.png
+	regex: true
+symbol:
+	code: D
+	image: dark.png
+	regex: true
+symbol:
+	code: R
+	image: fire.png
+	regex: true
+symbol:
+	code: Y
+	image: fairy.png
+	regex: true
+symbol:
+	code: G
+	image: grass.png
+	regex: true
+symbol:
+	code: L
+	image: lightning.png
+	regex: true
+symbol:
+	code: M
+	image: metal.png
+	regex: true
+symbol:
+	code: P
+	image: psychic.png
+	regex: true
+symbol:
+	code: l
+	image: l.png
+	regex: true
+symbol:
+	code: p
+	image: p.png
+	regex: true
+symbol:
+	code: r
+	image: r.png
+	regex: true
+symbol:
+	code: m
+	image: m.png
+	regex: true
+symbol:
+	code: y
+	image: y.png
+	regex: true
+symbol:
+	code: g
+	image: g.png
+	regex: true
+symbol:
+	code: w
+	image: w.png
+	regex: true
+symbol:
+	code: f
+	image: f.png
+	regex: true
+symbol:
+	code: c
+	image: c.png
+	regex: true
+symbol:
+	code: d
+	image: d.png
+	regex: true
+symbol:
+	code: a
+	image: a.png
+	regex: true
+symbol:
+	code: x
+	image: ×.png
+	regex: true
+symbol:
+	code: EX
+	image: EX.png
+	regex: true
+symbol:
+	code: O
+	image: {hpImage()+"common"}.png
+	regex: true
+symbol:
+	code: V
+	image: {hpImage()+"uncommon"}.png
+	regex: true
+symbol:
+	code: *
+	image: {hpImage()+"rare"}.png
