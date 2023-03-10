@@ -95,6 +95,7 @@
 		else if	contains(card.level, match:"Spell Card")						then "spell card"
 		else if card.attribute	== "trap"								then "trap card"
 		else if	contains(card.level, match:"Trap Card")							then "trap card"
+		else if	contains(card.monster_type, match:"Link")						then "link monster"
 		else if	contains(card.monster_type, match:"Pendulum")						then "pendulum effect monster"
 		else if	contains(card.monster_type, match:"Xyz")						then "xyz monster"
 		else if	contains(card.monster_type, match:"Dark Synchro")					then "dark synchro monster"
@@ -108,6 +109,8 @@
 		else if	contains(card.monster_type, match:"Toon")						then "effect monster"
 		else if	contains(card.monster_type, match:"Flip")						then "effect monster"
 		else if	contains(card.monster_type, match:"Effect")						then "effect monster"
+		else if contains(card.monster_type, match:"Normal")						then "normal monster"
+		else if contains(card.monster_type, match:"Skill")						then "skill card"
 		else                                    	 							"normal monster"
 	}
 	# Default 'attribute' of card
@@ -139,6 +142,8 @@
 	is_nmonster := {
 		card.card_type == "spell card" or
 	        card.card_type == "trap card" or
+			card.card_type == "conjoint spell card" or
+			card.card_type == "conjoint trap card" or
 	        card.card_type == "trell card"
 	}
 	is_monster := {
@@ -148,6 +153,7 @@
 		card.card_type == "synchro monster"         or
 		card.card_type == "dark synchro monster"    or
 		card.card_type == "xyz monster"             or
+		card.card_type == "link monster"             or
 		card.card_type == "pendulum normal monster" or
 		card.card_type == "pendulum effect monster" or
 		card.card_type == "pendulum fusion monster" or
