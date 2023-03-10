@@ -442,6 +442,16 @@ card field:
 	name: pendulum_text
 	multi line: true
 	script: text_filter(value)
+card field:
+	type: text
+	name: pendulum_red
+	multi line: true
+	script: text_filter(value)
+card field:
+	type: text
+	name: pendulum_blue
+	multi line: true
+	script: text_filter(value)
 ############################# Copyright stuff
 card field:
 	type: text
