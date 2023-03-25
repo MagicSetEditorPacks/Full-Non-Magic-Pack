@@ -1,10 +1,11 @@
 ﻿	is_link := {card.card_type == "link monster"}
-	is_tw := { styling.language == "chinese traditional" }
-	is_cn := { styling.language == "chinese simplified" }
-	is_en := { styling.language == "english" }
-	is_jp := { styling.language == "japanese" }
-
-	get_sep := {if is_en() then "<color:black>/</color:black>" else if is_cn() then "<i>／</i>" else "／" }
+	
+	is_tw := { (styling.language or else "") == "chinese traditional" }
+	is_cn := { (styling.language or else "") == "chinese simplified" }
+	is_jp := { (styling.language or else "") == "japanese" }
+	is_en := { (styling.language or else "english") == "english" }
+	
+	get_sep := { if is_en() then "<color:black>/</color:black>" else if is_cn() then "<i>／</i>" else "／" }
 	get_sepex := {
 		class :=remove_tags(input);
 		if class == "" then "" else get_sep()
