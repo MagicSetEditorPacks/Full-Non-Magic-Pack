@@ -6,40 +6,110 @@ set field:
 set field:
 	type: text
 	name: title
-	description: This information will not appear on the card.
+	default: "noname"
+	identifying: true
+	description: 套牌标题
 set field:
-	type: text
-	name: code
-	description: Recommended only 2 Capital digits. Will appear before card language. ex: XXX-EN101
-set field:
-	type: text
+	type: choice
 	name: language
-	description: Recommended 2 - 4 Captital digits. Will appear before the card number, after the code. ex: LOB-XX101
-set field:
-	type: text
-	name: number
-	description: Recommended only 3 Captital digits. Will appear after the card language. ex: LOB-ENXXX
-set field:
-	type: text
-	name: description
-	multi line: true
-	description: This information will not appear on the card.
+	initial: EN
+	choice: CN
+	choice: TW
+	choice: JP
+	choice: EN
+	choice: KO
+	description: such as: XXX-JP101、XX01-EN101
 set field:
 	type: text
 	name: edition
-	description: Editting this will set 1 edition for all the cards and will appear in the edition bar below the picture. ex-> LIMITED EDITION
+	default: "LIMITED EDITION"
+	description: such as "DUEL TERMINAL"
+set field:
+	type: text
+	name: author
+	default: "AntiMetaman"
+	description: 247321453
 set field:
 	type: text
 	name: copyright
 	description: Copyright information. This will not appear on the card.
 set field:
+	type: info
+	name: Set Options
+set field:
 	type: boolean
 	name: gods have effects
-	description: Should god cards have effects?
+	description: Should god cards have effects? 神的效果文不是斜体？（仅英文有效）
+	initial: yes
+set field:
+	type: boolean
+	name: no corner
+	description: Should have not corner? 没有防伪标志
 	initial: no
+set field:
+	type: boolean
+	name: hide gamecode
+	description: 隐藏密码，最好先写好密码，再导出的时候再设置这个
+	initial: no
+set field:
+	type: boolean
+	name: hide copyright
+	description: 隐藏密码，最好先写好密码，再导出的时候再设置这个
+	initial: no
+set field:
+	type: boolean
+	name: hide edition
+	description: 隐藏密码，最好先写好密码，再导出的时候再设置这个
+	initial: no
+set field:
+	type: boolean
+	name: hide number
+	description: 隐藏密码，最好先写好密码，再导出的时候再设置这个
+	initial: false
+set field:
+	type: boolean
+	name: hide foil
+	description: 隐藏密码，最好先写好密码，再导出的时候再设置这个
+	initial: false
+set field:
+	type: boolean
+	name: ST mark is text
+	description: 魔法陷阱的符号带标志文字？用于OCG制作
+	initial: yes
+set field:
+	type: boolean
+	name: copyright images
+	description: 版权文字为图片？用于OCG
+	initial: no
+set field:
+	type: boolean
+	name: pendulum image is small
+	description: pendulum image is small? Pendulum怪兽的中间图，不包含P的描述区域？用于YGOCORE
+	initial: yes
 ############################# Default style
 default set style:
+	Set Options:
+		alignment: middle center
+		padding left:50
+	Set Information:
+		alignment: middle center
+		padding left:50
 	title:
-		padding left: 2
 		font:
-			size: 16
+			size: 14
+	edition:
+		font:
+			size: 12
+			color: rgb(0,0,128)
+	author:
+		font:
+			size: 10
+			color: rgb(16,168,32)
+	language:
+		render style: both
+		choice images:
+			CN:	/yugioh.mse-game/icons/cn.png
+			TW:	/yugioh.mse-game/icons/cn.png
+			EN:	/yugioh.mse-game/icons/usgb.png
+			JP:	/yugioh.mse-game/icons/jp.png
+			KO:	/yugioh.mse-game/icons/ko.png
