@@ -470,6 +470,7 @@ card style:
 				else if card.card_type=="pendulum xyz monster" then rgb(255,255,255)
 				else if card.card_type=="pendulum dark synchro monster" then rgb(255,255,255)
 				else if card.card_type=="skill card" then rgb(0,0,0)
+				else if card.card_type=="link monster" then rgb(0,0,0)
 				else if is_nmonster() then "transparent"
 				else "transparent"
 
@@ -513,6 +514,7 @@ card style:
 				else if card.card_type=="pendulum dark synchro monster" then rgb(255,255,255)
 				else if card.card_type=="bigbang monster" then rgb(255,255,255)
 				else if card.card_type=="skill card" then rgb(255,255,255)
+				else if card.card_type=="link monster" then rgb(255,255,255)
 				else if is_nmonster() then rgb(255,255,255)
 				else rgb(0,0,0)
 		symbol font:
