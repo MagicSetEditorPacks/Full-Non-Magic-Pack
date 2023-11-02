@@ -1,7 +1,7 @@
-mse version: 2.0.0
+mse version: 2.0.2
 installer group: translations/English
 full name: English
-version: 2011-01-22
+version: 2020-05-15
 icon: usgb.png
 
 ############################################################## Menu items
@@ -11,6 +11,7 @@ menu:
 	open set:			&Open...	Ctrl+O
 	save set:			&Save	Ctrl+S
 	save set as:		Save &As...	F12
+	save set as directory:		Save As Directory...
 	export:				&Export
 	export html:			&HTML...
 	export image:			Card &Image...
@@ -28,8 +29,15 @@ menu:
 	undo:				&Undo%s	Ctrl+Z
 	redo:				&Redo%s	Ctrl+Y
 	cut:				Cu&t	Ctrl+X
+	cut card:		Cu&t	Ctrl+X
+	cut keyword:	Cu&t	Ctrl+X
 	copy:				&Copy	Ctrl+C
+	copy card:			&Copy	Ctrl+C
+	copy keyword:		&Copy	Ctrl+C
 	paste:				&Paste	Ctrl+V
+	paste card:		&Paste	Ctrl+V
+	paste keyword:	&Paste	Ctrl+V
+	select all:				Select &All	Ctrl+A
 	find:				&Find	Ctrl+F
 	find next:			Find &Next	F3
 	replace:			R&eplace	Ctrl+H
@@ -39,6 +47,7 @@ menu:
 	cards:			&Cards
 	previous card:		Select &Previous Card	PgUp
 	next card:			Select &Next Card	PgDn
+	search cards:			&Search Cards	Ctrl+K
 	add card:			&Add Card	Ctrl+Enter
 	add cards:			Add &Multiple Cards...
 	remove card:		&Delete Selected Card
@@ -52,6 +61,7 @@ menu:
 	keywords:		&Keywords
 	previous keyword:	Select &Previous Keyword	PgUp
 	next keyword:		Select &Next Keyword	PgDn
+	search keywords:			&Search Keywords	Ctrl+K
 	add keyword:		&Add Keyword	Ctrl+Enter
 	remove keyword:		&Remove Select Keyword	 Del
 	
@@ -73,13 +83,13 @@ menu:
 	
 	window:			&Window
 	new window:			&New Window
-	cards tab:			&Cards	F5
-	set info tab:		&Set Information	F6
-	style tab:			St&yle	F7
-	keywords tab:		&Keywords	F8
-	stats tab:			S&tatistics	F9
-	random pack tab:	&Random Packs
-	console tab:		&Console	Ctrl+F9
+	cards tab:			&Cards	Alt+1
+	style tab:			St&yle	Alt+2
+	set info tab:		&Set Information	Alt+3
+	keywords tab:		&Keywords	Alt+4
+	stats tab:			S&tatistics	Alt+5
+	random pack tab:	&Random Packs	Alt+6
+	console tab:		&Console	Alt+7
 	
 	help:			&Help
 	index:				&Index...	F1
@@ -111,12 +121,13 @@ menu:
 help:
 	welcome:			Welcome to Magic Set Editor
 	
-	file:
+	#file:
 	new set:			Create a new set
 	open set:			Open an existing set
 	last opened set:	Open '%s'
 	save set:			Save the set
 	save set as:		Save the set with a new name
+	save set as directory:		Save the set as a directory with separate files for each card
 	export:				Export the set...
 	export html:			Export the set to a web page
 	export image:			Export the selected card to an image file
@@ -130,7 +141,7 @@ help:
 	show profiler:		Show the profiler window, with timings of (script) functions. Used for optimization.
 	exit:				Quits Magic Set Editor; prompts to save the set
 	
-	edit:
+	#edit:
 	undo:				Undoes the last action
 	redo:				Redoes the last action
 	cut:				Move the selected text to the clipboard
@@ -142,15 +153,17 @@ help:
 	paste:				Inserts the text from the clipboard
 	paste card:			Inserts the card from the clipboard
 	paste keyword:		Inserts the keyword from the clipboard
+	select all:				Select all text
 	find:				Search the card texts
 	find next:			Find the next match
 	replace:			Replace in the card texts
 	auto replace:		What text should automatically be replaced?
 	preferences:		Change the configuration of Magic Set Editor
 	
-	cards:
+	#cards:
 	previous card:		Selects the previous card in the list
 	next card:			Selects the next card in the list
+	search cards:		Filter the card list using search terms
 	add card:			Add a new, blank, card to this set
 	add cards:			Add multiple cards to the set
 	remove card:		Delete the selected card from this set
@@ -162,13 +175,14 @@ help:
 	rotate 180:				Display the card up side down
 	card list columns:	Select what columns should be shown and in what order.
 	
-	keywords:
+	#keywords:
 	previous keyword:	Selects the previous keyword in the list
 	next keyword:		Selects the next keyword in the list
+	search keywords:		Filter the keyword list using search terms
 	add keyword:		Add a new keyword to this set
 	remove keyword:		Delete the selected keyword from this set
 	
-	format:
+	#format:
 	bold:				Makes the selected text bold
 	italic:				Makes the selected text italic
 	symbols:			Draws the selected text with symbols
@@ -176,14 +190,14 @@ help:
 	# spelling
 	no spelling suggestions:	There are no suggestions for correcting this error
 	
-	graph:
+	#graph:
 	pie:				A pie graph, the size of the slice indicates the number of cards
 	bar:				A bar graph, the height of the bar indicates the number of cards
 	stack:				A bar graph with stacked bars
 	scatter:			A scatter plot, the size indicates the number of cards
 	scatter pie:		A scatter plot where each item is a small pie graph
 	
-	window:
+	#window:
 	new window:			Creates another window to edit the same set
 	cards tab:			Edit the cards in the set
 	set info tab:		Edit information about the set, its creator, etc.
@@ -193,7 +207,7 @@ help:
 	random pack tab:	Try how the set works out in practice by generating random booster packs.
 	console tab:		Shows error messages and allows executing script commands.
 	
-	help:
+	#help:
 	index:				
 	website:			
 	about:				
@@ -201,6 +215,9 @@ help:
 	# Cards panel
 	collapse notes:		Hide the card notes box
 	expand notes:		Show the card notes box
+	search cards control:	Filter the card list. Use - to exclude cards. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
+	# Keywords panel
+	search keywords control: Filter the keyword list. Use - to exclude keywords. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
 	# Random pack panel
 	random seed:		Different packs will be generated each time.
 	fixed seed:			Using the same seed number gives the same 'random' packs.
@@ -233,7 +250,7 @@ help:
 	grid:				Show gridlines
 	snap:				Snap shapes and points to gridlines
 	
-	tool:
+	#tool:
 	select:				Select and move shapes
 	rotate:				Rotate and shear shapes
 	points:				Edit control points for a shape in the symbol
@@ -241,7 +258,7 @@ help:
 	symmetry:			Add symmetries to the symbol
 	paint:				Paint on the shape using a paintbrush
 	
-	select editor:
+	#select editor:
 	merge:				Merges this shape with those below it
 	subtract:			Subtracts this shape from shapes below it, leaves only the area in that shape that is not in this shape
 	intersect:			Intersects this shape with shapes below it, leaves only the area in both shapes
@@ -371,12 +388,6 @@ tooltip:
 	scatter:			Scatter Plot
 	scatter pie:		Scatter-Pie plot
 	
-	cards tab:			
-	set info tab:		Set Information
-	style tab:			Card Style
-	keywords tab:		
-	stats tab:			
-	
 	# symbol editor
 	store symbol:		Store symbol in set
 	
@@ -417,10 +428,10 @@ tooltip:
 label:
 	# Cards tab
 	card notes:			Card notes:
-	search cards:		Search for cards...
+	search cards:		Search cards (Ctrl+K)
 	
 	# Keywords tab
-	search keywords:	Search for keywords...
+	search keywords:	Search keywords (Ctrl+K)
 	keyword:			Keyword
 	match:				Matches
 	mode:				Mode
@@ -440,9 +451,6 @@ label:
 	pack name:			Pack name
 	seed:				Seed
 	total cards:		Total
-	
-	# Open dialogs
-	all files			All files
 	
 	# Other set window dialogs
 	save changes:
@@ -482,7 +490,6 @@ label:
 	# Card select / images export
 	select cards:			Cards to export
 	selected card count:	%s cards will be exported.
-	select cards print:	Select the cards you want to print
 	filename format:	&Format: 
 	filename conflicts:	&Handle duplicating filenames:
 	export filenames:	Filenames
@@ -509,7 +516,7 @@ label:
 	selection top:			&Top
 	selection width:		&Width
 	selection height:		&Height
-	zoom:				Zoom
+	#zoom:				Zoom
 	fix aspect ratio:		Fix aspect ratio (width/height)
 	zoom amount:			Zoom
 	zoom amount x:			Zoom &X
@@ -640,6 +647,7 @@ title:
 	new set:			New Set
 	open set:			Open Set
 	save set:			Save Set As
+	save set as directory:	Save Set As Directory
 	save image:			Save Image
 	updates available:	Updates Available
 	save changes:		Save Changes?
@@ -656,6 +664,7 @@ title:
 	select columns:		Select Columns
 	select cards:		Select Cards
 	select cards export:Select Cards to Export
+	select cards print:	Select the cards you want to print
 	# slice
 	slice image:		Slice Image
 	# pack
