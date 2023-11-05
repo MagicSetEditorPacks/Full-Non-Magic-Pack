@@ -23,9 +23,23 @@ card field:
 	choice: dlc monster
 	choice: token monster
 	choice: link monster
+	choice: evolute monster
+	choice: evolute conjoint monster
+	choice: enhance monster
+	choice: time leap monster
+	choice: normal conjoint monster
+	choice: effect conjoint monster
+	choice: ritual conjoint monster
+	choice: fusion conjoint monster
+	choice: synchro conjoint monster
+	choice: xyz conjoint monster
+	choice: link conjoint monster
+	choice: conjoint spell card
+	choice: conjoint trap card
 	choice: spell card
 	choice: trap card
 	choice: trell card
+	choice: skill card
 	default: card_type()
 	choice colors cardlist:
 		normal monster         :  rgb(197,179,53)
@@ -48,6 +62,7 @@ card field:
 		link monster           :  rgb(89,89,171)
 		spell card             :  rgb(67,161,99)
 		trap card              :  rgb(148,54,128)
+		skill card             : rgb(95,95,171)
 card field:
 	type: choice
 	name: foils
@@ -61,6 +76,12 @@ card field:
 	choice: star holo image
 	choice: mosaic holo image
 	default: foil()
+card field:
+	type: choice
+	name: sdoverlay
+	editable: false
+	choice: none
+	choice: sdoverlay image
 
 ############################# Link Marker Border
 card field:
@@ -168,11 +189,36 @@ card field:
 	card list visible: true
 	card list column: 2
 card field:
+	type: choice
+	name: conjoint_val
+	choice: none
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	choice: 7
+	choice: 8
+	choice: 9
+	choice: 10
+	choice: 11
+	choice: 12
+	card list visible: false
+	card list column: 0
+card field:
 	type: text
 	name: level
 	description: `=] * = star, % = continuous, ! = counter, + = equipment, & = field, $ = quickplay, # = ritual
 	script: level_filter(value)
-
+#	script: 
+#			forward_editor(
+#				field: card.level,
+#				prefix: if is_nmonster() and remove_tags(card.level)=="    " then "" else if is_nmonster() and (is_jp() or is_cn() or is_tw() ) then "【" else if is_nmonster() and is_en() then "[" else "",
+#				suffix: if is_nmonster() and remove_tags(card.level)=="    " then "" else if is_nmonster() and (is_jp() or is_cn() or is_tw() ) then "】" else if is_nmonster() and is_en() then "]" else "",
+#				soft_before_empty: true,
+#				hide_when_empty: true
+#				)
 ############################# Image
 card field:
 	type: image
@@ -394,6 +440,16 @@ card field:
 card field:
 	type: text
 	name: pendulum_text
+	multi line: true
+	script: text_filter(value)
+card field:
+	type: text
+	name: pendulum_red
+	multi line: true
+	script: text_filter(value)
+card field:
+	type: text
+	name: pendulum_blue
 	multi line: true
 	script: text_filter(value)
 ############################# Copyright stuff
