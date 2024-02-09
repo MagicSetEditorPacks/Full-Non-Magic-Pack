@@ -1,0 +1,101 @@
+mse version: 2.0.0
+full name: Animals
+short name: Thistledown
+installer group: Bang!/Characters
+position hint: 002
+icon: rodent.png
+
+image font size: 63
+horizontal space: 2
+
+symbol:
+	code: R
+	image: rodent.png
+	image font size: 63
+symbol:
+	code: S
+	image: seed.png
+	image font size: 63
+symbol:
+	code: seedglow
+	image: seed-dark-glow.png
+	image font size: 63
+symbol:
+	code: N
+	image: nectar.png
+	image font size: 63
+symbol:
+	code: U
+	image: invertebrate.png
+	image font size: 63
+symbol:
+	code: B
+	image: fruit.png
+	image font size: 63
+symbol:
+	code: F
+	image: fish.png
+	image font size: 63
+symbol:
+	code: W
+	image: wild.png
+	image font size: 63
+symbol:
+	code: X
+	image: no-food.png
+	image font size: 63
+symbol:
+	code: forest
+	image: forest.png
+	image font size: 63
+symbol:
+	code: grassland
+	image: grassland.png
+	image font size: 63
+symbol:
+	code: wetland
+	image: wetland.png
+	image font size: 63
+symbol:
+	code: card
+	image: card.png
+	image font size: 63
+symbol:
+	code: egg
+	image: egg.png
+	image font size: 63
+symbol:
+	code: hunt
+	image: predator.png
+	image font size: 63
+symbol:
+	code: flock
+	image: flocking.png
+	image font size: 63
+symbol:
+	code: die
+	image: die.png
+	image font size: 63
+
+insert symbol menu:
+	item: U
+	item: S
+	item: B
+	item: F
+	item: R
+	item: N
+	item: W
+	item: X
+	item:
+		type: line
+	item: forest
+	item: grassland
+	item: wetland
+	item:
+		type: line
+	item: card
+	item: egg
+	item: die
+	item: seedglow
+	item: hunt
+	item: flocking
