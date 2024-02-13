@@ -1,0 +1,323 @@
+mse version: 2.0.0
+game: Wingspan
+full name: Bird
+short name: Bird
+installer group: Wingspan/Bird
+icon: sample.png
+
+version: 2024-02-07
+depends on:
+	package: Wingspan.mse-game
+	version: 2024-02-07
+
+card width: 338
+card height: 511
+card dpi: 150
+card background: rgb(245, 246, 241)
+
+init script:
+	# Proportions adapted from the web styling of the excellent Wingsearch, found at
+	# https://navarog.github.io/wingsearch
+	cardw := 338 # Must match "card width:" tag, but that isn't available in init script
+	cardh := 511 # Must match "card height:" tag
+	fontscale := cardw / 338 # In case we need to upsize something
+	gray_box := [
+		width: cardw * 0.2774
+		height: cardw * 0.3328
+		left: cardw * 0.05547
+		top: -3
+	]
+	habitat_box := [
+		width: gray_box.width
+		height: gray_box.height * 0.65
+		left: gray_box.left
+		top: gray_box.top
+	]
+	food_box := [
+		width: gray_box.width
+		height: gray_box.height * 0.35
+		left: gray_box.left
+		top: gray_box.top + gray_box.height * (1 - 0.35)
+	]
+	title_box := [
+		width: cardw * 0.6413
+		height: cardh * 0.1291
+		left: gray_box.left + gray_box.width + 0.018 * cardw
+		top: cardh * 0.03634
+	]
+# Unique-per-card fields
+card style:
+	# Top row: habitat, cost, name
+	name:
+		top: { title_box.top + cardh * 0.02 }
+		bottom: { title_box.top + (title_box.height / 2) }
+		left: { title_box.left }
+		width: { title_box.width }
+		padding left: { cardw * 0.05547 }
+		padding right: { cardw * 0.05547 }
+		alignment: middle center shrink-overflow
+		z index: 3
+		font:
+			name: Cardenio Modern
+			size: { 18 * fontscale }
+			color: rgb(0,0,0)
+			weight: bold
+	sciencename:
+		top: { card_style.name.bottom }
+		left: { card_style.name.left }
+		width: { card_style.name.width }
+		height: { card_style.name.height }
+		padding left: { card_style.name.padding_left }
+		padding left: { card_style.name.padding_right }
+		alignment: middle center shrink-overflow
+		z index: 3
+		font:
+			name: Thirsty Rough Lt
+			size: { 15 * fontscale }
+			color: rgb(102,102,102)
+	foodcost:
+		top: { food_box.top }
+		left: { food_box.left }
+		width: { food_box.width }
+		height: { food_box.height }
+		alignment: middle center
+		font:
+			name: Cardenio Modern
+			size: { 18 * fontscale }
+			weight: bold
+		symbol font:
+			name: wingspan-symbols
+			size: { 21 * fontscale }
+			alignment: middle center
+		always symbol: true
+		z index: 3
+	habitat:
+		top: { habitat_box.top }
+		left: { habitat_box.left }
+		width: { habitat_box.width }
+		height: { habitat_box.height }
+		alignment: bottom center
+		render style: image
+		choice images:
+			forest: f.png
+			grassland: g.png
+			wetland: w.png
+			forest, grassland, wetland: fgw.png
+			forest, grassland: fg.png
+			forest, wetland: fw.png
+			grassland, wetland: gw.png
+		z index: 3
+	# Card art
+	art:
+		top: 55
+		left: 0
+		width: { cardw }
+		height: 330
+		z index: 1
+		mask: cardmask.png
+	# Middle row: points, nesting habit, how many eggs
+	points:
+		left: { cardw * 0.05547 }
+		top: { cardh * 0.297 }
+		width: { cardh * 0.05504 }
+		height: 52
+		alignment: left top
+		z index: 3
+		font:
+			name: Cardenio Modern
+			size: { 28 * fontscale }
+			color: rgb(74,65,57)
+			weight: bold
+	nest:
+		top: { card_style.points.bottom + (cardw * 0.01835) }
+		left: { cardw * 0.05547 }
+		width: { cardh * 0.05504 }
+		height: { cardh * 0.05504 }
+		z index: 3
+		render style: image
+		choice images:
+			any: star.png
+			ground: ground.png
+			platform: platform.png
+			bowl: bowl.png
+			cavity: cavity.png
+	eggs:
+		top: { card_style.nest.bottom + (cardw * 0.01835) }
+		left: { cardw * 0.065 }
+		width: { cardh * 0.04 }
+		height: { (cardh * 0.04) / 86 * 202 }
+		z index: 3
+		render style: image
+		choice images:
+			1: 1.png
+			2: 2.png
+			3: 3.png
+			4: 4.png
+			5: 5.png
+			6: 6.png
+	# Bottom row: power, fun fact, region
+	power_type:
+		top: { cardh * 0.6904 }
+		left: -1
+		width: { cardw + 2 }
+		height: { cardh * 0.1908 }
+		z index: 2
+		mask: powermask.png
+	wingspan:
+		right: { cardw - (cardw * 0.05547) }
+		width: { cardw * 0.1664 }
+		bottom: { card_style.power_type.top - (cardh * 0.04) }
+		height: { cardh * 0.03667 }
+		alignment: bottom center
+		z index: 3
+		font:
+			name: Cardenio Modern
+			size: { 14 * fontscale }
+			color: rgb(74,65,57)
+	power:
+		top: { card_style.power_type.top + cardh * 0.03634 }
+		left: 0
+		width: { cardw }
+		height: { card_style.power_type.height - cardh * 0.07267 }
+		alignment: middle left shrink-overflow
+		padding left: { card_style.name.padding_left }
+		padding right: { card_style.name.padding_right }
+		z index: 3
+		font:
+			name: Futura LtCn BT
+			italic name: Cardenio Modern
+			size: { 17 * fontscale }
+			color: rgb(0,0,0)
+		symbol font:
+			name: wingspan-symbols
+			size: { 21 * fontscale }
+			alignment: middle center
+		always symbol: false
+	funfacts:
+		right: { cardw - (cardw * 0.05547) }
+		width: { cardw * 0.6 }
+		bottom: { cardh - (cardh * 0.03) }
+		height: { cardh * 0.07339 }
+		alignment: top left
+		z index: 3
+		font:
+			name: Futura LtCn BT
+			size: { 11.5 * fontscale }
+			color: rgb(74,65,57)
+			weight: italic
+# Common-to-all formatting fields
+extra card field:
+	type: color
+	name: gray_box_border
+	initial: rgb(116, 104, 94)
+	editable: false
+	show statistics: false
+extra card field:
+	type: color
+	name: gray_box_fill
+	initial: rgb(199, 193, 179)
+	editable: false
+	show statistics: false
+extra card field:
+	type: color
+	name: title_box_fill
+	initial: rgb(245, 246, 241)
+	editable: false
+	show statistics: false
+extra card field:
+	type: color
+	name: title_box_border
+	initial: rgb(116, 104, 94)
+	editable: false
+	show statistics: false
+extra card field:
+	type: choice
+	name: cardbg
+	editable: false
+	show statistics: false
+	save value: false
+	choice: white
+extra card field:
+	type: choice
+	name: point_icon
+	editable: false
+	show statistics: false
+	save value: false
+	choice: white
+extra card field:
+	type: choice
+	name: wingspan_icon
+	editable: false
+	show statistics: false
+	save value: false
+	choice: white
+extra card field:
+	type: choice
+	name: globe
+	editable: false
+	show statistics: false
+	save value: false
+	choice: white
+extra card style:
+	gray_box_border:
+		left: { gray_box.left - 1 }
+		top: { gray_box.top - 1 }
+		width: { gray_box.width + 2 }
+		height: { gray_box.height + 2 }
+		radius: 4
+		z index: 2
+	gray_box_fill:
+		left: { gray_box.left }
+		top: { gray_box.top }
+		width: { gray_box.width }
+		height: { gray_box.height }
+		radius: 3
+		z index: 2
+	title_box_fill:
+		left: { title_box.left }
+		top: { title_box.top }
+		width: { title_box.width }
+		height: { title_box.height }
+		z index: 2
+	title_box_border:
+		left: { title_box.left }
+		top: { title_box.top }
+		width: { title_box.width }
+		height: { title_box.height }
+		left width:   1
+		right width:  0
+		top width:    1
+		bottom width: 1
+		z index: 2
+	cardbg:
+		left: 0
+		top: 0
+		width: { cardw }
+		height: { cardh }
+		z index: 0
+		render style: image
+		image: cardbg.png
+	point_icon:
+		top: { cardh * 0.2998 }
+		left: { cardw * 0.06934 }
+		height: { cardh * 0.1090 }
+		width: { (cardh * 0.1090) * 0.4772 }
+		z index: 2
+		render style: image
+		image: point.png
+	wingspan_icon:
+		bottom: { card_style.power_type.top - (cardh * 0.01817) }
+		right: { cardw - (cardw * 0.05547) }
+		width: { cardw * 0.1664 }
+		height: { (cardw * 0.1664) * 0.2067 }
+		z index: 2
+		render style: image
+		image: wingspan.png
+	globe:
+		bottom: { cardh - (cardh * 0.01) }
+		left: { cardw * 0.05547 }
+		width: { cardw * 0.25 }
+		height: { (cardw * 0.25) / 96 * 58 }
+		z index: 2
+		render style: image
+		image: globe.png

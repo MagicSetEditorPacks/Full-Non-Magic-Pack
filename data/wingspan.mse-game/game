@@ -1,0 +1,139 @@
+mse version: 0.3.8
+short name: Wingspan
+full name: Wingspan
+installer group: Wingspan/Game Files
+icon: icon.png
+position hint: 44
+
+version: 2024-02-07
+
+set field:
+	type: text
+	name: set title
+	identifying: true
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: text
+	name: artist
+set field:
+	type: text
+	name: copyright
+card field:
+	type: text
+	name: name
+	description: Name of the bird.
+	identifying: true
+	card list visible: true
+	card list column: 1
+	show statistics: false
+card field:
+	type: text
+	name: sciencename
+	description: Latin scientific name of the bird.
+	card list visible: false
+	show statistics: false
+card field:
+	type: multiple choice
+	name: habitat
+	description: Habitats of the bird.
+	choice: forest
+	choice: grassland
+	choice: wetland
+	initial: forest, grassland, wetland
+	card list visible: true
+	card list column: 2
+	card list name: Habitat
+	show statistics: false
+card field:
+	type: text
+	name: foodcost
+	card list visible: true
+	card list column: 3
+	card list name: Cost
+	show statistics: false
+	description: Food cost of the bird.
+card field:
+	type: text
+	name: points
+	card list visible: true
+	card list column: 4
+	card list name: Points
+	show statistics: false
+	description: Point value of the bird.
+card field:
+	type: choice
+	name: eggs
+	description: Maximum eggs.
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	card list visible: true
+	card list column: 5
+card field:
+	type: text
+	name: wingspan
+	card list visible: true
+	card list column: 4
+	card list name: Wingspan
+	show statistics: false
+	description: Wingspan in cm (or * for wild).
+card field:
+	type: color
+	name: power type
+	description: When power activates.
+	allow custom: false
+	choice:
+		name: when played
+		color: rgb(245, 246, 241)
+	choice:
+		name: when activated
+		color: rgb(192, 116, 51)
+	choice:
+		name: once between turns
+		color: rgb(246, 156, 170)
+	choice:
+		name: game end
+		color: rgb(255, 211, 62)
+	choice:
+		name: round end
+		color: rgb(107, 196, 193)
+	default name: when played
+	card list visible: true
+	card list column: 6
+card field:
+	type: image
+	name: art
+	show statistics: false
+	description: The image of the bird.
+card field:
+	type: text
+	name: power
+	description: Bird's power.
+	multi line: true
+	show statistics: false
+	card list visible: true
+	card list column: 7
+card field:
+	type: choice
+	name: nest
+	description: Nesting habit.
+	choice: any
+	choice: bowl
+	choice: ground
+	choice: platform
+	choice: cavity
+	card list visible: true
+	card list column: 8
+card field:
+	type: text
+	name: funfacts
+	description: Fun facts about the bird.
+	multi line: true
+	show statistics: false
+	card list visible: false
