@@ -1,0 +1,204 @@
+mse version: 2.0.0
+game: CustomRPG
+short name: DnDBoard Standard
+full name: (5.6cm x 8.7cm)
+icon: icon.png
+depends on: CustomRPG.mse-game 1.0
+depends on: CustomRPG.mse-include 1.0
+depends on: CustomRPG.mse-symbol-font 1.0
+depends on: CustomRPG-DnDBoard.mse-include 1.0
+card background: white
+#card width: 336
+#card height: 522
+#card dpi: 152.4
+card width: 560
+card height: 870
+card dpi: 254
+
+############################################################## Scripts
+init script:
+	dpi := 254
+
+	##### Category
+	cardlist_display1 := {
+		if contains(card.DnDBackgroundStd, match: "monster") then "Monster"
+		else if contains(card.DnDBackgroundStd, match: "weapon") then "Weapon"
+		else if contains(card.DnDBackgroundStd, match: "artefact") then "Artifact"
+		else if contains(card.DnDBackgroundStd, match: "spell") then "Spell"
+		else if contains(card.DnDBackgroundStd, match: "potion") then "Potion"
+		else if contains(card.DnDBackgroundStd, match: "trap") then "Trap"
+		else ""
+		}
+	##### Type
+	cardlist_display2 := {""}
+	##### Subtype/Info
+	cardlist_display3 := {
+		if contains(card.DnDBackgroundStd, match: "monster") then card.Info3
+		else ""
+		}
+	##### Misc/Info
+	cardlist_display4 := {
+		if contains(card.DnDBackgroundStd, match: "monster") then card.Info2
+		else card.Info1
+		}
+	##### Background
+	cardlist_display5 := {card.DnDBackgroundStd}
+
+############################################################## Style
+card style:
+	DnDBackgroundStd:
+		top:	0
+		left:	0
+		width:	{560*dpi/254}
+		height:	{870*dpi/254}
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			monster:		{"/CustomRPG-DnDBoard.mse-include/card_monster.png"}
+			weapon:			{"/CustomRPG-DnDBoard.mse-include/card_weapon.png"}
+			artefact:		{"/CustomRPG-DnDBoard.mse-include/card_artefact.png"}
+			spell:			{"/CustomRPG-DnDBoard.mse-include/card_spell.png"}
+			potion:			{"/CustomRPG-DnDBoard.mse-include/card_potion.png"}
+#			trap:			{"/CustomRPG-DnDBoard.mse-include/card_trap.png"}
+
+############################################################## Main Info
+	Name:
+		top: {62*dpi/254}
+		left: {130*dpi/254}
+		width: {325*dpi/254}
+		height: {40*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Vecna
+			size: {28*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+		allow formating: false
+
+	Picture:
+		top: {if card.DnDBackgroundStd == "monster" or card.DnDBackgroundStd == "weapon" or card.DnDBackgroundStd == "artefact" then 120*dpi/254 else if card.DnDBackgroundStd == "spell" then 119*dpi/254 else 0}
+		left: {if card.DnDBackgroundStd == "monster" or card.DnDBackgroundStd == "weapon" or card.DnDBackgroundStd == "artefact" then 123*dpi/254 else if card.DnDBackgroundStd == "spell" then 125*dpi/254 else 0}
+		width: {if not contains(card.DnDBackgroundStd, match: "potion") then 343*dpi/254 else 0}
+		height: {if not contains(card.DnDBackgroundStd, match: "potion") then 396*dpi/254 else 0}
+
+	Description:
+		top: {530*dpi/254}
+		left: {80*dpi/254}
+		width: {400*dpi/254}
+		height: {185*dpi/254}
+		alignment: top left stretch if-overflow
+		font: 
+			name: FrizQuadrata
+			size: {18*dpi/254}
+			scale down to: 8
+			color: rgba(255,255,255,255)
+		symbol font:
+			name: CustomRPG
+			size: {18*dpi/254}
+			alignment: center middle
+
+	Rules:
+		top: {715*dpi/254}
+		left: {80*dpi/254}
+		width: {400*dpi/254}
+		height: {105*dpi/254}
+		alignment: center top stretch if-overflow
+		font: 
+			name: FrizQuadrata
+			size: {26*dpi/254}
+			scale down to: 8
+			color: rgba(255,255,255,255)
+		symbol font:
+			name: CustomRPG
+			size: {26*dpi/254}
+			alignment: center middle
+
+	Info1:
+		top: {if not contains(card.DnDBackgroundStd, match: "monster") then 50*dpi/254 else 0}
+		left: {if card.DnDBackgroundStd == "potion" or card.DnDBackgroundStd == "weapon" or card.DnDBackgroundStd == "artefact" then 460*dpi/254 else if card.DnDBackgroundStd == "spell" then 462*dpi/254 else 0}
+		width: {if not contains(card.DnDBackgroundStd, match: "monster") then 60*dpi/254 else 0}
+		height: {if not contains(card.DnDBackgroundStd, match: "monster") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Vecna
+			size: {24*dpi/254}
+			scale down to: 8
+			color: rgba(255,255,255,255)
+
+	Info2:
+		top: {if card.DnDBackgroundStd == "monster" then 318*dpi/254 else 0}
+		left: {if card.DnDBackgroundStd == "monster" then 80*dpi/254 else 0}
+		width: {if card.DnDBackgroundStd == "monster" then 30*dpi/254 else 0}
+		height: {if card.DnDBackgroundStd == "monster" then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Vecna
+			size: {24*dpi/254}
+			scale down to: 8
+			color: rgba(255,255,255,255)
+
+	Info3:
+		top: {if card.DnDBackgroundStd == "monster" or card.DnDBackgroundStd == "spell" then 400*dpi/254 else 0}
+		left: {if card.DnDBackgroundStd == "monster" then 80*dpi/254 else if card.DnDBackgroundStd == "spell" then 82*dpi/254 else 0}
+		width: {if card.DnDBackgroundStd == "monster" or card.DnDBackgroundStd == "spell" then 30*dpi/254 else 0}
+		height: {if card.DnDBackgroundStd == "monster" or card.DnDBackgroundStd == "spell" then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Vecna
+			size: {24*dpi/254}
+			scale down to: 8
+			color: rgba(255,255,255,255)
+
+	Info4:
+		top: {if card.DnDBackgroundStd == "monster" or card.DnDBackgroundStd == "spell" then 482*dpi/254 else 0}
+		left: {if card.DnDBackgroundStd == "monster" then 80*dpi/254 else if card.DnDBackgroundStd == "spell" then 82*dpi/254 else 0}
+		width: {if card.DnDBackgroundStd == "monster" or card.DnDBackgroundStd == "spell" then 30*dpi/254 else 0}
+		height: {if card.DnDBackgroundStd == "monster" or card.DnDBackgroundStd == "spell" then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Vecna
+			size: {24*dpi/254}
+			scale down to: 8
+			color: rgba(255,255,255,255)
+
+############################################################## Icons
+	DnDMonster:
+		top: {if card.DnDBackgroundStd == "monster" then 50*dpi/254 else 0}
+		left: {if card.DnDBackgroundStd == "monster" then 52*dpi/254 else 0}
+		width: {if card.DnDBackgroundStd == "monster" then 65*dpi/254 else 0}
+		height: {if card.DnDBackgroundStd == "monster" then 65*dpi/254 else 0}
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:			/CustomRPG.mse-include/empty.png
+			bugbear:		/CustomRPG-DnDBoard.mse-include/icon_bugbear.png
+			gnoll:			/CustomRPG-DnDBoard.mse-include/icon_gnoll.png
+			goblin1:		/CustomRPG-DnDBoard.mse-include/icon_goblin1.png
+			lich:			/CustomRPG-DnDBoard.mse-include/icon_lich.png
+			ogre:			/CustomRPG-DnDBoard.mse-include/icon_ogre.png
+			race-aberration:		/CustomRPG.mse-include/symbol-raceaberration.png
+			race-beast:				/CustomRPG.mse-include/symbol-racebeast.png
+			race-construct:			/CustomRPG.mse-include/symbol-raceconstruct.png
+			race-dragon:			/CustomRPG.mse-include/symbol-racedragon.png
+			race-elemental:			/CustomRPG.mse-include/symbol-raceelemental.png
+			race-fey:				/CustomRPG.mse-include/symbol-racefey.png
+			race-giant:				/CustomRPG.mse-include/symbol-racegiant.png
+			race-humanoid:			/CustomRPG.mse-include/symbol-racehumanoid.png
+			race-monstroushumanoid:	/CustomRPG.mse-include/symbol-racemonstroushumanoid.png
+			race-ooze:				/CustomRPG.mse-include/symbol-raceooze.png
+			race-outsider:			/CustomRPG.mse-include/symbol-raceoutsider.png
+			race-plant:				/CustomRPG.mse-include/symbol-raceplant.png
+			race-undead:			/CustomRPG.mse-include/symbol-raceundead.png
+
+	DnDWeapon:
+		top: {if card.DnDBackgroundStd == "weapon" then 50*dpi/254 else 0}
+		left: {if card.DnDBackgroundStd == "weapon" then 50*dpi/254 else 0}
+		width: {if card.DnDBackgroundStd == "weapon" then 65*dpi/254 else 0}
+		height: {if card.DnDBackgroundStd == "weapon" then 65*dpi/254 else 0}
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:			/CustomRPG.mse-include/empty.png
+			melee:			/CustomRPG-DnDBoard.mse-include/weapon_melee.png
+			ranged:			/CustomRPG-DnDBoard.mse-include/weapon_ranged.png

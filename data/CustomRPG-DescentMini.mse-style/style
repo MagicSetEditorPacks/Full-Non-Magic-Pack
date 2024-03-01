@@ -1,0 +1,248 @@
+mse version: 2.0.0
+game: CustomRPG
+short name: Descent Mini
+full name: (4.1cm x 6.3cm)
+icon: icon.png
+depends on: CustomRPG.mse-game 1.0
+depends on: CustomRPG.mse-include 1.0
+depends on: CustomRPG.mse-symbol-font 1.0
+depends on: CustomRPG-Descent.mse-include 1.0
+card background: white
+#card width: 246
+#card height: 378
+#card dpi: 152.4
+card width: 410
+card height: 630
+card dpi: 254
+
+############################################################## Scripts
+init script:
+	dpi := 254
+
+	##### Category
+	cardlist_display1 := {
+		if contains(card.MiniBackground, match: "treasure") then "Treasure"
+		else if contains(card.MiniBackground, match: "status") then "Status"
+		else if contains(card.MiniBackground, match: "item") then "Item"
+		else if contains(card.MiniBackground, match: "relic") then "Relic"
+		else if contains(card.MiniBackground, match: "feat") then "Feat"
+		else if contains(card.MiniBackground, match: "familiar") then "Familiar"
+		else ""
+		}
+	##### Type
+	cardlist_display2 := {
+		if contains(card.MiniBackground, match: "warrior") then "Warrior"
+		else if contains(card.MiniBackground, match: "scout") then "Scout"
+		else if contains(card.MiniBackground, match: "mage") then "Mage"
+		else if contains(card.MiniBackground, match: "healer") then "Healer"
+		else if contains(card.MiniBackground, match: "generic") then "Generic"
+		else if contains(card.MiniBackground, match: "legendary") then "Legendary"
+		else if contains(card.MiniBackground, match: "shop") then "Shop"
+		else if contains(card.MiniBackground, match: "player") then "Player"
+		else if contains(card.MiniBackground, match: "overlord") then "Overlord"
+		else ""
+		}
+	##### Subtype/Info
+	cardlist_display3 := {
+		if not contains(card.MiniBackground, match: "status") and not contains(card.MiniBackground, match: "relic-overlord") and not contains(card.MiniBackground, match: "familiar") then card.Category
+		else ""
+		}
+	##### Misc/Info
+	cardlist_display4 := {
+		if contains(card.MiniBackground, match: "treasure") or contains(card.MiniBackground, match: "shop") then card.Cost
+		else ""
+		}
+	##### Background
+	cardlist_display5 := {card.MiniBackground}
+
+	card_type := {
+	if substring(card.MiniBackground, end:4) == "item" or substring(card.MiniBackground, end:5) == "relic" then "item"
+	else if substring(card.MiniBackground, end:4) == "feat" then "feat"
+	else if card.MiniBackground == "status" then "status"
+	else if card.MiniBackground == "familiar" then "familiar"
+	else "treasure"
+	}
+
+############################################################## Style
+card style:
+	MiniBackground:
+		top:	0
+		left:	0
+		width:	{410*dpi/254}
+		height:	{630*dpi/254}
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			treasure:		{"/CustomRPG-Descent.mse-include/card_treasure.png"}
+			status:			{"/CustomRPG-Descent.mse-include/card_status.png"}
+			item-shop:		{"/CustomRPG-Descent.mse-include/card_itemshop.png"}
+			item-warrior:	{"/CustomRPG-Descent.mse-include/card_itemwarrior.png"}
+			item-scout:		{"/CustomRPG-Descent.mse-include/card_itemscout.png"}
+			item-mage:		{"/CustomRPG-Descent.mse-include/card_itemmage.png"}
+			item-healer:	{"/CustomRPG-Descent.mse-include/card_itemhealer.png"}
+			relic-player:	{"/CustomRPG-Descent.mse-include/card_relicA.png"}
+			relic-overlord:	{"/CustomRPG-Descent.mse-include/card_relicB.png"}
+			feat-warrior:	{"/CustomRPG-Descent.mse-include/card_featwarrior.png"}
+			feat-scout:		{"/CustomRPG-Descent.mse-include/card_featscout.png"}
+			feat-mage:		{"/CustomRPG-Descent.mse-include/card_featmage.png"}
+			feat-healer:	{"/CustomRPG-Descent.mse-include/card_feathealer.png"}
+			feat-generic:	{"/CustomRPG-Descent.mse-include/card_featgeneric.png"}
+			feat-legendary:	{"/CustomRPG-Descent.mse-include/card_featlegendary.png"}
+#			familiar:		{"/CustomRPG-Descent.mse-include/card_familiar.png"}
+
+############################################################## Main Info
+	Name:
+		top: {if card_type() == "item" then 25*dpi/254 else if card_type() == "feat" then 55*dpi/254 else if card_type() == "status" then 165*dpi/254 else 45*dpi/254}
+		left: {if card_type() == "item" then 35*dpi/254 else if card_type() == "feat" then 80*dpi/254 else if card_type() == "status" then 105*dpi/254 else 75*dpi/254}
+		width: {if card_type() == "item" then 335*dpi/254 else if card_type() == "feat" then 250*dpi/254 else if card_type() == "status" then 210*dpi/254 else 265*dpi/254}
+		height: {if card_type() == "item" then 55*dpi/254 else if card_type() == "feat" then 40*dpi/254 else if card_type() == "status" then 30*dpi/254 else 40*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Windlass
+			size: {if card_type() == "status" then 20*dpi/254 else 24*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Picture:
+		top: {if card_type() == "item" then 98*dpi/254 else if card_type() == "status" then 25*dpi/254 else if card_type() == "treasure" then 135*dpi/254 else 0}
+		left: {if card_type() == "item" then 55*dpi/254 else if card_type() == "status" then 135*dpi/254 else if card_type() == "treasure" then 55*dpi/254 else 0}
+		width: {if card_type() == "item" then 300*dpi/254 else if card_type() == "status" then 150*dpi/254 else if card_type() == "treasure" then 315*dpi/254 else 0}
+		height: {if card_type() == "item" then 150*dpi/254 else if card_type() == "status" then 125*dpi/254 else if card_type() == "treasure" then 160*dpi/254 else 0}
+		visible: {if card_type() == "feat" then false else true}
+		mask:	{if card_type() == "treasure" then "/CustomRPG-Descent.mse-include/mask_picture2.png" else if card.MiniBackground == "item-shop" then "/CustomRPG-Descent.mse-include/mask_picture3.png" else if card_type() == "item" then "/CustomRPG-Descent.mse-include/mask_picture4.png" else if card_type() == "status" then "/CustomRPG-Descent.mse-include/mask_picture5.png"}
+
+	Category:
+		top: {if card_type() == "item" then 250*dpi/254 else if card_type() == "feat" then 120*dpi/254 else if card_type() == "treasure" then 105*dpi/254 else 0}
+		left: {if card_type() == "item" then 75*dpi/254 else if card_type() == "feat" then 105*dpi/254 else if card_type() == "treasure" then 105*dpi/254 else 0}
+		width: {if card_type() == "item" then 265*dpi/254 else if card_type() == "feat" then 200*dpi/254 else if card_type() == "treasure" then 205*dpi/254 else 0}
+		height: {if card_type() == "item" then 35*dpi/254 else if card_type() == "feat" then 25*dpi/254 else if card_type() == "treasure" then 20*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		visible: {if card_type() == "status" or card.MiniBackground == "relic-overlord" then false else true}
+		font: 
+			name: Windlass
+			size: {if card_type() == "item" then 18*dpi/254 else 14*dpi/254}
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Description:
+		top: {if card_type() == "item" then 305*dpi/254 else if card_type() == "feat" then 165*dpi/254 else if card_type() == "status" then 225*dpi/254 else 300*dpi/254}
+		left: {if card_type() == "item" then 70*dpi/254 else if card_type() == "feat" then 55*dpi/254 else if card_type() == "status" then 60*dpi/254 else 55*dpi/254}
+		width: {if card_type() == "item" then 270*dpi/254 else if card_type() == "feat" then 300*dpi/254 else if card_type() == "status" then 300*dpi/254 else 315*dpi/254}
+		height: {if card_type() == "item" then 255*dpi/254 else if card_type() == "feat" then 400*dpi/254 else if card_type() == "status" then 335*dpi/254 else 240*dpi/254}
+		alignment: top left stretch if-overflow
+		mask:	{if card_type() == "item" then "/CustomRPG-Descent.mse-include/mask_textbox3.png" else if card_type() == "treasure" then "/CustomRPG-Descent.mse-include/mask_textbox4.png" else "/CustomRPG-Descent.mse-include/mask_textbox5.png"}
+		font: 
+			name: Gara Scenario Descent
+			size: {22*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {18*dpi/254}
+			alignment: center middle
+
+	Cost:
+		top: {if card_type() == "treasure" then 530*dpi/254 else if card.MiniBackground == "item-shop" then 148*dpi/254 else 0}
+		left: {if card_type() == "treasure" then 298*dpi/254 else if card.MiniBackground == "item-shop" then 330*dpi/254 else 0}
+		width: {if card_type() == "treasure" then 80*dpi/254 else if card.MiniBackground == "item-shop" then 40*dpi/254 else 0}
+		height: {if card_type() == "treasure" then 80*dpi/254 else if card.MiniBackground == "item-shop" then 40*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		visible: {if card_type() == "treasure" or card.MiniBackground == "item-shop" then true else false}
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {32*dpi/254}
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Dice:
+		top: {if card_type() == "item" then 350*dpi/254 else 0}
+		left: {if card_type() == "item" then 368*dpi/254 else 0}
+		width: {if card_type() == "item" then 30*dpi/254 else 0}
+		height: {if card_type() == "item" then 180*dpi/254 else 0}
+		direction: vertical
+		visible: {if card_type() == "item" then true else false}
+		font: 
+			name: Gara Scenario Descent
+			size: {24*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {16*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	IconItem:
+		top: {if card_type() == "item" then 540*dpi/254 else 0}
+		left: {if card_type() == "item" then 10*dpi/254 else 0}
+		width: {if card_type() == "item" then 80*dpi/254 else 0}
+		height: {if card_type() == "item" then 80*dpi/254 else 0}
+		visible: {if card_type() == "item" and card.MiniBackground != "relic-overlord" then true else false}
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:					/CustomRPG.mse-include/empty.png
+			icon-onehanded:			/CustomRPG-Descent.mse-include/icon_onehanded.png
+			icon-twohanded:			/CustomRPG-Descent.mse-include/icon_twohanded.png
+			icon-armour:			/CustomRPG-Descent.mse-include/icon_armour.png
+			icon-miscitem:			/CustomRPG-Descent.mse-include/icon_miscitem.png
+
+	IconWeapon:
+		top: {if card_type() == "item" then 95*dpi/254 else 0}
+		left: 0
+		width: {if card_type() == "item" then 110*dpi/254 else 0}
+		height: {if card_type() == "item" then 145*dpi/254 else 0}
+		visible: {if card_type() == "item" and card.MiniBackground != "relic-overlord" then true else false}
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:					/CustomRPG.mse-include/empty.png
+			icon-itemmelee:			/CustomRPG-Descent.mse-include/icon_itemmelee.png
+			icon-itemranged:		/CustomRPG-Descent.mse-include/icon_itemranged.png
+			icon-relicmelee:		/CustomRPG-Descent.mse-include/icon_relicmelee.png
+			icon-relicranged:		/CustomRPG-Descent.mse-include/icon_relicranged.png
+
+	IconXP:
+		top: {if card_type() == "feat" then 102*dpi/254 else 0}
+		left: {if card_type() == "feat" then 325*dpi/254 else 0}
+		width: {if card_type() == "feat" then 55*dpi/254 else 0}
+		height: {if card_type() == "feat" then 60*dpi/254 else 0}
+		visible: {if card_type() == "feat" then true else false}
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:			/CustomRPG.mse-include/empty.png
+			icon-xp1:		/CustomRPG-Descent.mse-include/icon_xp1.png
+			icon-xp2:		/CustomRPG-Descent.mse-include/icon_xp2.png
+			icon-xp3:		/CustomRPG-Descent.mse-include/icon_xp3.png
+
+	IconExhaust:
+		top: {if card_type() == "feat" then 455*dpi/254 else 0}
+		left: {if card_type() == "feat" then 270*dpi/254 else 0}
+		width: {if card_type() == "feat" then 140*dpi/254 else 0}
+		height: {if card_type() == "feat" then 145*dpi/254 else 0}
+		visible: {if card_type() == "feat" then true else false}
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:			/CustomRPG.mse-include/empty.png
+			icon-exhaust1:	/CustomRPG-Descent.mse-include/icon_exhaust1.png
+			icon-exhaust2:	/CustomRPG-Descent.mse-include/icon_exhaust2.png
+			icon-exhaust3:	/CustomRPG-Descent.mse-include/icon_exhaust3.png
+
+	IconOverlord:
+		top: {if card.MiniBackground == "relic-overlord" then 505*dpi/254 else 0}
+		left: 0
+		width: {if card.MiniBackground == "relic-overlord" then 140*dpi/254 else 0}
+		height: {if card.MiniBackground == "relic-overlord" then 125*dpi/254 else 0}
+		visible: {if card.MiniBackground == "relic-overlord" then true else false}
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:					/CustomRPG.mse-include/empty.png
+			icon-universal:			/CustomRPG-Descent.mse-include/icon_overlorduniversal.png
+			icon-monster:			/CustomRPG-Descent.mse-include/icon_overlordmonster.png
+			icon-trap:				/CustomRPG-Descent.mse-include/icon_overlorduniversal.png
+			icon-scheme:			/CustomRPG-Descent.mse-include/icon_overlorduniversal.png

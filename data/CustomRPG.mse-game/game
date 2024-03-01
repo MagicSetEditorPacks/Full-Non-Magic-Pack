@@ -1,0 +1,3369 @@
+mse version: 2.0.0
+short name: CustomRPG
+full name: Krevett62
+icon:icon.png
+depends on: CustomRPG.mse-include 1.0
+position hint: 0
+version: 1.0
+
+# Combination of Zio's Custom RPG frames and erf_beto DnDStatCards and 
+# https://www.enworld.org/resources/zios-magic-set-editor-card-templates-for-rpgs.1591/
+# https://www.enworld.org/threads/monster-cards.297579/
+# beto credits:
+# Hacked by erf_beto :D
+# Special thanks to knight_otu, ander00, lord tirian and others from enworld.org, for inspiration and/or prior design/programming. :)
+# This is my first attempt at a MSE template. There's probably some lines I'm not using, I know. I'm still figuring it out :P
+
+
+############################################################## Scripts
+init script:
+	number_filter := filter_text@(match: "[0123456789]")
+
+	action_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Action>{input}</word-list-Action>" }
+
+	components_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Components>{input}</word-list-Components>" }
+
+	range_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Range>{input}</word-list-Range>" }
+
+	duration_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Duration>{input}</word-list-Duration>" }
+
+	area_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Area>{input}</word-list-Area>" }
+
+	attack_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Attack>{input}</word-list-Attack>" }
+
+	class_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Class>{input}</word-list-Class>" }
+
+	role_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Role>{input}</word-list-Role>" }
+
+	monstertype_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Monstertype>{input}</word-list-Monstertype>" }
+
+	powertype_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Powertype>{input}</word-list-Powertype>" }
+
+	save_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Save>{input}</word-list-Save>" }
+
+	rarity_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Rarity>{input}</word-list-Rarity>" }
+
+	value_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Value>{input}</word-list-Value>" }
+
+	power_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Power>{input}</word-list-Power>" }
+
+	school_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-School>{input}</word-list-School>" }
+
+	keyword_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Keyword>{input}</word-list-Keyword>" }
+
+	size_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Size>{input}</word-list-Size>" }
+
+	monster_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Monster>{input}</word-list-Monster>" }
+
+	item_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Item>{input}</word-list-Item>" }
+
+	slot_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Slot>{input}</word-list-Slot>" }
+
+	generic_filter := tag_remove_rule(tag: "<word-list-") + { "<word-list-Generic>{input}</word-list-Generic>" }
+
+	cardlist_display1 := {""}
+	cardlist_display2 := {""}
+	cardlist_display3 := {""}
+	cardlist_display4 := {""}
+	cardlist_display5 := {""}
+
+	## beto statcards
+
+	card_number := {
+		position (
+			of: card
+			in: set
+			order_by: {card.StatRole + card.StatName }
+		) + 1
+	}
+	############################################################## The text box
+	
+	# Filters for the text box
+	# the rule text filter
+	text_filter :=
+		# step 1 : remove all automatic tags
+		tag_remove_rule(tag: "<sym-auto>") +
+		tag_remove_rule(tag: "<i-auto>")   +
+		tag_remove_rule(tag: "<b-auto>")   +
+		# step 2 : expand shortcut words ~ and CARDNAME
+		replace_rule(
+			match: "~|~THIS~|CARDNAME",
+			in_context: "(^|[[:space:]]|\\()<match>", # TODO: Allow any punctuation before
+			replace: "<atom-cardname></atom-cardname>"
+			) +
+		# step 3 : fill in atom fields
+		tag_contents_rule(
+			tag: "<atom-cardname>",
+			contents: { if card_name=="" then "CARDNAME" else card_name }
+			) +
+		# step 4 : automatic bolding and capitalization
+		replace_rule(
+			match: "[Aa]ttacks|[Ll]imited [Pp]owers|[Aa]bilities|[Ss]kills",
+			in_context: "<match>[:]",
+			replace: to_upper) +
+		replace_rule(
+			match: "ATTACKS:|LIMITED POWERS:|ABILITIES:|SKILLS:",
+			replace: "<b-auto>&</b-auto>") +
+		#step 5 : Replace dot
+		replace_rule(
+			match: "\\*",
+			replace: "•") +
+		#step 5 : Attack symbols
+		replace_rule(
+			match: "[(][aAcCmMrRFBDU123456][)]",
+			replace: "<sym-auto>&</sym-auto>") +
+		curly_quotes	
+	upper_filter :=
+		tag_remove_rule(tag: "<size:") +
+		tag_remove_rule(tag: "</size") +
+		tag_remove_rule(tag: "<SIZE:") +
+		tag_remove_rule(tag: "</SIZE") +
+		to_upper
+	name_filter :=
+		tag_remove_rule(tag: "<size") +
+		tag_remove_rule(tag: "</size") +
+		tag_remove_rule(tag: "<SIZE:") +
+		tag_remove_rule(tag: "</SIZE") +
+		to_upper +
+		replace_rule(match: "[A-Z]", in_context:"^<match>| <match>", replace: "<size:16>&</size>")
+	ability_filter :=
+		tag_remove_rule(tag: "<size") +
+		tag_remove_rule(tag: "</size") +
+		replace_rule(match: "[(]*[-–+]*[0-9]*[)]", in_context:"^<match>| <match>", replace: "<size:7>&</size>")
+	type_filter :=
+		#tag_remove_rule(tag: "<word-list-") +
+		#replace_rule(match: " </soft>$", replace: "") + # remove trailing soft space
+		#tag_remove_rule(tag: "<soft") +
+		to_upper #+ 
+		#{
+			#"<word-list-Sizes>{ only_first(input) }</word-list-Sizes>"+" "+"<word-list-Origins>{ only_second(input) }</word-list-Origins>"+" "+"<word-list-Types>{ only_third(input) }</word-list-Types>" +" "+ only_subtypes(input) 
+		#}
+	
+	# all sub types, for word list
+	#only_subtypes  := filter_rule(match:"[(].*")
+	#only_first     := replace_rule(match:" [^\n]*", replace:"")
+	#only_second    := replace_rule(match:"^[^ ]* ?", replace:"") + replace_rule(match:" [^\n]*", replace:"")
+	#only_third     := replace_rule(match:"^[^ ]* ?", replace:"") + replace_rule(match:"^[^ ]* ?", replace:"") + replace_rule(match:".\\([^\n]*", replace:"")
+
+
+############################################################## Standard style
+card field:
+	type: choice
+	name: Background
+	show statistics: false
+	card list allow: false
+	description: Card background selection
+	choice: default
+	choice: default-dark
+	choice: default-blue
+	choice: default-green
+	choice: default-red
+	choice: default-yellow
+	choice: default-orange
+	choice: default-brown
+	choice: default-purple
+	choice: default-pink
+	choice: default-cyan
+	choice: default-seefoam
+	choice: generic-bronze1
+	choice: generic-bronze2
+	choice: generic-silver1
+	choice: generic-silver2
+	choice: generic-gold1
+	choice: generic-gold2
+	choice: generic-steel1
+	choice: generic-leather1
+	choice: generic-leather2
+	choice: generic-leather3
+	choice: generic-leather4
+	choice: generic-paper1
+	choice: generic-paper2
+	choice: generic-paper3
+	choice: generic-paper4
+	choice: generic-paper5
+	choice: generic-paper6
+	choice: generic-scroll1
+	choice: generic-scroll2
+	choice: generic-scroll3
+	choice: generic-scroll4
+	choice: generic-wood1
+	choice: generic-wood2
+	choice: radiant-blue
+	choice: radiant-green
+	choice: radiant-red
+	choice: radiant-orange
+	choice: radiant-pink
+	choice: radiant-purple
+	choice: pastel-blue
+	choice: pastel-green
+	choice: pastel-orange
+	choice: pastel-red
+	choice: pastel-purple
+	choice: pastel-yellow
+	choice: pastel-brown
+	choice: pastel-cyan
+
+card field:
+	type: choice
+	name: PawnBackground
+	show statistics: false
+	card list allow: false
+	description: Pawn background selection
+	choice: default
+	choice: default-dark
+	choice: default-blue
+	choice: default-green
+	choice: default-red
+	choice: default-yellow
+	choice: default-orange
+	choice: default-brown
+	choice: default-purple
+	choice: default-pink
+	choice: default-cyan
+	choice: default-seefoam
+
+card field:
+	type: choice
+	name: PawnPicture
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	description: Token image
+	choice: default
+
+card field:
+	type: text
+	name: PawnName
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	description: Token name
+	script: card.Name
+
+card field:
+	type: text
+	name: PawnInfo
+	show statistics: false
+	card list allow: false
+	save value: false
+	editable: false
+	description: Info textbox
+	script: card.Info1
+
+############################################################## Basic fields
+card field:
+	type: text
+	name: Name
+	identifying: true
+	show statistics: false
+	card list visible: true
+	card list name: Name
+	card list column: 0
+	description: Name of the card
+
+card field:
+	type: image
+	name: Picture
+	show statistics: false
+	card list allow: false
+	description: Picture of the card
+
+card field:
+	type: text
+	name: Category
+	show statistics: false
+	card list allow: false
+	description: Primary type of the card
+
+card field:
+	type: text
+	name: Type
+	show statistics: false
+	card list allow: false
+	description: Primary subtype/keyword of the card
+
+card field:
+	type: text
+	name: Category-Type
+	show statistics: false
+	card list allow: false
+	save value: false
+	description: Primary type and subtype(s) of the card
+	script: combined_editor(field1: card.Category, separator: " — ", field2: card.Type, soft_before_empty: true, hide_when_empty: false)
+
+card field:
+	type: text
+	name: Generic
+	show statistics: false
+	card list allow: false
+	description: Secondary type of the card
+
+card field:
+	type: text
+	name: Subtype
+	show statistics: false
+	card list allow: false
+	description: Secondary subtype/keyword of the card
+
+card field:
+	type: text
+	name: Generic-Subtype
+	show statistics: false
+	card list allow: false
+	save value: false
+	description: Secondary type and subtype(s) of the card
+	script: combined_editor(field1: card.Generic, separator: " — ", field2: card.Subtype, soft_before_empty: true, hide_when_empty: false)
+
+card field:
+	type: text
+	name: Description
+	multi line: true
+	show statistics: false
+	card list allow: false
+	description: Primary textbox of the card
+
+card field:
+	type: text
+	name: Rules
+	multi line: true
+	show statistics: false
+	card list allow: false
+	description: Secondary textbox of the card
+
+card field:
+	type: text
+	name: Description-Rules
+	multi line: true
+	show statistics: false
+	card list allow: false
+	save value: false
+	description: Combined textbox of the card
+	script: combined_editor(field1: card.Description, separator: "<line>\n</line>", field2: card.Rules)
+
+card field:
+	type: choice
+	name: Watermark
+	show statistics: false
+	card list allow: false
+	editable: false
+	description: A watermark for below the textbox
+	choice: default
+
+card field:
+	type: choice
+	name: ColorOrb
+	show statistics: false
+	card list allow: false
+	editable: false
+	description: A colored orb
+	choice: default
+
+card field:
+	type: text
+	name: Info1
+	show statistics: false
+	card list allow: false
+	description: Infobox
+
+card field:
+	type: text
+	name: Info2
+	show statistics: false
+	card list allow: false
+	description: Infobox
+
+card field:
+	type: text
+	name: Info3
+	show statistics: false
+	card list allow: false
+	description: Infobox
+
+card field:
+	type: text
+	name: Info4
+	show statistics: false
+	card list allow: false
+	description: Infobox
+
+card field:
+	type: text
+	name: Healthbox
+	show statistics: false
+	card list allow: false
+	description: Health value
+
+card field:
+	type: text
+	name: Manabox
+	show statistics: false
+	card list allow: false
+	description: Mana/Exhaust value
+
+############################################################## Textbox fields
+card field:
+	type: text
+	name: Textbox1
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox2
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox3
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox4
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox5
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox6
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox7
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox8
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox9
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox10
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox11
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox12
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox13
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox14
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox15
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox16
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox17
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox18
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox19
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox20
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox21
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox22
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox23
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox24
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox25
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox26
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox27
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox28
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox29
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox30
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox31
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox32
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox33
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox34
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox35
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+card field:
+	type: text
+	name: Textbox36
+	show statistics: false
+	card list allow: false
+	description: Textbox
+
+############################################################## Statbox fields
+card field:
+	type: text
+	name: Statbox1
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox2
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox3
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox4
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox5
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox6
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox7
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox8
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox9
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox10
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox11
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox12
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox13
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox14
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox15
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox16
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox17
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox18
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox19
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox20
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox21
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox22
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox23
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox24
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox25
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox26
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox27
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox28
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox29
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox30
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox31
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox32
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox33
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox34
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox35
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+card field:
+	type: text
+	name: Statbox36
+	show statistics: false
+	card list allow: false
+	description: Statbox
+
+############################################################## Icons/Symbols fields
+card field:
+	type: choice
+	name: Symbol
+	show statistics: false
+	card list allow: false
+	description: The symbol for the card
+	choice: none
+	choice: icon-armour
+	choice: icon-shield
+	choice: icon-weapon
+	choice: icon-helm
+	choice: icon-robe
+	choice: icon-boots
+	choice: icon-bracers
+	choice: icon-belt
+	choice: icon-cape
+	choice: icon-ring
+	choice: icon-amulet
+	choice: icon-staff
+	choice: icon-wand
+	choice: icon-artifact
+	choice: icon-potion
+	choice: icon-scroll
+	choice: icon-treasure
+	choice: icon-misc
+	choice: icon-trap
+	choice: icon-monster
+	choice: icon-mercenary
+	choice: icon-air
+	choice: icon-earth
+	choice: icon-fire
+	choice: icon-water
+	choice: icon-arcane
+	choice: icon-divine
+	choice: icon-nature
+	choice: icon-spell
+	choice: icon-status
+	choice: treasure
+	choice: monster
+	choice: trap-mechanical
+	choice: trap-magical
+	choice: trap-deadly
+	choice: weapon-melee
+	choice: weapon-ranged
+	choice: armour-heavy
+	choice: armour-medium
+	choice: armour-light
+	choice: item-potion1
+	choice: item-scroll1
+	choice: item-misc1
+	choice: spell-air1
+	choice: spell-air2
+	choice: spell-earth1
+	choice: spell-earth2
+	choice: spell-fire1
+	choice: spell-fire2
+	choice: spell-water1
+	choice: spell-water2
+	choice: spell-nature1
+	choice: spell-nature2
+	choice: spell-arcane1
+	choice: spell-arcane2
+	choice: spell-divine1
+	choice: spell-divine2
+	choice: spell-abjuration
+	choice: spell-conjuration
+	choice: spell-divination
+	choice: spell-enchantment
+	choice: spell-evocation
+	choice: spell-illusion
+	choice: spell-necromancy
+	choice: spell-transmutation
+	choice: power-closeblast
+	choice: power-rangedburst
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-gunslinger
+	choice: class-monk
+	choice: class-paladin
+	choice: class-psion
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-sorcerer
+	choice: class-warlock
+	choice: class-warlord
+	choice: class-wizard
+	choice: race-aasimar
+	choice: race-aasimar2
+	choice: race-dragonspawn
+	choice: race-dragonspawn2
+	choice: race-drow
+	choice: race-dwarf
+	choice: race-dwarfgold
+	choice: race-dwarfgray
+	choice: race-dwarfshield
+	choice: race-elf
+	choice: race-elfmoon
+	choice: race-elfsun
+	choice: race-elfwild
+	choice: race-elfwood
+	choice: race-genasiair
+	choice: race-genasiearth
+	choice: race-genasifire
+	choice: race-genasiwater
+#	choice: race-gnome
+	choice: race-gnomedeep
+	choice: race-gnomerock
+#	choice: race-gobelin
+#	choice: race-halfdragon
+	choice: race-halfdrow
+	choice: race-halfelf
+#	choice: race-halfling
+	choice: race-halflinglightfoot
+	choice: race-halflingstrongheart
+	choice: race-halforc
+	choice: race-human
+	choice: race-ironforged
+#	choice: race-orc
+	choice: race-tiefling
+	choice: race-tiefling2
+	choice: race-aberration
+	choice: race-beast
+	choice: race-construct
+	choice: race-dragon
+	choice: race-elemental
+	choice: race-fey
+	choice: race-giant
+	choice: race-humanoid
+	choice: race-monstroushumanoid
+	choice: race-ooze
+	choice: race-outsider
+	choice: race-plant
+	choice: race-undead
+
+card field:
+	type: choice
+	name: Box1
+	show statistics: false
+	card list allow: false
+	description: Special symbols
+	choice: none
+	choice: icon-melee
+	choice: icon-ranged
+	choice: icon-meleeranged
+	choice: icon-magic
+	choice: icon-defence
+	choice: icon-magicdefence
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-wizard
+	choice: skull-white
+	choice: skull-green
+	choice: skull-blue
+	choice: skull-black
+	choice: skull-yellow
+	choice: skull-orange
+	choice: skull-purple
+	choice: shield1-white
+	choice: shield1-green
+	choice: shield1-blue
+	choice: shield1-black
+	choice: shield1-yellow
+	choice: shield1-orange
+	choice: shield1-purple
+	choice: shield2-white
+	choice: shield2-green
+	choice: shield2-blue
+	choice: shield2-black
+	choice: shield2-yellow
+	choice: shield2-orange
+	choice: shield2-purple
+	choice: dice-special
+	choice: d4
+	choice: d6
+	choice: d8
+	choice: d10
+	choice: d12
+	choice: d20
+	choice: d100
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	choice: 7
+	choice: 8
+	choice: 9
+	choice: 10
+	choice: +
+
+card field:
+	type: choice
+	name: Box2
+	show statistics: false
+	card list allow: false
+	description: Special symbols
+	choice: none
+	choice: icon-melee
+	choice: icon-ranged
+	choice: icon-meleeranged
+	choice: icon-magic
+	choice: icon-defence
+	choice: icon-magicdefence
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-wizard
+	choice: skull-white
+	choice: skull-green
+	choice: skull-blue
+	choice: skull-black
+	choice: skull-yellow
+	choice: skull-orange
+	choice: skull-purple
+	choice: shield1-white
+	choice: shield1-green
+	choice: shield1-blue
+	choice: shield1-black
+	choice: shield1-yellow
+	choice: shield1-orange
+	choice: shield1-purple
+	choice: shield2-white
+	choice: shield2-green
+	choice: shield2-blue
+	choice: shield2-black
+	choice: shield2-yellow
+	choice: shield2-orange
+	choice: shield2-purple
+	choice: dice-special
+	choice: d4
+	choice: d6
+	choice: d8
+	choice: d10
+	choice: d12
+	choice: d20
+	choice: d100
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	choice: 7
+	choice: 8
+	choice: 9
+	choice: 10
+	choice: +
+
+card field:
+	type: choice
+	name: Box3
+	show statistics: false
+	card list allow: false
+	description: Special symbols
+	choice: none
+	choice: icon-melee
+	choice: icon-ranged
+	choice: icon-meleeranged
+	choice: icon-magic
+	choice: icon-defence
+	choice: icon-magicdefence
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-wizard
+	choice: skull-white
+	choice: skull-green
+	choice: skull-blue
+	choice: skull-black
+	choice: skull-yellow
+	choice: skull-orange
+	choice: skull-purple
+	choice: shield1-white
+	choice: shield1-green
+	choice: shield1-blue
+	choice: shield1-black
+	choice: shield1-yellow
+	choice: shield1-orange
+	choice: shield1-purple
+	choice: shield2-white
+	choice: shield2-green
+	choice: shield2-blue
+	choice: shield2-black
+	choice: shield2-yellow
+	choice: shield2-orange
+	choice: shield2-purple
+	choice: dice-special
+	choice: d4
+	choice: d6
+	choice: d8
+	choice: d10
+	choice: d12
+	choice: d20
+	choice: d100
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	choice: 7
+	choice: 8
+	choice: 9
+	choice: 10
+	choice: +
+
+card field:
+	type: choice
+	name: Box4
+	show statistics: false
+	card list allow: false
+	description: Special symbols
+	choice: none
+	choice: icon-melee
+	choice: icon-ranged
+	choice: icon-meleeranged
+	choice: icon-magic
+	choice: icon-defence
+	choice: icon-magicdefence
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-wizard
+	choice: skull-white
+	choice: skull-green
+	choice: skull-blue
+	choice: skull-black
+	choice: skull-yellow
+	choice: skull-orange
+	choice: skull-purple
+	choice: shield1-white
+	choice: shield1-green
+	choice: shield1-blue
+	choice: shield1-black
+	choice: shield1-yellow
+	choice: shield1-orange
+	choice: shield1-purple
+	choice: shield2-white
+	choice: shield2-green
+	choice: shield2-blue
+	choice: shield2-black
+	choice: shield2-yellow
+	choice: shield2-orange
+	choice: shield2-purple
+	choice: dice-special
+	choice: d4
+	choice: d6
+	choice: d8
+	choice: d10
+	choice: d12
+	choice: d20
+	choice: d100
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	choice: 7
+	choice: 8
+	choice: 9
+	choice: 10
+	choice: +
+
+card field:
+	type: choice
+	name: Box5
+	show statistics: false
+	card list allow: false
+	description: Special symbols
+	choice: none
+	choice: icon-melee
+	choice: icon-ranged
+	choice: icon-meleeranged
+	choice: icon-magic
+	choice: icon-defence
+	choice: icon-magicdefence
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-wizard
+	choice: skull-white
+	choice: skull-green
+	choice: skull-blue
+	choice: skull-black
+	choice: skull-yellow
+	choice: skull-orange
+	choice: skull-purple
+	choice: shield1-white
+	choice: shield1-green
+	choice: shield1-blue
+	choice: shield1-black
+	choice: shield1-yellow
+	choice: shield1-orange
+	choice: shield1-purple
+	choice: shield2-white
+	choice: shield2-green
+	choice: shield2-blue
+	choice: shield2-black
+	choice: shield2-yellow
+	choice: shield2-orange
+	choice: shield2-purple
+	choice: dice-special
+	choice: d4
+	choice: d6
+	choice: d8
+	choice: d10
+	choice: d12
+	choice: d20
+	choice: d100
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	choice: 7
+	choice: 8
+	choice: 9
+	choice: 10
+	choice: +
+
+card field:
+	type: choice
+	show statistics: false
+	card list allow: false
+	name: Box6
+	description: Special symbols
+	choice: none
+	choice: icon-melee
+	choice: icon-ranged
+	choice: icon-meleeranged
+	choice: icon-magic
+	choice: icon-defence
+	choice: icon-magicdefence
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-wizard
+	choice: skull-white
+	choice: skull-green
+	choice: skull-blue
+	choice: skull-black
+	choice: skull-yellow
+	choice: skull-orange
+	choice: skull-purple
+	choice: shield1-white
+	choice: shield1-green
+	choice: shield1-blue
+	choice: shield1-black
+	choice: shield1-yellow
+	choice: shield1-orange
+	choice: shield1-purple
+	choice: shield2-white
+	choice: shield2-green
+	choice: shield2-blue
+	choice: shield2-black
+	choice: shield2-yellow
+	choice: shield2-orange
+	choice: shield2-purple
+	choice: dice-special
+	choice: d4
+	choice: d6
+	choice: d8
+	choice: d10
+	choice: d12
+	choice: d20
+	choice: d100
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	choice: 7
+	choice: 8
+	choice: 9
+	choice: 10
+	choice: +
+
+card field:
+	type: choice
+	name: Box7
+	show statistics: false
+	card list allow: false
+	description: Special symbols
+	choice: none
+	choice: icon-melee
+	choice: icon-ranged
+	choice: icon-meleeranged
+	choice: icon-magic
+	choice: icon-defence
+	choice: icon-magicdefence
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-wizard
+	choice: skull-white
+	choice: skull-green
+	choice: skull-blue
+	choice: skull-black
+	choice: skull-yellow
+	choice: skull-orange
+	choice: skull-purple
+	choice: shield1-white
+	choice: shield1-green
+	choice: shield1-blue
+	choice: shield1-black
+	choice: shield1-yellow
+	choice: shield1-orange
+	choice: shield1-purple
+	choice: shield2-white
+	choice: shield2-green
+	choice: shield2-blue
+	choice: shield2-black
+	choice: shield2-yellow
+	choice: shield2-orange
+	choice: shield2-purple
+	choice: dice-special
+	choice: d4
+	choice: d6
+	choice: d8
+	choice: d10
+	choice: d12
+	choice: d20
+	choice: d100
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	choice: 7
+	choice: 8
+	choice: 9
+	choice: 10
+	choice: +
+
+card field:
+	type: choice
+	name: Box8
+	show statistics: false
+	card list allow: false
+	description: Special symbols
+	choice: none
+	choice: icon-melee
+	choice: icon-ranged
+	choice: icon-meleeranged
+	choice: icon-magic
+	choice: icon-defence
+	choice: icon-magicdefence
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-wizard
+	choice: skull-white
+	choice: skull-green
+	choice: skull-blue
+	choice: skull-black
+	choice: skull-yellow
+	choice: skull-orange
+	choice: skull-purple
+	choice: shield1-white
+	choice: shield1-green
+	choice: shield1-blue
+	choice: shield1-black
+	choice: shield1-yellow
+	choice: shield1-orange
+	choice: shield1-purple
+	choice: shield2-white
+	choice: shield2-green
+	choice: shield2-blue
+	choice: shield2-black
+	choice: shield2-yellow
+	choice: shield2-orange
+	choice: shield2-purple
+	choice: dice-special
+	choice: d4
+	choice: d6
+	choice: d8
+	choice: d10
+	choice: d12
+	choice: d20
+	choice: d100
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	choice: 7
+	choice: 8
+	choice: 9
+	choice: 10
+	choice: +
+
+card field:
+	type: choice
+	name: Box9
+	show statistics: false
+	card list allow: false
+	description: Special symbols
+	choice: none
+	choice: icon-melee
+	choice: icon-ranged
+	choice: icon-meleeranged
+	choice: icon-magic
+	choice: icon-defence
+	choice: icon-magicdefence
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-wizard
+	choice: skull-white
+	choice: skull-green
+	choice: skull-blue
+	choice: skull-black
+	choice: skull-yellow
+	choice: skull-orange
+	choice: skull-purple
+	choice: shield1-white
+	choice: shield1-green
+	choice: shield1-blue
+	choice: shield1-black
+	choice: shield1-yellow
+	choice: shield1-orange
+	choice: shield1-purple
+	choice: shield2-white
+	choice: shield2-green
+	choice: shield2-blue
+	choice: shield2-black
+	choice: shield2-yellow
+	choice: shield2-orange
+	choice: shield2-purple
+	choice: dice-special
+	choice: d4
+	choice: d6
+	choice: d8
+	choice: d10
+	choice: d12
+	choice: d20
+	choice: d100
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	choice: 7
+	choice: 8
+	choice: 9
+	choice: 10
+	choice: +
+
+card field:
+	type: choice
+	name: Box10
+	show statistics: false
+	card list allow: false
+	description: Special symbols
+	choice: none
+	choice: icon-melee
+	choice: icon-ranged
+	choice: icon-meleeranged
+	choice: icon-magic
+	choice: icon-defence
+	choice: icon-magicdefence
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-wizard
+	choice: skull-white
+	choice: skull-green
+	choice: skull-blue
+	choice: skull-black
+	choice: skull-yellow
+	choice: skull-orange
+	choice: skull-purple
+	choice: shield1-white
+	choice: shield1-green
+	choice: shield1-blue
+	choice: shield1-black
+	choice: shield1-yellow
+	choice: shield1-orange
+	choice: shield1-purple
+	choice: shield2-white
+	choice: shield2-green
+	choice: shield2-blue
+	choice: shield2-black
+	choice: shield2-yellow
+	choice: shield2-orange
+	choice: shield2-purple
+	choice: dice-special
+	choice: d4
+	choice: d6
+	choice: d8
+	choice: d10
+	choice: d12
+	choice: d20
+	choice: d100
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	choice: 7
+	choice: 8
+	choice: 9
+	choice: 10
+	choice: +
+
+card field:
+	type: choice
+	name: Box11
+	show statistics: false
+	card list allow: false
+	description: Special symbols
+	choice: none
+	choice: icon-melee
+	choice: icon-ranged
+	choice: icon-meleeranged
+	choice: icon-magic
+	choice: icon-defence
+	choice: icon-magicdefence
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-wizard
+	choice: skull-white
+	choice: skull-green
+	choice: skull-blue
+	choice: skull-black
+	choice: skull-yellow
+	choice: skull-orange
+	choice: skull-purple
+	choice: shield1-white
+	choice: shield1-green
+	choice: shield1-blue
+	choice: shield1-black
+	choice: shield1-yellow
+	choice: shield1-orange
+	choice: shield1-purple
+	choice: shield2-white
+	choice: shield2-green
+	choice: shield2-blue
+	choice: shield2-black
+	choice: shield2-yellow
+	choice: shield2-orange
+	choice: shield2-purple
+	choice: dice-special
+	choice: d4
+	choice: d6
+	choice: d8
+	choice: d10
+	choice: d12
+	choice: d20
+	choice: d100
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	choice: 7
+	choice: 8
+	choice: 9
+	choice: 10
+	choice: +
+
+card field:
+	type: choice
+	name: Box12
+	show statistics: false
+	card list allow: false
+	description: Special symbols
+	choice: none
+	choice: icon-melee
+	choice: icon-ranged
+	choice: icon-meleeranged
+	choice: icon-magic
+	choice: icon-defence
+	choice: icon-magicdefence
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-wizard
+	choice: skull-white
+	choice: skull-green
+	choice: skull-blue
+	choice: skull-black
+	choice: skull-yellow
+	choice: skull-orange
+	choice: skull-purple
+	choice: shield1-white
+	choice: shield1-green
+	choice: shield1-blue
+	choice: shield1-black
+	choice: shield1-yellow
+	choice: shield1-orange
+	choice: shield1-purple
+	choice: shield2-white
+	choice: shield2-green
+	choice: shield2-blue
+	choice: shield2-black
+	choice: shield2-yellow
+	choice: shield2-orange
+	choice: shield2-purple
+	choice: dice-special
+	choice: d4
+	choice: d6
+	choice: d8
+	choice: d10
+	choice: d12
+	choice: d20
+	choice: d100
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+	choice: 5
+	choice: 6
+	choice: 7
+	choice: 8
+	choice: 9
+	choice: 10
+	choice: +
+
+############################################################## Board style (Descent/DnD)
+card field:
+	type: choice
+	name: StandardBackground
+	show statistics: false
+	card list allow: false
+	description: Card background selection
+	choice: monster-front
+	choice: monster-back
+#	choice: lieutenant-front
+#	choice: lieutenant-back
+	choice: event
+	choice: overlord
+
+card field:
+	type: choice
+	name: MiniBackground
+	show statistics: false
+	card list allow: false
+	description: Card background selection
+	choice: treasure
+	choice: status
+	choice: item-shop
+	choice: item-warrior
+	choice: item-scout
+	choice: item-mage
+	choice: item-healer
+	choice: relic-player
+	choice: relic-overlord
+	choice: feat-warrior
+	choice: feat-scout
+	choice: feat-mage
+	choice: feat-healer
+	choice: feat-generic
+	choice: feat-legendary
+#	choice: familiar
+
+card field:
+	type: choice
+	name: HeroBackground
+	show statistics: false
+	card list allow: false
+	description: Card background selection
+	choice: warrior
+	choice: scout
+	choice: mage
+	choice: healer
+
+card field:
+	type: choice
+	name: DnDBackgroundStd
+	show statistics: false
+	card list allow: false
+	description: Card background selection
+	choice: monster
+	choice: weapon
+	choice: artefact
+	choice: spell
+	choice: potion
+#	choice: trap
+
+card field:
+	type: choice
+	name: DnDBackgroundLg
+	show statistics: false
+	card list allow: false
+	description: Card background selection
+	choice: hero
+
+card field:
+	type: text
+	name: Cost
+	show statistics: false
+	card list allow: false
+	description: The gold cost of the card
+
+card field:
+	type: text
+	name: Dice
+	show statistics: false
+	card list allow: false
+	description: The dices to roll for the item
+
+card field:
+	type: choice
+	name: IconItem
+	show statistics: false
+	card list allow: false
+	description: Icon of the item card
+	choice: none
+	choice: icon-onehanded
+	choice: icon-twohanded
+	choice: icon-armour
+	choice: icon-miscitem
+
+card field:
+	type: choice
+	name: IconOverlord
+	show statistics: false
+	card list allow: false
+	description: Icon of the overlord card
+	choice: none
+	choice: icon-universal
+	choice: icon-monster
+	choice: icon-trap
+	choice: icon-scheme
+
+card field:
+	type: choice
+	name: IconWeapon
+	show statistics: false
+	card list allow: false
+	description: Type of the weapon card
+	choice: none
+	choice: icon-itemmelee
+	choice: icon-itemranged
+	choice: icon-relicmelee
+	choice: icon-relicranged
+
+card field:
+	type: choice
+	name: IconXP
+	show statistics: false
+	card list allow: false
+	description: XP needed to buy the card
+	choice: none
+	choice: icon-xp1
+	choice: icon-xp2
+	choice: icon-xp3
+
+card field:
+	type: choice
+	name: IconExhaust
+	show statistics: false
+	card list allow: false
+	description: Additional exhaust cost
+	choice: none
+	choice: icon-exhaust1
+	choice: icon-exhaust2
+	choice: icon-exhaust3
+
+card field:
+	type: choice
+	name: IconAttack
+	show statistics: false
+	card list allow: false
+	description: Type of attack of the monster
+	choice: none
+	choice: melee
+	choice: ranged
+
+card field:
+	type: choice
+	name: IconMonster1
+	show statistics: false
+	card list allow: false
+	description: Type of the monster card
+	choice: none
+	choice: hot
+	choice: cold
+	choice: water
+	choice: mountain
+	choice: building
+	choice: cave
+	choice: civilized
+	choice: wilderness
+	choice: cursed
+	choice: dark
+
+card field:
+	type: choice
+	name: IconMonster2
+	show statistics: false
+	card list allow: false
+	description: Type of the monster card
+	choice: none
+	choice: hot
+	choice: cold
+	choice: water
+	choice: mountain
+	choice: building
+	choice: cave
+	choice: civilized
+	choice: wilderness
+	choice: cursed
+	choice: dark
+
+card field:
+	type: choice
+	name: DnDClass
+	show statistics: false
+	card list allow: false
+	description: Class symbol for the card
+	choice: none
+	choice: fighter
+	choice: rogue
+	choice: wizard
+	choice: cleric
+	choice: paladin
+	choice: barbarian
+	choice: ranger
+	choice: monk
+	choice: druid
+	choice: sorcerer
+	choice: bard
+	choice: warlock
+
+card field:
+	type: choice
+	name: DnDWeapon
+	show statistics: false
+	card list allow: false
+	description: Weapon type symbol
+	choice: none
+	choice: melee
+	choice: ranged
+
+card field:
+	type: choice
+	name: DnDMonster
+	show statistics: false
+	card list allow: false
+	description: Monster type symbol
+	choice: none
+	choice: bugbear
+	choice: gnoll
+	choice: goblin1
+	choice: lich
+	choice: ogre
+	choice: race-aberration
+	choice: race-beast
+	choice: race-construct
+	choice: race-dragon
+	choice: race-elemental
+	choice: race-fey
+	choice: race-giant
+	choice: race-humanoid
+	choice: race-monstroushumanoid
+	choice: race-ooze
+	choice: race-outsider
+	choice: race-plant
+	choice: race-undead
+
+############################################################## D&D/PF style
+card field:
+	type: choice
+	name: RPGBackground
+	show statistics: false
+	card list allow: false
+	description: Card background selection
+	choice: grey1
+	choice: grey2
+	choice: dark1
+#	choice: dark2
+	choice: blue1
+	choice: blue2
+	choice: green1
+	choice: green2
+	choice: red1
+	choice: red2
+	choice: orange1
+#	choice: orange2
+	choice: yellow1
+	choice: yellow2
+	choice: purple1
+#	choice: purple2
+	choice: pink1
+#	choice: pink2
+	choice: darkblue1
+#	choice: darkblue2
+	choice: seefoam1
+#	choice: seefoam2
+	choice: brown1
+	choice: brown2
+#	choice: gold
+#	choice: silver
+#	choice: bronze
+#	choice: iron
+#	choice: air
+	choice: earth
+	choice: fire
+	choice: water
+	choice: cloud
+	choice: storm
+	choice: stone
+#	choice: rock
+#	choice: ice
+#	choice: wood
+#	choice: nature
+
+card field:
+	type: text
+	name: Class
+	show statistics: false
+	card list allow: false
+	script: class_filter(value)
+	description: Race/Class
+
+card field:
+	type: text
+	name: Role
+	show statistics: false
+	card list allow: false
+	script: role_filter(value)
+	description: Role of monster
+
+card field:
+	type: text
+	name: Monstertype
+	show statistics: false
+	card list allow: false
+	script: monstertype_filter(value)
+	description: Subtype(s) of monster
+
+card field:
+	type: text
+	name: Powertype
+	show statistics: false
+	card list allow: false
+	script: powertype_filter(value)
+	description: Type of power
+
+card field:
+	type: text
+	name: Save
+	show statistics: false
+	card list allow: false
+	script: save_filter(value)
+	description: Save type for the spell
+
+card field:
+	type: text
+	name: Rarity
+	show statistics: false
+	card list allow: false
+	script: rarity_filter(value)
+	description: Rarity of item
+
+card field:
+	type: text
+	name: Value
+	show statistics: false
+	card list allow: false
+	script: value_filter(value)
+	description: Value of item
+
+card field:
+	type: text
+	name: Monsterbox1
+	multi line: true
+	show statistics: false
+	card list allow: false
+	description: Monster skills, feats and special qualities
+
+card field:
+	type: text
+	name: Monsterbox2
+	multi line: true
+	show statistics: false
+	card list allow: false
+	description: Monster attacks, powers and special abilities
+
+card field:
+	type: text
+	name: Itembox1
+	multi line: true
+	show statistics: false
+	card list allow: false
+	description: Flavor text
+
+card field:
+	type: text
+	name: Itembox2
+	multi line: true
+	show statistics: false
+	card list allow: false
+	description: Item powers and abilities
+
+card field:
+	type: text
+	name: Spellbox1
+	multi line: true
+	show statistics: false
+	card list allow: false
+	description: Flavor text
+
+card field:
+	type: text
+	name: Spellbox2
+	multi line: true
+	show statistics: false
+	card list allow: false
+	description: Spell, power, feat or skill description
+
+card field:
+	type: text
+	name: Components
+	show statistics: false
+	card list allow: false
+	script: components_filter(value)
+	description: Spell components
+
+card field:
+	type: text
+	name: Action
+	show statistics: false
+	card list allow: false
+	script: action_filter(value)
+	description: Action required for spell or power
+
+card field:
+	type: text
+	name: Damage
+	show statistics: false
+	card list allow: false
+	description: Base damage for spell or power
+
+card field:
+	type: text
+	name: Range
+	show statistics: false
+	card list allow: false
+	script: range_filter(value)
+	description: Spell or power range
+
+card field:
+	type: text
+	name: Area
+	show statistics: false
+	card list allow: false
+	script: area_filter(value)
+	description: Spell or power target/area of effect
+
+card field:
+	type: text
+	name: Duration
+	show statistics: false
+	card list allow: false
+	script: duration_filter(value)
+	description: Spell or power duration
+
+card field:
+	type: text
+	name: Attack
+	show statistics: false
+	card list allow: false
+	script: attack_filter(value)
+	description: Attack type of spell or power
+
+card field:
+	type: text
+	name: Power
+	show statistics: false
+	card list allow: false
+	script: power_filter(value)
+	description: Number of use(s) of power
+
+card field:
+	type: text
+	name: School
+	show statistics: false
+	card list allow: false
+	script: school_filter(value)
+	description: School of spell
+
+card field:
+	type: text
+	name: Keyword
+	show statistics: false
+	card list allow: false
+	script: keyword_filter(value)
+	description: Subtype(s)/Keyword(s) of spell or power
+
+card field:
+	type: text
+	name: Size
+	show statistics: false
+	card list allow: false
+	script: size_filter(value)
+	description: Size of monster
+
+card field:
+	type: text
+	name: Monster
+	show statistics: false
+	card list allow: false
+	script: monster_filter(value)
+	description: Race of monster
+
+card field:
+	type: text
+	name: Item
+	show statistics: false
+	card list allow: false
+	script: item_filter(value)
+	description: Type of item
+
+card field:
+	type: text
+	name: Slot
+	show statistics: false
+	card list allow: false
+	script: slot_filter(value)
+	description: Location of item
+
+card field:
+	type: text
+	name: Class-Monstertype
+	show statistics: false
+	card list allow: false
+	save value: false
+	description: Race/Class and subtype(s) of monster
+	script: combined_editor(field1: card.Class, separator: " [", field2: card.Monstertype, soft_before_empty: true, hide_when_empty: false)
+
+card field:
+	type: text
+	name: Role-Monstertype
+	show statistics: false
+	card list allow: false
+	save value: false
+	description: Role and subtype(s) of monster
+	script: combined_editor(field1: card.Role, separator: " [", field2: card.Monstertype, soft_before_empty: true, hide_when_empty: false)
+
+card field:
+	type: text
+	name: Rarity-Value
+	show statistics: false
+	card list allow: false
+	save value: false
+	description: Rarity and price of item
+	script: combined_editor(field1: card.Rarity, separator: " — ", field2: card.Value, soft_before_empty: true, hide_when_empty: false)
+
+card field:
+	type: text
+	name: Class-Powertype
+	show statistics: false
+	card list allow: false
+	save value: false
+	description: Race/Class and type of power
+	script: combined_editor(field1: card.Class, separator: " — ", field2: card.Powertype, soft_before_empty: true, hide_when_empty: false)
+
+card field:
+	type: text
+	name: Class-Save
+	show statistics: false
+	card list allow: false
+	save value: false
+	description: Race/Class and save type of spell
+	script: combined_editor(field1: card.Class, separator: " [", field2: card.Save, soft_before_empty: true, hide_when_empty: false)
+
+card field:
+	type: text
+	name: Power-Keyword
+	show statistics: false
+	card list allow: false
+	save value: false
+	description: Usage type and keyword(s) of power
+	script: combined_editor(field1: card.Power, separator: " ✦ ", field2: card.Keyword, soft_before_empty: true, hide_when_empty: false)
+
+card field:
+	type: text
+	name: School-Keyword
+	show statistics: false
+	card list allow: false
+	save value: false
+	description: School and domain/subtype(s) of spell
+	script: combined_editor(field1: card.School, separator: " [", field2: card.Keyword, soft_before_empty: true, hide_when_empty: false)
+
+card field:
+	type: text
+	name: Monster-Size
+	show statistics: false
+	card list allow: false
+	save value: false
+	description: Type and size of monster
+	script: combined_editor(field1: card.Monster, separator: " — ", field2: card.Size, soft_before_empty: true, hide_when_empty: false)
+
+card field:
+	type: text
+	name: Item-Slot
+	show statistics: false
+	card list allow: false
+	save value: false
+	description: Item type and slot
+	script: combined_editor(field1: card.Item, separator: " — ", field2: card.Slot, soft_before_empty: true, hide_when_empty: false)
+
+card field:
+	type: choice
+	name: ActionType
+	show statistics: false
+	card list allow: false
+	description: Icon for the type of action
+	choice: none
+	choice: icon-noaction
+	choice: icon-free
+	choice: icon-bonus
+	choice: icon-minor
+	choice: icon-move
+	choice: icon-standard
+	choice: icon-complex
+	choice: icon-reaction
+	choice: icon-minute
+	choice: icon-hour
+	choice: icon-ritual
+	choice: icon-concentration
+	choice: icon-tech
+	choice: icon-skill
+	choice: icon-item
+
+card field:
+	type: choice
+	name: MonsterType
+	show statistics: false
+	card list allow: false
+	description: Icon for the type of monster
+	choice: none
+	choice: race-aberration
+	choice: race-beast
+	choice: race-construct
+	choice: race-dragon
+	choice: race-elemental
+	choice: race-fey
+	choice: race-giant
+	choice: race-humanoid
+	choice: race-monstroushumanoid
+	choice: race-ooze
+	choice: race-outsider
+	choice: race-plant
+	choice: race-undead
+
+card field:
+	type: choice
+	name: ItemType
+	show statistics: false
+	card list allow: false
+	description: Icon for the type of item
+	choice: none
+	choice: icon-armour
+	choice: icon-shield
+	choice: icon-weapon
+	choice: icon-helm
+	choice: icon-robe
+	choice: icon-boots
+	choice: icon-bracers
+	choice: icon-belt
+	choice: icon-cape
+	choice: icon-ring
+	choice: icon-amulet
+	choice: icon-staff
+	choice: icon-wand
+	choice: icon-artifact
+	choice: icon-potion
+	choice: icon-scroll
+	choice: icon-treasure
+	choice: icon-misc
+
+card field:
+	type: choice
+	name: SpellType
+	show statistics: false
+	card list allow: false
+	description: Icon for the spell or power area of effect
+	choice: none
+	choice: icon-melee
+	choice: icon-meleebase
+	choice: icon-ranged
+	choice: icon-rangedbase
+	choice: icon-monster
+	choice: icon-hybrid
+	choice: icon-personal
+	choice: icon-touch
+	choice: icon-rangedtouch
+	choice: icon-blast
+	choice: icon-closeburst
+	choice: icon-rangedburst
+	choice: icon-wall
+
+card field:
+	type: choice
+	name: ClassRace
+	show statistics: false
+	card list allow: false
+	description: Symbol of the class or race
+	choice: none
+	choice: class-barbarian
+	choice: class-bard
+	choice: class-cleric
+	choice: class-druid
+	choice: class-fighter
+	choice: class-gunslinger
+	choice: class-monk
+	choice: class-paladin
+	choice: class-psion
+	choice: class-ranger
+	choice: class-rogue
+	choice: class-sorcerer
+	choice: class-warlock
+	choice: class-warlord
+	choice: class-wizard
+
+card field:
+	type: choice
+	name: SaveType
+	show statistics: false
+	card list allow: false
+	description: Icon for the attack or save type
+	choice: none
+	choice: icon-nosave
+	choice: icon-armorclass
+	choice: icon-fortitude
+	choice: icon-reflex
+	choice: icon-will
+	choice: icon-strength
+	choice: icon-dexterity
+	choice: icon-constitution
+	choice: icon-intelligence
+	choice: icon-wisdom
+	choice: icon-charisma
+
+############################# beto stuff
+############################# Background stuff
+
+card field:
+	type: choice
+	name: StatBackground
+	initial: original
+	choice: original
+	choice: epic
+	choice: PHB_blue
+	choice: DMG_red
+	choice: MM_green
+	choice: yellow
+	choice: brown
+	choice: green
+	choice: red
+	choice: black
+	choice: palegreen
+	choice: purple
+	choice: darkbrown
+	choice: trueblack
+	choice: silverblue
+	choice: greenscale
+	choice: greyscale
+	choice: white
+	show statistics: false
+card field:
+	type: image
+	name: image
+	show statistics: false
+############################# Name line
+card field:
+	type: text
+	name: StatName
+	card list visible: true
+	script:
+		if set.use_name_filter then
+			name_filter(input: value)
+		else
+			upper_filter(input: value)
+	card list column: 1
+	identifying: true
+	show statistics: false
+	description: The name of the monster.
+card field:
+	type: text
+	name: StatRole
+	position hint: 1
+	script: upper_filter(input: value)
+	card list visible: true
+	card list column: 2
+	description: The role, level, and status of the monster.
+card field:
+	type: text
+	name: xp
+	position hint: 1
+	script: upper_filter(input: value)
+	card list visible: true
+	card list column: 2
+	description: The xp of the monster.
+card field:
+	type: text
+	name: StatType
+	position hint: 1
+	script: type_filter(input: value)
+	card list visible: true
+	card list column: 3
+	description: The size, origin, type, and subtype of the monster.
+
+############################# Text box
+card field:
+	type: text
+	name: initiative
+	show statistics: false
+	description: The initiative modifier of the monster.
+	default: "<b>Initiative</b> "
+card field:
+	type: text
+	name: speed
+	show statistics: false
+	description: The speeds of the monster.
+	default: "<b>Speed</b> "
+card field:
+	type: text
+	name: senses
+	show statistics: false
+	description: The senses of the monster.
+	default: "<b>Senses</b> "
+card field:
+	type: text
+	name: special
+	show statistics: false
+	description: The special abilities of the monster.
+card field:
+	type: text
+	name: text
+	script: text_filter(input: value, card_name: card.StatName)
+	multi line: true
+	show statistics: false
+	description: The abilities of the monster.
+
+############################# Text box 2
+card field:
+	type: text
+	name: ac
+	show statistics: false
+	description: The Armor Class of the monster.
+card field:
+	type: text
+	name: fort
+	show statistics: false
+	description: The Fortitude defense of the monster.
+card field:
+	type: text
+	name: ref
+	show statistics: false
+	description: The Reflex defense of the monster.
+card field:
+	type: text
+	name: will
+	show statistics: false
+	description: The Will defense of the monster.
+card field:
+	type: text
+	name: hp
+	show statistics: false
+	description: The hit points and bloodied threshold of the monster.
+card field:
+	type: text
+	name: str
+	show statistics: false
+	script: ability_filter(input: value)
+	description: The Strength of the monster.
+	default: "<b>Str</b> "
+card field:
+	type: text
+	name: con
+	show statistics: false
+	script: ability_filter(input: value)
+	description: The Constitution of the monster.
+	default: "<b>Con</b> "
+card field:
+	type: text
+	name: dex
+	show statistics: false
+	script: ability_filter(input: value)
+	description: The Dexterity of the monster.
+	default: "<b>Dex</b> "
+card field:
+	type: text
+	name: int
+	show statistics: false
+	script: ability_filter(input: value)
+	description: The Intelligence of the monster.
+	default: "<b>Int</b> "
+card field:
+	type: text
+	name: wis
+	show statistics: false
+	script: ability_filter(input: value)
+	description: The Wisdom of the monster.
+	default: "<b>Wis</b> "
+card field:
+	type: text
+	name: cha
+	show statistics: false
+	script: ability_filter(input: value)
+	description: The Charisma of the monster.
+	default: "<b>Cha</b> "
+card field:
+	type: text
+	name: alignment
+	show statistics: false
+	description: The alignment and Languages of the monster.
+	default: "<b>Alignment</b> Unaligned <b>Languages</b> -"
+card field:
+	type: text
+	name: skills
+	show statistics: false
+	description: The Skills of the monster or special notes.
+	default: "<b>Skills</b> -"
+card field:
+	type: text
+	name: equip
+	show statistics: false
+	description: The equipment of the monster or special notes.
+	default: "<b>Equipment</b> -"
+
+############################# Card sorting / numbering
+card field:
+	type: text
+	name: card number
+	save value: false
+	script:      card_number() + "/" + number_of_items(in: set)
+	sort script: card.card_number
+	card list visible: true
+	card list column: 10
+	card list width: 50
+	card list name: #
+	card list alignment: right
+	editable: false
+	show statistics: false
+
+############################# Copyright stuff
+card field:
+	type: text
+	name: copyright
+	multi line: true
+	script: text_filter(input: value, card_name: card.StatName)
+	default: set.copyright
+	show statistics: false
+
+
+############################################################## Word lists
+word list:
+	name: Action
+	word: Aucune
+	word: Libre
+	word: Mineure
+	word: Mouvement
+	word: Simple
+	word: Complexe
+	word: Une minute
+	word: Dix minutes
+	word: Une heure
+	word: Automatique
+	word: Réaction
+
+word list:
+	name: Components
+	word: V
+	word: S
+	word: M
+	word: M*
+	word: V,S
+	word: V,M
+	word: V,M*
+	word: S,M
+	word: S,M*
+	word: V,S,M
+	word: V,S,M*
+
+word list:
+	name: Range
+	word: Personnelle
+	word: Corps à corps
+	word: Proximité
+	word: Distance
+	word: Contact
+	word: Contact à distance
+	word: Courte
+	word: Moyenne
+	word: Longue
+
+word list:
+	name: Duration
+	word: Instantanée
+	word: 1 round
+	word: 2 rounds
+	word: 3 rounds
+	word: 4 rounds
+	word: 5 rounds
+	word: 1 minute
+	word: 10 minutes
+	word: 1 heure
+	word: 10 heures
+	word: 24 heures
+	word: 1 round/niveau
+	word: 1 minute/niveau
+	word: 1 heure/niveau
+	word: Permanente
+
+word list:
+	name: Area
+	word: Utilisateur
+	word: Une créature
+	word: Un objet
+	word: Deux créature
+	word: Trois créatures
+	word: Quatre créatures
+	word: Cinq créatures
+	word: Une créature/niveau
+	word: Ligne
+	word: Cône
+	word: Rayon
+	word: Cylindre
+	word: Mur
+	word: Décharge
+	word: Explosion
+
+word list:
+	name: Attack
+	word: Aucune
+	word: Automatique
+	word: Force vs CA
+	word: Force vs Vigueur
+	word: Force vs Réflexe
+	word: Force vs Volonté
+	word: Dextérité vs CA
+	word: Dextérité vs Vigueur
+	word: Dextérité vs Réflexe
+	word: Dextérité vs Volonté
+	word: Constitution vs CA
+	word: Constitution vs Vigueur
+	word: Constitution vs Réflexe
+	word: Constitution vs Volonté
+	word: Intelligence vs CA
+	word: Intelligence vs Vigueur
+	word: Intelligence vs Réflexe
+	word: Intelligence vs Volonté
+	word: Sagesse vs CA
+	word: Sagesse vs Vigueur
+	word: Sagesse vs Réflexe
+	word: Sagesse vs Volonté
+	word: Charisme vs CA
+	word: Charisme vs Vigueur
+	word: Charisme vs Réflexe
+	word: Charisme vs Volonté
+
+word list:
+	name: Class
+	word: Barbare
+	word: Barde
+	word: Druide
+	word: Ensorceleur
+	word: Guerrier
+	word: Magicien
+	word: Moine
+	word: Paladin
+	word: Prêtre
+	word: Rôdeur
+	word: Roublard
+	word: Sorcier
+	word: Rôdeur
+	word: Demi-elfe
+	word: Demi-orque
+	word: Drakéide
+	word: Eladrin
+	word: Elfe
+	word: Gnôme
+	word: Halfelin
+	word: Humain
+	word: Nain
+	word: Tieffelin
+	word: Aberration
+	word: Animal
+	word: Créature artificielle
+	word: Créature magique
+	word: Dragon
+	word: Elémentaire
+	word: Extérieur
+	word: Fée
+	word: Géant
+	word: Humanoïde
+	word: Humanoïde monstrueux
+	word: Mort vivant
+	word: Plante
+	word: Vase
+	word: Vermine
+	word: Universel
+
+word list:
+	name: Role
+	word: Minion
+	word: Artilleur
+	word: Brute
+	word: Contrôleur
+	word: Chasseur
+	word: Franc-tireur
+	word: Soldat
+	word: Artilleur Elite
+	word: Brute Elite
+	word: Contrôleur Elite
+	word: Chasseur Elite
+	word: Franc-tireur Elite
+	word: Soldat Elite
+	word: Artilleur Solo
+	word: Brute Solo
+	word: Contrôleur Solo
+	word: Chasseur Solo
+	word: Franc-tireur Solo
+	word: Soldat Solo
+
+word list:
+	name: Monstertype
+	word: Air
+	word: Eau
+	word: Feu
+	word: Froid
+	word: Terre
+	word: Bien
+	word: Mal
+	word: Loi
+	word: Chaos
+	word: Altéré
+	word: Aquatique
+	word: Ange
+	word: Archon
+	word: Baatezu
+	word: Changeforme
+	word: Eladrin
+	word: Extraplanaire
+	word: Gobelinoïde
+	word: Guardianal
+	word: Intangible
+	word: Natif
+	word: Naturel
+	word: Nuée
+	word: Reptilien
+	word: Tanar'ri
+
+word list:
+	name: Powertype
+	word: Attaque
+	word: Utilitaire
+	word: Capacité de classe
+	word: Capacité de race
+	word: Capacité
+
+word list:
+	name: Save
+	word: Aucun
+	word: Vigueur partiel
+	word: Vigueur annule
+	word: Réflexe partiel
+	word: Réflexe annule
+	word: Volonté partiel
+	word: Volonté annule
+	word: Spécial
+	word: Force
+	word: Dextérité
+	word: Constitution
+	word: Intelligence
+	word: Sagesse
+	word: Charisme
+
+word list:
+	name: Rarity
+	word: Commun
+	word: Peu commun
+	word: Rare
+	word: Magique
+	word: Epique
+	word: Mythique
+	word: Légendaire
+	word: Artefact
+	word: Relique
+
+word list:
+	name: Value
+	word: 50po
+	word: 180po
+	word: 360po
+	word: 520po
+	word: 680po
+	word: 840po
+	word: 1000po
+	word: 1800po
+	word: 2600po
+	word: 3400po
+	word: 4200po
+	word: 5000po
+	word: 9000po
+	word: 13000po
+	word: 17000po
+	word: 21000po
+	word: 25000po
+	word: 45000po
+	word: 65000po
+	word: 85000po
+	word: 105000po
+	word: 125000po
+	word: 225000po
+	word: 325000po
+	word: 425000po
+	word: 525000po
+	word: 625000po
+	word: 1125000po
+	word: 1625000po
+	word: 2125000po
+	word: 2625000po
+	word: 3125000po
+
+word list:
+	name: Power
+	word: A volonté
+	word: Rencontre
+	word: Quotidien
+	word: Rituel
+	word: Spécial
+
+word list:
+	name: School
+	word: Universel
+	word: Abjuration
+	word: Conjuration
+	word: Divination
+	word: Enchantement
+	word: Evocation
+	word: Illusion
+	word: Nécromancie
+	word: Transmutation
+
+word list:
+	name: Keyword
+	word: Air
+	word: Acide
+	word: Eau
+	word: Electricité
+	word: Feu
+	word: Force
+	word: Froid
+	word: Terre
+	word: Nécrotique
+	word: Poison
+	word: Psychique
+	word: Radiant
+	word: Tonnerre
+	word: Arme
+	word: Focaliseur
+	word: Fiable
+	word: Périmètre
+	word: Persistant
+	word: Arcane
+	word: Divin
+	word: Nature
+	word: Abjuration
+	word: Altération
+	word: Charme
+	word: Conjuration
+	word: Divination
+	word: Guérison
+	word: Destruction
+	word: Enchantement
+	word: Evocation
+	word: Illusion
+	word: Invocation
+	word: Métamorphose
+	word: Mort
+	word: Nécromancie
+	word: Sommeil
+	word: Téléportation
+	word: Terreur
+
+word list:
+	name: Size
+	word: Infime
+	word: Minuscule
+	word: Très petit
+	word: Petit
+	word: Moyen
+	word: Grand
+	word: Très grand
+	word: Gigantesque
+	word: Colossal
+	word: Titanesque
+
+word list:
+	name: Monster
+	word: Aberration
+	word: Animal
+	word: Bête
+	word: Biomonstre
+	word: Créature artificielle
+	word: Créature magique
+	word: Cyborg
+	word: Dragon
+	word: Elémentaire
+	word: Extérieur
+	word: Fée
+	word: Géant
+	word: Humanoïde
+	word: Humanoïde monstrueux
+	word: Mech
+	word: Mort vivant
+	word: Plante
+	word: Vase
+	word: Vermine
+
+word list:
+	name: Item
+	word: Arme
+	word: Armure
+	word: Bouclier
+	word: Equipement
+	word: Focaliseur
+	word: Objet merveilleux
+	word: Consommable
+	word: Divers
+
+word list:
+	name: Slot
+	word: Anneau
+	word: Amulette
+	word: Pendentif
+	word: Talisman
+	word: Scarabée
+	word: Casque
+	word: Chapeau
+	word: Cagoule
+	word: Bracelets
+	word: Gantelets
+	word: Ceinturon
+	word: Bottes
+	word: Cape
+	word: Manteau
+	word: Veste
+	word: Pantalon
+	word: Lunettes
+	word: Potion
+	word: Parchemin
+	word: Etoffe
+	word: Matelassée
+	word: Cuir
+	word: Cuir clouté
+	word: Peau
+	word: Ecailles
+	word: Chemise de mailles
+	word: Cotte de mailles
+	word: Cuirasse
+	word: Bandes
+	word: Feuilletée
+	word: Plaques
+	word: Harnois
+	word: Targe
+	word: Rondache
+	word: Ecu
+	word: Pavois
+	word: Epée courte
+	word: Epée longue
+	word: Epée batârde
+	word: Epée à deux mains
+	word: Hachette
+	word: Hache de bataille
+	word: Hache de guerre
+	word: Grande hache
+	word: Gourdin
+	word: Masse
+	word: Etoile du matin
+	word: Fléau léger
+	word: Fléau lourd
+	word: Marteau léger
+	word: Marteau lourd
+	word: Maul
+	word: Lance
+	word: Hallebarde
+	word: Guisarme
+	word: Katana
+	word: Ninja-to
+	word: Wakizashi
+	word: Griffe
+	word: Baguette
+	word: Bâton
+	word: Orbe
+	word: Sceptre
+	word: Symbole
+	word: Pistolet
+	word: Fusil
+	word: Canon
+	word: Lanceur
+	word: Grenade
+	word: Explosif
+	word: Cyborg
+
+word list:
+	name: Generic
+	word: Artefact
+	word: Equipement
+	word: Objet
+	word: Objet magique
+	word: Relique
+	word: Potion
+	word: Parchemin
+	word: Fouille
+	word: Trésor
+	word: Piège
+	word: Pouvoir
+	word: Sortilège
+	word: Maléfice
+	word: Capacité
+	word: Compétence
+	word: Don
+	word: Monstre
+	word: Boss
+	word: Homme d'armes
+	word: Mercenaire
+	word: Rencontre
+	word: Amélioration
+	word: Etat
+	word: Evénement
+	word: Salle
+	word: Règle
+
+##################################### beto Word lists
+word list:
+	name: Sizes
+	word: Fine
+	word: Diminutive
+	word: Tiny
+	word: Small
+	word: Medium
+	word: Large
+	word: Huge
+	word: Gargantuan
+	word: Colossal
+word list:
+	name: Origins
+	word: Aberrant
+	word: Elemental
+	word: Fey
+	word: Immortal
+	word: Natural
+	word: Shadow
+word list:
+	name: Types
+	word: Animate
+	word: Beast
+	word: Humanoid
+	word: Magical Beast
+word list:
+	name: Subtypes
+	word: Air
+	word: Angel
+	word: Cold
+	word: Construct
+	word: Demon
+	word: Devil
+	word: Dragon
+	word: Earth
+	word: Fire
+	word: Ooze
+	word: Plant
+	word: Snake
+	word: Spider
+	word: Undead
+	word: Water
+
+############################################################## Cardlist columns display
+card field:
+	type: text
+	name: Display1
+	show statistics: true
+	card list visible: true
+	card list name: Category
+	card list column: 1
+	save value: false
+	editable: false
+	description: Only used for card list display
+	script: cardlist_display1()
+
+card field:
+	type: text
+	name: Display2
+	show statistics: true
+	card list visible: true
+	card list name: Type
+	card list column: 2
+	save value: false
+	editable: false
+	description: Only used for card list display
+	script: cardlist_display2()
+
+card field:
+	type: text
+	name: Display3
+	show statistics: false
+	card list visible: true
+	card list name: Subtype/Info
+	card list column: 3
+	save value: false
+	editable: false
+	description: Only used for card list display
+	script: cardlist_display3()
+
+card field:
+	type: text
+	name: Display4
+	show statistics: false
+	card list visible: true
+	card list name: Misc/Info
+	card list column: 4
+	save value: false
+	editable: false
+	description: Only used for card list display
+	script: cardlist_display4()
+
+card field:
+	type: text
+	name: Display5
+	show statistics: false
+	card list visible: true
+	card list name: Background
+	card list column: 5
+	save value: false
+	editable: false
+	description: Only used for card list display
+	script: cardlist_display5()
+
+############################################################## Auto replace
+auto replace:
+	match: -- 
+	replace: — 
+auto replace:
+	match: ** 
+	replace: ✦ 
+auto replace:
+	match: (CR)
+	replace: ©
+auto replace:
+	match: AE
+	replace: Æ
+	whole word: false
+auto replace:
+	match: TM
+	replace: ™
+	whole word: false
+auto replace:
+	# note the spaces
+	match:
+		 - 
+	replace:
+		 — 
+
+############################################################## Set fields
+
+# TODO
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+	identifying: true
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: text
+	name: artist
+set field:
+	type: text
+	name: copyright
+set field:
+	type: text
+	name: illustrator
+set field:
+	type: boolean
+	name: use name filter
+	description: Should the first letters in the name be larger?
+	initial: no
+############################# Default style
+
+default set style:
+	title:
+		padding left: 2
+		font:
+			size: 16

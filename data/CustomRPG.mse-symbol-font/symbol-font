@@ -1,0 +1,922 @@
+mse version: 2.0.0
+short name: CustomRPG-symbols
+full name: CustomRPG-symbols
+depends on: CustomRPG.mse-game 1.0
+depends on: CustomRPG.mse-include 1.0
+depends on: CustomRPG-D&D-PF.mse-include 1.0
+depends on: CustomRPG-Descent.mse-include 1.0
+depends on: CustomRPG-DnDBoard.mse-include 1.0
+version: 1.0
+
+############################################################## RPG symbols
+symbol:
+	code: $H
+	image: /CustomRPG.mse-include/icon-heart.png
+	image font size: 24
+symbol:
+	code: $S
+	image: /CustomRPG.mse-include/icon-spirit.png
+	image font size: 24
+symbol:
+	code: $T
+	image: /CustomRPG.mse-include/icon-stamina.png
+	image font size: 24
+symbol:
+	code: $M
+	image: /CustomRPG.mse-include/icon-move.png
+	image font size: 24
+symbol:
+	code: $G
+	image: /CustomRPG.mse-include/icon-gold.png
+	image font size: 24
+symbol:
+	code: $W
+	image: /CustomRPG.mse-include/icon-weight.png
+	image font size: 24
+symbol:
+	code: #Att
+	image: /CustomRPG.mse-include/icon-melee.png
+	image font size: 24
+symbol:
+	code: #Rng
+	image: /CustomRPG.mse-include/icon-ranged.png
+	image font size: 24
+symbol:
+	code: #MeRn
+	image: /CustomRPG.mse-include/icon-meleeranged.png
+	image font size: 24
+symbol:
+	code: #Mag
+	image: /CustomRPG.mse-include/icon-magic.png
+	image font size: 24
+symbol:
+	code: #Def
+	image: /CustomRPG.mse-include/icon-defence.png
+	image font size: 24
+symbol:
+	code: #MDef
+	image: /CustomRPG.mse-include/icon-resistance.png
+	image font size: 24
+symbol:
+	code: #Tap
+	image: /CustomRPG.mse-include/icon-tap.png
+	image font size: 24
+symbol:
+	code: #GP
+	image: /CustomRPG.mse-include/icon-goldpiece.png
+	image font size: 24
+symbol:
+	code: #SP
+	image: /CustomRPG.mse-include/icon-silverpiece.png
+	image font size: 24
+symbol:
+	code: #CP
+	image: /CustomRPG.mse-include/icon-copperpiece.png
+	image font size: 24
+symbol:
+	code: #Ammo
+	image: /CustomRPG.mse-include/icon-ammo.png
+	image font size: 32
+symbol:
+	code: #Skull
+	image: /CustomRPG.mse-include/icon-death.png
+	image font size: 32
+symbol:
+	code: #Blood
+	image: /CustomRPG.mse-include/icon-blood.png
+	image font size: 38
+symbol:
+	code: #Meal
+	image: /CustomRPG.mse-include/icon-meal.png
+	image font size: 24
+symbol:
+	code: #Healing
+	image: /CustomRPG.mse-include/icon-secondwind.png
+	image font size: 24
+symbol:
+	code: #Star
+	image: /CustomRPG.mse-include/icon-star.png
+	image font size: 24
+symbol:
+	code: #HealPotn
+	image: /CustomRPG.mse-include/icon-healingpotion.png
+	image font size: 24
+
+############################################################## DnD symbols
+symbol:
+	code: #DD4-melee
+	image: /CustomRPG.mse-include/area_melee.png
+	image font size: 34
+symbol:
+	code: #DD4-Bmelee
+	image: /CustomRPG.mse-include/area_meleebase.png
+	image font size: 34
+symbol:
+	code: #DD4-ranged
+	image: /CustomRPG.mse-include/area_ranged.png
+	image font size: 34
+symbol:
+	code: #DD4-Branged
+	image: /CustomRPG.mse-include/area_rangedbase.png
+	image font size: 34
+symbol:
+	code: #DD4-hybrid
+	image: /CustomRPG.mse-include/area_hybrid.png
+	image font size: 34
+symbol:
+	code: #DD4-personal
+	image: /CustomRPG.mse-include/area_personal.png
+	image font size: 34
+symbol:
+	code: #DD4-touch
+	image: /CustomRPG.mse-include/area_touch.png
+	image font size: 34
+symbol:
+	code: #DD4-rngtouch
+	image: /CustomRPG.mse-include/area_rangedtouch.png
+	image font size: 34
+symbol:
+	code: #DD4-blast
+	image: /CustomRPG.mse-include/area_blast.png
+	image font size: 34
+symbol:
+	code: #DD4-clsburst
+	image: /CustomRPG.mse-include/area_closeburst.png
+	image font size: 34
+symbol:
+	code: #DD4-rngburst
+	image: /CustomRPG.mse-include/area_rangedburst.png
+	image font size: 34
+symbol:
+	code: #DD4-keyword
+	image: /CustomRPG.mse-include/symbol_diamond.png
+	image font size: 34
+symbol:
+	code: #DD4-dot
+	image: /CustomRPG.mse-include/symbol_dot.png
+	image font size: 34
+
+############################################################## Descent symbols
+symbol:
+	code: $DH
+	image: /CustomRPG.mse-include/descent_health.png
+	image font size: 24
+symbol:
+	code: $DE
+	image: /CustomRPG.mse-include/descent_energy.png
+	image font size: 24
+symbol:
+	code: $DS
+	image: /CustomRPG.mse-include/descent_stamina.png
+	image font size: 24
+symbol:
+	code: $DD
+	image: /CustomRPG.mse-include/descent_defence.png
+	image font size: 24
+symbol:
+	code: $DM
+	image: /CustomRPG.mse-include/descent_move.png
+	image font size: 24
+symbol:
+	code: $DA
+	image: /CustomRPG.mse-include/descent_dice.png
+	image font size: 24
+symbol:
+	code: $DT
+	image: /CustomRPG.mse-include/descent_tap.png
+	image font size: 24
+symbol:
+	code: $D1
+	image: /CustomRPG.mse-include/descent_might.png
+	image font size: 24
+symbol:
+	code: $D2
+	image: /CustomRPG.mse-include/descent_knowledge.png
+	image font size: 24
+symbol:
+	code: $D3
+	image: /CustomRPG.mse-include/descent_willpower.png
+	image font size: 24
+symbol:
+	code: $D4
+	image: /CustomRPG.mse-include/descent_awareness.png
+	image font size: 24
+symbol:
+	code: £DTPlains
+	image: /CustomRPG.mse-include/icon-Tplains.png
+	image font size: 24
+symbol:
+	code: £DTForest
+	image: /CustomRPG.mse-include/icon-Tforest.png
+	image font size: 24
+symbol:
+	code: £DTMountain
+	image: /CustomRPG.mse-include/icon-Tmountain.png
+	image font size: 24
+symbol:
+	code: £DTRiver
+	image: /CustomRPG.mse-include/icon-Triver.png
+	image font size: 24
+symbol:
+	code: £DTSea
+	image: /CustomRPG.mse-include/icon-Tsea.png
+	image font size: 24
+
+############################################################## PS4 symbols
+symbol:
+	code: #PS4-attack
+	image: /CustomRPG.mse-include/ps_attack.png
+	image font size: 36
+symbol:
+	code: #PS4-tech
+	image: /CustomRPG.mse-include/ps_tech.png
+	image font size: 36
+symbol:
+	code: #PS4-skill
+	image: /CustomRPG.mse-include/ps_skill.png
+	image font size: 36
+symbol:
+	code: #PS4-item
+	image: /CustomRPG.mse-include/ps_item.png
+	image font size: 36
+symbol:
+	code: #PS4-defend
+	image: /CustomRPG.mse-include/ps_defend.png
+	image font size: 36
+
+############################################################## Tabletop dices
+symbol:
+	code: $d4
+	image: /CustomRPG.mse-include/icon-d4.png
+	image font size: 36
+symbol:
+	code: $d6
+	image: /CustomRPG.mse-include/icon-d6.png
+	image font size: 36
+symbol:
+	code: $d8
+	image: /CustomRPG.mse-include/icon-d8.png
+	image font size: 36
+symbol:
+	code: $d10a
+	image: /CustomRPG.mse-include/icon-d10.png
+	image font size: 36
+symbol:
+	code: $d10b
+	image: /CustomRPG.mse-include/icon-d100.png
+	image font size: 36
+symbol:
+	code: $d12
+	image: /CustomRPG.mse-include/icon-d12.png
+	image font size: 36
+symbol:
+	code: $d20
+	image: /CustomRPG.mse-include/icon-d20.png
+	image font size: 36
+
+############################################################## Heroquest dices
+symbol:
+	code: W1
+	image: /CustomRPG.mse-include/icon-white1.png
+	image font size: 24
+symbol:
+	code: W2
+	image: /CustomRPG.mse-include/icon-white2.png
+	image font size: 24
+symbol:
+	code: W3
+	image: /CustomRPG.mse-include/icon-white3.png
+	image font size: 24
+symbol:
+	code: B1
+	image: /CustomRPG.mse-include/icon-black1.png
+	image font size: 24
+symbol:
+	code: B2
+	image: /CustomRPG.mse-include/icon-black2.png
+	image font size: 24
+symbol:
+	code: B3
+	image: /CustomRPG.mse-include/icon-black3.png
+	image font size: 24
+symbol:
+	code: U1
+	image: /CustomRPG.mse-include/icon-blue1.png
+	image font size: 24
+symbol:
+	code: U2
+	image: /CustomRPG.mse-include/icon-blue2.png
+	image font size: 24
+symbol:
+	code: U3
+	image: /CustomRPG.mse-include/icon-blue3.png
+	image font size: 24
+symbol:
+	code: G1
+	image: /CustomRPG.mse-include/icon-green1.png
+	image font size: 24
+symbol:
+	code: G2
+	image: /CustomRPG.mse-include/icon-green2.png
+	image font size: 24
+symbol:
+	code: G3
+	image: /CustomRPG.mse-include/icon-green3.png
+	image font size: 24
+symbol:
+	code: P1
+	image: /CustomRPG.mse-include/icon-purple1.png
+	image font size: 24
+symbol:
+	code: P2
+	image: /CustomRPG.mse-include/icon-purple2.png
+	image font size: 24
+symbol:
+	code: P3
+	image: /CustomRPG.mse-include/icon-purple3.png
+	image font size: 24
+symbol:
+	code: O1
+	image: /CustomRPG.mse-include/icon-orange1.png
+	image font size: 24
+symbol:
+	code: O2
+	image: /CustomRPG.mse-include/icon-orange2.png
+	image font size: 24
+symbol:
+	code: O3
+	image: /CustomRPG.mse-include/icon-orange3.png
+	image font size: 24
+symbol:
+	code: Y1
+	image: /CustomRPG.mse-include/icon-yellow1.png
+	image font size: 24
+symbol:
+	code: Y2
+	image: /CustomRPG.mse-include/icon-yellow2.png
+	image font size: 24
+symbol:
+	code: Y3
+	image: /CustomRPG.mse-include/icon-yellow3.png
+	image font size: 24
+symbol:
+	code: $dM
+	image: /CustomRPG.mse-include/icon-ddmiss.png
+	image font size: 24
+symbol:
+	code: $dS
+	image: /CustomRPG.mse-include/icon-ddspecial.png
+	image font size: 24
+symbol:
+	code: £D1
+	image: /CustomRPG.mse-include/icon-disarm1.png
+	image font size: 24
+symbol:
+	code: £D2
+	image: /CustomRPG.mse-include/icon-disarm2.png
+	image font size: 24
+symbol:
+	code: £S1
+	image: /CustomRPG.mse-include/icon-search1.png
+	image font size: 24
+symbol:
+	code: £S2
+	image: /CustomRPG.mse-include/icon-search2.png
+	image font size: 24
+symbol:
+	code: £S3
+	image: /CustomRPG.mse-include/icon-search3.png
+	image font size: 24
+symbol:
+	code: £T1
+	image: /CustomRPG.mse-include/icon-turnundead1.png
+	image font size: 24
+symbol:
+	code: £T2
+	image: /CustomRPG.mse-include/icon-turnundead2.png
+	image font size: 24
+symbol:
+	code: £T3
+	image: /CustomRPG.mse-include/icon-turnundead3.png
+	image font size: 24
+symbol:
+	code: £DDY
+	image: /CustomRPG.mse-include/DD_yellow.png
+	image font size: 24
+symbol:
+	code: £DDO
+	image: /CustomRPG.mse-include/DD_orange.png
+	image font size: 24
+symbol:
+	code: £DDR
+	image: /CustomRPG.mse-include/DD_red.png
+	image font size: 24
+symbol:
+	code: £DDP
+	image: /CustomRPG.mse-include/DD_purple.png
+	image font size: 24
+
+############################################################## Descent dices
+symbol:
+	code: $DeU
+	image: /CustomRPG.mse-include/descent_blue.png
+	image font size: 24
+symbol:
+	code: $DeG
+	image: /CustomRPG.mse-include/descent_green.png
+	image font size: 24
+symbol:
+	code: $DeY
+	image: /CustomRPG.mse-include/descent_yellow.png
+	image font size: 24
+symbol:
+	code: $DeR
+	image: /CustomRPG.mse-include/descent_red.png
+	image font size: 24
+symbol:
+	code: $DeO
+	image: /CustomRPG.mse-include/descent_brown.png
+	image font size: 24
+symbol:
+	code: $DeW
+	image: /CustomRPG.mse-include/descent_grey.png
+	image font size: 24
+symbol:
+	code: $DeB
+	image: /CustomRPG.mse-include/descent_black.png
+	image font size: 24
+
+############################################################## DnD dices
+symbol:
+	code: $DnDWMelee
+	image: /CustomRPG-DnDBoard.mse-include/weapon_melee.png
+	image font size: 36
+symbol:
+	code: $DnDWRanged
+	image: /CustomRPG-DnDBoard.mse-include/weapon_ranged.png
+	image font size: 36
+symbol:
+	code: $DnDSMelee
+	image: /CustomRPG-DnDBoard.mse-include/spell_melee.png
+	image font size: 36
+symbol:
+	code: $DnDSRanged
+	image: /CustomRPG-DnDBoard.mse-include/spell_ranged.png
+	image font size: 36
+symbol:
+	code: $DnDMMelee
+	image: /CustomRPG-DnDBoard.mse-include/monster_melee.png
+	image font size: 36
+symbol:
+	code: $DnDMRanged
+	image: /CustomRPG-DnDBoard.mse-include/monster_ranged.png
+	image font size: 36
+symbol:
+	code: $DnDY
+	image: /CustomRPG.mse-include/DDyellow.png
+	image font size: 36
+symbol:
+	code: $DnDO
+	image: /CustomRPG.mse-include/DDorange.png
+	image font size: 36
+symbol:
+	code: $DnDR
+	image: /CustomRPG.mse-include/DDred.png
+	image font size: 36
+symbol:
+	code: $DnDP
+	image: /CustomRPG.mse-include/DDpurple.png
+	image font size: 36
+symbol:
+	code: $DnDSc
+	image: /CustomRPG.mse-include/DDsearch.png
+	image font size: 36
+symbol:
+	code: $DnDDi
+	image: /CustomRPG.mse-include/DDdisarm.png
+	image font size: 36
+symbol:
+	code: $DnDTu
+	image: /CustomRPG.mse-include/DDturnundead.png
+	image font size: 36
+symbol:
+	code: $DnDSp
+	image: /CustomRPG.mse-include/DDspecial.png
+	image font size: 36
+symbol:
+	code: $DnDstar
+	image: /CustomRPG.mse-include/DDstar.png
+	image font size: 36
+symbol:
+	code: $DnDreroll
+	image: /CustomRPG.mse-include/DDreroll.png
+	image font size: 36
+
+############################################################## Status symbols
+symbol:
+	code: #State-Blind
+	image: /CustomRPG.mse-include/icon-blind.png
+	image font size: 34
+symbol:
+	code: #State-Deaf
+	image: /CustomRPG.mse-include/icon-deaf.png
+	image font size: 34
+symbol:
+	code: #State-Poison
+	image: /CustomRPG.mse-include/icon-poison.png
+	image font size: 34
+symbol:
+	code: #State-Disease
+	image: /CustomRPG.mse-include/icon-disease.png
+	image font size: 34
+symbol:
+	code: #State-Paralysis
+	image: /CustomRPG.mse-include/icon-paralysis.png
+	image font size: 34
+symbol:
+	code: #State-Prone
+	image: /CustomRPG.mse-include/icon-prone.png
+	image font size: 34
+symbol:
+	code: #State-Sleep
+	image: /CustomRPG.mse-include/icon-sleep.png
+	image font size: 34
+symbol:
+	code: #State-Slow
+	image: /CustomRPG.mse-include/icon-slow.png
+	image font size: 34
+symbol:
+	code: #State-Fear
+	image: /CustomRPG.mse-include/icon-fear.png
+	image font size: 34
+symbol:
+	code: #State-Charmed
+	image: /CustomRPG.mse-include/icon-charmed.png
+	image font size: 34
+symbol:
+	code: #State-Confused
+	image: /CustomRPG.mse-include/icon-confused.png
+	image font size: 34
+symbol:
+	code: #State-FireDmg
+	image: /CustomRPG.mse-include/icon-firedamage.png
+	image font size: 34
+symbol:
+	code: #State-ColdDmg
+	image: /CustomRPG.mse-include/icon-colddamage.png
+	image font size: 34
+symbol:
+	code: #State-AcidDmg
+	image: /CustomRPG.mse-include/icon-aciddamage.png
+	image font size: 34
+symbol:
+	code: #State-LightningDmg
+	image: /CustomRPG.mse-include/icon-lightningdamage.png
+	image font size: 34
+symbol:
+	code: #State-NecroticDmg
+	image: /CustomRPG.mse-include/icon-necroticdamage.png
+	image font size: 34
+symbol:
+	code: #State-Boost
+	image: /CustomRPG.mse-include/icon-boost.png
+	image font size: 34
+symbol:
+	code: #State-Penalty
+	image: /CustomRPG.mse-include/icon-penalty.png
+	image font size: 34
+
+############################################################## Misc symbols
+symbol:
+	code: #Exposant
+	image: /CustomRPG.mse-include/symbol-exponent.png
+	image font size: 96
+symbol:
+	code: #Infinity
+	image: /CustomRPG.mse-include/symbol-infinity.png
+	image font size: 272
+symbol:
+	code: #Air
+	image: /CustomRPG.mse-include/icon-air.png
+	image font size: 34
+symbol:
+	code: #Amulet
+	image: /CustomRPG.mse-include/icon-amulet.png
+	image font size: 34
+symbol:
+	code: #Arcane
+	image: /CustomRPG.mse-include/icon-arcane.png
+	image font size: 34
+symbol:
+	code: #Armour
+	image: /CustomRPG.mse-include/icon-armour.png
+	image font size: 34
+symbol:
+	code: #Artifact
+	image: /CustomRPG.mse-include/icon-artifact.png
+	image font size: 34
+symbol:
+	code: #Belt
+	image: /CustomRPG.mse-include/icon-belt.png
+	image font size: 34
+symbol:
+	code: #Boots
+	image: /CustomRPG.mse-include/icon-boots.png
+	image font size: 34
+symbol:
+	code: #Bracers
+	image: /CustomRPG.mse-include/icon-bracers.png
+	image font size: 34
+symbol:
+	code: #Cape
+	image: /CustomRPG.mse-include/icon-cape.png
+	image font size: 34
+symbol:
+	code: #Divine
+	image: /CustomRPG.mse-include/icon-divine.png
+	image font size: 34
+symbol:
+	code: #Earth
+	image: /CustomRPG.mse-include/icon-earth.png
+	image font size: 34
+symbol:
+	code: #Fire
+	image: /CustomRPG.mse-include/icon-fire.png
+	image font size: 34
+symbol:
+	code: #Helm
+	image: /CustomRPG.mse-include/icon-helm.png
+	image font size: 34
+symbol:
+	code: #Mercenary
+	image: /CustomRPG.mse-include/icon-mercenary.png
+	image font size: 34
+symbol:
+	code: #Misc
+	image: /CustomRPG.mse-include/icon-misc.png
+	image font size: 34
+symbol:
+	code: #Monster
+	image: /CustomRPG.mse-include/icon-monster.png
+	image font size: 34
+symbol:
+	code: #Nature
+	image: /CustomRPG.mse-include/icon-nature.png
+	image font size: 34
+symbol:
+	code: #Potion
+	image: /CustomRPG.mse-include/icon-potion.png
+	image font size: 34
+symbol:
+	code: #Ring
+	image: /CustomRPG.mse-include/icon-ring.png
+	image font size: 34
+symbol:
+	code: #Robe
+	image: /CustomRPG.mse-include/icon-robe.png
+	image font size: 34
+symbol:
+	code: #Scroll
+	image: /CustomRPG.mse-include/icon-scroll.png
+	image font size: 34
+symbol:
+	code: #Shield
+	image: /CustomRPG.mse-include/icon-shield.png
+	image font size: 34
+symbol:
+	code: #Spell
+	image: /CustomRPG.mse-include/icon-spell.png
+	image font size: 34
+symbol:
+	code: #Staff
+	image: /CustomRPG.mse-include/icon-staff.png
+	image font size: 34
+symbol:
+	code: #Status
+	image: /CustomRPG.mse-include/icon-status.png
+	image font size: 34
+symbol:
+	code: #Trap
+	image: /CustomRPG.mse-include/icon-trap.png
+	image font size: 34
+symbol:
+	code: #Treasure
+	image: /CustomRPG.mse-include/icon-treasure.png
+	image font size: 34
+symbol:
+	code: #Wand
+	image: /CustomRPG.mse-include/icon-wand.png
+	image font size: 34
+symbol:
+	code: #Water
+	image: /CustomRPG.mse-include/icon-water.png
+	image font size: 34
+symbol:
+	code: #Weapon
+	image: /CustomRPG.mse-include/icon-weapon.png
+	image font size: 34
+
+############################################################## Symbols menu
+insert symbol menu:
+	item:
+		type: submenu
+		name: RPG symbols
+		item: $H
+		item: $S
+		item: $T
+		item: $M
+		item: $G
+		item: $W
+		item: #Att
+		item: #Rng
+		item: #MeRn
+		item: #Mag
+		item: #Def
+		item: #MDef
+		item: #Tap
+		item: #GP
+		item: #SP
+		item: #CP
+		item: #Ammo
+		item: #Skull
+		item: #Blood
+		item: #Meal
+		item: #Healing
+		item: #Star
+		item: #HealPotn
+	item:
+		type: submenu
+		name: DnD symbols
+		item: #DD4-Bmelee
+		item: #DD4-melee
+		item: #DD4-Branged
+		item: #DD4-ranged
+		item: #DD4-hybrid
+		item: #DD4-personal
+		item: #DD4-touch
+		item: #DD4-rngtouch
+		item: #DD4-blast
+		item: #DD4-clsburst
+		item: #DD4-rngburst
+		item: #DD4-keyword
+		item: #DD4-dot
+	item:
+		type: submenu
+		name: Descent symbols
+		item: $DH
+		item: $DE
+		item: $DS
+		item: $DD
+		item: $DM
+		item: $DA
+		item: $DT
+		item: $D1
+		item: $D2
+		item: $D3
+		item: $D4
+		item: £DTPlains
+		item: £DTForest
+		item: £DTMountain
+		item: £DTRiver
+		item: £DTSea
+	item:
+		type: submenu
+		name: PSIV symbols
+		item: #PS4-attack
+		item: #PS4-tech
+		item: #PS4-skill
+		item: #PS4-item
+		item: #PS4-defend
+	item:
+		type: submenu
+		name: Tabletop dices
+		item: $d4
+		item: $d6
+		item: $d8
+		item: $d10a
+		item: $d10b
+		item: $d12
+		item: $d20
+	item:
+		type: submenu
+		name: Heroquest dices
+		item: W1
+		item: W2
+		item: W3
+		item: B1
+		item: B2
+		item: B3
+		item: U1
+		item: U2
+		item: U3
+		item: G1
+		item: G2
+		item: G3
+		item: P1
+		item: P2
+		item: P3
+		item: O1
+		item: O2
+		item: O3
+		item: Y1
+		item: Y2
+		item: Y3
+		item: $dM
+		item: $dS
+		item: £D1
+		item: £D2
+		item: £S1
+		item: £S2
+		item: £S3
+		item: £T1
+		item: £T2
+		item: £T3
+		item: £DDY
+		item: £DDO
+		item: £DDR
+		item: £DDP
+	item:
+		type: submenu
+		name: Descent dices
+		item: $DeU
+		item: $DeG
+		item: $DeY
+		item: $DeR
+		item: $DeO
+		item: $DeW
+		item: $DeB
+	item:
+		type: submenu
+		name: DnD dices
+		item: $DnDWMelee
+		item: $DnDWRanged
+		item: $DnDSMelee
+		item: $DnDSRanged
+		item: $DnDMMelee
+		item: $DnDMRanged
+		item: $DnDY
+		item: $DnDO
+		item: $DnDR
+		item: $DnDP
+		item: $DnDSc
+		item: $DnDDi
+		item: $DnDTu
+		item: $DnDSp
+		item: $DnDstar
+		item: $DnDreroll
+	item:
+		type: submenu
+		name: Status symbols
+		item: #State-Blind
+		item: #State-Deaf
+		item: #State-Poison
+		item: #State-Disease
+		item: #State-Paralysis
+		item: #State-Prone
+		item: #State-Sleep
+		item: #State-Slow
+		item: #State-Fear
+		item: #State-Charmed
+		item: #State-Confused
+		item: #State-FireDmg
+		item: #State-ColdDmg
+		item: #State-AcidDmg
+		item: #State-LightningDmg
+		item: #State-NecroticDmg
+		item: #State-Boost
+		item: #State-Penalty
+	item:
+		type: submenu
+		name: Misc symbols
+		item: #Exposant
+		item: #Infinity
+		item: #Air
+		item: #Amulet
+		item: #Arcane
+		item: #Armour
+		item: #Artifact
+		item: #Belt
+		item: #Boots
+		item: #Bracers
+		item: #Cape
+		item: #Divine
+		item: #Earth
+		item: #Fire
+		item: #Helm
+		item: #Mercenary
+		item: #Misc
+		item: #Monster
+		item: #Nature
+		item: #Potion
+		item: #Ring
+		item: #Robe
+		item: #Scroll
+		item: #Shield
+		item: #Spell
+		item: #Staff
+		item: #Status
+		item: #Trap
+		item: #Treasure
+		item: #Wand
+		item: #Water
+		item: #Weapon

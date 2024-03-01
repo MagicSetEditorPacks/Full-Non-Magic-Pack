@@ -1,0 +1,102 @@
+﻿mse version: 0.3.6
+version: 2008-06-02
+short name: attacks
+installer group: DnDStatcards/Attack symbols
+position hint: 001
+icon: BMelee.png
+depends on:
+	package: CustomRPG.mse-game
+	version: 1.0
+
+image font size: 160
+horizontal space: 2
+symbol:
+	code: (a)
+	image: BArea.png
+symbol:
+	code: (A)
+	image: Area.png
+	image font size: 114
+symbol:
+	code: (c)
+	image: BClose.png
+symbol:
+	code: (C)
+	image: Close.png
+	image font size: 100
+symbol:
+	code: (m)
+	image: BMelee.png
+symbol:
+	code: (M)
+	image: Melee.png
+	image font size: 120
+symbol:
+	code: (r)
+	image: BRanged.png
+symbol:
+	code: (R)
+	image: Ranged.png
+	image font size: 119
+symbol:
+	code: (F)
+	image: Forward.png
+	image font size: 130
+symbol:
+	code: (B)
+	image: Backward.png
+	image font size: 130
+symbol:
+	code: (D)
+	image: Dot.png
+	image font size: 130
+symbol:
+	code: (U)
+	image: Usable.png
+	image font size: 130
+symbol:
+	code: (1)
+	image: 1.png
+	image font size: 130
+symbol:
+	code: (2)
+	image: 2.png
+	image font size: 130
+symbol:
+	code: (3)
+	image: 3.png
+	image font size: 130
+symbol:
+	code: (4)
+	image: 4.png
+	image font size: 130
+symbol:
+	code: (5)
+	image: 5.png
+	image font size: 130
+symbol:
+	code: (6)
+	image: 6.png
+	image font size: 130
+
+##############################################################
+# Insert-symbol menu
+insert symbol menu:
+	item: (a)
+	item: (A)
+	item: (c)
+	item: (C)
+	item: (m)
+	item: (M)
+	item: (r)
+	item: (R)
+	item: (F)
+	item: (B)
+	item: (D)
+	item: (U)
+	item: (1)
+	item: (2)
+	item: (3)
+	item: (4)
+	item: (5)
+	item: (6)

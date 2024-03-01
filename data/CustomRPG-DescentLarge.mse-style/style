@@ -1,0 +1,235 @@
+mse version: 2.0.0
+game: CustomRPG
+short name: Descent Large
+full name: (12.7cm x 10.2cm)
+icon: icon.png
+depends on: CustomRPG.mse-game 1.0
+depends on: CustomRPG.mse-include 1.0
+depends on: CustomRPG.mse-symbol-font 1.0
+depends on: CustomRPG-Descent.mse-include 1.0
+card background: white
+#card width: 762
+#card height: 612
+#card dpi: 152.4
+card width: 1270
+card height: 1020
+card dpi: 254
+
+############################################################## Scripts
+init script:
+	dpi := 254
+
+	##### Category
+	cardlist_display1 := {"Hero"}
+	##### Type
+	cardlist_display2 := {
+		if contains(card.HeroBackground, match: "warrior") then "Warrior"
+		else if contains(card.HeroBackground, match: "scout") then "Scout"
+		else if contains(card.HeroBackground, match: "mage") then "Mage"
+		else if contains(card.HeroBackground, match: "healer") then "Healer"
+		else ""
+		}
+	##### Subtype/Info
+	cardlist_display3 := {card.Textbox2}
+	##### Misc/Info
+	cardlist_display4 := {card.Textbox3}
+	##### Background
+	cardlist_display5 := {card.HeroBackground}
+
+############################################################## Style
+card style:
+	HeroBackground:
+		top:	0
+		left:	0
+		width:	{1270*dpi/254}
+		height:	{1020*dpi/254}
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			warrior:	{"/CustomRPG-Descent.mse-include/hero_warrior.png"}
+			scout:		{"/CustomRPG-Descent.mse-include/hero_scout.png"}
+			mage:		{"/CustomRPG-Descent.mse-include/hero_mage.png"}
+			healer:		{"/CustomRPG-Descent.mse-include/hero_healer.png"}
+
+############################################################## Main Info
+	Name:
+		top: {35*dpi/254}
+		left: {20*dpi/254}
+		width: {415*dpi/254}
+		height: {70*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Windlass
+			size: {28*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Picture:
+		top: {105*dpi/254}
+		left: 0
+		width: {565*dpi/254}
+		height: {730*dpi/254}
+		mask:	{"/CustomRPG-Descent.mse-include/mask_picture1.png"}
+
+	Category:
+		top: {20*dpi/254}
+		left: {835*dpi/254}
+		width: {290*dpi/254}
+		height: {65*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Windlass
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Type:
+		top: {485*dpi/254}
+		left: {835*dpi/254}
+		width: {290*dpi/254}
+		height: {65*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Windlass
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Description:
+		top: {85*dpi/254}
+		left: {730*dpi/254}
+		width: {505*dpi/254}
+		height: {390*dpi/254}
+		alignment: top left stretch if-overflow
+		mask:	{"/CustomRPG-Descent.mse-include/mask_textbox1.png"}
+		font: 
+			name: Gara Scenario Descent
+			size: {22*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {22*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Rules:
+		top: {555*dpi/254}
+		left: {730*dpi/254}
+		width: {505*dpi/254}
+		height: {390*dpi/254}
+		alignment: top left stretch if-overflow
+		mask:	{"/CustomRPG-Descent.mse-include/mask_textbox2.png"}
+		font: 
+			name: Gara Scenario Descent
+			size: {22*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {22*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Textbox1:
+		top: {190*dpi/254}
+		left: {600*dpi/254}
+		width: {80*dpi/254}
+		height: {80*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {60*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Textbox2:
+		top: {375*dpi/254}
+		left: {655*dpi/254}
+		width: {80*dpi/254}
+		height: {80*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {60*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Textbox3:
+		top: {565*dpi/254}
+		left: {655*dpi/254}
+		width: {80*dpi/254}
+		height: {80*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {60*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Textbox4:
+		top: {752.5*dpi/254}
+		left: {601.5*dpi/254}
+		width: {80*dpi/254}
+		height: {80*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {60*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+		symbol font:
+			name: CustomRPG
+			size: {38*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Textbox5:
+		top: {835*dpi/254}
+		left: {175*dpi/254}
+		width: {50*dpi/254}
+		height: {50*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {42*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Textbox6:
+		top: {835*dpi/254}
+		left: {355*dpi/254}
+		width: {50*dpi/254}
+		height: {50*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {42*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Textbox7:
+		top: {935*dpi/254}
+		left: {125*dpi/254}
+		width: {50*dpi/254}
+		height: {50*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {42*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Textbox8:
+		top: {935*dpi/254}
+		left: {400*dpi/254}
+		width: {50*dpi/254}
+		height: {50*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {42*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)

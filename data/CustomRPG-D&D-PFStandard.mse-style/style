@@ -1,0 +1,1602 @@
+mse version: 2.0.0
+game: CustomRPG
+short name: D&D-PF Standard
+full name: (6.35cm x 8.86cm)
+icon: icon.png
+depends on: CustomRPG.mse-game 1.0
+depends on: CustomRPG.mse-include 1.0
+depends on: CustomRPG.mse-symbol-font 1.0
+depends on: CustomRPG-D&D-PF.mse-include 1.0
+card background: white
+#card width: 381
+#card height: 532
+#card dpi: 152.4
+card width: 635
+card height: 886
+card dpi: 254
+
+############################################################## Scripts
+init script:
+	dpi := 254
+
+	##### Category
+	cardlist_display1 := {
+		if contains(styling.CardType, match:"generic") then card.Category
+		else if contains(styling.CardType, match:"monster") then "Monster"
+		else if contains(styling.CardType, match:"item") then "Item"
+		else if contains(styling.CardType, match:"magic") then "Spell/Power"
+		else if contains(styling.CardType, match:"cardback") then "Cardback"
+		else ""
+		}
+	##### Type
+	cardlist_display2 := {
+		if contains(styling.CardType, match:"generic") then card.Type
+		else if contains(styling.CardType, match:"monster") then card.Monster
+		else if contains(styling.CardType, match:"item") then card.Item
+		else if contains(styling.CardType, match:"spell") then card.School
+		else if contains(styling.CardType, match:"power") then card.Power
+		else if contains(styling.CardType, match:"tech") or contains(styling.CardType, match:"magic-custom") then card.Category
+		else ""
+		}
+	##### Subtype/Info
+	cardlist_display3 := {
+		if contains(styling.CardType, match:"generic") then card.Generic
+		else if contains(styling.CardType, match:"monster-DD3") then card.Monster
+		else if contains(styling.CardType, match:"monster-DD4") then card.Role
+		else if contains(styling.CardType, match:"monster-PS4") then card.Category
+		else if contains(styling.CardType, match:"monster-custom") or contains(styling.CardType, match:"spell") or contains(styling.CardType, match:"power") then card.Class
+		else if contains(styling.CardType, match:"tech") or contains(styling.CardType, match:"magic-custom") then card.Type
+		else if contains(styling.CardType, match:"item") then card.Slot
+		else ""
+		}
+	##### Misc/Info
+	cardlist_display4 := {
+		if contains(styling.CardType, match:"generic") then card.Subtype
+		else if contains(styling.CardType, match:"monster") or contains(styling.CardType, match:"item") or contains(styling.CardType, match:"magic") then card.Info1
+		else ""
+		}
+	##### Background
+	cardlist_display5 := {card.RPGBackground}
+
+	card_style := {"/CustomRPG-D&D-PF.mse-include/card_" + styling.CardStyle + ".png"}
+
+	card_border := {"/CustomRPG-D&D-PF.mse-include/border_" + styling.CardBorder + ".png"}
+
+	texture_style := {"/CustomRPG-D&D-PF.mse-include/texture_" + styling.CardTexture + ".png"}
+
+	overlay_style := {"/CustomRPG-D&D-PF.mse-include/overlay_" + styling.CardType + ".png"}
+
+############################################################## Style
+styling field:
+	type: choice
+	name: CardType
+	description: Overlay for the card
+	initial: genericA
+	choice: genericA
+	choice: genericB
+	choice: genericC
+	choice: genericD
+#	choice: monster-ADD
+	choice: monster-DD3
+	choice: monster-DD4
+#	choice: monster-DD5
+#	choice: monster-PF
+#	choice: monster-WH
+	choice: monster-PS4
+	choice: monster-customA
+	choice: monster-customB
+	choice: item-weapon
+	choice: item-armor
+	choice: item-phantasy
+	choice: item-misc
+	choice: item-custom
+	choice: magic-spell
+	choice: magic-power
+	choice: magic-techskill
+	choice: magic-custom
+#	choice: misc-feat
+#	choice: misc-skill
+	choice: cardback
+
+styling field:
+	type: choice
+	name: CardStyle
+	description: Style for the card
+	initial: style1
+	choice: style1
+	choice: style2
+
+styling field:
+	type: choice
+	name: CardBorder
+	description: Borders for the card
+	initial: none
+	choice: none
+	choice: black
+	choice: bronze
+	choice: silver
+	choice: gold
+
+styling field:
+	type: choice
+	name: CardTexture
+	description: Texture for the card
+	initial: paper1
+	choice: paper1
+	choice: paper2
+	choice: scroll1
+	choice: scroll2
+	choice: celtic
+	choice: gold
+	choice: leather
+	choice: steel
+
+styling field:
+	type: choice
+	name: Watermark
+	description: Watermark for the card
+	initial: empty
+	choice: empty
+	choice: watermark-barbarian
+	choice: watermark-bard
+	choice: watermark-cleric
+	choice: watermark-druid
+	choice: watermark-fighter
+	choice: watermark-monk
+	choice: watermark-paladin
+	choice: watermark-ranger
+	choice: watermark-rogue
+	choice: watermark-shaman
+	choice: watermark-sorcerer
+	choice: watermark-warlock
+	choice: watermark-wizard
+	choice: watermark-dragonborn
+	choice: watermark-drow
+	choice: watermark-dwarf
+	choice: watermark-elf
+	choice: watermark-human
+	choice: watermark-archdruid
+	choice: watermark-assassin
+	choice: watermark-blackknight
+	choice: watermark-blademaster
+	choice: watermark-deathknight
+	choice: watermark-deathshaman
+	choice: watermark-divinechampion
+	choice: watermark-divineoracle
+	choice: watermark-dragonhunter
+	choice: watermark-evil
+	choice: watermark-guardian
+	choice: watermark-hellbringer
+	choice: watermark-hunter
+	choice: watermark-knight
+	choice: watermark-loremaster
+	choice: watermark-masterofflames
+	choice: watermark-necromancer
+	choice: watermark-noble
+	choice: watermark-priest
+	choice: watermark-sneak
+	choice: watermark-soulbinder
+	choice: watermark-spellstorm
+	choice: watermark-stormwarden
+	choice: watermark-timemaster
+	choice: watermark-trickster
+	choice: watermark-warrior
+
+styling field:
+	type: choice
+	name: NameFont
+	description: Font for the name of the card
+	initial: HeroQuest
+	choice: Times New Roman
+	choice: MPlantin
+	choice: Gara Scenario Descent
+	choice: HeroQuest
+	choice: Caslon Antique Regular
+	choice: Gaze Italic
+	choice: FrizQuadrata
+	choice: Kelmscott
+	choice: Windlass
+	choice: Blackmoor LET
+	choice: Vecna
+
+styling field:
+	type: color
+	name: NameColor
+	description: Color for the name of the card
+	initial: black
+	choice:
+		name: black
+		color: rgb(0,0,0)
+	choice:
+		name: white
+		color: rgb(255,255,255)
+	choice:
+		name: bronze
+		color: rgb(205,127,50)
+	choice:
+		name: silver
+		color: rgb(128,128,128)
+	choice:
+		name: gold
+		color: rgb(255,215,0)
+	choice:
+		name: blue
+		color: rgb(0,0,255)
+	choice:
+		name: orange
+		color: rgb(255,165,0)
+	choice:
+		name: green
+		color: rgb(0,128,0)
+	choice:
+		name: red
+		color: rgb(255,0,0)
+	choice:
+		name: purple
+		color: rgb(128,0,128)
+	choice:
+		name: yellow
+		color: rgb(255,255,0)
+	choice:
+		name: cyan
+		color: rgb(0,255,255)
+	choice:
+		name: magenta
+		color: rgb(255,0,255)
+	choice:
+		name: brown
+		color: rgb(139,69,19)
+	choice:
+		name: teal
+		color: rgb(0,128,128)
+
+styling field:
+	type: choice
+	name: TypeFont1
+	description: Font for the primary type-subtype boxes
+	initial: Caslon Antique Regular
+	choice: Times New Roman
+	choice: MPlantin
+	choice: Gara Scenario Descent
+	choice: HeroQuest
+	choice: Caslon Antique Regular
+	choice: Gaze Italic
+	choice: FrizQuadrata
+	choice: Kelmscott
+	choice: Windlass
+	choice: Blackmoor LET
+	choice: Vecna
+
+styling field:
+	type: choice
+	name: TypeFont2
+	description: Font for the secondary type-subtype boxes
+	initial: Caslon Antique Regular
+	choice: Times New Roman
+	choice: MPlantin
+	choice: Gara Scenario Descent
+	choice: HeroQuest
+	choice: Caslon Antique Regular
+	choice: Gaze Italic
+	choice: FrizQuadrata
+	choice: Kelmscott
+	choice: Windlass
+	choice: Blackmoor LET
+	choice: Vecna
+
+styling field:
+	type: choice
+	name: TextFont1
+	description: Font for the first main textbox
+	initial: Gaze Italic
+	choice: Times New Roman
+	choice: MPlantin
+	choice: Gara Scenario Descent
+	choice: HeroQuest
+	choice: Caslon Antique Regular
+	choice: Gaze Italic
+	choice: FrizQuadrata
+	choice: Kelmscott
+	choice: Windlass
+	choice: Blackmoor LET
+	choice: Vecna
+
+styling field:
+	type: choice
+	name: TextAlign1
+	description: Text alignment for the first main textbox
+	initial: top left
+	choice: top left
+	choice: top center
+	choice: middle left
+	choice: middle center
+
+styling field:
+	type: choice
+	name: TextFont2
+	description: Font for the second main textbox
+	initial: FrizQuadrata
+	choice: Times New Roman
+	choice: MPlantin
+	choice: Gara Scenario Descent
+	choice: HeroQuest
+	choice: Caslon Antique Regular
+	choice: Gaze Italic
+	choice: FrizQuadrata
+	choice: Kelmscott
+	choice: Windlass
+	choice: Blackmoor LET
+	choice: Vecna
+
+styling field:
+	type: choice
+	name: TextAlign2
+	description: Text alignment for the second main textbox
+	initial: top left
+	choice: top left
+	choice: top center
+	choice: middle left
+	choice: middle center
+
+styling field:
+	type: choice
+	name: InfoFont
+	description: Font for the small infoboxes
+	initial: Caslon Antique Regular
+	choice: Times New Roman
+	choice: MPlantin
+	choice: Gara Scenario Descent
+	choice: HeroQuest
+	choice: Caslon Antique Regular
+	choice: Gaze Italic
+	choice: FrizQuadrata
+	choice: Kelmscott
+	choice: Windlass
+	choice: Blackmoor LET
+	choice: Vecna
+
+styling field:
+	type: color
+	name: InfoColor
+	description: Color for the small infoboxes
+	initial: black
+	choice:
+		name: black
+		color: rgb(0,0,0)
+	choice:
+		name: white
+		color: rgb(255,255,255)
+	choice:
+		name: bronze
+		color: rgb(205,127,50)
+	choice:
+		name: silver
+		color: rgb(128,128,128)
+	choice:
+		name: gold
+		color: rgb(255,215,0)
+	choice:
+		name: blue
+		color: rgb(0,0,255)
+	choice:
+		name: orange
+		color: rgb(255,165,0)
+	choice:
+		name: green
+		color: rgb(0,128,0)
+	choice:
+		name: red
+		color: rgb(255,0,0)
+	choice:
+		name: purple
+		color: rgb(128,0,128)
+	choice:
+		name: yellow
+		color: rgb(255,255,0)
+	choice:
+		name: cyan
+		color: rgb(0,255,255)
+	choice:
+		name: magenta
+		color: rgb(255,0,255)
+	choice:
+		name: brown
+		color: rgb(139,69,19)
+	choice:
+		name: teal
+		color: rgb(0,128,128)
+
+styling field:
+	type: choice
+	name: StatboxFont
+	description: Font for the small statboxes
+	initial: Caslon Antique Regular
+	choice: Times New Roman
+	choice: MPlantin
+	choice: Gara Scenario Descent
+	choice: HeroQuest
+	choice: Caslon Antique Regular
+	choice: Gaze Italic
+	choice: FrizQuadrata
+	choice: Kelmscott
+	choice: Windlass
+	choice: Blackmoor LET
+	choice: Vecna
+
+############################################################## Background
+card style:
+	RPGBackground:
+		top:	0
+		left:	0
+		width:	{635*dpi/254}
+		height:	{886*dpi/254}
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			grey1:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_grey1.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			grey2:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_grey2.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			dark1:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_dark1.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			blue1:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_blue1.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			blue2:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_blue2.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			green1:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_green1.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			green2:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_green2.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			red1:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_red1.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			red2:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_red2.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			orange1:		{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_orange1.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			yellow1:		{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_yellow1.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			yellow2:		{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_yellow2.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			purple1:		{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_purple1.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			pink1:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_pink1.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			darkblue1:		{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_darkblue1.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			seefoam1:		{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_seefoam1.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			brown1:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_brown1.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			brown2:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_brown2.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			earth:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_earth.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			fire:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_fire.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			water:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_water.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			cloud:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_cloud.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			storm:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_storm.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+			stone:			{combine_blend(image1: card_border(), image2: combine_blend(image1: overlay_style(), image2: masked_blend(light: texture_style(), dark: "/CustomRPG-D&D-PF.mse-include/background_stone.png", mask: card_style()), combine: "overlay"), combine: "overlay")}
+
+############################################################## Main Info
+	Name:
+		top: {20*dpi/254}
+		left: {100*dpi/254}
+		width: {435*dpi/254}
+		height: {50*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: {styling.NameFont}
+			size: {28*dpi/254}
+			weight: bold
+			color: {styling.NameColor}
+		allow formating: false
+
+	Picture:
+		top: {if contains(styling.CardType, match: "monster") then 640*dpi/254 else if contains(styling.CardType, match: "item") or contains(styling.CardType, match: "genericD") then 120*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 415*dpi/254 else if contains(styling.CardType, match: "item") or contains(styling.CardType, match: "genericD") then 415*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 200*dpi/254 else if contains(styling.CardType, match: "item") or contains(styling.CardType, match: "genericD") then 200*dpi/254 else if contains(styling.CardType, match: "cardback") then 635*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 160*dpi/254 else if contains(styling.CardType, match: "item") or contains(styling.CardType, match: "genericD") then 160*dpi/254 else if contains(styling.CardType, match: "cardback") then 886*dpi/254 else 0}
+
+	Watermark:
+		top: {if contains(styling.CardType, match: "monster") then 265*dpi/254 else 400*dpi/254}
+		left: {if contains(styling.CardType, match: "monster") then 135*dpi/254 else 180*dpi/254}
+		width: {280*dpi/254}
+		height: {280*dpi/254}
+		visible: {if styling.Watermark == "empty" then false else true}
+		z index: -1
+		render style: image
+		popup style: dropdown
+		choice images:
+			default:	{set_combine(input: combine_blend(image1: "/CustomRPG.mse-include/watermark-overlay.png", image2: "/CustomRPG.mse-include/" + to_string(styling.Watermark) + ".png", combine: "overlay"), combine: "normal")}
+
+############################################################## Large Textboxes
+	Monsterbox1:
+		top: {if contains(styling.CardType, match: "monster") then 120*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 20*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-DD4") or contains(styling.CardType, match: "monster-PS4") or contains(styling.CardType, match: "monster-customA") then 505*dpi/254 else if contains(styling.CardType, match: "monster-DD3") or contains(styling.CardType, match: "monster-customB") then 425*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 200*dpi/254 else 0}
+		alignment: {styling.TextAlign1}
+		font: 
+			name: {styling.TextFont1}
+			size: {18*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {18*dpi/254}
+			alignment: center middle
+
+	Monsterbox2:
+		top: {if contains(styling.CardType, match: "monster") then 320*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 20*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-DD4") or contains(styling.CardType, match: "monster-PS4") or contains(styling.CardType, match: "monster-customA") then 505*dpi/254 else if contains(styling.CardType, match: "monster-DD3") or contains(styling.CardType, match: "monster-customB") then 425*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 320*dpi/254 else 0}
+		alignment: {styling.TextAlign2}
+		font: 
+			name: {styling.TextFont2}
+			size: {18*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {18*dpi/254}
+			alignment: center middle
+
+	Itembox1:
+		top: {if contains(styling.CardType, match: "item") then 120*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "item") then 20*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "item") then 395*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "item") then 160*dpi/254 else 0}
+		alignment: {styling.TextAlign1}
+		font: 
+			name: {styling.TextFont1}
+			size: {18*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {18*dpi/254}
+			alignment: center middle
+
+	Itembox2:
+		top: {if contains(styling.CardType, match: "item") then 280*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "item") then 20*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "item") then 595*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "item") then 520*dpi/254 else 0}
+		mask:	{if contains(styling.CardType, match: "weapon") or contains(styling.CardType, match: "armor") or contains(styling.CardType, match: "phantasy") or contains(styling.CardType, match: "custom") then "/CustomRPG-D&D-PF.mse-include/mask_itembox.png"}
+		alignment: {styling.TextAlign2}
+		font: 
+			name: {styling.TextFont2}
+			size: {18*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {18*dpi/254}
+			alignment: center middle
+
+	Spellbox1:
+		top: {if contains(styling.CardType, match: "magic") then 225*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "magic") then 20*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "magic") then 595*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "magic") then 100*dpi/254 else 0}
+		alignment: {styling.TextAlign1}
+		font: 
+			name: {styling.TextFont1}
+			size: {18*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {18*dpi/254}
+			alignment: center middle
+
+	Spellbox2:
+		top: {if contains(styling.CardType, match: "magic") then 325*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "magic") then 20*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "magic") then 595*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "magic") then 475*dpi/254 else 0}
+		alignment: {styling.TextAlign2}
+		font: 
+			name: {styling.TextFont2}
+			size: {18*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {18*dpi/254}
+			alignment: center middle
+
+	Description:
+		top: {if contains(styling.CardType, match: "generic") then 120*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "generic") then 20*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "genericA") or contains(styling.CardType, match: "genericB") or contains(styling.CardType, match: "genericC") then 595*dpi/254 else if contains(styling.CardType, match: "genericD") then 395*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "genericA") or contains(styling.CardType, match: "genericB") or contains(styling.CardType, match: "genericC") then 120*dpi/254 else if contains(styling.CardType, match: "genericD") then 160*dpi/254 else 0}
+		mask:	{if contains(styling.CardType, match: "genericC") then "/CustomRPG-D&D-PF.mse-include/mask_genericbox.png"}
+		alignment: {styling.TextAlign1}
+		font: 
+			name: {styling.TextFont1}
+			size: {18*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {18*dpi/254}
+			alignment: center middle
+
+	Rules:
+		top: {if contains(styling.CardType, match: "genericA") or contains(styling.CardType, match: "genericB") or contains(styling.CardType, match: "genericC") then 240*dpi/254 else if contains(styling.CardType, match: "genericD") then 280*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "generic") then 20*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "generic") then 595*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "genericA") or contains(styling.CardType, match: "genericB") or contains(styling.CardType, match: "genericC") then 560*dpi/254 else if contains(styling.CardType, match: "genericD") then 520*dpi/254 else 0}
+		alignment: {styling.TextAlign2}
+		font: 
+			name: {styling.TextFont2}
+			size: {18*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {18*dpi/254}
+			alignment: center middle
+
+############################################################## Top Type-Subtype Textbox
+	Class-Monstertype:
+		top: {if contains(styling.CardType, match: "monster-DD3") or contains(styling.CardType, match: "monster-custom") then 92.5*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-DD3") or contains(styling.CardType, match: "monster-custom") then 175*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-DD3") or contains(styling.CardType, match: "monster-custom") then 285*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-DD3") or contains(styling.CardType, match: "monster-custom") then 25*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {16*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Role-Monstertype:
+		top: {if contains(styling.CardType, match: "monster-DD4") then 92.5*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-DD4") then 175*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-DD4") then 285*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-DD4") then 25*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {16*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Class-Powertype:
+		top: {if contains(styling.CardType, match: "power") then 92.5*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "power") then 175*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "power") then 285*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "power") then 25*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {16*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Class-Save:
+		top: {if contains(styling.CardType, match: "spell") then 92.5*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "spell") then 175*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "spell") then 285*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "spell") then 25*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {16*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Rarity-Value:
+		top: {if contains(styling.CardType, match: "item") then 92.5*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "item") then 175*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "item") then 285*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "item") then 25*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {16*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Category-Type:
+		top: {if contains(styling.CardType, match: "genericA") or contains(styling.CardType, match: "genericB") or contains(styling.CardType, match: "genericD") or contains(styling.CardType, match: "monster-PS4") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") then 92.5*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "genericA") or contains(styling.CardType, match: "genericB") or contains(styling.CardType, match: "genericD") or contains(styling.CardType, match: "monster-PS4") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") then 175*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "genericA") or contains(styling.CardType, match: "genericB") or contains(styling.CardType, match: "genericD") or contains(styling.CardType, match: "monster-PS4") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") then 285*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "genericA") or contains(styling.CardType, match: "genericB") or contains(styling.CardType, match: "genericD") or contains(styling.CardType, match: "monster-PS4") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") then 25*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {16*dpi/254}
+			color: rgba(0,0,0,255)
+
+############################################################## Bottom Type-Subtype Textbox
+	School-Keyword:
+		top: {if contains(styling.CardType, match: "spell") then 820*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "spell") then 95*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "spell") then 445*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "spell") then 50*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {24*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Power-Keyword:
+		top: {if contains(styling.CardType, match: "power") then 820*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "power") then 95*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "power") then 445*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "power") then 50*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {24*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Monster-Size:
+		top: {if contains(styling.CardType, match: "monster") then 820*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 95*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 445*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 50*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {24*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Item-Slot:
+		top: {if contains(styling.CardType, match: "item") then 820*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "item") then 95*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "item") then 445*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "item") then 50*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {24*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Generic-Subtype:
+		top: {if contains(styling.CardType, match: "genericB") or contains(styling.CardType, match: "genericD") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") then 820*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "genericB") or contains(styling.CardType, match: "genericD") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") then 95*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "genericB") or contains(styling.CardType, match: "genericD") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") then 445*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "genericB") or contains(styling.CardType, match: "genericD") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") then 50*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {24*dpi/254}
+			color: rgba(0,0,0,255)
+
+############################################################## Top Infoboxes
+	Info1:
+		top: {if contains(styling.CardType, match: "monster") or contains(styling.CardType, match: "magic") or contains(styling.CardType, match: "item") or contains(styling.CardType, match: "genericD") then 20*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") or contains(styling.CardType, match: "magic") or contains(styling.CardType, match: "item") or contains(styling.CardType, match: "genericD") then 20*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") or contains(styling.CardType, match: "magic") or contains(styling.CardType, match: "item") or contains(styling.CardType, match: "genericD") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") or contains(styling.CardType, match: "magic") or contains(styling.CardType, match: "item") or contains(styling.CardType, match: "genericD") then 80*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: {styling.InfoFont}
+			size: {20*dpi/254}
+			color: {styling.InfoColor}
+
+	Info2:
+		top: {if contains(styling.CardType, match: "monster") or contains(styling.CardType, match: "item") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") or contains(styling.CardType, match: "genericD") then 20*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") or contains(styling.CardType, match: "item") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") or contains(styling.CardType, match: "genericD") then 535*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") or contains(styling.CardType, match: "item") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") or contains(styling.CardType, match: "genericD") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") or contains(styling.CardType, match: "item") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") or contains(styling.CardType, match: "genericD") then 80*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: {styling.InfoFont}
+			size: {20*dpi/254}
+			color: {styling.InfoColor}
+
+	Components:
+		top: {if contains(styling.CardType, match: "spell") then 20*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "spell") then 535*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "spell") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "spell") then 80*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: {styling.InfoFont}
+			size: {20*dpi/254}
+			color: {styling.InfoColor}
+
+############################################################## Top Infoboxes Names
+	Info3:
+		top: {if contains(styling.CardType, match: "custom") or contains(styling.CardType, match: "genericD") then 5*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "custom") or contains(styling.CardType, match: "genericD") then 30*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "custom") or contains(styling.CardType, match: "genericD") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "custom") or contains(styling.CardType, match: "genericD") then 50*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: {styling.InfoFont}
+			size: {24*dpi/254}
+			color: {styling.InfoColor}
+
+	Info4:
+		top: {if contains(styling.CardType, match: "custom") or contains(styling.CardType, match: "genericD") then 5*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "custom") or contains(styling.CardType, match: "genericD") then 545*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "custom") or contains(styling.CardType, match: "genericD") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "custom") or contains(styling.CardType, match: "genericD") then 50*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: {styling.InfoFont}
+			size: {24*dpi/254}
+			color: {styling.InfoColor}
+
+############################################################## Item/Spell Textboxes
+	Textbox1:
+		top: {if contains(styling.CardType, match: "weapon") or contains(styling.CardType, match: "armor") or contains(styling.CardType, match: "phantasy") or contains(styling.CardType, match: "item-custom") then 285*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "weapon") or contains(styling.CardType, match: "armor") or contains(styling.CardType, match: "phantasy") or contains(styling.CardType, match: "item-custom") then 475*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "weapon") or contains(styling.CardType, match: "armor") or contains(styling.CardType, match: "phantasy") or contains(styling.CardType, match: "item-custom") then 140*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "weapon") or contains(styling.CardType, match: "armor") or contains(styling.CardType, match: "phantasy") or contains(styling.CardType, match: "item-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox2:
+		top: {if contains(styling.CardType, match: "weapon") or contains(styling.CardType, match: "armor") or contains(styling.CardType, match: "phantasy") or contains(styling.CardType, match: "item-custom") then 325*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "weapon") or contains(styling.CardType, match: "armor") or contains(styling.CardType, match: "phantasy") or contains(styling.CardType, match: "item-custom") then 475*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "weapon") or contains(styling.CardType, match: "armor") or contains(styling.CardType, match: "phantasy") or contains(styling.CardType, match: "item-custom") then 140*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "weapon") or contains(styling.CardType, match: "armor") or contains(styling.CardType, match: "phantasy") or contains(styling.CardType, match: "item-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox3:
+		top: {if contains(styling.CardType, match: "weapon") or contains(styling.CardType, match: "armor") or contains(styling.CardType, match: "phantasy") or contains(styling.CardType, match: "item-custom") then 365*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "weapon") or contains(styling.CardType, match: "armor") or contains(styling.CardType, match: "phantasy") or contains(styling.CardType, match: "item-custom") then 475*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "weapon") or contains(styling.CardType, match: "armor") or contains(styling.CardType, match: "phantasy") or contains(styling.CardType, match: "item-custom") then 140*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "weapon") or contains(styling.CardType, match: "armor") or contains(styling.CardType, match: "phantasy") or contains(styling.CardType, match: "item-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Action:
+		top: {if contains(styling.CardType, match: "spell") or contains(styling.CardType, match: "power") or contains(styling.CardType, match: "magic-custom") then 125*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "spell") or contains(styling.CardType, match: "power") or contains(styling.CardType, match: "magic-custom") then 90*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "spell") or contains(styling.CardType, match: "power") or contains(styling.CardType, match: "magic-custom") then 200*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "spell") or contains(styling.CardType, match: "power") or contains(styling.CardType, match: "magic-custom") then 30*dpi/254 else 0}
+		alignment: left middle stretch if-overflow
+		font: 
+			name: FrizQuadrata
+			size: {18*dpi/254}
+			color: rgba(255,128,0,255)
+
+	Damage:
+		top: {if contains(styling.CardType, match: "tech") then 125*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "tech") then 90*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "tech") then 200*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "tech") then 30*dpi/254 else 0}
+		alignment: left middle stretch if-overflow
+		font: 
+			name: FrizQuadrata
+			size: {18*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Range:
+		top: {if contains(styling.CardType, match: "magic") then 125*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "magic") then 390*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "magic") then 200*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "magic") then 30*dpi/254 else 0}
+		alignment: left middle stretch if-overflow
+		font: 
+			name: FrizQuadrata
+			size: {18*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Area:
+		top: {if contains(styling.CardType, match: "magic") then 175*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "magic") then 390*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "magic") then 200*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "magic") then 30*dpi/254 else 0}
+		alignment: left middle stretch if-overflow
+		font: 
+			name: FrizQuadrata
+			size: {18*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Attack:
+		top: {if contains(styling.CardType, match: "power") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") then 175*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "power") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") then 90*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "power") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") then 200*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "power") or contains(styling.CardType, match: "tech") or contains(styling.CardType, match: "magic-custom") then 30*dpi/254 else 0}
+		alignment: left middle stretch if-overflow
+		font: 
+			name: FrizQuadrata
+			size: {18*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Duration:
+		top: {if contains(styling.CardType, match: "spell") then 175*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "spell") then 90*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "spell") then 200*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "spell") then 30*dpi/254 else 0}
+		alignment: left middle stretch if-overflow
+		font: 
+			name: FrizQuadrata
+			size: {18*dpi/254}
+			color: rgba(0,0,0,255)
+
+############################################################## Item/Spell Textboxes Names
+	Textbox4:
+		top: {if contains(styling.CardType, match: "item-custom") then 285*dpi/254 else if contains(styling.CardType, match: "magic-custom") then 125*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "item-custom") then 375*dpi/254 else if contains(styling.CardType, match: "magic-custom") then 0*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "item-custom") then 100*dpi/254 else if contains(styling.CardType, match: "magic-custom") then 90*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "item-custom") then 30*dpi/254 else if contains(styling.CardType, match: "magic-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox5:
+		top: {if contains(styling.CardType, match: "item-custom") then 325*dpi/254 else if contains(styling.CardType, match: "magic-custom") then 125*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "item-custom") then 375*dpi/254 else if contains(styling.CardType, match: "magic-custom") then 300*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "item-custom") then 100*dpi/254 else if contains(styling.CardType, match: "magic-custom") then 90*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "item-custom") then 30*dpi/254 else if contains(styling.CardType, match: "magic-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox6:
+		top: {if contains(styling.CardType, match: "item-custom") then 365*dpi/254 else if contains(styling.CardType, match: "magic-custom") then 175*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "item-custom") then 375*dpi/254 else if contains(styling.CardType, match: "magic-custom") then 0*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "item-custom") then 100*dpi/254 else if contains(styling.CardType, match: "magic-custom") then 90*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "item-custom") then 30*dpi/254 else if contains(styling.CardType, match: "magic-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox7:
+		top: {if contains(styling.CardType, match: "magic-custom") then 175*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "magic-custom") then 300*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "magic-custom") then 90*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "magic-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+############################################################## Monster Statboxes
+	Statbox1:
+		top: {if contains(styling.CardType, match: "monster") then 130*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox2:
+		top: {if contains(styling.CardType, match: "monster") then 190*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox3:
+		top: {if contains(styling.CardType, match: "monster") then 250*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox4:
+		top: {if contains(styling.CardType, match: "monster") then 310*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox5:
+		top: {if contains(styling.CardType, match: "monster") then 370*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox6:
+		top: {if contains(styling.CardType, match: "monster") then 430*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox7:
+		top: {if contains(styling.CardType, match: "monster") then 490*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox8:
+		top: {if contains(styling.CardType, match: "monster") then 550*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox9:
+		top: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 130*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox10:
+		top: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 190*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox11:
+		top: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 250*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox12:
+		top: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 310*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox13:
+		top: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 370*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox14:
+		top: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 430*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox15:
+		top: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 490*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox16:
+		top: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 550*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "DD3") or contains(styling.CardType, match: "customB") then 60*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox17:
+		top: {if contains(styling.CardType, match: "monster") then 740*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 40*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox18:
+		top: {if contains(styling.CardType, match: "monster") then 740*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 100*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox19:
+		top: {if contains(styling.CardType, match: "monster") then 740*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 160*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox20:
+		top: {if contains(styling.CardType, match: "monster") then 740*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 220*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox21:
+		top: {if contains(styling.CardType, match: "monster") then 740*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 280*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Statbox22:
+		top: {if contains(styling.CardType, match: "monster") then 740*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 340*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 60*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+############################################################## Monster Statboxes Names
+	Textbox8:
+		top: {if contains(styling.CardType, match: "monster-custom") then 130*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox9:
+		top: {if contains(styling.CardType, match: "monster-custom") then 190*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox10:
+		top: {if contains(styling.CardType, match: "monster-custom") then 250*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox11:
+		top: {if contains(styling.CardType, match: "monster-custom") then 310*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox12:
+		top: {if contains(styling.CardType, match: "monster-custom") then 370*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox13:
+		top: {if contains(styling.CardType, match: "monster-custom") then 430*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox14:
+		top: {if contains(styling.CardType, match: "monster-custom") then 490*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox15:
+		top: {if contains(styling.CardType, match: "monster-custom") then 550*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 530*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox16:
+		top: {if contains(styling.CardType, match: "customB") then 130*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "customB") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox17:
+		top: {if contains(styling.CardType, match: "customB") then 190*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "customB") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox18:
+		top: {if contains(styling.CardType, match: "customB") then 250*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "customB") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox19:
+		top: {if contains(styling.CardType, match: "customB") then 310*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "customB") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox20:
+		top: {if contains(styling.CardType, match: "customB") then 370*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "customB") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox21:
+		top: {if contains(styling.CardType, match: "customB") then 430*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "customB") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox22:
+		top: {if contains(styling.CardType, match: "customB") then 490*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "customB") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox23:
+		top: {if contains(styling.CardType, match: "customB") then 550*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "customB") then 450*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "customB") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "customB") then 30*dpi/254 else 0}
+		alignment: center bottom stretch if-overflow
+		z index: 1
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox24:
+		top: {if contains(styling.CardType, match: "monster-custom") then 680*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 40*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 60*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox25:
+		top: {if contains(styling.CardType, match: "monster-custom") then 680*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 100*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 60*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox26:
+		top: {if contains(styling.CardType, match: "monster-custom") then 680*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 160*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 60*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox27:
+		top: {if contains(styling.CardType, match: "monster-custom") then 680*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 220*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 60*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox28:
+		top: {if contains(styling.CardType, match: "monster-custom") then 680*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 280*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 60*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+	Textbox29:
+		top: {if contains(styling.CardType, match: "monster-custom") then 680*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster-custom") then 340*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster-custom") then 60*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster-custom") then 60*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {20*dpi/254}
+			color: rgba(0,0,0,255)
+
+############################################################## Symbols/Icons
+	ClassRace:
+		top: {if contains(styling.CardType, match: "power") then 10*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "power")  then 535*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "power") then 80*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "power") then 80*dpi/254 else 0}
+		z index: -1
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:					/CustomRPG.mse-include/empty.png
+			class-bard:				/CustomRPG.mse-include/symbol-classbard.png
+			class-barbarian:		/CustomRPG.mse-include/symbol-classbarbarian.png
+			class-cleric:			/CustomRPG.mse-include/symbol-classcleric.png
+			class-druid:			/CustomRPG.mse-include/symbol-classdruid.png
+			class-fighter:			/CustomRPG.mse-include/symbol-classfighter.png
+			class-gunslinger:		/CustomRPG.mse-include/symbol-classgunslinger.png
+			class-monk:				/CustomRPG.mse-include/symbol-classmonk.png
+			class-paladin:			/CustomRPG.mse-include/symbol-classpaladin.png
+			class-psion:			/CustomRPG.mse-include/symbol-classpsion.png
+			class-ranger:			/CustomRPG.mse-include/symbol-classranger.png
+			class-rogue:			/CustomRPG.mse-include/symbol-classrogue.png
+			class-sorcerer:			/CustomRPG.mse-include/symbol-classsorcerer.png
+			class-warlock:			/CustomRPG.mse-include/symbol-classwarlock.png
+			class-warlord:			/CustomRPG.mse-include/symbol-classwarlord.png
+			class-wizard:			/CustomRPG.mse-include/symbol-classwizard.png
+
+	ActionType:
+		top: {if contains(styling.CardType, match: "item") or contains(styling.CardType, match: "magic") then 810*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "item") or contains(styling.CardType, match: "magic") then 25*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "item") or contains(styling.CardType, match: "magic") then 70*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "item") or contains(styling.CardType, match: "magic") then 70*dpi/254 else 0}
+		z index: -1
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:				/CustomRPG.mse-include/empty.png
+			icon-noaction:		/CustomRPG.mse-include/action_none.png
+			icon-free:			/CustomRPG.mse-include/action_free.png
+			icon-bonus:			/CustomRPG.mse-include/action_bonus.png
+			icon-minor:			/CustomRPG.mse-include/action_minor.png
+			icon-move:			/CustomRPG.mse-include/action_move.png
+			icon-standard:		/CustomRPG.mse-include/action_standard.png
+			icon-complex:		/CustomRPG.mse-include/action_fullround.png
+			icon-reaction:		/CustomRPG.mse-include/action_immediate.png
+			icon-minute:		/CustomRPG.mse-include/action_minute.png
+			icon-hour:			/CustomRPG.mse-include/action_hour.png
+			icon-ritual:		/CustomRPG.mse-include/icon-ritual.png
+			icon-concentration:	/CustomRPG.mse-include/icon-concentration.png
+			icon-tech:			/CustomRPG.mse-include/ps_tech.png
+			icon-skill:			/CustomRPG.mse-include/ps_skill.png
+			icon-item:			/CustomRPG.mse-include/ps_item.png
+
+	ItemType:
+		top: {if contains(styling.CardType, match: "item") then 810*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "item") then 540*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "item") then 70*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "item") then 70*dpi/254 else 0}
+		z index: -1
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:					/CustomRPG.mse-include/empty.png
+			icon-armour:			/CustomRPG.mse-include/icon-armour.png
+			icon-shield:			/CustomRPG.mse-include/icon-shield.png
+			icon-weapon:			/CustomRPG.mse-include/icon-weapon.png
+			icon-helm:				/CustomRPG.mse-include/icon-helm.png
+			icon-robe:				/CustomRPG.mse-include/icon-robe.png
+			icon-boots:				/CustomRPG.mse-include/icon-boots.png
+			icon-bracers:			/CustomRPG.mse-include/icon-bracers.png
+			icon-belt:				/CustomRPG.mse-include/icon-belt.png
+			icon-cape:				/CustomRPG.mse-include/icon-cape.png
+			icon-ring:				/CustomRPG.mse-include/icon-ring.png
+			icon-amulet:			/CustomRPG.mse-include/icon-amulet.png
+			icon-staff:				/CustomRPG.mse-include/icon-staff.png
+			icon-wand:				/CustomRPG.mse-include/icon-wand.png
+			icon-artifact:			/CustomRPG.mse-include/icon-artifact.png
+			icon-potion:			/CustomRPG.mse-include/icon-potion.png
+			icon-scroll:			/CustomRPG.mse-include/icon-scroll.png
+			icon-treasure:			/CustomRPG.mse-include/icon-treasure.png
+			icon-misc:				/CustomRPG.mse-include/icon-misc.png
+
+	MonsterType:
+		top: {if contains(styling.CardType, match: "monster") then 810*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "monster") then 540*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "monster") then 70*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "monster") then 70*dpi/254 else 0}
+		z index: -1
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:					/CustomRPG.mse-include/empty.png
+			race-aberration:		/CustomRPG.mse-include/symbol-raceaberration.png
+			race-beast:				/CustomRPG.mse-include/symbol-racebeast.png
+			race-construct:			/CustomRPG.mse-include/symbol-raceconstruct.png
+			race-dragon:			/CustomRPG.mse-include/symbol-racedragon.png
+			race-elemental:			/CustomRPG.mse-include/symbol-raceelemental.png
+			race-fey:				/CustomRPG.mse-include/symbol-racefey.png
+			race-giant:				/CustomRPG.mse-include/symbol-racegiant.png
+			race-humanoid:			/CustomRPG.mse-include/symbol-racehumanoid.png
+			race-monstroushumanoid:	/CustomRPG.mse-include/symbol-racemonstroushumanoid.png
+			race-ooze:				/CustomRPG.mse-include/symbol-raceooze.png
+			race-outsider:			/CustomRPG.mse-include/symbol-raceoutsider.png
+			race-plant:				/CustomRPG.mse-include/symbol-raceplant.png
+			race-undead:			/CustomRPG.mse-include/symbol-raceundead.png
+
+	SpellType:
+		top: {if contains(styling.CardType, match: "magic") then 810*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "magic") then 540*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "magic") then 70*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "magic") then 70*dpi/254 else 0}
+		z index: -1
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:					/CustomRPG.mse-include/empty.png
+			icon-melee:				/CustomRPG.mse-include/area_melee.png
+			icon-meleebase:			/CustomRPG.mse-include/area_meleebase.png
+			icon-ranged:			/CustomRPG.mse-include/area_ranged.png
+			icon-rangedbase:		/CustomRPG.mse-include/area_rangedbase.png
+			icon-monster:			/CustomRPG.mse-include/area_monster.png
+			icon-hybrid:			/CustomRPG.mse-include/area_hybrid.png
+			icon-personal:			/CustomRPG.mse-include/area_personal.png
+			icon-touch:				/CustomRPG.mse-include/area_touch.png
+			icon-rangedtouch:		/CustomRPG.mse-include/area_rangedtouch.png
+			icon-blast:				/CustomRPG.mse-include/area_blast.png
+			icon-closeburst:		/CustomRPG.mse-include/area_closeburst.png
+			icon-rangedburst:		/CustomRPG.mse-include/area_rangedburst.png
+			icon-wall:				/CustomRPG.mse-include/area_wall.png
+
+	SaveType:
+		top: {if contains(styling.CardType, match: "magic") then 770*dpi/254 else 0}
+		left: {if contains(styling.CardType, match: "magic") then 292.5*dpi/254 else 0}
+		width: {if contains(styling.CardType, match: "magic") then 50*dpi/254 else 0}
+		height: {if contains(styling.CardType, match: "magic") then 50*dpi/254 else 0}
+		z index: -1
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:				/CustomRPG.mse-include/empty.png
+			icon-nosave:		/CustomRPG.mse-include/symbol-nosave.png
+			icon-armorclass:	/CustomRPG.mse-include/symbol-armorclass.png
+			icon-fortitude:		/CustomRPG.mse-include/symbol-fortitude.png
+			icon-reflex:		/CustomRPG.mse-include/symbol-reflex.png
+			icon-will:			/CustomRPG.mse-include/symbol-will.png
+			icon-strength:		/CustomRPG.mse-include/symbol-strength.png
+			icon-dexterity:		/CustomRPG.mse-include/symbol-dexterity.png
+			icon-constitution:	/CustomRPG.mse-include/symbol-constitution.png
+			icon-intelligence:	/CustomRPG.mse-include/symbol-intelligence.png
+			icon-wisdom:		/CustomRPG.mse-include/symbol-wisdom.png
+			icon-charisma:		/CustomRPG.mse-include/symbol-charisma.png

@@ -1,0 +1,605 @@
+mse version: 2.0.0
+game: CustomRPG
+short name: Descent Standard
+full name: (5.75cm x 8.9cm)
+icon: icon.png
+depends on: CustomRPG.mse-game 1.0
+depends on: CustomRPG.mse-include 1.0
+depends on: CustomRPG.mse-symbol-font 1.0
+depends on: CustomRPG-Descent.mse-include 1.0
+card background: white
+#card width: 345
+#card height: 534
+#card dpi: 152.4
+card width: 575
+card height: 890
+card dpi: 254
+
+############################################################## Scripts
+init script:
+	dpi := 254
+
+	##### Category
+	cardlist_display1 := {
+		if contains(card.StandardBackground, match: "monster") then "Monster"
+		else if contains(card.StandardBackground, match: "lieutenant") then "Lieutenant"
+		else if contains(card.StandardBackground, match: "event") then "Event"
+		else if contains(card.StandardBackground, match: "overlord") then "Overlord"
+		else ""
+		}
+	##### Type
+	cardlist_display2 := {
+		if contains(card.StandardBackground, match: "overlord") then card.Category
+		else ""
+		}
+	##### Subtype/Info
+	cardlist_display3 := {
+		if contains(card.StandardBackground, match: "monster-front") then card.Statbox14
+		else if contains(card.StandardBackground, match: "overlord") then card.Type
+		else ""
+		}
+	##### Misc/Info
+	cardlist_display4 := {
+		if contains(card.StandardBackground, match: "monster-front") then card.Statbox17
+		else ""
+		}
+	##### Background
+	cardlist_display5 := {card.StandardBackground}
+
+	card_type := {
+	if card.StandardBackground == "monster-front" or card.StandardBackground == "monster-back" then "monster"
+	else if card.StandardBackground == "lieutenant-front" or card.StandardBackground == "lieutenant-back" then "lieutenant"
+	else if card.StandardBackground == "event" then "event"
+	else "overlord"
+	}
+
+	overlay_style1 := {
+	if card.StandardBackground == "monster-front" and styling.MinionBox == 2 then "/CustomRPG-Descent.mse-include/overlay_minion1.png"
+	else if card.StandardBackground == "monster-front" and styling.MinionBox == 3 then "/CustomRPG-Descent.mse-include/overlay_minion2.png"
+	else if card.StandardBackground == "monster-front" and styling.MinionBox == 4 then "/CustomRPG-Descent.mse-include/overlay_minion3.png"
+	else "/CustomRPG-Descent.mse-include/overlay_empty.png"
+	}
+
+	overlay_style2 := {
+	if card.StandardBackground == "monster-front" and styling.MasterBox == 2 then "/CustomRPG-Descent.mse-include/overlay_master1.png"
+	else if card.StandardBackground == "monster-front" and styling.MasterBox == 3 then "/CustomRPG-Descent.mse-include/overlay_master2.png"
+	else if card.StandardBackground == "monster-front" and styling.MasterBox == 4 then "/CustomRPG-Descent.mse-include/overlay_master3.png"
+	else "/CustomRPG-Descent.mse-include/overlay_empty.png"
+	}
+
+	overlay_style := {combine_blend(image1: overlay_style1(), image2: overlay_style2(), combine: "overlay")}
+
+############################################################## Style
+styling field:
+	type: choice
+	name: MinionBox
+	description: Number of abilities for the minion (monster-front)
+	initial: 1
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+
+styling field:
+	type: choice
+	name: MasterBox
+	description: Number of abilities for the master (monster-front)
+	initial: 1
+	choice: 1
+	choice: 2
+	choice: 3
+	choice: 4
+
+############################################################## Fields
+card style:
+	StandardBackground:
+		top:	0
+		left:	0
+		width:	{575*dpi/254}
+		height:	{890*dpi/254}
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			monster-front:			{combine_blend(image1: overlay_style(), image2: "/CustomRPG-Descent.mse-include/card_monsterfront.png", combine: "overlay")}
+			monster-back:			{"/CustomRPG-Descent.mse-include/card_monsterback.png"}
+#			lieutenant-front:		{"/CustomRPG-Descent.mse-include/card_lieutenantfront.png"}
+#			lieutenant-back:		{"/CustomRPG-Descent.mse-include/card_lieutenantback.png"}
+			event:					{"/CustomRPG-Descent.mse-include/card_event.png"}
+			overlord:				{"/CustomRPG-Descent.mse-include/card_overlord.png"}
+
+############################################################## Main Info
+	Name:
+		top: {if card_type() == "overlord" then 60*dpi/254 else if card.StandardBackground == "monster-front" then 550*dpi/254 else if card.StandardBackground == "monster-back" then 140*dpi/254 else 0}
+		left: {if card_type() == "overlord" then 135*dpi/254 else if card.StandardBackground == "monster-front" then 125*dpi/254 else if card.StandardBackground == "monster-back" then 122*dpi/254 else 0}
+		width: {if card_type() == "overlord" then 305*dpi/254 else if card.StandardBackground == "monster-front" then 330*dpi/254 else if card.StandardBackground == "monster-back" then 330*dpi/254 else 0}
+		height: {if card_type() == "overlord" then 55*dpi/254 else if card.StandardBackground == "monster-front" then 40*dpi/254 else if card.StandardBackground == "monster-back" then 40*dpi/254 else 0}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Windlass
+			size: {if card.StandardBackground == "monster-front" then 24*dpi/254 else 28*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Picture:
+		top: {if card.StandardBackground == "monster-front" then 300*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" then 30*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" then 515*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" then 230*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		mask:	{if card.StandardBackground == "monster-front" then  "/CustomRPG-Descent.mse-include/mask_picture6.png"}
+
+	Category:
+		top: {if card_type() == "overlord" then 145*dpi/254 else 0}
+		left: {if card_type() == "overlord" then 150*dpi/254 else 0}
+		width: {if card_type() == "overlord" then 280*dpi/254 else 0}
+		height: {if card_type() == "overlord" then 25*dpi/254 else 0}
+		visible: {if card_type() == "overlord" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Windlass
+			size: {18*dpi/254}
+			style: italic
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Type:
+		top: {if card_type() == "overlord" then 800*dpi/254 else 0}
+		left: {if card_type() == "overlord" then 60*dpi/254 else 0}
+		width: {if card_type() == "overlord" then 350*dpi/254 else 0}
+		height: {if card_type() == "overlord" then 50*dpi/254 else 0}
+		visible: {if card_type() == "overlord" then true else false}
+		alignment: left middle stretch if-overflow
+		font: 
+			name: Windlass
+			size: {24*dpi/254}
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Description:
+		top: {if card_type() == "overlord" then 210*dpi/254 else if card.StandardBackground == "monster-back" then 250*dpi/254 else if card.StandardBackground == "event" then 150*dpi/254 else 0}
+		left: {if card_type() == "overlord" then 120*dpi/254 else if card.StandardBackground == "monster-back" then 65*dpi/254 else if card.StandardBackground == "event" then 70*dpi/254 else 0}
+		width: {if card_type() == "overlord" then 340*dpi/254 else if card.StandardBackground == "monster-back" then 430*dpi/254 else if card.StandardBackground == "event" then 455*dpi/254 else 0}
+		height: {if card_type() == "overlord" then 490*dpi/254 else if card.StandardBackground == "monster-back" then 500*dpi/254 else if card.StandardBackground == "event" then 640*dpi/254 else 0}
+		visible: {if card_type() == "monster-front" then false else true}
+		alignment: top left stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {24*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {24*dpi/254}
+			alignment: center middle
+
+	Info1:
+		top: {if card_type() == "overlord" then 765*dpi/254 else 0}
+		left: {if card_type() == "overlord" then 450*dpi/254 else 0}
+		width: {if card_type() == "overlord" then 75*dpi/254 else 0}
+		height: {if card_type() == "overlord" then 75*dpi/254 else 0}
+		visible: {if card_type() == "overlord" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {52*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Info2:
+		top: {if card.StandardBackground == "monster-front" then 228*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" then 164*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" then 248*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" then 44*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {32*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {24*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Info3:
+		top: {if card.StandardBackground == "monster-front" then 622*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" then 165*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" then 248*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" then 44*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {32*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {24*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Info4:
+		top: {if card.StandardBackground == "monster-front" then 472*dpi/254 else if card.StandardBackground == "monster-back" then 42*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" then 456*dpi/254 else if card.StandardBackground == "monster-back" then 254*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" then 65*dpi/254 else if card.StandardBackground == "monster-back" then 65*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" then 65*dpi/254 else if card.StandardBackground == "monster-back" then 65*dpi/254 else 0}
+		visible: {if card_type() == "monster" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Windlass
+			size: {24*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+
+############################################################## Statboxes
+	Statbox13:
+		top: {if card.StandardBackground == "monster-front" then 25*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" then 106*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" then 55*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" then 55*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {32*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Statbox14:
+		top: {if card.StandardBackground == "monster-front" then 25*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" then 292*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" then 55*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" then 55*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {32*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Statbox15:
+		top: {if card.StandardBackground == "monster-front" then 25*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" then 468*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" then 75*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" then 55*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {32*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+		symbol font:
+			name: CustomRPG
+			size: {24*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Statbox16:
+		top: {if card.StandardBackground == "monster-front" then 810*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" then 106*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" then 55*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" then 55*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {32*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Statbox17:
+		top: {if card.StandardBackground == "monster-front" then 810*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" then 292*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" then 55*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" then 55*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {32*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Statbox18:
+		top: {if card.StandardBackground == "monster-front" then 810*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" then 468*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" then 75*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" then 55*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {32*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+		symbol font:
+			name: CustomRPG
+			size: {24*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Statbox19:
+		top: {if card.StandardBackground == "monster-back" then 835*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-back" then 50*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-back" then 40*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-back" then 38*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-back" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {28*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+
+	Statbox20:
+		top: {if card.StandardBackground == "monster-back" then 835*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-back" then 108*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-back" then 40*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-back" then 38*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-back" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {28*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+
+	Statbox21:
+		top: {if card.StandardBackground == "monster-back" then 835*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-back" then 238*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-back" then 40*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-back" then 38*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-back" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {28*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+
+	Statbox22:
+		top: {if card.StandardBackground == "monster-back" then 835*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-back" then 296*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-back" then 40*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-back" then 38*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-back" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {28*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+
+	Statbox23:
+		top: {if card.StandardBackground == "monster-back" then 835*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-back" then 432*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-back" then 40*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-back" then 38*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-back" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {28*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+
+	Statbox24:
+		top: {if card.StandardBackground == "monster-back" then 835*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-back" then 490*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-back" then 40*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-back" then 38*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-back" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {28*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+
+############################################################## Textboxes
+	Textbox1:
+		top: {if card.StandardBackground == "monster-front" then 120*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" then 20*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" and styling.MinionBox == 1 then 535*dpi/254 else if card.StandardBackground == "monster-front" and styling.MinionBox > 1 then 267.5*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front"  and styling.MinionBox <= 2 then 90*dpi/254 else if card.StandardBackground == "monster-front"  and styling.MinionBox > 2 then 45*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {24*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {20*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Textbox2:
+		top: {if card.StandardBackground == "monster-front" and styling.MinionBox > 1 then 120*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" and styling.MinionBox > 1 then 287.5*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" and styling.MinionBox > 1 then 267.5*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" and styling.MinionBox < 3 then 90*dpi/254 else if card.StandardBackground == "monster-front" and styling.MinionBox > 2 then 45*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {24*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {20*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Textbox3:
+		top: {if card.StandardBackground == "monster-front" and styling.MinionBox > 2 then 165*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" and styling.MinionBox > 2 then 20*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" and styling.MinionBox < 4 then 535*dpi/254 else if card.StandardBackground == "monster-front" and styling.MinionBox > 3 then 267.5*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" and styling.MinionBox > 2 then 45*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {24*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {20*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Textbox4:
+		top: {if card.StandardBackground == "monster-front" and styling.MinionBox > 3 then 165*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" and styling.MinionBox > 3 then 287.5*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" and styling.MinionBox > 3 then 267.5*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" and styling.MinionBox > 3 then 45*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {24*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {20*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Textbox5:
+		top: {if card.StandardBackground == "monster-front" then 678*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" then 20*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" and styling.MasterBox == 1 then 535*dpi/254 else if card.StandardBackground == "monster-front" and styling.MasterBox > 1 then 267.5*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front"  and styling.MasterBox <= 2 then 90*dpi/254 else if card.StandardBackground == "monster-front"  and styling.MasterBox > 2 then 45*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {24*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {20*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Textbox6:
+		top: {if card.StandardBackground == "monster-front" and styling.MasterBox > 1 then 678*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" and styling.MasterBox > 1 then 287.5*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" and styling.MasterBox > 1 then 267.5*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" and styling.MasterBox < 3 then 90*dpi/254 else if card.StandardBackground == "monster-front" and styling.MasterBox > 2 then 45*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {24*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {20*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Textbox7:
+		top: {if card.StandardBackground == "monster-front" and styling.MasterBox > 2 then 723*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" and styling.MasterBox > 2 then 20*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" and styling.MasterBox < 4 then 535*dpi/254 else if card.StandardBackground == "monster-front" and styling.MasterBox > 3 then 267.5*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" and styling.MasterBox > 2 then 45*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {24*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {20*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Textbox8:
+		top: {if card.StandardBackground == "monster-front" and styling.MasterBox > 3 then 723*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" and styling.MasterBox > 3 then 287.5*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" and styling.MasterBox > 3 then 267.5*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" and styling.MasterBox > 3 then 45*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {24*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {20*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+############################################################## Icons
+	IconAttack:
+		top: {if card.StandardBackground == "monster-front" then 468*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-front" then 53*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-front" then 65*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-front" then 65*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-front" then true else false}
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:			/CustomRPG.mse-include/empty.png
+			melee:			/CustomRPG-Descent.mse-include/icon_monstermelee.png
+			ranged:			/CustomRPG-Descent.mse-include/icon_monsterranged.png
+
+	IconMonster1:
+		top: {if card.StandardBackground == "monster-back" then 10*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-back" then 12*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-back" then 116*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-back" then 116*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-back" then true else false}
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:			/CustomRPG.mse-include/empty.png
+			hot:			/CustomRPG-Descent.mse-include/icon_hot.png
+			cold:			/CustomRPG-Descent.mse-include/icon_cold.png
+			water:			/CustomRPG-Descent.mse-include/icon_water.png
+			mountain:		/CustomRPG-Descent.mse-include/icon_mountain.png
+			building:		/CustomRPG-Descent.mse-include/icon_building.png
+			cave:			/CustomRPG-Descent.mse-include/icon_cave.png
+			civilized:		/CustomRPG-Descent.mse-include/icon_civilized.png
+			wilderness:		/CustomRPG-Descent.mse-include/icon_wild.png
+			cursed:			/CustomRPG-Descent.mse-include/icon_cursed.png
+			dark:			/CustomRPG-Descent.mse-include/icon_dark.png
+
+	IconMonster2:
+		top: {if card.StandardBackground == "monster-back" then 10*dpi/254 else 0}
+		left: {if card.StandardBackground == "monster-back" then 448*dpi/254 else 0}
+		width: {if card.StandardBackground == "monster-back" then 116*dpi/254 else 0}
+		height: {if card.StandardBackground == "monster-back" then 116*dpi/254 else 0}
+		visible: {if card.StandardBackground == "monster-back" then true else false}
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:			/CustomRPG.mse-include/empty.png
+			hot:			/CustomRPG-Descent.mse-include/icon_hot.png
+			cold:			/CustomRPG-Descent.mse-include/icon_cold.png
+			water:			/CustomRPG-Descent.mse-include/icon_water.png
+			mountain:		/CustomRPG-Descent.mse-include/icon_mountain.png
+			building:		/CustomRPG-Descent.mse-include/icon_building.png
+			cave:			/CustomRPG-Descent.mse-include/icon_cave.png
+			civilized:		/CustomRPG-Descent.mse-include/icon_civilized.png
+			wilderness:		/CustomRPG-Descent.mse-include/icon_wild.png
+			cursed:			/CustomRPG-Descent.mse-include/icon_cursed.png
+			dark:			/CustomRPG-Descent.mse-include/icon_dark.png

@@ -1,0 +1,218 @@
+mse version: 2.0.0
+game: CustomRPG
+short name: DnDBoard Large
+full name: (17cm x 11.6cm)
+icon: icon.png
+depends on: CustomRPG.mse-game 1.0
+depends on: CustomRPG.mse-include 1.0
+depends on: CustomRPG.mse-symbol-font 1.0
+depends on: CustomRPG-DnDBoard.mse-include 1.0
+card background: white
+#card width: 1020
+#card height: 696
+#card dpi: 152.4
+card width: 1700
+card height: 1160
+card dpi: 254
+
+############################################################## Scripts
+init script:
+	dpi := 254
+
+	##### Category
+	cardlist_display1 := {card.Category}
+	##### Type
+	cardlist_display2 := {card.Type}
+	##### Subtype/Info
+	cardlist_display3 := {card.Textbox4}
+	##### Misc/Info
+	cardlist_display4 := {card.Textbox5}
+	##### Background
+	cardlist_display5 := {card.DnDBackgroundLg}
+
+############################################################## Style
+card style:
+	DnDBackgroundLg:
+		top:	0
+		left:	0
+		width:	{1700*dpi/254}
+		height:	{1160*dpi/254}
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			hero:	{combine_blend(image1: "/CustomRPG-DnDBoard.mse-include/overlay_hero.png", image2: "/CustomRPG-DnDBoard.mse-include/card_hero.png", combine: "overlay")}
+
+############################################################## Main Info
+	Name:
+		top: {90*dpi/254}
+		left: {470*dpi/254}
+		width: {400*dpi/254}
+		height: {70*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Windlass
+			size: {42*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	DnDClass:
+		top: {40*dpi/254}
+		left: {300*dpi/254}
+		width: {160*dpi/254}
+		height: {160*dpi/254}
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:			/CustomRPG.mse-include/empty.png
+			fighter:		/CustomRPG-DnDBoard.mse-include/symbol_fighter.png
+			rogue:			/CustomRPG-DnDBoard.mse-include/symbol_rogue.png
+			wizard:			/CustomRPG-DnDBoard.mse-include/symbol_wizard.png
+			cleric:			/CustomRPG-DnDBoard.mse-include/symbol_cleric.png
+			paladin:		/CustomRPG-DnDBoard.mse-include/symbol_paladin.png
+			barbarian:		/CustomRPG-DnDBoard.mse-include/symbol_barbarian.png
+			ranger:			/CustomRPG-DnDBoard.mse-include/symbol_ranger.png
+			monk:			/CustomRPG-DnDBoard.mse-include/symbol_monk.png
+			druid:			/CustomRPG-DnDBoard.mse-include/symbol_druid.png
+			sorcerer:		/CustomRPG-DnDBoard.mse-include/symbol_sorcerer.png
+			bard:			/CustomRPG-DnDBoard.mse-include/symbol_bard.png
+			warlock:		/CustomRPG-DnDBoard.mse-include/symbol_warlock.png
+
+	Picture:
+		top: {40*dpi/254}
+		left: {900*dpi/254}
+		width: {560*dpi/254}
+		height: {740*dpi/254}
+#		mask:	/CustomRPG.mse-include/mask_full.png
+
+	Category-Type:
+		top: {200*dpi/254}
+		left: {300*dpi/254}
+		width: {570*dpi/254}
+		height: {60*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Windlass
+			size: {28*dpi/254}
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Description:
+		top: {260*dpi/254}
+		left: {300*dpi/254}
+		width: {570*dpi/254}
+		height: {380*dpi/254}
+		alignment: top left stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {22*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {22*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+	Rules:
+		top: {940*dpi/254}
+		left: {300*dpi/254}
+		width: {570*dpi/254}
+		height: {180*dpi/254}
+		alignment: top left stretch if-overflow
+		font: 
+			name: Gara Scenario Descent
+			size: {22*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {22*dpi/254}
+			alignment: center middle
+		always symbol: true
+
+############################################################## Textboxes
+	Textbox1:
+		top: {770*dpi/254}
+		left: {320*dpi/254}
+		width: {40*dpi/254}
+		height: {40*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {36*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Textbox2:
+		top: {770*dpi/254}
+		left: {495*dpi/254}
+		width: {40*dpi/254}
+		height: {40*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {36*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Textbox3:
+		top: {770*dpi/254}
+		left: {670*dpi/254}
+		width: {40*dpi/254}
+		height: {40*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Blackmoor LET Plain:1.0
+			size: {36*dpi/254}
+			weight: bold
+			color: rgba(255,255,255,255)
+
+	Textbox4:
+		top: {870*dpi/254}
+		left: {1140*dpi/254}
+		width: {60*dpi/254}
+		height: {60*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {28*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+
+	Textbox5:
+		top: {870*dpi/254}
+		left: {1200*dpi/254}
+		width: {60*dpi/254}
+		height: {60*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {28*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+
+	Textbox6:
+		top: {930*dpi/254}
+		left: {1140*dpi/254}
+		width: {60*dpi/254}
+		height: {60*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {28*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+
+	Textbox7:
+		top: {930*dpi/254}
+		left: {1200*dpi/254}
+		width: {60*dpi/254}
+		height: {60*dpi/254}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: Caslon Antique Regular
+			size: {28*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)

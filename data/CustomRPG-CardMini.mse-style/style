@@ -1,0 +1,638 @@
+mse version: 2.0.0
+game: CustomRPG
+short name: Mini
+full name: (4.8cm x 6.6cm)
+icon: icon.png
+depends on: CustomRPG.mse-game 1.0
+depends on: CustomRPG.mse-include 1.0
+depends on: CustomRPG.mse-symbol-font 1.0
+card background: white
+#card width: 288
+#card height: 396
+#card dpi: 152.4
+card width: 480
+card height: 660
+card dpi: 254
+
+############################################################## Scripts
+init script:
+	dpi := 254
+
+	##### Category
+	cardlist_display1 := {if styling.PictureStyle == "cardback" then "Cardback"	else card.Category}
+	##### Type
+	cardlist_display2 := {if styling.PictureStyle == "cardback" then ""	else card.Type}
+	##### Subtype/Info
+	cardlist_display3 := {if styling.PictureStyle == "cardback" then ""	else number_filter(card.Info1)}
+	##### Misc/Info
+	cardlist_display4 := {if styling.PictureStyle == "cardback" then ""	else number_filter(card.Info2)}
+	##### Background
+	cardlist_display5 := {card.Background}
+
+	overlay_style := {
+	if styling.PictureStyle == "cardback" then "/CustomRPG.mse-include/card-cardback.png"
+	else if styling.PictureStyle == "fulltext" then "/CustomRPG.mse-include/card-fulltext.png"
+	else "/CustomRPG.mse-include/card-overlay1a.png"
+	}
+
+############################################################## Style
+styling field:
+	type: choice
+	name: PictureStyle
+	description: Style of picture for the card
+	initial: large
+	choice: small
+	choice: large
+	choice: fulltransparent
+	choice: fulltext
+	choice: cardback
+
+styling field:
+	type: choice
+	name: CardSymbol
+	description: Display of a card symbol
+	initial: enabled
+	choice: disabled
+	choice: enabled
+
+styling field:
+	type: choice
+	name: Watermark
+	description: Watermark for the card
+	initial: empty
+	choice: empty
+	choice: watermark-barbarian
+	choice: watermark-bard
+	choice: watermark-cleric
+	choice: watermark-druid
+	choice: watermark-fighter
+	choice: watermark-monk
+	choice: watermark-paladin
+	choice: watermark-ranger
+	choice: watermark-rogue
+	choice: watermark-shaman
+	choice: watermark-sorcerer
+	choice: watermark-warlock
+	choice: watermark-wizard
+	choice: watermark-dragonborn
+	choice: watermark-drow
+	choice: watermark-dwarf
+	choice: watermark-elf
+	choice: watermark-human
+	choice: watermark-archdruid
+	choice: watermark-assassin
+	choice: watermark-blackknight
+	choice: watermark-blademaster
+	choice: watermark-deathknight
+	choice: watermark-deathshaman
+	choice: watermark-divinechampion
+	choice: watermark-divineoracle
+	choice: watermark-dragonhunter
+	choice: watermark-evil
+	choice: watermark-guardian
+	choice: watermark-hellbringer
+	choice: watermark-hunter
+	choice: watermark-knight
+	choice: watermark-loremaster
+	choice: watermark-masterofflames
+	choice: watermark-necromancer
+	choice: watermark-noble
+	choice: watermark-priest
+	choice: watermark-sneak
+	choice: watermark-soulbinder
+	choice: watermark-spellstorm
+	choice: watermark-stormwarden
+	choice: watermark-timemaster
+	choice: watermark-trickster
+	choice: watermark-warrior
+
+styling field:
+	type: choice
+	name: NameFont
+	description: Font for the name of the card
+	initial: HeroQuest
+	choice: Times New Roman
+	choice: MPlantin
+	choice: Gara Scenario Descent
+	choice: HeroQuest
+	choice: Caslon Antique Regular
+	choice: Gaze Italic
+	choice: FrizQuadrata
+	choice: Kelmscott
+	choice: Windlass
+	choice: Blackmoor LET
+	choice: Vecna
+
+styling field:
+	type: color
+	name: NameColor
+	description: Color for the name of the card
+	initial: black
+	choice:
+		name: black
+		color: rgb(0,0,0)
+	choice:
+		name: white
+		color: rgb(255,255,255)
+	choice:
+		name: bronze
+		color: rgb(205,127,50)
+	choice:
+		name: silver
+		color: rgb(128,128,128)
+	choice:
+		name: gold
+		color: rgb(255,215,0)
+	choice:
+		name: blue
+		color: rgb(0,0,255)
+	choice:
+		name: orange
+		color: rgb(255,165,0)
+	choice:
+		name: green
+		color: rgb(0,128,0)
+	choice:
+		name: red
+		color: rgb(255,0,0)
+	choice:
+		name: purple
+		color: rgb(128,0,128)
+	choice:
+		name: yellow
+		color: rgb(255,255,0)
+	choice:
+		name: cyan
+		color: rgb(0,255,255)
+	choice:
+		name: magenta
+		color: rgb(255,0,255)
+	choice:
+		name: brown
+		color: rgb(139,69,19)
+	choice:
+		name: teal
+		color: rgb(0,128,128)
+
+styling field:
+	type: choice
+	name: TypeFont
+	description: Font for the type-subtype boxes
+	initial: Caslon Antique Regular
+	choice: Times New Roman
+	choice: MPlantin
+	choice: Gara Scenario Descent
+	choice: HeroQuest
+	choice: Caslon Antique Regular
+	choice: Gaze Italic
+	choice: FrizQuadrata
+	choice: Kelmscott
+	choice: Windlass
+	choice: Blackmoor LET
+	choice: Vecna
+
+styling field:
+	type: choice
+	name: TextFont
+	description: Font for the main textbox
+	initial: Gaze Italic
+	choice: Times New Roman
+	choice: MPlantin
+	choice: Gara Scenario Descent
+	choice: HeroQuest
+	choice: Caslon Antique Regular
+	choice: Gaze Italic
+	choice: FrizQuadrata
+	choice: Kelmscott
+	choice: Windlass
+	choice: Blackmoor LET
+	choice: Vecna
+
+styling field:
+	type: choice
+	name: TextAlign
+	description: Text alignment for the main textbox
+	initial: top left
+	choice: top left
+	choice: top center
+	choice: middle left
+	choice: middle center
+
+styling field:
+	type: choice
+	name: InfoFont
+	description: Font for the small infoboxes
+	initial: HeroQuest
+	choice: Times New Roman
+	choice: MPlantin
+	choice: Gara Scenario Descent
+	choice: HeroQuest
+	choice: Caslon Antique Regular
+	choice: Gaze Italic
+	choice: FrizQuadrata
+	choice: Kelmscott
+	choice: Windlass
+	choice: Blackmoor LET
+	choice: Vecna
+
+styling field:
+	type: color
+	name: InfoColor
+	description: Color for the small infoboxes
+	initial: black
+	choice:
+		name: black
+		color: rgb(0,0,0)
+	choice:
+		name: white
+		color: rgb(255,255,255)
+	choice:
+		name: bronze
+		color: rgb(205,127,50)
+	choice:
+		name: silver
+		color: rgb(128,128,128)
+	choice:
+		name: gold
+		color: rgb(255,215,0)
+	choice:
+		name: blue
+		color: rgb(0,0,255)
+	choice:
+		name: orange
+		color: rgb(255,165,0)
+	choice:
+		name: green
+		color: rgb(0,128,0)
+	choice:
+		name: red
+		color: rgb(255,0,0)
+	choice:
+		name: purple
+		color: rgb(128,0,128)
+	choice:
+		name: yellow
+		color: rgb(255,255,0)
+	choice:
+		name: cyan
+		color: rgb(0,255,255)
+	choice:
+		name: magenta
+		color: rgb(255,0,255)
+	choice:
+		name: brown
+		color: rgb(139,69,19)
+	choice:
+		name: teal
+		color: rgb(0,128,128)
+
+############################################################## Background
+card style:
+	Background:
+		top:	0
+		left:	0
+		width:	{480*dpi/254}
+		height:	{660*dpi/254}
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			default:			{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-default.png", combine: "overlay")}
+			default-dark:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-default-dark.png", combine: "overlay")}
+			default-blue:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-default-blue.png", combine: "overlay")}
+			default-green:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-default-green.png", combine: "overlay")}
+			default-red:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-default-red.png", combine: "overlay")}
+			default-yellow:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-default-yellow.png", combine: "overlay")}
+			default-orange:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-default-orange.png", combine: "overlay")}
+			default-brown:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-default-brown.png", combine: "overlay")}
+			default-purple:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-default-purple.png", combine: "overlay")}
+			default-pink:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-default-pink.png", combine: "overlay")}
+			default-cyan:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-default-cyan.png", combine: "overlay")}
+			default-seefoam:	{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-default-seefoam.png", combine: "overlay")}
+			generic-bronze1:	{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-bronze1.png", combine: "overlay")}
+			generic-bronze2:	{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-bronze2.png", combine: "overlay")}
+			generic-silver1:	{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-silver1.png", combine: "overlay")}
+			generic-silver2:	{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-silver2.png", combine: "overlay")}
+			generic-gold1:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-gold1.png", combine: "overlay")}
+			generic-gold2:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-gold2.png", combine: "overlay")}
+			generic-steel1:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-steel1.png", combine: "overlay")}
+			generic-leather1:	{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-leather1.png", combine: "overlay")}
+			generic-leather2:	{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-leather2.png", combine: "overlay")}
+			generic-leather3:	{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-leather3.png", combine: "overlay")}
+			generic-leather4:	{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-leather4.png", combine: "overlay")}
+			generic-paper1:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-paper1.png", combine: "overlay")}
+			generic-paper2:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-paper2.png", combine: "overlay")}
+			generic-paper3:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-paper3.png", combine: "overlay")}
+			generic-paper4:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-paper4.png", combine: "overlay")}
+			generic-paper5:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-paper5.png", combine: "overlay")}
+			generic-paper6:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-paper6.png", combine: "overlay")}
+			generic-scroll1:	{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-scroll1.png", combine: "overlay")}
+			generic-scroll2:	{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-scroll2.png", combine: "overlay")}
+			generic-scroll3:	{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-scroll3.png", combine: "overlay")}
+			generic-scroll4:	{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-scroll4.png", combine: "overlay")}
+			generic-wood1:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-wood1.png", combine: "overlay")}
+			generic-wood2:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-generic-wood2.png", combine: "overlay")}
+			radiant-blue:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-radiant-blue.png", combine: "overlay")}
+			radiant-green:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-radiant-green.png", combine: "overlay")}
+			radiant-red:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-radiant-red.png", combine: "overlay")}
+			radiant-orange:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-radiant-orange.png", combine: "overlay")}
+			radiant-pink:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-radiant-pink.png", combine: "overlay")}
+			radiant-purple:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-radiant-purple.png", combine: "overlay")}
+			pastel-blue:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-pastel-blue.png", combine: "overlay")}
+			pastel-green:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-pastel-green.png", combine: "overlay")}
+			pastel-orange:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-pastel-orange.png", combine: "overlay")}
+			pastel-red:			{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-pastel-red.png", combine: "overlay")}
+			pastel-purple:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-pastel-purple.png", combine: "overlay")}
+			pastel-yellow:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-pastel-yellow.png", combine: "overlay")}
+			pastel-brown:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-pastel-brown.png", combine: "overlay")}
+			pastel-cyan:		{combine_blend(image1: overlay_style(), image2: "/CustomRPG.mse-include/card-pastel-cyan.png", combine: "overlay")}
+
+############################################################## Main Info
+	Name:
+		top: {15*dpi/254}
+		left: {if styling.PictureStyle == "fulltext" then 15*dpi/254 else 90*dpi/254}
+		width: {if styling.PictureStyle == "fulltext" then 450*dpi/254 else 300*dpi/254}
+		height: {37.5*dpi/254}
+		visible: {if styling.PictureStyle == "cardback" then false else true}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: {styling.NameFont}
+			size: {28*dpi/254}
+			weight: bold
+			color: {styling.NameColor}
+		allow formating: false
+
+	Picture:
+		top: {if styling.PictureStyle == "cardback" or styling.PictureStyle == "fulltransparent" then 0 else 54*dpi/254}
+		left: {if styling.PictureStyle == "cardback" or styling.PictureStyle == "fulltransparent" then 0 else if styling.PictureStyle == "small" then 63.75*dpi/254 else 26.25*dpi/254}
+		width: {if styling.PictureStyle == "cardback" or styling.PictureStyle == "fulltransparent" then 480*dpi/254 else if styling.PictureStyle == "small" then 352.5*dpi/254 else 427.5*dpi/254}
+		height: {if styling.PictureStyle == "cardback" or styling.PictureStyle == "fulltransparent" then 660*dpi/254 else 283.5*dpi/254}
+		visible: {if styling.PictureStyle == "fulltext" then false else true}
+		mask: {if styling.PictureStyle == "cardback" then "/CustomRPG.mse-include/card-cardbackmask.png" else if styling.PictureStyle == "fulltransparent" then "/CustomRPG.mse-include/mask_picture.png"}
+
+	Category:
+		top: {337.5*dpi/254}
+		left: {15*dpi/254}
+		width: {197.5*dpi/254}
+		height: {37.5*dpi/254}
+		visible: {if styling.PictureStyle == "cardback" or styling.PictureStyle == "fulltext" or styling.CardSymbol == "disabled" then false else true}
+		alignment: right middle stretch if-overflow
+		font: 
+			name: {styling.TypeFont}
+			size: {26*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Type:
+		top: {337.5*dpi/254}
+		left: {267.5*dpi/254}
+		width: {197.5*dpi/254}
+		height: {37.5*dpi/254}
+		visible: {if styling.PictureStyle == "cardback" or styling.PictureStyle == "fulltext" or styling.CardSymbol == "disabled" then false else true}
+		alignment: left middle stretch if-overflow
+		font: 
+			name: {styling.TypeFont}
+			size: {26*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Category-Type:
+		top: {337.5*dpi/254}
+		left: {15*dpi/254}
+		width: {if styling.CardSymbol == "disabled" then 450*dpi/254 else 0}
+		height: {if styling.CardSymbol == "disabled" then 37.5*dpi/254 else 0}
+		visible: {if styling.PictureStyle == "cardback" or styling.PictureStyle == "fulltext" or styling.CardSymbol == "enabled" then false else true}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: {styling.TypeFont}
+			size: {26*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Description:
+		top: {if styling.PictureStyle == "fulltext" then 52.5*dpi/254 else 375*dpi/254}
+		left: {15*dpi/254}
+		width: {450*dpi/254}
+		height: {if styling.PictureStyle == "fulltext" then 562.5*dpi/254 else 240*dpi/254}
+		visible: {if styling.PictureStyle == "cardback" then false else true}
+		alignment: {styling.TextAlign}
+		font: 
+			name: {styling.TextFont}
+			size: {24*dpi/254}
+			scale down to: 8
+			color: rgba(0,0,0,255)
+		symbol font:
+			name: CustomRPG
+			size: {24*dpi/254}
+			alignment: center middle
+#		always symbol: true
+
+	Watermark:
+		top : {375*dpi/254}
+		left: {120*dpi/254}
+		width: {240*dpi/254}
+		height: {240*dpi/254}
+		visible: {if styling.PictureStyle == "cardback" or styling.PictureStyle == "fulltext" or styling.Watermark == "empty" then false else true}
+		z index: -1
+		render style: image
+		popup style: dropdown
+		choice images:
+			default:	{set_combine(input: combine_blend(image1: "/CustomRPG.mse-include/watermark-overlay.png", image2: "/CustomRPG.mse-include/" + to_string(styling.Watermark) + ".png", combine: "overlay"), combine: "normal")}
+
+	Info1:
+		top: {19*dpi/254}
+		left: {15*dpi/254}
+		width: {75*dpi/254}
+		height: {30*dpi/254}
+		visible: {if styling.PictureStyle == "cardback" or styling.PictureStyle == "fulltext" then false else true}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: {styling.InfoFont}
+			size: {20*dpi/254}
+			weight: bold
+			color: {styling.InfoColor}
+		symbol font:
+			name: CustomRPG
+			size: {20*dpi/254}
+			alignment: center middle
+#		always symbol: true
+
+	Info2:
+		top: {19*dpi/254}
+		left: {390*dpi/254}
+		width: {75*dpi/254}
+		height: {30*dpi/254}
+		visible: {if styling.PictureStyle == "cardback" or styling.PictureStyle == "fulltext" then false else true}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: {styling.InfoFont}
+			size: {20*dpi/254}
+			weight: bold
+			color: {styling.InfoColor}
+		symbol font:
+			name: CustomRPG
+			size: {20*dpi/254}
+			alignment: center middle
+#		always symbol: true
+
+	Info3:
+		top: {620*dpi/254}
+		left: {202.5*dpi/254}
+		width: {75*dpi/254}
+		height: {30*dpi/254}
+		visible: {if styling.PictureStyle == "cardback" or styling.PictureStyle == "fulltext" then false else true}
+		alignment: center middle stretch if-overflow
+		font: 
+			name: {styling.InfoFont}
+			size: {20*dpi/254}
+			weight: bold
+			color: {styling.InfoColor}
+		symbol font:
+			name: CustomRPG
+			size: {20*dpi/254}
+			alignment: center middle
+#		always symbol: true
+
+############################################################## Symbols/Icons
+	Symbol:
+		top: {330*dpi/254}
+		left: {217.5*dpi/254}
+		width: {45*dpi/254}
+		height: {45*dpi/254}
+		visible: {if styling.PictureStyle == "cardback" or styling.PictureStyle == "fulltext" or styling.CardSymbol == "disabled" then false else true}
+		render style: image
+		popup style: dropdown
+		choice images:
+			none:					/CustomRPG.mse-include/empty.png
+			icon-armour:			/CustomRPG.mse-include/icon-armour.png
+			icon-shield:			/CustomRPG.mse-include/icon-shield.png
+			icon-weapon:			/CustomRPG.mse-include/icon-weapon.png
+			icon-helm:				/CustomRPG.mse-include/icon-helm.png
+			icon-robe:				/CustomRPG.mse-include/icon-robe.png
+			icon-boots:				/CustomRPG.mse-include/icon-boots.png
+			icon-bracers:			/CustomRPG.mse-include/icon-bracers.png
+			icon-belt:				/CustomRPG.mse-include/icon-belt.png
+			icon-cape:				/CustomRPG.mse-include/icon-cape.png
+			icon-ring:				/CustomRPG.mse-include/icon-ring.png
+			icon-amulet:			/CustomRPG.mse-include/icon-amulet.png
+			icon-staff:				/CustomRPG.mse-include/icon-staff.png
+			icon-wand:				/CustomRPG.mse-include/icon-wand.png
+			icon-artifact:			/CustomRPG.mse-include/icon-artifact.png
+			icon-potion:			/CustomRPG.mse-include/icon-potion.png
+			icon-scroll:			/CustomRPG.mse-include/icon-scroll.png
+			icon-treasure:			/CustomRPG.mse-include/icon-treasure.png
+			icon-misc:				/CustomRPG.mse-include/icon-misc.png
+			icon-trap:				/CustomRPG.mse-include/icon-trap.png
+			icon-monster:			/CustomRPG.mse-include/icon-monster.png
+			icon-mercenary:			/CustomRPG.mse-include/icon-mercenary.png
+			icon-air:				/CustomRPG.mse-include/icon-air.png
+			icon-earth:				/CustomRPG.mse-include/icon-earth.png
+			icon-fire:				/CustomRPG.mse-include/icon-fire.png
+			icon-water:				/CustomRPG.mse-include/icon-water.png
+			icon-arcane:			/CustomRPG.mse-include/icon-arcane.png
+			icon-divine:			/CustomRPG.mse-include/icon-divine.png
+			icon-nature:			/CustomRPG.mse-include/icon-nature.png
+			icon-spell:				/CustomRPG.mse-include/icon-spell.png
+			icon-status:			/CustomRPG.mse-include/icon-status.png
+			treasure:				/CustomRPG.mse-include/symbol-treasure1.png
+			monster:				/CustomRPG.mse-include/symbol-monster1.png
+			trap-mechanical:		/CustomRPG.mse-include/symbol-trapmechanical.png
+			trap-magical:			/CustomRPG.mse-include/symbol-trapmagical.png
+			trap-deadly:			/CustomRPG.mse-include/symbol-trapdeadly.png
+			weapon-melee:			/CustomRPG.mse-include/symbol-weaponmelee.png
+			weapon-ranged:			/CustomRPG.mse-include/symbol-weaponranged.png
+			armour-heavy:			/CustomRPG.mse-include/symbol-armourheavy.png
+			armour-medium:			/CustomRPG.mse-include/symbol-armourmedium.png
+			armour-light:			/CustomRPG.mse-include/symbol-armourlight.png
+			item-potion1:			/CustomRPG.mse-include/symbol-itempotion1.png
+			item-scroll1:			/CustomRPG.mse-include/symbol-itemscroll1.png
+			item-misc1:				/CustomRPG.mse-include/symbol-itemmisc1.png
+			spell-air1:				/CustomRPG.mse-include/symbol-magicair1.png
+			spell-air2:				/CustomRPG.mse-include/symbol-magicair2.png
+			spell-earth1:			/CustomRPG.mse-include/symbol-magicearth1.png
+			spell-earth2:			/CustomRPG.mse-include/symbol-magicearth2.png
+			spell-fire1:			/CustomRPG.mse-include/symbol-magicfire1.png
+			spell-fire2:			/CustomRPG.mse-include/symbol-magicfire2.png
+			spell-water1:			/CustomRPG.mse-include/symbol-magicwater1.png
+			spell-water2:			/CustomRPG.mse-include/symbol-magicwater2.png
+			spell-nature1:			/CustomRPG.mse-include/symbol-magicnature1.png
+			spell-nature2:			/CustomRPG.mse-include/symbol-magicnature2.png
+			spell-arcane1:			/CustomRPG.mse-include/symbol-magicarcane1.png
+			spell-arcane2:			/CustomRPG.mse-include/symbol-magicarcane2.png
+			spell-divine1:			/CustomRPG.mse-include/symbol-magicdivine1.png
+			spell-divine2:			/CustomRPG.mse-include/symbol-magicdivine2.png
+			spell-abjuration:		/CustomRPG.mse-include/symbol-magicabjuration.png
+			spell-conjuration:		/CustomRPG.mse-include/symbol-magicconjuration.png
+			spell-divination:		/CustomRPG.mse-include/symbol-magicdivination.png
+			spell-enchantment:		/CustomRPG.mse-include/symbol-magicenchantment.png
+			spell-evocation:		/CustomRPG.mse-include/symbol-magicevocation.png
+			spell-illusion:			/CustomRPG.mse-include/symbol-magicillusion.png
+			spell-necromancy:		/CustomRPG.mse-include/symbol-magicnecromancy.png
+			spell-transmutation:	/CustomRPG.mse-include/symbol-magictransmutation.png
+			power-closeblast:		/CustomRPG.mse-include/area_blast.png
+			power-rangedburst:		/CustomRPG.mse-include/area_rangedburst.png
+			class-bard:				/CustomRPG.mse-include/symbol-classbard.png
+			class-barbarian:		/CustomRPG.mse-include/symbol-classbarbarian.png
+			class-cleric:			/CustomRPG.mse-include/symbol-classcleric.png
+			class-druid:			/CustomRPG.mse-include/symbol-classdruid.png
+			class-fighter:			/CustomRPG.mse-include/symbol-classfighter.png
+			class-gunslinger:		/CustomRPG.mse-include/symbol-classgunslinger.png
+			class-monk:				/CustomRPG.mse-include/symbol-classmonk.png
+			class-paladin:			/CustomRPG.mse-include/symbol-classpaladin.png
+			class-psion:			/CustomRPG.mse-include/symbol-classpsion.png
+			class-ranger:			/CustomRPG.mse-include/symbol-classranger.png
+			class-rogue:			/CustomRPG.mse-include/symbol-classrogue.png
+			class-sorcerer:			/CustomRPG.mse-include/symbol-classsorcerer.png
+			class-warlock:			/CustomRPG.mse-include/symbol-classwarlock.png
+			class-warlord:			/CustomRPG.mse-include/symbol-classwarlord.png
+			class-wizard:			/CustomRPG.mse-include/symbol-classwizard.png
+			race-aasimar:			/CustomRPG.mse-include/symbol-raceaasimar.png
+			race-aasimar2:			/CustomRPG.mse-include/symbol-raceaasimar2.png
+			race-dragonspawn:		/CustomRPG.mse-include/symbol-racedragonspawn.png
+			race-dragonspawn2:		/CustomRPG.mse-include/symbol-racedragonspawn2.png
+			race-drow:				/CustomRPG.mse-include/symbol-racedrow.png
+			race-dwarf:				/CustomRPG.mse-include/symbol-racedwarf.png
+			race-dwarfgold:			/CustomRPG.mse-include/symbol-racedwarfgold.png
+			race-dwarfgray:			/CustomRPG.mse-include/symbol-racedwarfgray.png
+			race-dwarfshield:		/CustomRPG.mse-include/symbol-racedwarfshield.png
+			race-elf:				/CustomRPG.mse-include/symbol-raceelf.png
+			race-elfmoon:			/CustomRPG.mse-include/symbol-raceelfmoon.png
+			race-elfsun:			/CustomRPG.mse-include/symbol-raceelfsun.png
+			race-elfwild:			/CustomRPG.mse-include/symbol-raceelfwild.png
+			race-elfwood:			/CustomRPG.mse-include/symbol-raceelfwood.png
+			race-genasiair:			/CustomRPG.mse-include/symbol-racegenasiair.png
+			race-genasiearth:		/CustomRPG.mse-include/symbol-racegenasiearth.png
+			race-genasifire:		/CustomRPG.mse-include/symbol-racegenasifire.png
+			race-genasiwater:		/CustomRPG.mse-include/symbol-racegenasiwater.png
+#			race-gnome:				/CustomRPG.mse-include/symbol-racegnome.png
+			race-gnomedeep:			/CustomRPG.mse-include/symbol-racegnomedeep.png
+			race-gnomerock:			/CustomRPG.mse-include/symbol-racegnomerock.png
+#			race-gobelin:			/CustomRPG.mse-include/symbol-racegobelin.png
+#			race-halfdragon:		/CustomRPG.mse-include/symbol-racehalfdragon.png
+			race-halfdrow:			/CustomRPG.mse-include/symbol-racehalfdrow.png
+			race-halfelf:			/CustomRPG.mse-include/symbol-racehalfelf.png
+#			race-halfling:			/CustomRPG.mse-include/symbol-racehalfling.png
+			race-halflinglightfoot:		/CustomRPG.mse-include/symbol-racehalflinglightfoot.png
+			race-halflingstrongheart:	/CustomRPG.mse-include/symbol-racehalflingstrongheart.png
+			race-halforc:			/CustomRPG.mse-include/symbol-racehalforc.png
+			race-human:				/CustomRPG.mse-include/symbol-racehuman.png
+			race-ironforged:		/CustomRPG.mse-include/symbol-raceironforged.png
+#			race-orc:				/CustomRPG.mse-include/symbol-raceorc.png
+			race-tiefling:			/CustomRPG.mse-include/symbol-racetiefling.png
+			race-tiefling2:			/CustomRPG.mse-include/symbol-racetiefling2.png
+			race-aberration:		/CustomRPG.mse-include/symbol-raceaberration.png
+			race-beast:				/CustomRPG.mse-include/symbol-racebeast.png
+			race-construct:			/CustomRPG.mse-include/symbol-raceconstruct.png
+			race-dragon:			/CustomRPG.mse-include/symbol-racedragon.png
+			race-elemental:			/CustomRPG.mse-include/symbol-raceelemental.png
+			race-fey:				/CustomRPG.mse-include/symbol-racefey.png
+			race-giant:				/CustomRPG.mse-include/symbol-racegiant.png
+			race-humanoid:			/CustomRPG.mse-include/symbol-racehumanoid.png
+			race-monstroushumanoid:	/CustomRPG.mse-include/symbol-racemonstroushumanoid.png
+			race-ooze:				/CustomRPG.mse-include/symbol-raceooze.png
+			race-outsider:			/CustomRPG.mse-include/symbol-raceoutsider.png
+			race-plant:				/CustomRPG.mse-include/symbol-raceplant.png
+			race-undead:			/CustomRPG.mse-include/symbol-raceundead.png

@@ -1,0 +1,384 @@
+﻿mse version: 0.3.6
+game: CustomRPG
+short name: D&D 4e Card
+full name: D&D 4e RPG stat cards
+installer group: DnDStatcards/style files
+icon: card-sample.png
+position hint: 001
+
+version: 2008-06-02
+depends on:
+	package: CustomRPG.mse-game
+	version: 1.0
+depends on:
+	package: CustomRPG-D&D-Attacks.mse-symbol-font
+	version: 2008-06-02
+
+card height: 370
+card width: 518
+card dpi: 150
+
+############################################################## Extra scripts
+styling field:
+	type: boolean
+	name: use art
+	description: Allows an image field in the upper right of the card.
+	initial: no
+
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	StatBackground:
+		left:	0
+		top:	0
+		width:	518
+		height:	370
+		z index: -2
+		render style: image
+		popup style: in place
+		image: {card.StatBackground+".png"}
+
+
+	image:
+		right:	515
+		top:	60
+		width:	150
+		height:	150
+		z index: -1
+		visible: {if styling.use_art == "no" then false else true}
+
+	############################# Name line
+	StatName:
+		left:   10
+		top :   13
+		width:  {490 - card_style.StatRole.content_width}
+		#width: 290
+		height: 20
+		alignment: bottom left shrink-overflow
+		padding bottom: 0
+		z index: 1
+		font:
+			name: Arial
+			size: 12
+			weight: bold
+			color: {if card.StatBackground=="white" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: {if card.StatBackground=="white" then rgb(255,255,255) else rgb(0,0,0) }
+			shadow displacement x: 2
+			shadow displacement y: 2
+
+
+	StatRole:
+		right: 500
+		top : 13
+		width: 200
+		height: 20
+		alignment: middle right shrink-overflow
+		font:
+			name: Arial
+			size: 9
+			color: {if card.StatBackground=="white" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: {if card.StatBackground=="white" then rgb(255,255,255) else rgb(0,0,0) }
+			shadow displacement x: 2
+			shadow displacement y: 2
+		z index: 2
+		padding top: 0
+
+	xp:
+		right: 500
+		top : 35
+		width: 200
+		height: 12
+		alignment: middle right shrink-overflow
+		font:
+			name: Arial
+			size: 9
+			color: {if card.StatBackground=="white" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: {if card.StatBackground=="white" then rgb(255,255,255) else rgb(0,0,0) }
+			shadow displacement x: 2
+			shadow displacement y: 2
+		z index: 2
+		padding top: 0
+
+	StatType:
+		left:   10
+		top :   35
+		width:  {490 - card_style.StatRole.content_width}
+		#width: 290
+		height: 12
+		alignment: middle left shrink-overflow
+		padding bottom: 0
+		z index: 1
+		font:
+			name: Arial
+			size: 8
+			color: {if card.StatBackground=="white" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: {if card.StatBackground=="white" then rgb(255,255,255) else rgb(0,0,0) }
+			shadow displacement x: 2
+			shadow displacement y: 2
+
+	############################# Text box 1
+	initiative:
+		left:   80
+		top :   60
+		width:  80
+		height: 15
+		alignment: middle left shrink-overflow
+		padding bottom: 0
+		z index: 1
+		font:
+			name: Arial
+			size: 10
+
+	speed:
+		left:   165
+		top :   60
+		width:  80
+		height: 15
+		alignment: middle left shrink-overflow
+		padding bottom: 0
+		z index: 1
+		font:
+			name: Arial
+			size: 10
+	senses:
+		left:   250
+		top :   60
+		width:  263
+		height: 15
+		alignment: middle left shrink-overflow
+		padding bottom: 0
+		z index: 1
+		font:
+			name: Arial
+			size: 10
+	special:
+		left:   80
+		top :   80
+		width:  433
+		height: 10
+		alignment: middle left shrink-overflow
+		padding bottom: 0
+		z index: 1
+		font:
+			name: Arial
+			size: 9
+	text:
+		left: 69
+		top : 97
+		width: 443
+		height: 205
+		alignment: top left shrink-overflow
+		font:
+			name: Arial
+			size: 10
+			scale down to: 3
+		symbol font:
+			name: CustomRPG-D&D-Attacks
+			size: 15
+		mask: textmask.png
+		z index: 2
+		padding left: 8
+		padding top: 2
+		padding bottom: 3
+		line height hard: 1.2
+		line height line: 1.0
+		line height soft: 1.0
+	############################# Text box 2
+
+	ac:
+		left: 10
+		top : 100
+		width: 55
+		height: 15
+		alignment: middle center shrink-overflow
+		font:
+			name: Arial
+			size: 14
+			weight: bold
+			color: {if card.StatBackground=="white" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: {if card.StatBackground=="white" then rgb(255,255,255) else rgb(0,0,0) }
+			shadow displacement x: 2
+			shadow displacement y: 2
+
+		z index: 3
+		padding top: 0
+	fort:
+		left: 10
+		top : 155
+		width: 55
+		height: 15
+		alignment: middle center shrink-overflow
+		font:
+			name: Arial
+			size: 14
+			weight: bold
+			color: {if card.StatBackground=="white" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: {if card.StatBackground=="white" then rgb(255,255,255) else rgb(0,0,0) }
+
+			shadow displacement x: 2
+			shadow displacement y: 2
+		z index: 3
+		padding top: 0
+	ref:
+		left: 10
+		top : 207
+		width: 55
+		height: 15
+		alignment: middle center shrink-overflow
+		font:
+			name: Arial
+			size: 14
+			weight: bold
+			color: {if card.StatBackground=="white" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: {if card.StatBackground=="white" then rgb(255,255,255) else rgb(0,0,0) }
+			shadow displacement x: 2
+			shadow displacement y: 2
+		z index: 3
+		padding top: 0
+	will:
+		left: 10
+		top : 261
+		width: 55
+		height: 15
+		alignment: middle center shrink-overflow
+		font:
+			name: Arial
+			size: 14
+			weight: bold
+			color: {if card.StatBackground=="white" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: {if card.StatBackground=="white" then rgb(255,255,255) else rgb(0,0,0) }
+			shadow displacement x: 2
+			shadow displacement y: 2
+		z index: 3
+		padding top: 0
+	hp:
+		left: 6
+		top : 315
+		width: 80
+		height: 15
+		alignment: middle center shrink-overflow
+		font:
+			name: Arial
+			size: 14
+			weight: bold
+			color: {if card.StatBackground=="white" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: {if card.StatBackground=="white" then rgb(255,255,255) else rgb(0,0,0) }
+			shadow displacement x: 2
+			shadow displacement y: 2
+		z index: 3
+		padding top: 0
+	str:
+		left:   108
+		top :   318
+		width:  62
+		height: 15
+		alignment: middle left shrink-overflow
+		padding bottom: 0
+		z index: 3
+		font:
+			name: Arial
+			size: 9
+	con:
+		left:   173
+		top :   318
+		width:  62
+		height: 15
+		alignment: middle left shrink-overflow
+		padding bottom: 0
+		z index: 3
+		font:
+			name: Arial
+			size: 9
+	dex:
+		left:   238
+		top :   318
+		width:  62
+		height: 15
+		alignment: middle left shrink-overflow
+		padding bottom: 0
+		z index: 3
+		font:
+			name: Arial
+			size: 9
+	int:
+		left:   304
+		top :   318
+		width:  62
+		height: 15
+		alignment: middle left shrink-overflow
+		padding bottom: 0
+		z index: 3
+		font:
+			name: Arial
+			size: 9
+	wis:
+		left:   370
+		top :   318
+		width:  62
+		height: 15
+		alignment: middle left shrink-overflow
+		padding bottom: 0
+		z index: 3
+		font:
+			name: Arial
+			size: 9
+	cha:
+		left:   435
+		top :   318
+		width:  62
+		height: 15
+		alignment: middle left shrink-overflow
+		padding bottom: 0
+		z index: 3
+		font:
+			name: Arial
+			size: 9
+
+	############################# Card sorting / numbering
+	############################# Copyright stuff
+
+	alignment:
+		left: 108
+		top : 305
+		width: 390
+		height: 12
+		alignment: middle left shrink-overflow
+		z index: 1
+		font:
+			name: Arial
+			size: 9
+	skills:
+		left: 108
+		top : 334
+		width: 390
+		height: 12
+		alignment: middle left shrink-overflow
+		z index: 1
+		font:
+			name: Arial
+			size: 9
+
+	equip:
+		left: 108
+		top : 347
+		width: 390
+		height: 12
+		alignment: middle left shrink-overflow
+		z index: 1
+		font:
+			name: Arial
+			size: 9
+
+	copyright:
+		left:   5
+		top :   343
+		width:  85
+		height: 25
+		z index: 3
+		alignment: middle center shrink-overflow
+		font:
+			name: Arial
+			size: 8
+		symbol font:
+			name: CustomRPG-D&D-Attacks
+			size: 10

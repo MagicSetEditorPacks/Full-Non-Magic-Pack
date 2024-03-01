@@ -1,0 +1,130 @@
+mse version: 2.0.0
+game: CustomRPG
+short name: Pawn M
+full name: (28.5mm x 47.5mm)
+icon: icon.png
+depends on: CustomRPG.mse-game 1.0
+depends on: CustomRPG.mse-include 1.0
+depends on: CustomRPG.mse-symbol-font 1.0
+card background: white
+#card width: 171
+#card height: 570
+#card dpi: 152.4
+card width: 285
+card height: 950
+card dpi: 254
+
+############################################################## Scripts
+init script:
+	dpi := 254
+	Width := 285
+	Height := 950
+	SizeFont := 8 * Height / 570
+	SizeBox := 37.5 * Height / 1240
+
+	##### Category
+	cardlist_display1 := {"Pawn"}
+	##### Type
+	cardlist_display2 := {""}
+	##### Subtype/Info
+	cardlist_display3 := {""}
+	##### Misc/Info
+	cardlist_display4 := {""}
+	##### Background
+	cardlist_display5 := {card.PawnBackground}
+
+############################################################## Style
+card style:
+	PawnBackground:
+		top:	0
+		left:	0
+		width:	{Width*dpi/254}
+		height:	{Height*dpi/254}
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			default:			{combine_blend(image1: "/CustomRPG.mse-include/token-pawn.png", image2: "/CustomRPG.mse-include/token-default.png", combine: "overlay")}
+			default-dark:		{combine_blend(image1: "/CustomRPG.mse-include/token-pawn.png", image2: "/CustomRPG.mse-include/token-dark.png", combine: "overlay")}
+			default-blue:		{combine_blend(image1: "/CustomRPG.mse-include/token-pawn.png", image2: "/CustomRPG.mse-include/token-blue.png", combine: "overlay")}
+			default-green:		{combine_blend(image1: "/CustomRPG.mse-include/token-pawn.png", image2: "/CustomRPG.mse-include/token-green.png", combine: "overlay")}
+			default-red:		{combine_blend(image1: "/CustomRPG.mse-include/token-pawn.png", image2: "/CustomRPG.mse-include/token-red.png", combine: "overlay")}
+			default-yellow:		{combine_blend(image1: "/CustomRPG.mse-include/token-pawn.png", image2: "/CustomRPG.mse-include/token-yellow.png", combine: "overlay")}
+			default-orange:		{combine_blend(image1: "/CustomRPG.mse-include/token-pawn.png", image2: "/CustomRPG.mse-include/token-orange.png", combine: "overlay")}
+			default-brown:		{combine_blend(image1: "/CustomRPG.mse-include/token-pawn.png", image2: "/CustomRPG.mse-include/token-brown.png", combine: "overlay")}
+			default-purple:		{combine_blend(image1: "/CustomRPG.mse-include/token-pawn.png", image2: "/CustomRPG.mse-include/token-purple.png", combine: "overlay")}
+			default-pink:		{combine_blend(image1: "/CustomRPG.mse-include/token-pawn.png", image2: "/CustomRPG.mse-include/token-pink.png", combine: "overlay")}
+			default-cyan:		{combine_blend(image1: "/CustomRPG.mse-include/token-pawn.png", image2: "/CustomRPG.mse-include/token-cyan.png", combine: "overlay")}
+			default-seefoam:	{combine_blend(image1: "/CustomRPG.mse-include/token-pawn.png", image2: "/CustomRPG.mse-include/token-seefoam.png", combine: "overlay")}
+
+############################################################## Main Info
+	Name:
+		top: 0
+		left: 40
+		width: {(Width - 80)*dpi/254}
+		height: {SizeBox*dpi/254}
+		alignment: center middle
+		font: 
+			name: HeroQuest
+			size: {SizeFont*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	PawnName:
+		bottom:	{(Height - SizeBox)*dpi/254}
+		right:	40
+		width:	{(Width - 80)*dpi/254}
+		height:	{SizeBox*dpi/254}
+		angle: 180
+		alignment: center middle
+		font: 
+			name: HeroQuest
+			size: {SizeFont*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	Picture:
+		top: {(37.5 * Height / 1240)*dpi/254}
+		left: {1*dpi/254}
+		width: {(Width - 2)*dpi/254}
+		height: {(545 * Height / 1240)*dpi/254}
+
+	PawnPicture:
+		bottom:	{((Height / 2) + 37.5 * Height / 1240)*dpi/254}
+		right:	{1*dpi/254}
+		width:	{(Width - 2)*dpi/254}
+		height:	{(545 * Height / 1240)*dpi/254}
+		angle: 180
+		render style: image
+		popup style: in place
+		choice images:
+			default:	{flip_horizontal(card.Picture)}
+
+	Info1:
+		top: {((Height / 2) - SizeBox)*dpi/254}
+		left: {((Width - 100) / 2)*dpi/254}
+		width: {100*dpi/254}
+		height: {SizeBox*dpi/254}
+		alignment: center middle
+		font: 
+			name: HeroQuest
+			size: {SizeFont*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		allow formating: false
+
+	PawnInfo:
+		bottom:	{((Height / 2))*dpi/254}
+		right:	{((Width - 100) / 2)*dpi/254}
+		width:	{100*dpi/254}
+		height:	{SizeBox*dpi/254}
+		angle: 180
+		alignment: center middle
+		font: 
+			name: HeroQuest
+			size: {SizeFont*dpi/254}
+			weight: bold
+			color: rgba(0,0,0,255)
+		allow formating: false
