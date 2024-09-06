@@ -64,8 +64,8 @@ set field:
 	initial: custom
 	# Convert from older mse versions
 	script:
-		if value = "yes" then "real, custom"
-		else if value = "no" then ""
+		if value == "yes" then "real, custom"
+		else if value == "no" then ""
 		else value
 	description: For which kinds of keywords should reminder text be added by default? Note: you can enable/disable reminder text by right clicking the keyword.
 set field:

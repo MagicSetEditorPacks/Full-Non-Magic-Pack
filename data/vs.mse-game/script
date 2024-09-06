@@ -208,19 +208,13 @@
 	
 	name_sep := {
 		if contains(set.logo, match: "Marvel") then (
-			if is_character() and card.identity=="" then "™"
-			else if is_character() and card.identity!="" then "™ <sym>•</sym> "
-			else if is_equipment() and card.identity=="" then " "
-			else if is_equipment() and card.identity!="" then " <sym>•</sym> "
-			else ""
+			if is_character() and card.identity != "" then "™ <sym>•</sym> "
+			else if is_character() then "™"
+			else if is_equipment() and card.identity != "" then " <sym>•</sym> "
+			else " "
 		)
-		else if is_character() and card.identity=="" then " "
-		else if is_character() and card.identity!="" then " <sym>•</sym> "
-		else if is_equipment() and card.identity=="" then " "
-		else if is_equipment() and card.identity!="" then " <sym>•</sym> "
-		else if is_location() and card.identity=="" then " "
-		else if is_location() and card.identity!="" then " <sym>•</sym> "
-		else ""
+		else if card.identity != "" then " <sym>•</sym> "
+		else " "
 	}
 	
 	separator_type := {

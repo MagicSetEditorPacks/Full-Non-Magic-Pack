@@ -273,7 +273,7 @@ card style:
 			name: vs-standard-arrow
 			size: 16
 			alignment: middle center
-		visible: is_dual()
+		visible: {is_dual()}
 		alignment: middle center shrink-overflow
 		z index: 4
 		padding left:   2
