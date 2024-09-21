@@ -1,0 +1,340 @@
+﻿mse version: 2.0.0
+game: sr
+short name: Portrait
+full name: Style for Runners etc.
+icon: icon.png
+position hint: 1
+installer group: shadowrun/styles/portrait
+version: 2012-10-06
+
+depends on:
+	package: sr.mse-game
+	version: 2012-10-06
+	
+depends on:
+	package: sr-symbols.mse-symbol-font
+	version: 2012-10-06
+	
+card width: 754
+card height: 1048
+card dpi: 300
+
+card style:
+	bg_color:
+		top: 0
+		left: 0
+		width: 754
+		height: 1048
+		z index: -3
+		mask: m_card.png
+		
+	card type:
+		left: 36
+		top: 36
+		width: 684
+		height: 942
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			Challenge: c_challenge.png
+			Runner: c_runner.png
+			Contact: c_contact.png
+			Special: c_special.png
+			Special (Stinger): c_special_stinger.png
+			Gear: c_gear.png
+			Gear (Matrix): c_gear_matrix.png
+			Gear (Magic): c_gear_magic.png
+
+	full name:
+		top: 83
+		left: 86
+		height: 35
+		width: { if is_special_stinger() then 484 else 581 }
+		alignment: left middle overflow-shrink
+		z index: 4
+		font:
+			name: Shadowrun
+			size: 26
+			weight: bold
+			color: { text_color() }
+			separator color: rgb(200,0,0)
+
+	skill1:
+		top: { if is_runner() then card_style.nuyenicon.top + card_style.nuyenicon.height + 28 else 0 }
+		left: { if is_runner() then 580 else 0 }
+		height: 75
+		width: 75
+		render style: image
+		visible: { is_runner() }
+		z index: 1
+		choice images:
+			none: card_bg_black.png
+			athletic: s_athletic.png
+			conjure: s_conjure.png
+			decking: s_decking.png
+			demolition: s_demolition.png
+			firearms: s_firearms.png
+			gunnery: s_gunnery.png
+			leadership: s_leadership.png
+			melee: s_melee.png
+			piloting: s_piloting.png
+			social: s_social.png
+			sorcery: s_sorcery.png
+			stealth: s_stealth.png
+			streetwise: s_streetwise.png
+			technical: s_technical.png
+			
+	skill1 exponent:
+		top: { if is_runner() then card_style.skill1.top else 0 }
+		left: { if is_runner() then 657 else 0 }
+		height: 26
+		width: 14
+		visible: { card.skill1 != "none" }
+		alignment: left top
+		z index: 1
+		font:
+			name: Shadowrun
+			size: 18
+			weight: bold
+			color: { text_color() }
+		
+	skill2:
+		top: { if is_runner() then card_style.skill1.top + card_style.skill1.height + 18 else 0 }
+		left: { if is_runner() then 580 else 0}
+		height: 75
+		width: 75
+		render style: image
+		visible: { card.skill1 != "none" }
+		z index: 1
+		choice images:
+			none: card_bg_black.png
+			athletic: s_athletic.png
+			conjure: s_conjure.png
+			decking: s_decking.png
+			demolition: s_demolition.png
+			firearms: s_firearms.png
+			gunnery: s_gunnery.png
+			leadership: s_leadership.png
+			melee: s_melee.png
+			piloting: s_piloting.png
+			social: s_social.png
+			sorcery: s_sorcery.png
+			stealth: s_stealth.png
+			streetwise: s_streetwise.png
+			technical: s_technical.png
+			
+	skill2 exponent:
+		top: {if is_runner() then card_style.skill2.top else 0 }
+		left: { if is_runner() then 657 else 0 }
+		height: 26
+		width: 14
+		visible: { card.skill2 != "none" }
+		alignment: left top
+		z index: 1
+		font:
+			name: Shadowrun
+			size: 18
+			weight: bold
+			color: { text_color() }
+			
+	skill3:
+		top: { if is_runner() then card_style.skill2.top + card_style.skill2.height + 18 else 0 }
+		left: { if is_runner() then 580 else 0}
+		height: 75
+		width: 75
+		render style: image
+		visible: { card.skill2 != "none" }
+		z index: 1
+		choice images:
+			none: card_bg_black.png
+			athletic: s_athletic.png
+			conjure: s_conjure.png
+			decking: s_decking.png
+			demolition: s_demolition.png
+			firearms: s_firearms.png
+			gunnery: s_gunnery.png
+			leadership: s_leadership.png
+			melee: s_melee.png
+			piloting: s_piloting.png
+			social: s_social.png
+			sorcery: s_sorcery.png
+			stealth: s_stealth.png
+			streetwise: s_streetwise.png
+			technical: s_technical.png
+			
+	skill3 exponent:
+		top: {if is_runner() then card_style.skill3.top else 0 }
+		left: { if is_runner() then 657 else 0 }
+		height: 26
+		width: 14
+		alignment: left top
+		z index: 1
+		visible: { card.skill3 != "none" }
+		font:
+			name: Shadowrun
+			size: 18
+			weight: bold
+			color: { text_color() }
+	
+	skill4:
+		top: { if is_runner() then card_style.skill3.top + card_style.skill3.height + 18 else 0 }
+		left: { if is_runner() then 580 else 0}
+		height: 75
+		width: 75
+		render style: image
+		visible: { card.skill3 != "none" and is_runner() }
+		z index: 1
+		choice images:
+			none: card_bg_black.png
+			athletic: s_athletic.png
+			conjure: s_conjure.png
+			decking: s_decking.png
+			demolition: s_demolition.png
+			firearms: s_firearms.png
+			gunnery: s_gunnery.png
+			leadership: s_leadership.png
+			melee: s_melee.png
+			piloting: s_piloting.png
+			social: s_social.png
+			sorcery: s_sorcery.png
+			stealth: s_stealth.png
+			streetwise: s_streetwise.png
+			technical: s_technical.png
+	
+	skill4 exponent:
+		top: {if is_runner() then card_style.skill4.top else 0 }
+		left: { if is_runner() then 657 else 0 }
+		height: 26
+		width: 14
+		z index: 1
+		alignment: left top
+		visible: { card.skill4 != "none" and is_runner() }
+		font:
+			name: Shadowrun
+			size: 18
+			weight: bold
+			color: { text_color() }
+
+	image:
+		top: 179
+		left: 90
+		height: { if is_runner() then 646 else if is_contact() then 742 else if is_layout1() then 483 else 396 }
+		width: { if is_runner() then 458 else if is_contact() then 300 else 573 }
+		z index: 1
+		default: image_bg.png
+		mask: 
+			script:
+				if is_contact() then "m_contact.png"
+				else if is_runner() then "m_runner.png"
+
+	text:
+		top: { if is_runner() then 835 else if is_contact() then 179 else if is_layout1() then 675 else if is_challenge() then 585 else 0 }
+		left: { if is_contact() then 420 else 94 }
+		height: { if is_runner() then 102 else if is_contact() then 739 else if is_layout1() then 254 else if is_challenge() then 335 else 0 }
+		width: { if is_contact() then 243 else 569 }
+		z index: 1
+		alignment: left top
+		padding left: 1
+		padding right: 1
+		padding top: 1
+		padding bottom: 1
+		font:
+			name: Shadowrun
+			size: 22
+			scale down to: 8
+			color: { text_color() }
+		mask: { if is_layout1() then "m_text.png" else if is_contact() then "m_text_contact.png" else if is_challenge() and card.sleaze == "" and card.threat_rating != "" then "m_text_challenge1.png" else if is_challenge() and card.sleaze != "" then "m_text_challenge2.png" else "" }
+			
+	sleaze:
+		top: { if is_challenge() then 846 else 0 }
+		left: { if is_challenge() then 90 else 0 }
+		height: { if is_challenge() then 77 else 0 }
+		width: { if is_challenge() then 380 else 0 }
+		visible: { is_challenge() }
+		always symbol: true
+		z index: 2
+		alignment: 
+			script:
+				if is_runner() then "top left"
+				else "middle left"
+		font:
+			name: Shadowrun
+			size: 16
+			color: { text_color() }
+			weight:
+				script:
+					if is_runner() then "bold"
+					else if is_challenge() then "bold"
+					else "normal"
+		symbol font:
+			name: sr-symbols
+			size: 75
+
+	threat rating:
+		top: { if is_challenge() then 883 else if is_runner() then 750 else 0}
+		left: { if is_challenge() then 478 else if is_runner() then 580 else 0}
+		height: { if is_challenge() then 40 else if is_runner() then 80 else 0}
+		width: { if is_challenge() then 185 else if is_runner() then 75 else 0 }
+		visible: { is_challenge() or is_runner() }
+		z index: 2
+		alignment:
+			script:
+				if is_challenge() then "bottom right"
+				else "bottom center"
+		font:
+			name: Shadowrun
+			size: 28
+			weight: bold
+			color: { text_color() }
+			separator color: rgb(200,0,0)
+
+	nuyenicon:
+		top: { if is_runner() then 179 else if is_challenge() then 0 else if is_contact() then 839 else 850 }
+		left: { if is_runner() then 572 else if is_challenge() then 0 else 576 }
+		height: 82
+		width: 87
+		z index: 2
+		visible: { is_runner() or is_contact() or is_layout1() }
+		render style: image
+		choice images:
+			default: nuyen.png
+
+	nuyen:
+		top: { if is_runner() then 179 else if is_challenge() then 0 else if is_contact() then 839 else 850 }
+		left: { if is_runner() then 572 else if is_challenge() then 0 else 576 }
+		height: 82
+		width: 87
+		z index: 3
+		visible: { is_runner() or is_contact() or is_layout1() }
+		alignment: middle center overflow-shrink
+		font:
+			name: Shadowrun
+			size: 48
+			weight: bold
+			color: rgb(255,255,255)
+
+	rarity:
+		top : 990
+		left: 10
+		width: 24
+		height: 24
+		z index: 2
+		render style: image
+		choice images:
+			common: script: symbol_variation(symbol: set.symbol, variation: "common")
+			uncommon: script: symbol_variation(symbol: set.symbol, variation: "uncommon")
+			rare: script: symbol_variation(symbol: set.symbol, variation: "rare")
+	
+	copyright line:
+		top: 998
+		left: 40
+		height: 16
+		width: 680
+		z index: 1
+		alignment: left top overflow-shrink
+		font:
+			name: Shadowrun
+			size: 13
+			color: rgb(255,255,255)
+			separator color: rgb(200,0,0)
