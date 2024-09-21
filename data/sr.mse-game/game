@@ -1,0 +1,363 @@
+﻿mse version: 2.0.0
+short name: Shadowrun
+full name: Shadowrun TCG
+icon: card_back.png
+position hint: 5
+installer group: shadowrun/game files
+version: 2012-10-06
+##### Template by Greadle (greadle@gmail.com), big thanks to green_meep and hooliganj for extensive help with the code
+
+init script: include file: script
+include file: auto_replace
+include file: set_fields
+include file: packs
+
+########## Card Field Text
+##### Card Title (Combined Editor)
+card field:
+	type: text
+	name: name
+	editable: false
+	identifying: true
+	script: to_upper(value)
+	card list visible: true
+	card list column: 1
+	card list width: 256
+	show statistics: false
+
+card field:
+	type: text
+	name: runner type
+	editable: false
+	script: to_upper(value)
+	card list visible: true
+	card list column: 3
+	card list width: 256
+	show statistics: true
+
+card field:
+	type: text
+	name: full name
+	save value: false
+	description: The card's name. On runner cards, use left and right arrow to switch to runner type.
+	script:
+		if is_runner() then
+			# Either just name, or runner name • runner type 
+			combined_editor(
+				field1: card.name,
+				separator: " • ",
+				field2: card.runner_type,
+				soft_before_empty: true,
+				hide_when_empty: true
+				)
+		else
+			forward_editor(field: card.name)
+	card list allow: false
+	show statistics: false
+#####
+
+card field:
+	type: text
+	name: reputation
+	description: The objective's reputation.
+	card list visible: true
+	card list column: 6
+	card list width: 64
+
+##### Main Text Field (Combined Editor)
+card field:
+	type: text
+	name: rules
+	multi line: true
+	show statistics: false
+	card list visible: false
+	default: card_rules(card.rules)
+	
+card field:
+	type: text
+	name: flavor
+	script: flavortext_filter(value)
+	multi line: true
+	show statistics: false
+	card list allow: false
+
+card field:
+	type: text
+	name: text
+	multi line: true
+	save value: false
+	show statistics: false
+	card list allow: false
+	script:
+		combined_editor(field1: card.rules, separator: "<line>\n</line>", field2: card.flavor)
+	description: The rules and flavor text for the card; use up and down arrows to switch. Use (Y) to insert the Nuyen symbol.
+#####
+
+card field:
+	type: text
+	name: sleaze
+	multi line: true
+	description: The sleaze requirements: use format -> insert symbol, or first three letters of a skill.
+	show statistics: false
+	card list allow: false
+	script: to_upper(value)
+
+##### Threat Rating	(Combined Editor)
+card field:
+	type: text
+	name: attack value
+	script: to_upper(value)
+	show statistics: false
+	description: The card's attack value
+
+card field:
+	type: text
+	name: body
+	script: to_upper(value)
+	show statistics: false
+	description: The card's body
+
+card field:
+	type: text
+	name: threat rating
+	multi line: true
+	save value: false
+	script: 
+		combined_editor(field1: card.attack_value, separator: "/", field2: card.body, soft_before_empty: true, hide_when_empty: true)
+	card list visible: true
+	card list column: 5
+	card list width: 128
+	description: The card's threat rating, use left and right arrows to switch between attack value and body.
+	show statistics: false
+#####
+
+card field:
+	type: text
+	name: nuyen
+	description: The card's cost in Nuyen
+	card list visible: true
+	card list column: 4
+	card list width: 128
+	script: to_upper(value)
+
+##### Copyright Line (Combined Editor)
+card field:
+	type: text
+	name: copyright
+	default: card_copyright(card.card_copyright)
+	show statistics: false
+	card list allow: false
+	
+card field:
+	type: text
+	name: illustrator
+	default: set.illustrator
+	card list visible: true
+	card list column: 7
+	card list width: 256
+	show statistics: true
+
+card field:
+	type: text
+	name: copyright line
+	save value: false
+	description: Use left and right arrow to switch between Copyright and Illustrator.
+	script:
+			combined_editor(
+				field1: card.copyright,
+				separator: " Illustrator: ",			
+				field2: card.illustrator,
+				soft_before_empty: true,
+				hide_when_empty: true
+				)
+	card list allow: false
+	show statistics: false
+#####
+
+########## Card Field Choice
+card field:
+	type: choice
+	name: card type
+	card list visible: true
+	card list column: 2
+	card list width: 256
+	description: The card's type.
+	choice: Challenge
+	choice: Runner
+	choice: Contact
+	choice: Special
+	choice: Special (Stinger)
+	choice: Gear
+	choice: Gear (Matrix)
+	choice: Gear (Magic)
+	choice: Location
+	choice: Objective
+	default: default_card_type()
+
+card field:
+	type: choice
+	name: nuyenicon
+	editable: false
+	choice: default
+	show statistics: false
+	card list allow: false
+
+card field:
+	type: choice
+	name: rarity
+	description: The card's rarity (invisible)
+	choice: common
+	choice: uncommon
+	choice: rare
+	card list visible: true
+	card list column: 8
+	initial: common
+
+card field:
+	type: choice
+	name: skill1
+	show statistics: false
+	card list allow: false
+	description: The runner's first skill.
+	choice: none
+	choice: athletic
+	choice: conjure
+	choice: decking
+	choice: demolition
+	choice: firearms
+	choice: gunnery
+	choice: leadership
+	choice: melee
+	choice: piloting
+	choice: social
+	choice: sorcery
+	choice: stealth
+	choice: streetwise
+	choice: technical
+	
+card field:
+	type: choice
+	name: skill1 exponent
+	show statistics: false
+	card list allow: false
+	description: The exponent for the first skill
+	choice:
+	choice: 2
+	choice: 3
+	choice: 4
+	
+card field:
+	type: choice
+	name: skill2
+	show statistics: false
+	card list allow: false
+	description: The runner's second skill.
+	choice: none
+	choice: athletic
+	choice: conjure
+	choice: decking
+	choice: demolition
+	choice: firearms
+	choice: gunnery
+	choice: leadership
+	choice: melee
+	choice: piloting
+	choice: social
+	choice: sorcery
+	choice: stealth
+	choice: streetwise
+	choice: technical
+	
+card field:
+	type: choice
+	name: skill2 exponent
+	show statistics: false
+	card list allow: false
+	description: The exponent for the second skill
+	choice:
+	choice: 2
+	choice: 3
+	choice: 4
+	
+card field:
+	type: choice
+	name: skill3
+	show statistics: false
+	card list allow: false
+	description: The runner's third skill.
+	choice: none
+	choice: athletic
+	choice: conjure
+	choice: decking
+	choice: demolition
+	choice: firearms
+	choice: gunnery
+	choice: leadership
+	choice: melee
+	choice: piloting
+	choice: social
+	choice: sorcery
+	choice: stealth
+	choice: streetwise
+	choice: technical
+
+card field:
+	type: choice
+	name: skill3 exponent
+	show statistics: false
+	card list allow: false
+	description: The exponent for the third skill
+	choice:
+	choice: 2
+	choice: 3
+	choice: 4
+	
+card field:
+	type: choice
+	name: skill4
+	show statistics: false
+	card list allow: false
+	description: The runner's fourth skill.
+	choice: none
+	choice: athletic
+	choice: conjure
+	choice: decking
+	choice: demolition
+	choice: firearms
+	choice: gunnery
+	choice: leadership
+	choice: melee
+	choice: piloting
+	choice: social
+	choice: sorcery
+	choice: stealth
+	choice: streetwise
+	choice: technical
+	
+card field:
+	type: choice
+	name: skill4 exponent
+	show statistics: false
+	card list allow: false
+	description: The exponent for the fourth skill
+	choice:
+	choice: 2
+	choice: 3
+	choice: 4
+
+########## Card Field Image	
+card field:
+	type: image
+	name: image
+	description: The card's image
+	show statistics: false
+	card list allow: false
+
+########## Card Field Color	
+card field:
+	type: color
+	name: bg_color
+	show statistics: false
+	card list allow: false
+	default: rgb(1,1,1)
+	editable: false

@@ -1,0 +1,144 @@
+﻿mse version: 2.0.0
+game: sr
+short name: Landscape
+full name: Style for Objectives etc.
+icon: icon.png
+position hint: 2
+installer group: shadowrun/styles/landscape
+version: 2012-10-06
+
+depends on:
+	package: sr.mse-game
+	version: 2012-10-06
+
+card width: 1048
+card height: 754
+card dpi: 300
+
+init script:
+	default_card_type := { "Location" }
+
+card style:
+	bg_color:
+		top: 0
+		left: 0
+		width: 1048
+		height: 754
+		z index: -3
+		mask: m_card.png
+
+	card type:
+		left: 36
+		top: 36
+		width: 978
+		height: 648
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			Location: c_location.png
+			Objective: c_objective.png
+
+	full name:
+		top: 83
+		left: 86
+		height: 35
+		width: { if is_location() then 880 else if is_objective() then 791 else 0 }
+		alignment: left top overflow-shrink
+		z index: 1
+		font:
+			name: Shadowrun
+			size: 26
+			weight: bold
+			color: { text_color() }
+			separator color: red
+			
+	reputation:
+		top: 83
+		left: 922
+		height: 35
+		width: 50
+		z index: 4
+		visible: { is_objective() }
+		alignment: middle center
+		font:
+			name: Shadowrun
+			size: 26
+			weight: bold
+			color: rgb(255,255,255)
+
+	image:
+		top: 179
+		left: 90
+		height: { if is_location() then 450 else if is_objective() then 280 else 0 }
+		width: { if is_location() then 434 else if is_objective() then 867 else 0 }
+		default: image_bg.png
+		z index: 1
+
+	text:
+		top: { if is_location() then 179 else if is_objective() then 477 else 0 }
+		left: { if is_location() then 546 else if is_objective() then 95 else 0 }
+		height: { if is_location() then 450 else if is_objective() then 156 else 0 }
+		width: { if is_location() then 406 else if is_objective() then 862 else 0 }
+		alignment: left top
+		padding left: 1
+		padding right: 1
+		padding top: 1
+		padding bottom: 1
+		z index: 1
+		font:
+			name: Shadowrun
+			size: 22
+			scale down to: 8
+			color: { text_color() }
+		mask: { if is_location() then "m_text_location.png" else "" }
+
+	nuyenicon:
+		top: { if is_location() then 547 else 0 }
+		left: { if is_location() then 865 else 0 }
+		height: 82
+		width: 87
+		z index: 3
+		visible: { is_location() }
+		render style: image
+		choice images:
+			default: nuyen.png
+	
+	nuyen:
+		top: { if is_location() then 547 else 0}
+		left: { if is_location() then 865 else 0 }
+		height: 82
+		width: 87
+		z index: 4
+		visible: { is_location() }
+		alignment: middle center overflow-shrink
+		font:
+			name: Shadowrun
+			size: 48
+			weight: bold
+			color: rgb(255,255,255)
+	
+	rarity:
+		top : 696
+		left: 10
+		width: 24
+		height: 24
+		z index: 2
+		render style: image
+		choice images:
+			common: script: symbol_variation(symbol: set.symbol, variation: "common")
+			uncommon: script: symbol_variation(symbol: set.symbol, variation: "uncommon")
+			rare: script: symbol_variation(symbol: set.symbol, variation: "rare")
+	
+	copyright line:
+		top: 704
+		left: 40
+		height: 16
+		width: 974
+		alignment: left top overflow-shrink
+		z index: 1
+		font:
+			name: Shadowrun
+			size: 13
+			color: rgb(255,255,255)
+			separator color: rgb(200,0,0)

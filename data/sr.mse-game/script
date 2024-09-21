@@ -1,0 +1,51 @@
+﻿########## Control Variables
+
+##### Helpful Booleans
+	is_challenge := { card.card_type == "Challenge" }
+	is_runner := { card.card_type == "Runner" }
+	is_contact := { card.card_type == "Contact" }
+	is_special := { card.card_type == "Special" }
+	is_special_stinger := { card.card_type == "Special (Stinger)" }
+	is_gear := { card.card_type == "Gear" }
+	is_gear_matrix := { card.card_type == "Gear (Matrix)" }
+	is_gear_magic := { card.card_type == "Gear (Magic)" }
+	is_objective := { card.card_type == "Objective" }
+	is_location := { card.card_type == "Location" }
+	# Layout Boolean for Specials / Stingers and Gear of all types
+	is_layout1 := { 
+		card.card_type == "Special"
+		or card.card_type == "Special (Stinger)"
+		or card.card_type == "Gear"
+		or card.card_type == "Gear (Matrix)"
+		or card.card_type == "Gear (Magic)"
+	}
+	default_card_type := { "Challenge" }
+
+##### Determine Default Rules Text
+	card_rules := { 
+		stylesheet;
+		card.card_type
+		if is_runner() then "<b>Runner</b> "
+		else if is_challenge() then "<b>Challenge</b> "
+		else if is_contact() then "<b>Contact</b> "
+		else if is_special() or is_special_stinger() then "<b>Special</b> "
+		else if is_gear() then "<b>Gear</b> "
+		else if is_gear_magic() then "<b>Gear (Magic)</b> "
+		else if is_gear_matrix() then "<b>Gear (Matrix)</b> "
+		else if is_objective() then "<b>Objective</b> "
+		else "<b>Location</b> "
+	}
+
+##### Scripts for Coypright Line
+	card_copyright := {
+		if set.set_acronym != "" then "<b>"+set.set_acronym+"</b>"+" <b>•</b> "+set.copyright
+		else set.copyright
+	}
+
+##### Determine Default Text Color
+text_color := {
+	if is_challenge() or is_location() or is_objective() then rgb(161,223,246) else rgb(179,230,103)
+}
+
+##### The Flavor Text Filter - makes all text italic and quotes curly
+flavortext_filter := remove_tag@(tag: "<i-flavor>")+{"<i-flavor>"+input+"</i-flavor>"}+curly_quotes;

@@ -1,0 +1,42 @@
+﻿pack type:
+	name: common
+	select: no replace
+	filter: card.rarity == "common"
+
+pack type:
+	name: uncommon
+	select: no replace
+	filter: card.rarity == "uncommon"
+
+pack type:
+	name: rare
+	select: no replace
+	filter: card.rarity == "rare"
+
+pack type:
+	name: booster
+	select: all
+	item:
+		name: rare
+		amount: 1
+	item:
+		name: uncommon
+		amount: 4
+	item:
+		name: common
+		amount: 10
+
+pack type:
+	name: additional common
+	item:
+		name: common
+		
+pack type:
+	name: additional uncommon
+	item:
+		name: uncommon
+		
+pack type:
+	name: additional rare
+	item:
+		name: rare

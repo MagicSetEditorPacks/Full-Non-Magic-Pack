@@ -1,0 +1,83 @@
+﻿########## Set fields
+
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+	identifying: true
+	description: The title of your set, such as Underworld
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: symbol
+	name: symbol
+	description: Edit the symbols used for rarity.
+set field:
+	type: info
+	name: Set Default Values
+set field:
+	type: text
+	name: set acronym
+	script: to_upper(value)
+	description: The default acronym for the copyright line on all cards, e.g. CW for Corp War.
+set field:
+	type: text
+	name: copyright
+	default: "© 1997 FASA. All Rights Reserved."
+	description: Default copyright at the bottom of all cards.
+set field:
+	type: text
+	name: illustrator
+	description: Default illustrator for the copyright line on all cards.
+
+########## Default style
+
+default set style:
+	title:
+		font:
+			name: Shadowrun
+			weight: bold
+			size: 16
+
+	description:
+		font:
+			name: Shadowrun
+			size: 12
+			
+	set acronym:
+		font:
+			name: Shadowrun
+			weight: bold
+			size: 12
+
+	copyright:
+		font:
+			name: Shadowrun
+			size: 12
+	
+	illustrator:
+		font:
+			name: Shadowrun
+			size: 12
+			
+########## Rarity Symbols - set to be solid black and thus invisible			
+	symbol:
+		variation:
+			name: common
+			fill type: solid
+			fill color:   rgb(0,0,0)
+			border color: rgb(0,0,0)
+		variation:
+			name: uncommon
+			fill type: solid
+			fill color:   rgb(0,0,0)
+			border color: rgb(0,0,0)
+		variation:
+			name: rare
+			fill type: solid
+			fill color:   rgb(0,0,0)
+			border color: rgb(0,0,0)

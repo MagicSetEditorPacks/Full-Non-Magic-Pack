@@ -1,0 +1,142 @@
+﻿mse version: 2.0.0
+installer group: shadowrun/symbol-font
+image font size: 75
+horizontal space: 5
+version: 2012-10-06
+
+symbol:
+	code: OR
+	image: or.png
+	text font:
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+symbol:
+	code: ATH
+	image: s_athletic.png
+	text font: 
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+	
+symbol:
+	code: CON
+	image: s_conjure.png
+	text font:
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+symbol:
+	code: DEC
+	image: s_decking.png
+	text font:
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+symbol:
+	code: DEM
+	image: s_demolition.png
+	text font:
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+symbol:
+	code: FIR
+	image: s_firearms.png
+	text font:
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+symbol:
+	code: GUN
+	image: s_gunnery.png
+	text font:
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+symbol:
+	code: LEA
+	image: s_leadership.png
+	text font:
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+symbol:
+	code: MEL
+	image: s_melee.png
+	text font:
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+symbol:
+	code: PIL
+	image: s_piloting.png
+	text font:
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+symbol:
+	code: SOC
+	image: s_social.png
+	text font:
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+symbol:
+	code: SOR
+	image: s_sorcery.png
+	text font:
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+symbol:
+	code: STE
+	image: s_stealth.png
+	text font: 
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+symbol:
+	code: STR
+	image: s_streetwise.png
+	text font: 
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+symbol:
+	code: TEC
+	image: s_technical.png
+	text font:
+		name: Shadowrun
+		color: rgb(255,255,255)
+		size: 0.9
+
+insert symbol menu:
+	item: OR
+	item: ATH
+	item: CON
+	item: DEC
+	item: DEM
+	item: FIR
+	item: GUN
+	item: LEA
+	item: MEL
+	item: PIL
+	item: SOC
+	item: SOR
+	item: STE
+	item: STR
+	item: TEC
