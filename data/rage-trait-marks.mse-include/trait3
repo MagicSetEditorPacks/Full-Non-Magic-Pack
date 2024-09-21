@@ -1,0 +1,15 @@
+# The choices for third column of character trait line (breed)
+# Included by a game file
+
+choice:
+choice:
+	name: Breed
+	choice: Homid
+	choice: Metis
+	choice: Lupus
+	choice: Feline
+	choice: Cephalopod
+	choice: Other
+	line below: true
+choice: Crinos
+choice: Battle

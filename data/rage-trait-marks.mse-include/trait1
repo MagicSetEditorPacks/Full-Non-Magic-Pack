@@ -1,0 +1,43 @@
+# The choices for first column of character trait line (faction/fera/garou tribe)
+# Included by a game file
+
+choice:
+choice:
+	name: Garou
+	choice: Black Furies
+	choice: Bone Gnawers
+	choice: Children of Gaia
+	choice: Fianna
+	choice: Get of Fenris
+	choice: Glass Walkers
+	choice: Red Talons
+	choice: Shadow Lords
+	choice: Silent Striders
+	choice: Silver Fangs
+	choice: Stargazers
+	choice: Uktena
+	choice: Wendigo
+	line below: true
+	choice: Black Spiral Dancers
+	line below: true
+choice:
+	name: Fera
+	choice: Ajaba
+	choice: Ananasi
+	choice: Bastet
+	choice: Corax
+	choice: Gurahl
+	choice: Kitsune
+	choice: Mokole
+	choice: Nuwisha
+	choice: Ratkin
+	choice: Rokea
+	line below: true
+choice:
+	name: Wyrm
+	choice: Abomination
+	choice: Bane
+	choice: Cults
+	choice: Pentex
+	choice: Unbound
+	choice: Vampire

@@ -1,0 +1,433 @@
+mse version: 2.0.0
+game: Rage
+short name: Rage
+full name: Rage Apocalypse
+icon: card-sample.png
+position hint: 01
+
+version: 2011-09-05
+depends on: Rage.mse-game version: 2011-09-05
+depends on: rage-trait-marks.mse-include 2011-09-05
+
+card width: 360
+card height: 508
+card dpi: 150
+
+############################################################## Extra scripts
+	
+############################################################## Set info fields
+
+############################################################## Extra style options
+
+############################################################## Card fields
+card style:
+	############################# Background stuff
+	cardtype:
+		left:	0
+		top:	0
+		width:	360
+		height:	508
+		z index: -2
+		render style: image
+		popup style: in place
+		choice images:
+			Ally:		ally.jpg
+			Enemy:		enemy.jpg
+			Victim:		victim.jpg
+			Action:		action.jpg
+			Board Meeting:	boardmeeting.jpg
+			Combat Action:	combataction.jpg
+			Combat Event:	combatevent.jpg
+			Event:		event.jpg
+			Moot:		moot.jpg
+			Quest:		quest.jpg
+			Event - Totem:	totem.jpg
+			Caern:		caern.jpg
+			Gift:		gift.jpg
+			Rite:		rite.jpg
+			Equipment - Bane/Fetish: fetish.jpg
+			Equipment - Non-Fetish:	nonfetishequipment.jpg
+			Territory:	territory.jpg
+			Character Gaia:		gaiacharacter.jpg
+			Character Rogue:	roguecharacter.jpg
+			Character Wyrm:		wyrmcharacter.jpg
+			Character Default:	gaiacharacter.jpg
+			Character generic Gaia:		gaiacharacter.jpg
+			Character generic Rogue:	roguecharacter.jpg
+			Character generic Wyrm:		wyrmcharacter.jpg
+			Character Garou Black Furies:	blackfury.jpg
+			Character Garou Bone Gnawers:	bonegnawer.jpg
+			Character Garou Children of Gaia:	childofgaia.jpg
+			Character Garou Fianna:	fianna.jpg
+			Character Garou Get of Fenris:	getoffenris.jpg
+			Character Garou Glass Walkers:	glasswalkers.jpg
+			Character Garou Red Talons:	redtalon.jpg
+			Character Garou Shadow Lords:	shadowlord.jpg
+			Character Garou Silent Striders:	silentstrider.jpg
+			Character Garou Silver Fangs:	silverfang.jpg
+			Character Garou Uktena:	uktena.jpg
+			Character Garou Wendigo:	wendigo.jpg
+			Character Garou Black Spiral Dancers:	blackspiraldancers.jpg
+			Character Fera:	fera.jpg
+			Character Wyrm Bane:	bane.jpg
+			Character Wyrm Cults:	wyrmcharacter.jpg
+			Character Wyrm Pentex:	pentex.jpg
+			Character Wyrm Other:	wyrmcharacter.jpg
+
+
+	############################# Set box
+
+	setsymbol:
+		z index: 8
+		left:	{ if card.layout=="territory" then 21 else 19 }
+		top:	{ if card.layout=="territory" then 492 else 21 }
+		width:	28
+		height:	27
+		render style: image
+		alignment: middle center
+		angle:	{ if card.layout=="territory" then 90 else 0 }
+		choice images:
+			common:   script: symbol_variation(symbol: set.symbol, variation: "common")
+
+
+	############################# Name line
+	name:
+		left:   { if card.layout=="territory" then 27 else 55 }
+		top :   { if card.layout=="character" then 23 else if card.layout=="territory" then 452 else 27 }
+		width:  { if card.layout=="territory" then 395 else 250 }
+		angle:	{ if card.layout=="territory" then 90 else 0 }
+		height: 25
+		alignment: bottom center shrink-overflow
+		padding bottom: 0
+		z index: 1
+		font:
+			name: Stucco 555
+			size: 19
+			color: rgb(255,255,255)
+
+	############################# Image
+	image:
+		left:	{ if card.layout=="leftart" then 32 else if card.layout=="rightart" then 177 else if card.layout == "creature" then 37 else if card.layout == "caern2" then 34 else if card.layout=="character" then 45 else if card.layout=="territory" then 60 else 33 }
+		top:	{ if card.category=="tall" then 61 else if card.layout == "creature" then 56 else if card.layout == "caern2" then 58 else if card.layout=="character" then 34 else if card.layout=="territory" then 462 else 68 }
+		width:	{ if card.category=="tall" then 154 else if card.category=="character" then 270 else if card.layout=="territory" then 411 else 288 }
+		height:	{ if card.category=="tall" then 406 else if card.layout == "creature" then 290 else if card.layout=="character" then 337 else if card.layout=="territory" then 155 else 228 }
+		mask: { if card.layout=="character" then "charactermask.jpg" }
+		angle:	{ if card.layout=="territory" then 90 else 0 }
+		z index: 2
+
+		
+	############################# Type line
+
+	## Printed on card template
+
+	############################# Requirements line
+
+	requirements:
+		left:	36
+		top:	{ if card.layout == "caern2" then 295 else if card.type == "Combat Action" then 312 else 307 }
+		width:	{ if contains(card.layout, match:"2") then 288 else 0 }
+		height:	23
+		z index: 6
+		alignment: middle center shrink-overflow
+		visible: { contains(card.layout, match:"2") }
+		padding bottom: 0
+		font:
+			name: Stucco 555
+			size: 19
+			color: rgb(255,255,255)
+		## Matches "standard2" and "caern2"
+
+	tall requirements:
+		left:	{ if card.layout == "leftart" then 197 else 29 }
+		top:	{ if card.category != "tall" then 600 else if contains(card.type, match:"Non") then 600 else if card.type == "Rite" then 64 else 393 }
+		width:	138
+		height: 23
+		z index: 10
+		alignment: middle center shrink-overflow
+		visible: { contains(card.layout, match:"art") }
+		padding bottom: 0
+		font:
+			name: Stucco 555
+			size: 19
+			color: rgb(255,255,255)
+		## Matches "rightart" and "leftart"
+
+	############################# Text box
+	rule text:
+		left: { if card.layout == "leftart" then 193 else if card.layout == "rightart" then 22 else if card.layout=="creature" then 128 else if card.layout=="character" then 110 else if card.layout=="territory" then 222 else 32 }
+		top : { if card.category == "tall" then 94 else if card.layout == "creature" then 354 else if card.layout == "standard2" then 338 else if card.layout == "caern2" then 325 else if card.layout=="character" then 400 else if card.layout=="territory" then 463 else 304 }
+		width: { if card.category=="tall" then 150 else if card.layout == "creature" then 195 else if card.layout=="character" then 223 else if card.layout=="territory" then 416 else 290 }
+		height: { if contains(card.type, match:"Non") then 395 else if card.category=="tall" then 295 else if card.layout == "standard2" then 106 else if card.layout == "caern2" then 118 else if card.layout=="character" then 89 else if card.layout=="territory" then 73 else 135 }
+		font:
+			name: Gill Sans MT
+			italic name: Arial Narrow Italic
+			size: 15
+			scale down to: 6
+			color: rgb(255,255,255)
+		alignment: left top
+		z index: 9
+		padding left:   0
+		padding top:    0
+		padding right:  0
+		padding bottom: 0
+		line height hard: 0.8
+		line height line: 0.8
+		line height soft: 0.6
+		line height hard max: 0.9
+		line height line max: 1.6
+		angle:	{ if card.layout=="territory" then 90 else 0 }
+
+
+	tall keywords:
+		left: { if card.layout == "leftart" then 193 else 26 }
+		top : { if card.category == "tall" then 421 else 600 }
+		width: 144
+		height: { if contains(card.type, match:"Non") then 0 else 60 }
+		font:
+			name: Gill Sans MT
+			italic name: Arial Narrow Italic
+			size: 14
+			scale down to: 6
+			color: rgb(255,255,255)
+		alignment: left top
+		z index: 9
+		visible: { card.category == "tall" }
+		padding left:   0
+		padding top:    0
+		padding right:  0
+		padding bottom: 0
+		line height hard: 0.8
+		line height line: 0.8
+		line height soft: 0.6
+		line height hard max: 0.9
+		line height line max: 1.6
+
+
+
+	############################# Abilities
+	renown:
+		z index: 4
+		left:	313
+		top:	{ if card.iscreature=="true" then 20 else 600 }
+		width:	27
+		height:	27
+		alignment: center middle shrink-overflow
+		visible: { card.iscreature=="true" }
+		font:
+			name: Stucco 555
+			size: 17
+			color: rgb(255,255,255)
+	
+	rage:
+		z index: 4
+		left:	{ if card.layout=="character" then 82 else 93 }
+		top:	{ if card.layout == "creature" then 394 else if card.layout=="character" then 400 else 600 }
+		width:	21
+		height:	21
+		alignment: left middle shrink-overflow
+		visible: { card.iscreature=="true" }
+		font:
+			name: Stucco 555
+			size: 17
+			color: rgb(255,255,255)
+
+	gnosis:
+		z index: 10
+		left:	{ if card.layout=="character" then 87 else 104 }
+		top:	{ if card.layout == "creature" then 421 else if card.layout=="character" then 425 else 600 }
+		width:	21
+		height:	21
+		alignment: left middle shrink-overflow
+		visible: { card.iscreature=="true" }
+		font:
+			name: Stucco 555
+			size: 17
+			color: rgb(255,255,255)
+
+	health:
+		z index: 10
+		left:	{ if card.layout=="character" then 87 else 104 }
+		top:	{ if card.layout == "creature" then 448 else if card.layout=="character" then 450 else 600 }
+		width:	21
+		height:	21
+		alignment: left middle shrink-overflow
+		visible: { card.iscreature=="true" }
+		font:
+			name: Stucco 555
+			size: 17
+			color: rgb(255,255,255)
+
+	regenerates:
+		z index: 10
+		left:	{ if card.layout=="character" then 25 else 32 }
+		top:	{ if card.layout == "creature" then 471 else if card.layout=="character" then 471 else 600 }
+		width:	80
+		height:	14
+		alignment: left middle shrink-overflow
+		visible: { card.iscreature=="true" }
+		font:
+			name: Stucco 555
+			size: 12
+			color: rgb(255,255,255)
+
+	############################# Faction glyph
+	faction:
+		z index:	10
+		left:	318
+		top:	466
+		width:	40
+		height:	40
+		visible:	{ card.layout=="character" }
+		render style: image
+		popup style: in place
+		choice images:
+			Gaia:	/rage-trait-marks.mse-include/gaiaglyph.png
+			Rogue:	/rage-trait-marks.mse-include/rogueglyph.png
+			Wyrm:	/rage-trait-marks.mse-include/wyrmglyph.png
+		
+			
+	############################# Copyright stuff
+
+
+	copyrighttext:
+		z index: 5
+		left:	{ if card.layout=="territory" then 345 else 1 }
+		top:	{ if card.layout=="territory" then 500 else 494 }
+		width:	{ if card.layout=="territory" then 484 else 349 }
+		height:	10
+		alignment: center middle shrink-overflow
+		angle:	{ if card.layout=="territory" then 90 else 0 }
+		font:
+			name: Gill Sans MT
+			size: 10
+			color: rgb(0,0,0)
+
+	############################# Artist
+
+	artist:
+		z index: 4
+		left:	{ if card.layout=="territory" then 343 else 345 }
+		top:	{ if card.layout=="territory" then 13 else 485 }
+		width:	300
+		height:	10
+		angle:  { if card.layout=="territory" then 180 else 90 }
+		alignment: left middle shrink-overflow
+		font:
+			name: Gill Sans MT
+			size: 10
+			color: rgb(255,255,255)
+
+
+
+	############################# Extra Card Styles
+
+	ragetext:
+		left: { if card.layout=="character" then 23 else 37 }
+		top: { if card.layout == "creature" then 394 else if card.layout=="character" then 400 else 600 }
+		width: 50
+		height: 21
+		z index: 0
+		alignment: left middle shrink-overflow
+		visible: { card.iscreature=="true" }
+		font:
+			name: Stucco 555
+			size: 17
+			color: rgb(255,255,255)
+
+	gnosistext:
+		left: { if card.layout=="character" then 22 else 32 }
+		top: { if card.layout == "creature" then 421 else if card.layout=="character" then 425 else 600 }
+		width: { if card.layout=="character" then 59 else 68 }
+		height: 21
+		z index: 0
+		alignment: left middle shrink-overflow
+		visible: { card.iscreature=="true" }
+		font:
+			name: Stucco 555
+			size: 17
+			color: rgb(255,255,255)
+
+	healthtext:
+		left: { if card.layout=="character" then 22 else 32 }
+		top: { if card.layout == "creature" then 448 else if card.layout=="character" then 450 else 600 }
+		width: { if card.layout=="character" then 59 else 68 }
+		height: 21
+		z index: 0
+		alignment: left middle shrink-overflow
+		visible: { card.iscreature=="true" }
+		font:
+			name: Stucco 555
+			size: 17
+			color: rgb(255,255,255)
+
+	############################# Traits (Characters only)
+	trait1:
+		left:	32
+		top:	{ if card.layout=="character" then 375 else 600 }
+		width:	24
+		height:	19
+		render style: image
+		alignment: middle center
+		z index: 4
+		include file: 	/rage-trait-marks.mse-include/trait-images
+
+	trait1-text:
+		z index: 4
+		left:	58
+		top:	{ if card.layout=="character" then 375 else 600 }
+		width:	95
+		height:	19
+		alignment: left middle shrink-overflow
+		visible: { card.layout=="character" }
+		font:
+			name: Arial Narrow
+			size: 12
+			color: rgb(255,255,255)
+
+	trait2:
+		left:	157
+		top:	{ if card.layout=="character" then 375 else 600 }
+		width:	19
+		height:	19
+		render style: image
+		alignment: middle center
+		z index: 4
+		include file: 	/rage-trait-marks.mse-include/trait-images
+
+
+	trait2-text:
+		z index: 4
+		left:	179
+		top:	{ if card.layout=="character" then 375 else 600 }
+		width:	74
+		height:	19
+		alignment: left middle shrink-overflow
+		visible: { card.layout=="character" }
+		font:
+			name: Arial Narrow
+			size: 12
+			color: rgb(255,255,255)
+
+	trait3:
+		left:	257
+		top:	{ if card.layout=="character" then 375 else 600 }
+		width:	19
+		height:	19
+		render style: image
+		alignment: middle center
+		z index: 4
+		include file: 	/rage-trait-marks.mse-include/trait-images
+
+
+	trait3-text:
+		z index: 4
+		left:	279
+		top:	{ if card.layout=="character" then 375 else 600 }
+		width:	48
+		height:	19
+		alignment: left middle shrink-overflow
+		visible: { card.layout=="character" }
+		font:
+			name: Arial Narrow
+			size: 12
+			color: rgb(255,255,255)

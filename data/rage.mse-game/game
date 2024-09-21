@@ -1,0 +1,515 @@
+mse version: 2.0.0
+full name: Rage Apocalypse
+short name: Rage
+icon: card-back.png
+version: 2011-09-05
+depends on: rage-trait-marks.mse-include 2011-09-05
+position hint: 01
+
+##### Known Errors
+# Wyrm character template is off-centre.
+# Some glyphs still sport white backgrounds.
+# Am unhappy with long list of card templates.
+
+	
+############################################################## Functions & filters
+	
+# General functions
+init script:
+	
+	############################################################## Other boxes
+			
+	# Shape of cards, can be changed in style files
+	card_shape := { "normal" }
+	
+	############################################################## Determine card type
+
+	definelayout := {
+		if	input == "Ally" then "creature"
+		else if	input == "Enemy" then "creature"
+		else if	input == "Victim" then "creature"
+		else if	input == "Action" then "standard"
+		else if	input == "Combat Event" then "standard"
+		else if	input == "Event" then "standard"
+		else if	input == "Quest" then "standard"
+		else if	input == "Board Meeting" then "standard2"
+		else if	input == "Combat Action" then "standard2"
+		else if	input == "Event - Totem" then "standard2"
+		else if	input == "Moot" then "standard2"
+		else if	input == "Caern" then "caern2"
+		else if input == "Gift" then "leftart"
+		else if input == "Rite" then "leftart"
+		else if input == "Equipment - Non-Fetish" then "rightart"
+		else if input == "Equipment - Bane/Fetish" then "rightart"
+		else if input == "Character Gaia" then "character"
+		else if input == "Character Rogue" then "character"
+		else if input == "Character Wyrm" then "character"
+		else if input == "Territory" then "territory"
+		else "character"
+	}
+
+
+	definecategory := {
+		if	input == "longart" then "long"
+		else if	input == "leftart" then "tall"
+		else if	input == "rightart" then "tall"
+		else if input == "character" then "character"
+		else if input == "territory" then "long"
+		else "square"
+	}
+
+	creaturetrue := {
+		if	input == "creature" then "true"
+		else if	input == "character" then "true"
+		else "false"
+	}
+
+
+	type_default := {
+		"Character Default"
+	}
+
+	trim_trait2 := {
+		replace(card.trait2, match:"Bastet ", replace: "")
+	}
+
+	trim_trait := {
+		replace(input, match: "(Garou|Fera|Wyrm|Auspice|Bastet|Cults|Fomori|Breed) ", replace: "")
+	}
+
+	strip_name := {
+		replace(replace(to_lower(card.name), match: ",", replace: "-"), match: "( |')", replace: "")
+	}
+	
+	defaulttrait := {
+		if	input == "Character Garou Bone Gnawer" then "Garou Bone Gnawers"
+		else if	input == "Character Garou Black Furies" then "Garou Black Furies"
+		else if	input == "Character Garou Children of Gaia" then "Garou Children of Gaia"
+		else if	input == "Character Garou Fianna" then "Garou Fianna"
+		else if	input == "Character Garou Glass Walkers" then "Garou Glass Walkers"
+		else if	input == "Character Garou Red Talons" then "Garou Red Talons"
+		else if	input == "Character Garou Get of Fenris" then "Garou Get of Fenris"
+		else if	input == "Character Garou Silent Striders" then "Garou Silent Striders"
+		else if	input == "Character Garou Shadow Lords" then "Garou Shadow Lords"
+		else if	input == "Character Garou Silver Fangs" then "Garou Silver Fangs"
+		else if	input == "Character Garou Stargazers" then "Garou Stargazers"
+		else if	input == "Character Garou Uktena" then "Garou Uktena"
+		else if	input == "Character Garou Wendigo" then "Garou Wendigo"
+		else if	input == "Character Garou Black Spiral Dancers" then "Garou Black Spiral Dancers"
+		else if	input == "Character Wyrm Pentex" then "Wyrm Pentex"
+		else if	input == "Character Wyrm Cults" then "Wyrm Cults"
+		else if	input == "Character Wyrm Bane" then "Wyrm Bane"
+		else ""
+	}
+	
+	faction_default := {
+		if	input == "Character Garou Bone Gnawer" then "Gaia"
+		else if	input == "Character Garou Black Furies" then "Gaia"
+		else if	input == "Character Garou Children of Gaia" then "Gaia"
+		else if	input == "Character Garou Fianna" then "Gaia"
+		else if	input == "Character Garou Glass Walkers" then "Gaia"
+		else if	input == "Character Garou Red Talons" then "Gaia"
+		else if	input == "Character Garou Get of Fenris" then "Gaia"
+		else if	input == "Character Garou Silent Striders" then "Gaia"
+		else if	input == "Character Garou Shadow Lords" then "Gaia"
+		else if	input == "Character Garou Silver Fangs" then "Gaia"
+		else if	input == "Character Garou Stargazers" then "Gaia"
+		else if	input == "Character Garou Uktena" then "Gaia"
+		else if	input == "Character Garou Wendigo" then "Gaia"
+		else if	input == "Character Garou Black Spiral Dancers" then "Wyrm"
+		else if	input == "Character Wyrm Pentex" then "Wyrm"
+		else if	input == "Character Wyrm Cults" then "Wyrm"
+		else if	input == "Character Wyrm Bane" then "Wyrm"
+		else if	input == "Character Wyrm Other" then "Wyrm"
+		else ""
+	}
+	
+############################################################## Set fields
+	
+set field:
+	type: info
+	name: Set Information
+set field:
+	type: text
+	name: title
+	identifying: true
+set field:
+	type: text
+	name: description
+	multi line: true
+set field:
+	type: symbol
+	name: symbol
+	description: The symbol for this set, double click to edit
+
+default set style:
+	symbol:
+		max aspect ratio: 2.5
+		variation:
+			name: common
+			border radius: 0
+			fill type: solid
+			fill color:   rgb(255,255,255)
+			border color: rgb(0,0,0)
+
+############################################################## Card fields
+
+
+
+############################# Name line
+
+card field:
+	type: text
+	name: filename
+	show statistics: false
+	editable: false
+	card list visible: false
+	description: used for creating image files
+	default: to_text(strip_name(card.name))
+
+card field:
+	type: text
+	name: name
+	identifying: true
+	show statistics: false
+	card list visible: true
+	card list name: Name
+	card list column: 1
+	script: card.name
+card field:
+	type: text
+	name: full name
+	save value: false
+	show statistics: false
+	editable: false
+	card list visible: true
+	card list name: Name
+	card list column: 1
+	description: The name of the card
+	script: card.name
+
+
+
+############################# Image
+card field:
+	type: image
+	name: image
+	show statistics: false
+
+card field:
+	type: image
+	name: tall image
+	show statistics: false
+	
+############################# Type and layout
+card field:
+	type: text
+	name: type
+	show statistics: true
+	card list visible: true
+	default: card.cardtype
+	editable: false
+	save value: false
+	card list column: 2
+	description: The type of this card
+	## Only used for card list.
+
+card field:
+	type: text
+	name: layout
+	card list visible: false
+	default: definelayout(card.cardtype)
+	editable: false
+	save value: false
+	show statistics: false
+	## Used in Style to define which boxes are where
+
+
+card field:
+	type: text
+	name: category
+	card list visible: false
+	default: definecategory(card.layout)
+	editable: false
+	save value: false
+	show statistics: false
+	## Used in Style to define which boxes are where (a macro-layout)
+
+card field:
+	type: text
+	name: iscreature
+	card list visible: false
+	default: creaturetrue(card.layout)
+	editable: false
+	save value: false
+	show statistics: false
+	## Used in Style to define which boxes are where (a macro-layout)
+
+card field:
+	type: text
+	name: requirements
+	show statistics: false
+	card list visible: true
+	card list column: 8
+	card list name: Stats
+	card list width: 125
+	description: The requirements needed to play this card
+	## Options field for Standard2 cards
+
+card field:
+	type: text
+	name: tall requirements
+	show statistics: false
+	description: The requirements needed to play this card
+	card list visible: true
+	card list column: 9
+	card list name: Requires
+	card list width: 75
+	## Options field for artright/artleft cards
+
+card field:
+	type: choice
+	name: cardtype
+	choice:
+		name: Character
+		choice:
+			name: Garou
+			choice: Black Furies
+			choice: Bone Gnawers
+			choice: Children of Gaia
+			choice: Fianna
+			choice: Get of Fenris
+			choice: Glass Walkers
+			choice: Red Talons
+			choice: Shadow Lords
+			choice: Silent Striders
+			choice: Silver Fangs
+			choice: Stargazers
+			choice: Uktena
+			choice: Wendigo
+			choice: Black Spiral Dancers
+		choice:	Fera
+		choice:
+			name: Wyrm
+			choice: Bane
+			choice: Cults
+			choice: Pentex
+			choice: Other
+		choice:
+			name: generic
+			choice: Gaia
+			choice: Rogue
+			choice: Wyrm
+	choice: Action
+	choice: Ally
+	choice: Board Meeting
+	choice: Caern
+	choice: Combat Action
+	choice: Combat Event
+	choice: Enemy
+	choice: Equipment - Bane/Fetish
+	choice: Equipment - Non-Fetish
+	choice: Event
+	choice: Event - Totem
+	choice: Gift
+	choice: Moot
+	choice: Quest
+	choice: Rite
+	choice: Territory
+	choice: Victim
+	default: type_default()
+	show statistics: false
+	description: Change the card image to change the card type.
+	## Background card image - determines type and layout above
+
+
+############################# Artist
+card field:
+	type: text
+	name: artist
+	show statistics: false
+	card list visible: false
+	description: The artist of this card
+
+
+card field:
+	type: text
+	name: copyrighttext
+	save value: false
+	script: "Rage is copyright White Wolf Game Studios."
+	editable: false
+	show statistics: false
+	
+############################# Text box
+card field:
+	type: text
+	name: rule text
+	show statistics: false
+	multi line: true
+	
+card field:
+	type: text
+	name: tall text
+	card list visible: false
+	editable: false
+	save value: false
+	show statistics: false
+	## Obsolete field.  Present in Sahel demo set.
+
+card field:
+	type: text
+	name: tall keywords
+	show statistics: false
+	multi line: true
+	card list visible: true
+	card list column: 10
+	card list name: Requirements
+	card list width: 400
+## Optional field for tall-art cards except non-fetish equipment
+
+############################ Set box
+card field:
+	type: choice
+	name: set
+	description: this has now been superceded by setsymbol
+
+card field:
+	type: choice
+	name: setsymbol
+	editable: false
+	choice: common
+	initial: common
+	description: enables custom set symbol
+
+############################ Trait line (Characters only)
+card field:
+	type: choice
+	name: trait1
+	default: defaulttrait(card.cardtype)
+	include file: /rage-trait-marks.mse-include/trait1
+	description: The faction or creature type of this Character
+
+card field:
+	type: text
+	name: trait1-text
+	show statistics: true
+	card list visible: false
+	script: to_string(trim_trait(card.trait1))
+	editable: false
+
+card field:
+	type: choice
+	name: trait2
+	include file: /rage-trait-marks.mse-include/trait2
+
+card field:
+	type: text
+	name: trait2-text
+	show statistics: true
+	card list visible: false
+	script: to_string(trim_trait(card.trait2))
+	editable: false
+
+card field:
+	type: choice
+	name: trait3
+	include file: /rage-trait-marks.mse-include/trait3
+
+card field:
+	type: text
+	name: trait3-text
+	show statistics: true
+	card list visible: false
+	default: to_string(trim_trait(card.trait3))
+	editable: false
+
+############################# Abilities (creatures only)
+card field:
+	type: text
+	name: renown
+	card list visible: true
+	card list column: 4
+	card list width: 25
+card field:
+	type: text
+	name: rage
+	card list visible: true
+	card list column: 5
+	card list width: 25
+card field:
+	type: text
+	name: gnosis
+	card list visible: true
+	card list column: 6
+	card list width: 25
+card field:
+	type: text
+	name: health
+	card list visible: true
+	card list column: 7
+	card list width: 25
+
+card field:
+	type: text
+	name: ragetext
+	save value: false
+	script: "RAGE"
+	editable: false
+	show statistics: false
+
+card field:
+	type: text
+	name: gnosistext
+	save value: false
+	script: "GNOSIS"
+	editable: false
+	show statistics: false
+
+card field:
+	type: text
+	name: healthtext
+	save value: false
+	script: "HEALTH"
+	editable: false
+	show statistics: false
+
+card field:
+	type: choice
+	name: regenerates
+	choice: 
+	choice: (Regenerates)
+	description: Toggle for creatures who regenerate against creature type
+	
+	############################# Faction glyph
+card field:
+	type: choice
+	name: faction
+	default: faction_default(card.cardtype)
+	choice:
+	choice:	Gaia
+	choice:	Rogue
+	choice:	Wyrm
+
+	
+############################################################## Word lists
+	
+word list:
+	name: type
+	word: Ally
+	word: Enemy
+	word: Victim
+	word: Action
+	
+############################################################# Auto replace
+	
+
+	
+############################################################## Keywords
+	
+############################# Keyword rules
+	
+has keywords: false
+
+	
+############################# All Rage keywords
+	
