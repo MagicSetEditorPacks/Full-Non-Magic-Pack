@@ -1,0 +1,61 @@
+# Glyph allocation
+
+choice images:
+	Garou Black Furies:	/rage-trait-marks.mse-include/BlackFuries.gif
+	Garou Bone Gnawers:	/rage-trait-marks.mse-include/BoneGnawers.gif
+	Garou Children of Gaia:	/rage-trait-marks.mse-include/ChildrenofGaia.gif
+	Garou Fianna:		/rage-trait-marks.mse-include/Fianna.gif
+	Garou Get of Fenris:	/rage-trait-marks.mse-include/GetofFenris.gif
+	Garou Glass Walkers:	/rage-trait-marks.mse-include/GlassWalkers.gif
+	Garou Red Talons:	/rage-trait-marks.mse-include/RedTalons.gif
+	Garou Shadow Lords:	/rage-trait-marks.mse-include/ShadowLords.gif
+	Garou Silent Striders:	/rage-trait-marks.mse-include/SilentStriders.gif
+	Garou Silver Fangs:	/rage-trait-marks.mse-include/SilverFangs.gif
+	Garou Stargazers:	/rage-trait-marks.mse-include/StarGazers.gif
+	Garou Uktena:		/rage-trait-marks.mse-include/Uktena.gif
+	Garou Wendigo:		/rage-trait-marks.mse-include/Wendigo.gif
+	Garou Black Spiral Dancers:	/rage-trait-marks.mse-include/Blackspiraldancers.gif
+	Fera Ajaba:	/rage-trait-marks.mse-include/Ajaba.gif
+	Fera Ananasi:	/rage-trait-marks.mse-include/Ananasi.gif
+	Fera Bastet:	/rage-trait-marks.mse-include/Bastet.gif
+	Fera Corax:	/rage-trait-marks.mse-include/Corax.gif
+	Fera Gurahl:	/rage-trait-marks.mse-include/Gurahl.gif
+	Fera Kitsune:	/rage-trait-marks.mse-include/Kitsune.gif
+	Fera Mokole:	/rage-trait-marks.mse-include/Mokole.gif
+	Fera Nuwisha:	/rage-trait-marks.mse-include/Nuwisha.gif
+	Fera Ratkin:	/rage-trait-marks.mse-include/Ratkin.gif
+	Fera Rokea:	/rage-trait-marks.mse-include/Rokea.gif
+	Wyrm Abomination:	/rage-trait-marks.mse-include/Abomination.gif
+	Wyrm Bane:		/rage-trait-marks.mse-include/Banes.gif
+	Wyrm Cults:		/rage-trait-marks.mse-include/Cults.gif
+	Wyrm Pentex:		/rage-trait-marks.mse-include/Pentex.gif
+	Wyrm Unbound:		/rage-trait-marks.mse-include/Unbound.gif
+	Wyrm Vampire:		/rage-trait-marks.mse-include/Vampire.gif
+	Bastet Bagheera:	/rage-trait-marks.mse-include/Bagheera.gif
+	Bastet Balam:		/rage-trait-marks.mse-include/Balam.gif
+	Bastet Bubasti:		/rage-trait-marks.mse-include/Bubasti.gif
+	Bastet Khan:		/rage-trait-marks.mse-include/Khan.gif
+	Bastet Pumonca:		/rage-trait-marks.mse-include/Pumonca.gif
+	Bastet Qualmi:		/rage-trait-marks.mse-include/Qualmi.gif
+	Bastet Simba:		/rage-trait-marks.mse-include/Simba.gif
+	Bastet Swara:		/rage-trait-marks.mse-include/Swara.gif
+	Bastet Hellcat:		/rage-trait-marks.mse-include/Ceilican.gif
+	Auspice Ahroun:		/rage-trait-marks.mse-include/Ahroun.gif
+	Auspice Galliard:	/rage-trait-marks.mse-include/Galliard.gif
+	Auspice Philodox:	/rage-trait-marks.mse-include/Philodox.gif
+	Auspice Theurge:	/rage-trait-marks.mse-include/Theurge.gif
+	Auspice Ragabash:	/rage-trait-marks.mse-include/Ragabash.gif
+	Cults 7th Generation:	/rage-trait-marks.mse-include/7thgen.gif
+	Cults Chulorvian:	/rage-trait-marks.mse-include/Unbound.gif
+	Cults Walid Set:	/rage-trait-marks.mse-include/WalidSet.gif
+	Fomori Fomori, Iliad:	/rage-trait-marks.mse-include/Fomori.gif
+	Fomori Fomori, Odyssey:	/rage-trait-marks.mse-include/Fomori.gif
+	Executive:		/rage-trait-marks.mse-include/Executives.gif
+	Breed Homid:	/rage-trait-marks.mse-include/Homid.gif
+	Breed Metis:	/rage-trait-marks.mse-include/Metis.gif
+	Breed Lupus:	/rage-trait-marks.mse-include/Lupus.gif
+	Breed Feline:	/rage-trait-marks.mse-include/Feline.gif
+	Breed Cephalopod:	/rage-trait-marks.mse-include/Blackspiraldancers.gif
+	Breed Other:	/rage-trait-marks.mse-include/Lupus.gif
+	Crinos:		/rage-trait-marks.mse-include/Crinos.gif
+	Battle:		/rage-trait-marks.mse-include/Battleform.gif

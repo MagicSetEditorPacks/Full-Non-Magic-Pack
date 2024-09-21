@@ -1,0 +1,51 @@
+﻿mse version: 0.3.8
+short name: LackeyCCG
+full name: Plugin Exporter
+position hint: 003
+icon: icon.png
+version: 2009-10-24
+
+depends on: rage.mse-game 2008-09-11
+
+game: rage
+create directory: true
+file type: *.txt|*.txt|*.*|*.*
+
+# Picks-at-Flies
+# Adapted from code by Pichoro and Innuendo
+# Based on code by Idle Muse and Seeonee
+
+option field:
+	type: choice
+	name: Remember!
+	choice: Edit your setlist.txt file in LackeyCCG to add your new set!
+option field:
+	type: choice
+	name: export size
+	choice: LackeyCCG Large
+	choice: LackeyCCG Small
+	choice: MSE Standard
+	description: LackeyCCG Large is 388x545. LackeyCCG Small is 200x282. MSE Standard is 360x508.
+
+script:
+	image_export_width := { if options.export_size == "MSE Standard" then "360"
+		else if options.export_size == "LackeyCCG Small" then "200"
+		else "388"
+		}
+	image_export_height := { if options.export_size == "MSE Standard" then "508"
+		else if options.export_size == "LackeyCCG Small" then "282"
+		else "545"
+		}
+	mse_to_lackeyccg_image_name := { mse_to_lackeyccg_name_filter := replace(to_lower(input), match:" |'|!", replace:"") }
+	mse_to_lackeyccg_rules_filter := replace@(match:"\n", replace:" ")
+	write_normal := {card.name+"	"
+		+"newset	"
+		+mse_to_lackeyccg_image_name(card.name)+"	"
+		+"-	"+"-	"
+		+card.cardtype+"	"
+		+"	"+card.regenerates+"	"
+		+mse_to_lackeyccg_rules_filter(card.rule_text)+"\n"
+		}
+	write_cards := to_text(for each card in sort_list(cards, order_by: {card.name}) do write_normal())
+	write_images := for each card in sort_list(cards, order_by: {card.name}) do write_image_file(card, file:"{mse_to_lackeyccg_image_name(card.name)}.jpg", width: image_export_width(), height: image_export_height())
+	to_string("This file intentionally blank.\n"+write_cards)
