@@ -1,0 +1,12 @@
+# Tribe choices
+
+choice:
+	name: None
+	line below: true
+choice:
+	name: Base Game
+	choice:	Avian
+	choice: Canine
+	choice: Hooved
+	choice: Insect
+	choice: Reptile

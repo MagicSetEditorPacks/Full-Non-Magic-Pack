@@ -1,0 +1,33 @@
+# Cost Images
+
+choice images:
+	Blood 1 Blood: /inscryption-costs/cost_1blood.png
+	Blood 2 Blood: /inscryption-costs/cost_2blood.png
+	Blood 3 Blood: /inscryption-costs/cost_3blood.png
+	Blood 4 Blood: /inscryption-costs/cost_4blood.png
+
+	Bone 1 Bone: /inscryption-costs/cost_1bone.png
+	Bone 2 Bones: /inscryption-costs/cost_2bone.png
+	Bone 3 Bones: /inscryption-costs/cost_3bone.png
+	Bone 4 Bones: /inscryption-costs/cost_4bone.png
+	Bone 5 Bones: /inscryption-costs/cost_5bone.png
+	Bone 6 Bones: /inscryption-costs/cost_6bone.png
+	Bone 7 Bones: /inscryption-costs/cost_7bone.png
+	Bone 8 Bones: /inscryption-costs/cost_8bone.png
+	Bone 9 Bones: /inscryption-costs/cost_9bone.png
+	Bone 10 Bones: /inscryption-costs/cost_10bone.png
+
+	Energy 1 Energy: /inscryption-costs/cost_1energy.png
+	Energy 2 Energy: /inscryption-costs/cost_2energy.png
+	Energy 3 Energy: /inscryption-costs/cost_3energy.png
+	Energy 4 Energy: /inscryption-costs/cost_4energy.png
+	Energy 5 Energy: /inscryption-costs/cost_5energy.png
+	Energy 6 Energy: /inscryption-costs/cost_6energy.png
+
+	Mox Orange: /inscryption-costs/cost_orangegem.png
+	Mox Green: /inscryption-costs/cost_greengem.png
+	Mox Blue: /inscryption-costs/cost_bluegem.png
+	Mox Orange and Green: /inscryption-costs/cost_orangegreengem.png
+	Mox Green and Blue: /inscryption-costs/cost_greenbluegem.png
+	Mox Blue and Orange: /inscryption-costs/cost__blueorangegem.png
+	Mox Triple: /inscryption-costs/cost_trigem.png

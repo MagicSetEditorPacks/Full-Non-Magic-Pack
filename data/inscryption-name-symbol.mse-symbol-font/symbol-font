@@ -1,0 +1,10 @@
+mse version: 2.0.0
+installer group: inscryption/name-font
+
+
+image font size: 28
+horizontal space: 2
+symbol:
+	code: OLD_DATA
+	image: squid_title.png
+	image font size: 25

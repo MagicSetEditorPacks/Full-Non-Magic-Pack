@@ -1,0 +1,8 @@
+# Tribe Images
+
+choice images:
+	Base Game Avian: /inscryption-tribes.mse-include/tribeicon_avian.png
+	Base Game Canine: /inscryption-tribes.mse-include/tribeicon_canine.png
+	Base Game Hooved: /inscryption-tribes.mse-include/tribeicon_hooved.png
+	Base Game Insect: /inscryption-tribes.mse-include/tribeicon_insect.png
+	Base Game Reptile: /inscryption-tribes.mse-include/tribeicon_reptile.png

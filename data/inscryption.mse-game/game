@@ -1,0 +1,79 @@
+mse version: 2.0.0
+short name: inscryption
+full name: Act 1 Version Inscryption
+icon: card_back.png
+position hint: 2734
+installer group: inscryption/game files
+version: 2021-11-03
+depends on:
+	package: inscryption-sigils.mse-include
+	version: 2021-11-03
+depends on:
+	package: inscryption-tribes.mse-include
+	version: 2021-11-03
+depends on:
+	package: inscryption-costs.mse-include
+	version: 2021-11-03
+
+##############
+
+card field:
+	type: choice
+	name: background
+	choice: regular
+	choice: rare
+	choice: terrain
+	description: How the card looks.
+card field:
+	type: text
+	name: creature name
+	description: The name of the card.
+card field:
+	type: choice
+	name: casting cost 1
+	include file: /inscryption-costs.mse-include/cost-names
+	description: What you need to cast the card.
+card field:
+	type: choice
+	name: casting cost 2
+	include file: /inscryption-costs.mse-include/cost-names
+	description: If you need to add another cost to the card, put it here.
+card field:
+	type: choice
+	name: casting cost 3
+	include file: /inscryption-costs.mse-include/cost-names
+	description: If you need a third cost for some reason, here you go.
+card field:
+	type: choice
+	name: casting cost 4
+	include file: /inscryption-costs.mse-include/cost-names
+	description: A fourth casting cost, because why not.
+card field:
+	type: choice
+	name: tribe symbol
+	include file: /inscryption-tribes.mse-include/tribe-names
+	description: What tribe the card belongs to.
+card field:
+	type: image
+	name: cardimage
+card field:
+	type: choice
+	name: sigil single
+	include file: /inscryption-sigils.mse-include/sigil-names
+	description: If the card has a single sigil, use this one.
+card field:
+	type: choice
+	name: sigil twin
+	include file: /inscryption-sigils.mse-include/sigil-names
+	description: If the card has two sigils, use this for one of them.
+card field:
+	type: choice
+	name: sigil twin 2
+	include file: /inscryption-sigils.mse-include/sigil-names
+	description: If the card has two sigils, use this for one of them.
+card field:
+	type: text
+	name: power
+card field:
+	type: text
+	name: health
