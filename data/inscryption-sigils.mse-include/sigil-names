@@ -1,0 +1,110 @@
+# Sigil choices
+# Included by a game file
+
+choice:
+	name: none
+	line below: true
+choice:
+	name: Wild Abilities
+	choice:
+		name: Combat
+		choice: Bees on Hit
+		choice: Buffs Neighbors
+		choice: Mighty Leap
+		choice: Prevent Attack
+		choice: Sharp Quills
+		choice: Soaring
+		choice: Split Strike
+		choice: Stinky
+		choice: Submerge
+		choice: Triple Strike
+	choice:
+		name: Evolve
+		choice: Evolve Plain
+		choice: Evolve One
+		choice: Evolve Two
+		choice: Evolve Three
+	choice:
+		name: Movement
+		choice: Burrowing
+		choice: Guard Dog
+		choice: Move Beside
+		choice: Strafe
+		choice: Strafe Push
+		choice: Tail on Hit
+	choice:
+		name: Resource
+		choice: Create Bells
+		choice: Create Dams
+		choice: Draw Ants
+		choice: Draw Copy
+		choice: Draw Rabbits
+		choice: Sacrifical
+		choice: Worthy Sacrifice
+		choice: Tutor
+choice:
+	name: Tech Abilities
+	choice: Annoying
+	choice: Nanoarmor
+	choice: Draw Vessel
+	choice: Explode on Death
+	choice: Gain Battery
+	choice: Sentry
+	choice: Sniper
+	choice: Steel Trap
+	choice: Swap Stats
+	choice: Transformer
+choice:
+	name: Cells, Conduit, and Latch
+	choice: Cell Buff Self
+	choice: Cell Draw Random
+	choice: Cell Tristrike
+	choice: Conduit Buff Attack
+	choice: Conduit Null
+	choice: Conduit Spawn Gems
+	choice: Latch Brittle
+	choice: Latch Nanoarmor
+	choice: Latch Explode on Death
+choice:
+	name: Death Abilities
+	choice: Blood Guzzler
+	choice: Bone Digger
+	choice: Brittle
+	choice: Corpse Eater
+	choice: Deathtouch
+	choice: Draw Copy on Death
+	choice: Haunter
+	choice: Quad Bones
+choice:
+	name: Magic Abilities
+	choice: Buff Gems
+	choice: Drop Ruby on Death
+	choice: Explode Gems
+	choice: Gain Blue Gem
+	choice: Gain Green Gem
+	choice: Gain Orange Gem
+	choice: Gem Dependant
+	choice: Gem Draw
+	choice: Shield Gems
+choice:
+	name: Unusual/Other
+	choice: All Strike
+	choice: Apparition
+	choice: Delete File
+	choice: Draw Random Cards on Death
+	choice: Edaxio Arms
+	choice: Edaxio Head
+	choice: Edaxio Legs
+	choice: Edaxio Torso
+	choice: Exploding Corpse
+	choice: File Size Damage
+	choice: Ice Cube
+	choice: Permadeath
+	choice: Random Ability
+	choice: Random Consumable
+	choice: Sinkhole
+	choice: Tidal Lock
+	choice: VR
+choice:
+	name: Custom
+	choice: none

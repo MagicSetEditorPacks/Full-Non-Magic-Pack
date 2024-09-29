@@ -1,0 +1,42 @@
+# Cost choices
+# Included by a game file
+# Shoutout to Kopie for the basis of the Energy Symbols
+
+choice:
+	name: none
+	line below: true
+choice:
+	name: Blood
+	choice: 1 Blood
+	choice: 2 Blood
+	choice: 3 Blood
+	choice: 4 Blood
+choice:
+	name: Bone
+	choice: 1 Bone
+	choice: 2 Bones
+	choice: 3 Bones
+	choice: 4 Bones
+	choice: 5 Bones
+	choice: 6 Bones
+	choice: 7 Bones
+	choice: 8 Bones
+	choice: 9 Bones
+	choice: 10 Bones
+choice:
+	name: Energy
+	choice: 1 Energy
+	choice: 2 Energy
+	choice: 3 Energy
+	choice: 4 Energy
+	choice: 5 Energy
+	choice: 6 Energy
+choice:
+	name: Mox
+	choice: Orange
+	choice: Green
+	choice: Blue
+	choice: Orange and Green
+	choice: Green and Blue
+	choice: Blue and Orange
+	choice: Triple

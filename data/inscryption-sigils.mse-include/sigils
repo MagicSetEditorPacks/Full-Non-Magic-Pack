@@ -1,0 +1,91 @@
+# Sigils
+
+Wild Abilities Combat Bees on Hit:	/inscryption-sigils.mse-include/ability_beesonhit.png
+Wild Abilities Combat Buffs Neighbors:		 /inscryption-sigils.mse-include/ability_buffneighbours.png
+Wild Abilities Combat Mighty Leap: 	 	 /inscryption-sigils.mse-include/ability_reach.png
+Wild Abilities Combat Prevent Attack: 	  	 /inscryption-sigils.mse-include/ability_preventattack.png
+Wild Abilities Combat Sharp Quills: 	  	 /inscryption-sigils.mse-include/ability_sharp.png
+Wild Abilities Combat Soaring: 		  	 /inscryption-sigils.mse-include/ability_flying.png
+Wild Abilities Combat Split Strike: 	  	 /inscryption-sigils.mse-include/ability_splitstrike.png
+Wild Abilities Combat Stinky: 		   	 /inscryption-sigils.mse-include/ability_debuffenemy.png
+Wild Abilities Combat Submerge: 	  	 /inscryption-sigils.mse-include/ability_submerge.png
+Wild Abilities Combat Triple Strike: 	   	 /inscryption-sigils.mse-include/ability_tristrike.png
+
+Wild Abilities Evolve Evolve Plain: 	   	 /inscryption-sigils.mse-include/ability_evolve.png
+Wild Abilities Evolve Evolve One: 	  	 /inscryption-sigils.mse-include/ability_evolve_1.png
+Wild Abilities Evolve Evolve Two: 	   	 /inscryption-sigils.mse-include/ability_evolve_2.png
+Wild Abilities Evolve Evolve Three: 	  	 /inscryption-sigils.mse-include/ability_evolve_3.png
+
+Wild Abilities Movement Burrowing: 	  	 /inscryption-sigils.mse-include/ability_whackamole.png
+Wild Abilities Movement Guard Dog: 	  	 /inscryption-sigils.mse-include/ability_guarddog.png
+Wild Abilities Movement Move Beside: 	 	 /inscryption-sigils.mse-include/ability_movebeside.png
+Wild Abilities Movement Strafe: 	  	 /inscryption-sigils.mse-include/ability_strafe.png
+Wild Abilities Movement Strafe Push: 	   	 /inscryption-sigils.mse-include/ability_strafepush.png
+Wild Abilities Movement Tail on Hit: 	   	 /inscryption-sigils.mse-include/ability_tailonhit.png
+
+Wild Abilities Resource Create Bells: 	   	 /inscryption-sigils.mse-include/ability_createbells.png
+Wild Abilities Resource Create Dams: 	 	 /inscryption-sigils.mse-include/ability_createdams.png
+Wild Abilities Resource Draw Ants: 	 	 /inscryption-sigils.mse-include/ability_drawant.png
+Wild Abilities Resource Draw Copy: 	 	 /inscryption-sigils.mse-include/ability_drawcopy.png
+Wild Abilities Resource Draw Rabbits: 	 	 /inscryption-sigils.mse-include/ability_drawrabbits.png
+Wild Abilities Resource Sacrifical:	 	 /inscryption-sigils.mse-include/ability_sacrifical.png
+Wild Abilities Resource Worthy Sacrifice: 	 /inscryption-sigils.mse-include/ability_tripleblood.png
+Wild Abilities Resource Tutor: 	 	 	 /inscryption-sigils.mse-include/ability_tutor.png
+
+Tech Abilities Annoying: 		/inscryption-sigils.mse-include/ability_buffenemy.png
+Tech Abilities Nanoarmor: 		/inscryption-sigils.mse-include/ability_deathshield.png
+Tech Abilities Draw Vessel: 		/inscryption-sigils.mse-include/ability_drawvesselonhit.png
+Tech Abilities Explode on Death:	/inscryption-sigils.mse-include/ability_explodeondeath.png
+Tech Abilities Gain Battery: 	 	/inscryption-sigils.mse-include/ability_gainbattery.png
+Tech Abilities Sentry: 	 	 	/inscryption-sigils.mse-include/ability_sentry.png
+Tech Abilities Sniper: 	 	 	/inscryption-sigils.mse-include/ability_sniper.png
+Tech Abilities Steel Trap: 	 	/inscryption-sigils.mse-include/ability_steeltrap.png
+Tech Abilities Swap Stats: 	 	/inscryption-sigils.mse-include/ability_swapstats.png
+Tech Abilities Transformer: 	 	/inscryption-sigils.mse-include/ability_transformer.png
+
+Cells Conduits and Latches Cell Buff Self: 		/inscryption-sigils.mse-include/ability_cellbuffself.png
+Cells Conduits and Latches Cell Draw Random: 		/inscryption-sigils.mse-include/ability_celldrawrandomcardondeath.png
+Cells Conduits and Latches Cell Tristrike: 		/inscryption-sigils.mse-include/ability_celltristrike.png
+Cells Conduits and Latches Conduit Buff Attack: 	/inscryption-sigils.mse-include/ability_conduitbuffattack.png
+Cells Conduits and Latches Conduit Null: 	 	/inscryption-sigils.mse-include/ability_conduitnull.png
+Cells Conduits and Latches Conduit Spawn Gems:	 	/inscryption-sigils.mse-include/ability_conduitspawngems.png
+Cells Conduits and Latches Latch Brittle: 	 	/inscryption-sigils.mse-include/ability_latchbrittle.png
+Cells Conduits and Latches Latch Nanoarmor:	 	/inscryption-sigils.mse-include/ability_latchdeathshield.png
+Cells Conduits and Latches Latch Explode on Death:	/inscryption-sigils.mse-include/ability_latchexplodeondeath.png
+
+Death Abilities Blood Guzzler: 			/inscryption-sigils.mse-include/ability_bloodguzzler.png
+Death Abilities Bone Digger: 	 	 	/inscryption-sigils.mse-include/ability_bonedigger.png
+Death Abilities Brittle: 	 	 	/inscryption-sigils.mse-include/ability_brittle.png
+Death Abilities Corpse Eater: 	 		/inscryption-sigils.mse-include/ability_corpseeater.png
+Death Abilities Deathtouch: 	 		/inscryption-sigils.mse-include/ability_deathtouch.png
+Death Abilities Draw Copy on Death:	 	/inscryption-sigils.mse-include/ability_drawcopyondeath.png
+Death Abilities Haunter: 	 	 	/inscryption-sigils.mse-include/ability_haunter.png
+Death Abilities Quad Bones: 	 	 	/inscryption-sigils.mse-include/ability_quadruplebones.png
+
+Magic Abilities Buff Gems: 	 	 	/inscryption-sigils.mse-include/ability_
+Magic Abilities Drop Ruby on Death: 	 	/inscryption-sigils.mse-include/ability_droprubyondeath.png
+Magic Abilities Explode Gems: 	 	 	/inscryption-sigils.mse-include/ability_explodeondeath.png
+Magic Abilities Gain Blue Gem: 		 	/inscryption-sigils.mse-include/ability_gainbluegem.png
+Magic Abilities Gain Green Gem:	 	 	/inscryption-sigils.mse-include/ability_gaingreengem.png
+Magic Abilities Gain Orange Gem: 		/inscryption-sigils.mse-include/ability_gainorangegem.png
+Magic Abilities Gem Dependant: 	 	 	/inscryption-sigils.mse-include/ability_gemdependant.png
+Magic Abilities Gem Draw: 	 	 	/inscryption-sigils.mse-include/ability_gemsdraw.png
+Magic Abilities Shield Gems: 	  	 	/inscryption-sigils.mse-include/ability_shieldgems.png
+
+Unusual and Other All Strike: 			/inscryption-sigils.mse-include/ability_allstrike.png
+Unusual and Other Apparition: 			/inscryption-sigils.mse-include/ability_apparition.png
+Unusual and Other Delete File: 	 		/inscryption-sigils.mse-include/ability_deletefile.png
+Unusual and Other Draw Random Cards on Death: 	/inscryption-sigils.mse-include/ability_drawrandomcardondeath.png
+Unusual and Other Edaxio Arms: 	 	 	/inscryption-sigils.mse-include/ability_edaxioarms.png
+Unusual and Other Edaxio Head: 	 	 	/inscryption-sigils.mse-include/ability_edaxiohead.png
+Unusual and Other Edaxio Legs: 	 		/inscryption-sigils.mse-include/ability_edaxiolegs.png
+Unusual and Other Edaxio Torso: 		/inscryption-sigils.mse-include/ability_edaxiotorso.png
+Unusual and Other Exploding Corpse: 		/inscryption-sigils.mse-include/ability_explodingcorpse.png
+Unusual and Other File Size Damage: 		/inscryption-sigils.mse-include/ability_filesizedamage.png
+Unusual and Other Ice Cube: 			/inscryption-sigils.mse-include/ability_icecube.png
+Unusual and Other Permadeath: 			/inscryption-sigils.mse-include/ability_permadeath.png
+Unusual and Other Random Ability: 		/inscryption-sigils.mse-include/ability_randomability.png
+Unusual and Other Random Consumable: 		/inscryption-sigils.mse-include/ability_randomconsumable.png
+Unusual and Other Sinkhole: 			/inscryption-sigils.mse-include/ability_sinkhole.png
+Unusual and Other Tidal Lock: 			/inscryption-sigils.mse-include/ability_squirrelorbit.png
+Unusual and Other VR: 				/inscryption-sigils.mse-include/ability_virtualreality.png

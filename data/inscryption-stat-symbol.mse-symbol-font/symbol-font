@@ -1,0 +1,21 @@
+mse version: 2.0.0
+installer group: inscryption/stat-font
+version: 2021-11-03
+
+image font size: 28
+horizontal space: 2
+symbol:
+	code: A
+	image: ants_stat_icon.png
+symbol:
+	code: B
+	image: bell_stat_icon.png
+symbol:
+	code: C
+	image: cardsinhand_stat_icon.png
+symbol:
+	code: H
+	image: bones_stat_icon.png
+symbol:
+	code: M
+	image: mirror_stat_icon.png

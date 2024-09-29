@@ -1,0 +1,180 @@
+mse version: 2.0.0
+game: inscryption
+short name: Beastly
+full name: Act 1 Style.
+icon: card_empty.png
+position hint: 02
+installer group: inscryption/style-act1
+
+version: 2021-11-03
+depends on: 
+	package: inscryption.mse-game
+	version: 2021-11-03
+depends on: 
+	package: inscryption-name-symbol.mse-symbol-font
+	version: 2021-11-03
+depends on:
+	package: inscryption-costs.mse-include
+	version: 2021-11-03
+depends on:
+	package: inscryption-sigils.mse-include
+	version: 2021-11-03
+depends on:
+	package: inscryption-stat-symbol.mse-symbol-font
+	version: 2021-11-03
+depends on:
+	package: inscryption-tribes.mse-include
+	version: 2021-11-03
+
+card width: 125
+card height: 190
+card dpi: 45
+
+############################################## Card fields
+card style:
+	############################### Name line
+	background:
+		left: 0
+		top: 0
+		height: 190
+		width: 125
+		z index: 0
+		render style: image
+		mask: bg.png
+		default: regular
+		choice images:
+			regular: card_empty.png
+			rare: card_empty_rare.png
+			terrain: card_terrain_empty.png
+	creature name:
+		left: 7
+		top: 9
+		right: 118
+		height: 17
+		alignment: middle center overflow-shrink
+		z index: 4
+		font:
+			name: Heavyweight
+			size: 15
+			color: rgb(0,0,0)
+		symbol font:
+			name: inscryption-name-symbol
+			size: 15
+
+	casting cost 1:
+		right: 123
+		top: 8
+		width: 64
+		height: 64
+		alignment: middle center
+		z index: 3
+		render style: image
+		include file: /inscryption-costs.mse-include/costs
+
+	casting cost 2:
+		right: 123
+		top: 35
+		width: 64
+		height: 64
+		alignment: middle center
+		z index: 3
+		render style: image
+		include file: /inscryption-costs.mse-include/costs
+	casting cost 3:
+		right: 123
+		top: 62
+		width: 64
+		height: 64
+		alignment: middle center
+		z index: 3
+		render style: image
+		include file: /inscryption-costs.mse-include/costs
+	casting cost 4:
+		right: 123
+		top: 89
+		width: 64
+		height: 64
+		alignment: middle center
+		z index: 3
+		render style: image
+		include file: /inscryption-costs.mse-include/costs
+	tribe symbol:
+		left: -4
+		top: 2.4
+		height: 62.1
+		width: 51.6
+		z index: 3
+		render style: image
+		alignment: top left
+		include file: /inscryption-tribes.mse-include/tribes
+	##################### image
+	cardimage:
+		left: 5
+		top: 34
+		width: 114
+		height: 94
+		z index: 2
+
+	##################### sigils
+	sigil single:
+		left: 
+		top:
+		width: 49
+		height: 49
+		z index: 2
+		render style: image
+		popup style: in place
+		alignment: middle center
+		include file: /inscryption-sigils.mse-include/sigils
+	sigil twin:
+		left: 58
+		top: 130
+		width: 30
+		height: 30
+		z index: 2
+		render style: image
+		popup style: in place
+		alignment: middle center
+		include file: /inscryption-sigils.mse-include/sigils
+	sigil twin 2:
+		left: 30
+		top: 150
+		width: 30
+		height: 30
+		z index: 2
+		render style: image
+		popup style: in place
+		alignment: middle center
+		include file: /inscryption-sigils.mse-include/sigils
+	######################### Power and Health
+	power:
+		z index: 3
+		left: 8
+		top: 135
+		width: 24
+		height: 24
+		alignment: middle center
+		font:
+			name: Heavyweight
+			size: 22
+			color: black
+		symbol font:
+			name: inscryption-stat-symbol
+			size: 22
+			alignment: center middle
+	health:
+		z index: 3
+		left: 95
+		top: 155
+		width: 24
+		height: 24
+		alignment: middle center
+		font:
+			name: Heavyweight
+			size: 22
+			color: black
+		symbol font:
+			name: inscryption-stat-symbol
+			size: 22
+			alignment: center middle
+	
