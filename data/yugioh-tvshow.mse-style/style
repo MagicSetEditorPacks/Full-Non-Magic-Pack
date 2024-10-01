@@ -21,7 +21,7 @@ depends on:
 
 card width: 375
 card height: 523
-card dpi: 300
+card dpi: 150
 ############################################################## Acknowledgements
 ############################################################## Extra scripts
 init script:

@@ -23,7 +23,7 @@ depends on:
 
 card width: 375
 card height: 549
-card dpi: 300
+card dpi: 150
 ########################################## Extra Scripts
 init script:
 	# Is the unit a special unit?

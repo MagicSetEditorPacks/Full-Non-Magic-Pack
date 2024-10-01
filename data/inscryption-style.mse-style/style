@@ -28,7 +28,7 @@ depends on:
 
 card width: 125
 card height: 190
-card dpi: 45
+card dpi: 150
 
 ############################################## Card fields
 card style:

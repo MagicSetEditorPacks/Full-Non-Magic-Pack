@@ -14,7 +14,7 @@ depends on:
 	
 card width: 650
 card height: 908
-card dpi: 90
+card dpi: 150
 card background: rgb(255,255,255)
 
 ########################################

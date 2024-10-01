@@ -13,7 +13,7 @@ depends on:
 
 card width: 300
 card height: 400
-card dpi: 300
+card dpi: 150
 ############################################################## Extra scripts
 ############################################################## Set info fields
 set info style:
