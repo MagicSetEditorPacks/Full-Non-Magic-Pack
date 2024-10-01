@@ -21,7 +21,7 @@ depends on:
 
 card width: 361
 card height: 523
-card dpi: 152.6265
+card dpi: 150
 ############################################################## Extra scripts
 init script:
 	card_type := {

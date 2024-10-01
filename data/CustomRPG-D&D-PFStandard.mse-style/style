@@ -13,7 +13,7 @@ card background: white
 #card dpi: 152.4
 card width: 635
 card height: 886
-card dpi: 254
+card dpi: 150
 
 ############################################################## Scripts
 init script:

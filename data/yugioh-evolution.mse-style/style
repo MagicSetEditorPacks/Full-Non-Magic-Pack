@@ -16,7 +16,7 @@ depends on:
 
 card width: 375
 card height: 525
-card dpi: 158.5455
+card dpi: 150
 #By Smr1313
 #Adapted by Pichoro
 init script:

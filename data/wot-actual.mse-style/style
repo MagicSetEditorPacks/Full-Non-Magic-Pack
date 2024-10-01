@@ -20,7 +20,7 @@ depends on:
 card background: white
 card width: 750
 card height: 1050
-card dpi: 600
+card dpi: 300
 
 ############################################################## Extra scripts
 ############################################################## Set info fields

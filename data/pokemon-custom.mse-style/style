@@ -14,7 +14,7 @@ depends on: pokemon-symbols.mse-symbol-font 0.32
 card background: white
 card width: 375
 card height: 523
-card dpi: 96
+card dpi: 150
 
 #Fonts Used: Gill Sans Std, Sanvito Pro Light Caption, Futura Std, Frutiger LT Std
 #################### Background Stuff
