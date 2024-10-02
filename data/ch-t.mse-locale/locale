@@ -58,6 +58,7 @@ menu:
 	format:			字體格式
 	bold:			粗體	Ctrl+B
 	italic:			斜體	Ctrl+I
+	underline:			&Underline	Ctrl+U
 	symbols:		符號	Ctrl+M
 	reminder text:		提示文本	Ctrl+R
 	insert symbol:		插入符號
@@ -70,6 +71,8 @@ menu:
 	stack:			堆疊條形圖	3
 	scatter:		散點圖	4
 	scatter pie:		散餅圖	5
+	console:			Console
+	clear console:		&Clear Console	Ctrl+L
 	
 	window:			視窗
 	new window:		新建視窗
@@ -171,6 +174,7 @@ help:
 	format:
 	bold:			將所選文字設為粗體
 	italic:			將所選文字設為斜體
+	underline:			Makes the selected text underlined
 	symbols:		將所選文字改成符號
 	reminder text:		對選擇的關鍵詞顯示提示文本
 #_ADD	# spelling
@@ -182,6 +186,8 @@ help:
 	stack:			條形圖，堆疊條形圖
 	scatter:		散點圖，每一個散點的大小取決與卡牌數量
 	scatter pie:		散餅圖，每一個三點都是一個小型餅狀圖
+	scatter pie:		A scatter plot where each item is a small pie graph
+	clear console:		Clear the console
 	
 	window:
 	new window:		創建一個額外視窗用來編輯同一套牌
@@ -197,7 +203,9 @@ help:
 	index:			
 	website:			
 	about:				
-	
+	# New Set Window
+	search game list control:			Filter the game list. Use - to exclude games. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
+	search stylesheet list control:		Filter the stylesheet list. Use - to exclude styles. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
 	# Cards panel
 #_ADD	collapse notes:		Hide the card notes box
 #_ADD	expand notes:		Show the card notes box
@@ -332,6 +340,7 @@ tool:
 	smooth point:		平滑
 	symmetric point:	對稱
 	
+	clear console:		Clear Console
 ############################################################## Toolbar help text
 tooltip:
 	cards tab:		卡牌編輯	
@@ -362,6 +371,7 @@ tooltip:
 	
 	bold:			粗體
 	italic:			斜體
+	underline:			Underline
 	symbols:		系列符號
 	reminder text:		提示文本
 	
@@ -413,6 +423,7 @@ tooltip:
 	smooth point:		點平滑效果
 	symmetric point:	點對稱效果
 
+	clear console:		Clear Console
 ############################################################## Labels in the GUI
 label:
 	# Cards tab
@@ -453,7 +464,8 @@ label:
 	# New set window
 	game type:		游戲類型:
 	style type:		風格樣式:
-	
+	search game list:					Filter Games
+	search stylesheet list:				Filter Stylesheets
 	stylesheet not found:
 		你要打開的套牌使用的是 "%s" 樣式表
 		這個樣式表在你的系統里沒有找到，請選擇其他方案

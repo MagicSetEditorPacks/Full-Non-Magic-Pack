@@ -58,6 +58,7 @@ menu:
 	format:			F&ormater
 	bold:				&Fed	Ctrl+B
 	italic:				&Kursiv	Ctrl+I
+	underline:			&Underline	Ctrl+U
 	symbols:			&Symboler	Ctrl+M
 	reminder text:		&Nøgleordspåmindelser	Ctrl+R
 	insert symbol:		I&ndsæt Symbol
@@ -70,6 +71,8 @@ menu:
 	stack:				&Stolpediagram I Lag	3
 	scatter:			K&oordinatvisning	4
 	scatter pie:		La&gkage-Koordinater	5
+	console:			Console
+	clear console:		&Clear Console	Ctrl+L
 	
 	window:			&Vindue
 	new window:			&Nyt Vindue
@@ -169,6 +172,7 @@ help:
 	format:
 	bold:				Gør den valgte tekst fed
 	italic:				Gør den valgte tekst kursiv
+	underline:			Makes the selected text underlined
 	symbols:			Teksten er som Magic-symboler
 	reminder text:		Viser huskeregler i teksten
 	# spelling
@@ -180,6 +184,7 @@ help:
 	stack:				En stolpegraf med stolperne lagt i bunker
 	scatter:			Et koordinatdiagram, hvor størrelsen af hver koordinat viser størrelsen
 	scatter pie:		Et koordinatdiagram hvor hver koordinat har sin egen lagkagegraf
+	clear console:		Clear the console
 	
 	window:
 	new window:			Åbner et nyt vindue for at arbejde med det samme sæt
@@ -196,7 +201,9 @@ help:
 	index:				
 	website:			
 	about:				
-	
+	# New Set Window
+	search game list control:			Filter the game list. Use - to exclude games. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
+	search stylesheet list control:		Filter the stylesheet list. Use - to exclude styles. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
 	# Cards panel
 	collapse notes:		Viser noteboksen
 	expand notes:		Vis noteboksen
@@ -330,6 +337,7 @@ tool:
 	free point:			Fri
 	smooth point:		Glat
 	symmetric point:	Symmetrisk
+	clear console:		Clear Console
 	
 ############################################################## Toolbar help text
 tooltip:
@@ -360,6 +368,7 @@ tooltip:
 	
 	bold:				Fed
 	italic:				Kursiv
+	underline:			Underline
 	symbols:			Symboler
 	reminder text:		Huskeregler
 	
@@ -410,6 +419,7 @@ tooltip:
 	free point:			Aflås punkt
 	smooth point:		Gør punkt glat
 	symmetric point:	Gør punkt symmetrisk
+	clear console:		Clear Console
 
 ############################################################## Labels in the GUI
 label:
@@ -448,6 +458,8 @@ label:
 	# New set window
 	game type:			&Spiltype:
 	style type:			&Kortstil:
+	search game list:					Filter Games
+	search stylesheet list:				Filter Stylesheets
 	
 	stylesheet not found:
 		Sættet du har åbner bruger stilen "%s".

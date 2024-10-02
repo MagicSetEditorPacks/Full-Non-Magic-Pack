@@ -59,6 +59,7 @@ menu:
 	format:			&Format
 	bold:				Wy&tłuszczony	Ctrl+B
 	italic:				&Kursywa	Ctrl+I
+	underline:			&Underline	Ctrl+U
 	symbols:			&Symbole	Ctrl+M
 	reminder text:		&Tekst przypomnienia	Ctrl+R
 	insert symbol:		&Wstaw symbol
@@ -71,6 +72,8 @@ menu:
 	stack:				Słupkowy z &podziałką	3
 	scatter:			&Rozproszony	4
 	scatter pie:		Ro&zproszony Kołowy	5
+	console:			Console
+	clear console:		&Clear Console	Ctrl+L
 	
 	window:			&Okno
 	new window:			&Nowe okno
@@ -170,6 +173,7 @@ help:
 	format:
 	bold:				Pogrubia zaznaczony tekst
 	italic:				Pochyla zaznaczony tekst
+	underline:			Makes the selected text underlined
 	symbols:			Rysuje zaznaczony tekst z symbolami
 	reminder text:		Pokazuj tekst przypomnienia dla wybranego słowa kluczowego
 	no spelling suggestions:	 Nie ma sugestii co do sposobu korekty tego słowa.
@@ -180,6 +184,7 @@ help:
 	stack:				Wykres słupkowy z podziałką
 	scatter:			Wykres rozproszony, wielkość kółka jest proporcjonalna do ilości kart
 	scatter pie:		Wykres rozproszony kołowy - wykres rozproszony, gdzie każde kółko jest małym wykresem kołowym
+	clear console:		Clear the console
 	
 	window:
 	new window:			Otwiera ten sam zestaw w nowym oknie
@@ -194,6 +199,9 @@ help:
 	index:				
 	website:			
 	about:				
+	# New Set Window
+	search game list control:			Filter the game list. Use - to exclude games. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
+	search stylesheet list control:		Filter the stylesheet list. Use - to exclude styles. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
 	
 	# Cards panel
 	collapse notes:		Schowaj panel z notatkami
@@ -327,6 +335,7 @@ tool:
 	free point:			Wolny
 	smooth point:		Gładki
 	symmetric point:	Symetryczny
+	clear console:		Clear Console
 	
 ############################################################## Toolbar help text
 tooltip:
@@ -357,6 +366,7 @@ tooltip:
 	
 	bold:				Wytłuszczenie
 	italic:				Kursywa
+	underline:			Underline
 	symbols:			Symbole
 	reminder text:		Przypomnienie
 	
@@ -407,6 +417,7 @@ tooltip:
 	free point:			Odblokuj punkt
 	smooth point:		Wygładź punkt
 	symmetric point:	Usymetrycznij punkt
+	clear console:		Clear Console
 
 ############################################################## Labels in the GUI
 label:
@@ -445,6 +456,8 @@ label:
 	# New set window
 	game type:			Rodzaj &gry:
 	style type:			&Styl kart:
+	search game list:					Filter Games
+	search stylesheet list:				Filter Stylesheets
 	
 	stylesheet not found:
 		Zestaw który próbujesz otworzyć używa stylu z arkusz "%s".

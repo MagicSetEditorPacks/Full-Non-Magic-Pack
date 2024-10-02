@@ -58,6 +58,7 @@ menu:
 	format:			F&ormatar
 	bold:				&Negrito	Ctrl+B
 	italic:				&Italico	Ctrl+I
+	underline:			&Underline	Ctrl+U
 	symbols:			&Simbolos	Ctrl+M
 	reminder text:			&Texto Explicativo	Ctrl+R
 	insert symbol:			I&nserir Símbolo
@@ -70,7 +71,8 @@ menu:
 	stack:				&Barras Empilhadas	3
 	scatter:			G&áfico de linhas	4
 	scatter pie:			Sc&atter-Pie		5
-	
+	console:			Console
+	clear console:		&Clear Console	Ctrl+L
 	window:			&Janela
 	new window:			&Nova Janela
 	cards tab:			C&ards	F5
@@ -169,6 +171,7 @@ help:
 	format:
 	bold:				Faça o texto selecionado transformar-se em Negrito.
 	italic:				Faça o texto selecionado transformar-se em Itálico.
+	underline:			Makes the selected text underlined
 	symbols:			Transforma uma parte do texto selecionada em simbolos.
 	reminder text:			Mostra ou oculta o Texto Explicativo de uma Palavra-Chave selecionado.
 	# spelling
@@ -180,7 +183,8 @@ help:
 	stack:				Um gráfico de Barra com Barras em pilhadas.
 	scatter:			Um scatter plot, o tamanho indica o número de cards.
 	scatter pie:			A dispersão parcela em que cada item é um gráfico de um pequena torta.
-	
+	clear console:		Clear the console
+
 	window:
 	new window:			&Cria uma outra janela para editar a mesma Edição.
 	cards tab:			&Edita o card da Edição.
@@ -194,7 +198,9 @@ help:
 	index:				
 	website:			
 	about:				
-	
+	# New Set Window
+	search game list control:			Filter the game list. Use - to exclude games. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
+	search stylesheet list control:		Filter the stylesheet list. Use - to exclude styles. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
 	# Cards panel
 	collapse notes:			Oculta a caixa de anotações do card.
 	expand notes:			Mostra a caixa de anotações do card.
@@ -326,7 +332,7 @@ tool:
 	free point:			Livre
 	smooth point:			Fumaça
 	symmetric point:		Simétrico
-	
+	clear console:		Clear Console
 ############################################################## Toolbar help text
 tooltip:
 	cards tab:			
@@ -356,6 +362,7 @@ tooltip:
 	
 	bold:				Negrito
 	italic:				Itálico
+	underline:			Underline
 	symbols:			Simbolo
 	reminder text:			Texto Explicativo
 	
@@ -406,7 +413,7 @@ tooltip:
 	free point:			Desagrupa os pontos
 	smooth point:			Suavilização dos pontos
 	symmetric point:		Faça os pontos torna-sem simétricos
-
+	clear console:		Clear Console
 ############################################################## Labels in the GUI
 label:
 	# Cards tab
@@ -444,6 +451,8 @@ label:
 	# New set window
 	game type:			&Estilo de Jogo:
 	style type:			&Estilo do Tipo:
+	search game list:					Filter Games
+	search stylesheet list:				Filter Stylesheets
 	
 	stylesheet not found:
 			A Edição está a tentar abrir utiliza a folha de estilo "%s".

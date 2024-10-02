@@ -57,6 +57,7 @@ menu:
 	format:			F&ormat
 	bold:				&Fett	Ctrl+B
 	italic:				&Kursiv	Ctrl+I
+	underline:			&Underline	Ctrl+U
 	symbols:			&Symbole	Ctrl+M
 	reminder text:		&Reminder Text	Ctrl+R
 	insert symbol:		Sy&mbol einfügen
@@ -69,6 +70,8 @@ menu:
 	stack:				&Gestapelte Säulen	3
 	scatter:			&Blase	4
 	scatter pie:		G&estreute Kreise	5
+	console:			Console
+	clear console:		&Clear Console	Ctrl+L
 	
 	window:			&Ansicht
 	new window:			&Neues Fenster
@@ -168,6 +171,7 @@ help:
 	format:
 	bold:				Formatiert den Text Fett
 	italic:				Formatiert den Text Kursiv
+	underline:			Makes the selected text underlined
 	symbols:			Formatiert den Text als Symbol
 	reminder text:		Zeige den Reminder-Text für die gewählte Fähigkeit an
 #_ADD	# spelling
@@ -179,6 +183,7 @@ help:
 	stack:				Ein Balkendiagramm mit gestapelten Säulen
 	scatter:			Ein Blasendiagramm, die Größe der Blase zeigt die Anzahl der Karten an
 	scatter pie:		Gestreute Kreise, wobei jeder Kreis ein Kreisdiagramm ist
+	clear console:		Clear the console
 	
 	window:
 	new window:			Erstellt ein neues Fenster mit der gleichen Edition
@@ -193,6 +198,9 @@ help:
 	index:				
 	website:			
 	about:				
+	# New Set Window
+	search game list control:			Filter the game list. Use - to exclude games. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
+	search stylesheet list control:		Filter the stylesheet list. Use - to exclude styles. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
 	
 	# Cards panel
 	collapse notes:		Versteckt die Karten-Notiz-Box
@@ -327,6 +335,7 @@ tool:
 	smooth point:		Glätten
 	symmetric point:	Symmetrisch
 	
+	clear console:		Clear Console
 ############################################################## Toolbar help text
 tooltip:
 	cards tab:		Karten	
@@ -356,6 +365,7 @@ tooltip:
 	
 	bold:				Fett
 	italic:				Krusiv
+	underline:			Underline
 	symbols:			Symbole
 	reminder text:		Text merken
 	
@@ -407,6 +417,7 @@ tooltip:
 	smooth point:		Punkt glätten
 	symmetric point:	Punkt symmetrisch ausrichten
 
+	clear console:		Clear Console
 ############################################################## Labels in the GUI
 label:
 	# Cards tab
@@ -444,6 +455,8 @@ label:
 	# New set window
 	game type:			&Spieltyp:
 	style type:			&Style:
+	search game list:					Filter Games
+	search stylesheet list:				Filter Stylesheets
 	
 	stylesheet not found:
 		Die ausgewählte Edition benutzt das Stylesheet "%s" .

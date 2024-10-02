@@ -58,6 +58,7 @@ menu:
 	format:			字体格式
 	bold:			粗体	Ctrl+B
 	italic:			斜体	Ctrl+I
+	underline:			&Underline	Ctrl+U
 	symbols:		符号	Ctrl+M
 	reminder text:		提示文本	Ctrl+R
 	insert symbol:		插入符号
@@ -70,7 +71,8 @@ menu:
 	stack:			堆叠条形图	3
 	scatter:		散点图	4
 	scatter pie:		散饼图	5
-	
+	console:			Console
+	clear console:		&Clear Console	Ctrl+L
 	window:			窗口
 	new window:		新建窗口
 	cards tab:		卡牌编辑	F5
@@ -80,6 +82,8 @@ menu:
 	stats tab:		统计结果	F9
 #_ADD	random pack tab:	&Random Packs
 #_ADD	console tab:		&Console	Ctrl+F9
+	console:			Console
+	clear console:		&Clear Console	Ctrl+L
 	
 	help:			帮助
 	index:			索引...	F1
@@ -171,6 +175,7 @@ help:
 	format:
 	bold:			将所选文字设为粗体
 	italic:			将所选文字设为斜体
+	underline:		Makes the selected text underlined
 	symbols:		将所选文字改成符号
 	reminder text:		对选择的关键词显示提示文本
 #_ADD	# spelling
@@ -182,7 +187,7 @@ help:
 	stack:			条形图，堆叠条形图
 	scatter:		散点图，每一个散点的大小取决与卡牌数量
 	scatter pie:		散饼图，每一个三点都是一个小型饼状图
-	
+	clear console:		Clear the console
 	window:
 	new window:		创建一个额外窗口用来编辑同一套牌
 	cards tab:		编辑套牌中的卡牌
@@ -198,6 +203,9 @@ help:
 	website:			
 	about:				
 	
+	# New Set Window
+	search game list control:			Filter the game list. Use - to exclude games. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
+	search stylesheet list control:		Filter the stylesheet list. Use - to exclude styles. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
 	# Cards panel
 #_ADD	collapse notes:		Hide the card notes box
 #_ADD	expand notes:		Show the card notes box
@@ -207,6 +215,7 @@ help:
 #_ADD	seed:				Seed number for the random generator. Using the same seed number gives the same 'random' packs.
 #_ADD	edit pack type:		Double click to edit pack type
 #_ADD	number of packs:	The number of %ss to generate
+	clear console:		Clear the console
 	
 	# Preferences
 	app language:
@@ -332,6 +341,7 @@ tool:
 	smooth point:		平滑
 	symmetric point:	对称
 	
+	clear console:		Clear Console
 ############################################################## Toolbar help text
 tooltip:
 	cards tab:		卡牌编辑	
@@ -362,6 +372,7 @@ tooltip:
 	
 	bold:			粗体
 	italic:			斜体
+	underline:			Underline
 	symbols:		系列符号
 	reminder text:		提示文本
 	
@@ -453,6 +464,8 @@ label:
 	# New set window
 	game type:		游戏类型:
 	style type:		风格样式:
+	search game list control:			Filter the game list. Use - to exclude games. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
+	search stylesheet list control:		Filter the stylesheet list. Use - to exclude styles. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
 	
 	stylesheet not found:
 		你要打开的套牌使用的是 "%s" 样式表

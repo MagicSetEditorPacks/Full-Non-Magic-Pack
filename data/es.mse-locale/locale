@@ -57,6 +57,7 @@ menu:
 	format:			F&ormato
 	bold:				&Negrita	Ctrl+B
 	italic:				&Cursiva	Ctrl+I
+	underline:			&Underline	Ctrl+U
 	symbols:			&Símbolos	Ctrl+M
 	reminder text:		&Texto recordatorio	Ctrl+R
 	insert symbol:		I&nsertar símbolo
@@ -69,6 +70,8 @@ menu:
 	stack:				&Barras apiladas	3
 	scatter:			A&mbulantes parcela	4
 	scatter pie:		Am&bulantes-Pie	5
+	console:			Console
+	clear console:		&Clear Console	Ctrl+L
 	
 	window:			&Ventana
 	new window:			&Nueva ventana
@@ -168,6 +171,7 @@ help:
 	format:
 	bold:				Pone el texto seleccionado en negrita
 	italic:				Pone el texto seleccionado en cursiva
+	underline:			Makes the selected text underlined
 	symbols:			Dibuja el texto seleccionado con símbolos
 	reminder text:		Muestra el texto recordatorio de la palabra clave seleccionada
 #_ADD	# spelling
@@ -179,7 +183,7 @@ help:
 	stack:				Un gráfico de barras con las barras apiladas
 	scatter:			Un gráfico de dispersión, el tamaño indica el número de tarjetas
 	scatter pie:		Un gráfico de dispersión donde cada tema es un pequeño pastel gráfico
-	
+	clear console:		Clear the console
 	window:
 	new window:			Crea otra ventana para editar el mismo set
 	cards tab:			Edita las cartas del set
@@ -193,6 +197,9 @@ help:
 	index:				
 	website:			
 	about:				
+	# New Set Window
+	search game list control:			Filter the game list. Use - to exclude games. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
+	search stylesheet list control:		Filter the stylesheet list. Use - to exclude styles. Use field: to search in a specific field. Use quotes for literal search. Separate multiple queries with a space.
 	
 	# Cards panel
 #_ADD	collapse notes:		Hide the card notes box
@@ -327,6 +334,7 @@ tool:
 	smooth point:		Suavizar
 	symmetric point:	Símetrico
 	
+	clear console:		Clear Console
 ############################################################## Toolbar help text
 tooltip:
 	cards tab:			
@@ -356,6 +364,7 @@ tooltip:
 	
 	bold:				Negrita
 	italic:				Cursiva
+	underline:			Underline
 	symbols:			Símbolos
 	reminder text:		Texto recordatorio
 	
@@ -407,6 +416,7 @@ tooltip:
 	smooth point:		Hacer punto suave
 	symmetric point:	Hacer punto simétrico
 
+	clear console:		Clear Console
 ############################################################## Labels in the GUI
 label:
 	# Cards tab
@@ -444,6 +454,8 @@ label:
 	# New set window
 	game type:			&Tipo de juego:
 	style type:			&Estilo de carta:
+	search game list:					Filter Games
+	search stylesheet list:				Filter Stylesheets
 	
 	stylesheet not found:
 		El set que estás intentando abrir usa el estilo "%s".
