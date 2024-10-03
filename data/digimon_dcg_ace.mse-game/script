@@ -1,0 +1,391 @@
+############################################################## Scripts
+	
+	is_ace := {
+		card.evolution_effect == "ACE"
+	}
+	
+	is_mega := {
+		level := to_int(card.level) or else 0
+		card.type == "Digimon" and level >= 6
+	}
+	
+	get_level_below := {
+		level := to_int(card.level) or else 3
+		if level == 0 then 2
+		else (level - 1)
+	}
+	
+	get_evolution := {
+		if card.type == "Tamer" or card.type == "Option" or is_mega() then "None"
+		else "Evolution"
+	}
+	
+	has_evo_effect := {
+		is_ace() or card.evolution_effect == "Evolution" or card.type == "Digi-Egg"
+	}
+	
+	not_digimon := {
+		card.type == "Tamer" or card.type == "Option"
+	}
+	
+	all_colour_sort := {
+		if 		clr == "Red"	then "A"
+		else if clr == "Blue"	then "B"
+		else if clr == "Yellow"	then "C"
+		else if clr == "Green"	then "D"
+		else if clr == "Black"	then "E"
+		else if clr == "Purple"	then "F"
+		else if clr == "White"	then "G"
+		else "Z"
+	}
+	
+	colour_sort := {
+		all_colour_sort(clr: card.colour)
+	}
+	
+	evocolour_sort := {
+		all_colour_sort(clr: card.evocolour)
+	}
+	
+	evocolour2_sort := {
+		all_colour_sort(clr: card.evocolour2)
+	}
+	
+	type_sort := {
+		if card.type == "Digi-Egg" then "A"
+		else if card.type == "Digimon" then "B"
+		else if card.type == "Tamer" then "C"
+		else "D"
+	}
+	
+	rarity_sort := {
+		if card.rarity == "Secret Rare" then "B"
+		else "A"
+	}
+	
+	get_set_number := {
+		position := to_string(position(
+			of: card
+			in: set
+			order_by: {
+				rarity_sort() + type_sort() + colour_sort() + card.level
+			}) + 1)
+		if set.auto_increment then
+			if length(position) > 2 then position
+			else if length(position) > 1 then "0" + position
+			else "00" + position
+		else ""
+	}
+
+	expand_keywords@(
+		condition: {
+			correct_case
+		}
+		default_expand: {
+			chosen(choice:if correct_case then mode else "lower case", set.automatic_reminder_text)
+		},
+		combine: {
+			keyword  := "<nospellcheck>{keyword}</nospellcheck>"
+			reminder := process_english_hints(reminder)
+			keyword + if expand then "<atom-reminder-{mode}> ({reminder})</atom-reminder-{mode}>"
+		}) 
+	
+	auto_replace :=
+		replace@(
+			match: "\\[When Attacking\\]|WHENATTACK"
+			replace: "<sym>WAT</sym>"
+		) +
+		replace@(
+			match: "\\[End of Attack\\]|AFTERATTACK|ENDOFATTACK"
+			replace: "<sym>AFAT</sym>"
+		) +
+		replace@(
+			match: "\\[Start of Your Turn\\]|STARTALL"
+			replace: "<sym>STARTTB</sym>"
+		) +
+		replace@(
+			match: "\\[End of Opponent’s Turn\\]|STARTOPP"
+			replace: "<sym>STARTTO</sym>"
+		) +
+		replace@(
+			match: "\\[Start of Your Turn\\]|STARTTURN"
+			replace: "<sym>STARTTP</sym>"
+		) +
+		replace@(
+			match: "\\[Start of Your Main Phase\\]|STARTMAIN"
+			replace: "<sym>STARTMP</sym>"
+		) +
+		replace@(
+			match: "\\[End of All Turns\\]|ENDALL"
+			replace: "<sym>ENDTB</sym>"
+		) +
+		replace@(
+			match: "\\[End of Opponent’s Turn\\]|ENDOPP"
+			replace: "<sym>ENDTO</sym>"
+		) +
+		replace@(
+			match: "\\[End of Your Turn\\]|ENDYOUR"
+			replace: "<sym>ENDTP</sym>"
+		) +
+		replace@(
+			match: "\\[On Deletion\\]|ONDEL"
+			replace: "<sym>ONDEL</sym>"
+		) +
+		replace@(
+			match: "\\[On Play\\]|ONPLAY"
+			replace: "<sym>ONPLAY</sym>"
+		) +
+		replace@(
+			match: "\\[Digivolve\\]|DIGIVOLVE"
+			replace: "<sym>DIGIEVO</sym>"
+		) +
+		replace@(
+			match: "\\[When Digivolving\\]|ONDIGIVOLVE"
+			replace: "<sym>EVOL</sym>"
+		) +
+		replace@(
+			match: "\\[Main\\]|MAIN "
+			replace: "<sym>MAIN</sym>"
+		) +
+		replace@(
+			match: "\\[Security\\]|SECURITY"
+			replace: "<sym>SECR</sym>"
+		) +
+		replace@(
+			match: "\\[All Turns\\]|ALLTURN"
+			replace: "<sym>TRNB</sym>"
+		) +
+		replace@(
+			match: "\\[Opponent's Turn\\]|OPPTURN"
+			replace: "<sym>TRNO</sym>"
+		) +
+		replace@(
+			match: "\\[Your Turn\\]|YOURTURN"
+			replace: "<sym>TRNP</sym>"
+		) + 
+		replace@(
+			match: "\\SBlocker\\S|BLOCK"
+			replace: "<sym>BLOCK</sym>"
+		) + 
+		replace@(
+			match: "\\SJamming\\S|JAM"
+			replace: "<sym>JAM</sym>"
+		) + 
+		replace@(
+			match: "\\SArmor Purge\\S|PURGE"
+			replace: "<sym>PURGE</sym>"
+		) + 
+		replace@(
+			match: "\\SPiercing\\S|PIERCE"
+			replace: "<sym>PRCE</sym>"
+		) + 
+		replace@(
+			match: "\\SRetaliation\\S|RETAL"
+			replace: "<sym>REVN</sym>"
+		) + 
+		replace@(
+			match: "\\SReboot\\S|REBOOT"
+			replace: "<sym>REBT</sym>"
+		) + 
+		replace@(
+			match: "\\[Once Per Turn\\]|ONCE"
+			replace: "<sym>ONCE</sym>"
+		) + 
+		replace@(
+			match: "\\[Twice Per Turn\\]|TWICE"
+			replace: "<sym>TWICE</sym>"
+		) + 
+		replace@(
+			match: "\\[Thrice Per Turn\\]|THRICE"
+			replace: "<sym>THRICE</sym>"
+		) + 
+		replace@(
+			match: "\\[DigiXros ([0-9]+)\\]|XROS([0-9]+) "
+			replace: "<sym>XROS\\1</sym>"
+		) + 
+		replace@(
+			match: "\\SDraw ([0-9]+)\\S|DRAW([0-9]+) "
+			replace: "<sym>DR\\1</sym>"
+		) + 
+		replace@(
+			match: "\\SSecurity Attack ([+-—][0-9])\\S|SECATK([+-—][0-9])"
+			replace: "<sym>SEC\\1</sym>"
+		) + 
+		replace@(
+			match: "\\SSecurity Attack\\S |SECATK "
+			replace: "<sym>SEC</sym>"
+		) + 
+		replace@(
+			match: "\\SRecovery ([0-9]) \\SDeck\\S\\S|RECOVER([0-9])"
+			replace: "<sym>RECD\\1</sym>"
+		) + 
+		replace@(
+			match: "RECOVER "
+			replace: "<sym>RECD</sym>"
+		) + 
+		replace@(
+			match: "DEDIGIVOLVE([0-9])"
+			replace: "<sym>REVT\\1</sym>"
+		) + 
+		replace@(
+			match: "DEDIGIVOLVE "
+			replace: "<sym>REVT</sym>"
+		) + 
+		replace@(
+			match: "DIGISORPTION([0-9])"
+			replace: "<sym>SORP-\\1</sym>"
+		) + 
+		replace@(
+			match: "DIGIBURST([0-9])"
+			replace: "<sym>DGB\\1</sym>"
+		) +
+		replace@(
+			match: "DIGIBURST "
+			replace: "<sym>DGB</sym> "
+		) +
+		replace@(
+			match: "\\SRush\\S|RUSH"
+			replace: "<sym>RSH</sym>"
+		) +
+		replace@(
+			match: "\\SBlitz\\S|BLITZ"
+			replace: "<sym>BLZ</sym>"
+		) +
+		replace@(
+			match: "\\SRaid\\S|RAID"
+			replace: "<sym>RAID</sym>"
+		) +
+		replace@(
+			match: "\\SAlliance\\S|ALLIANCE"
+			replace: "<sym>ALLIANCE</sym>"
+		) +
+		replace@(
+			match: "\\SEvade\\S|EVADE"
+			replace: "<sym>EVADE</sym>"
+		) +
+		replace@(
+			match: "\\SDelay\\S|DELAY"
+			replace: "<sym>DELAY</sym>"
+		) +
+		replace@(
+			match: "DECOYRED"
+			replace: "<sym>DECRED</sym>"
+		) +
+		replace@(
+			match: "DECOYBLUE"
+			replace: "<sym>DECBLU</sym>"
+		) +
+		replace@(
+			match: "DECOYYELLOW"
+			replace: "<sym>DECYEL</sym>"
+		) +
+		replace@(
+			match: "DECOYGREEN"
+			replace: "<sym>DECGRN</sym>"
+		) +
+		replace@(
+			match: "DECOYBLACK"
+			replace: "<sym>DECBLK</sym>"
+		) +
+		replace@(
+			match: "DECOYPURPLE"
+			replace: "<sym>DECPUR</sym>"
+		) +
+		replace@(
+			match: "DECOYWHITE"
+			replace: "<sym>DECWHI</sym>"
+		) +
+		replace@(
+			match: "WHITE"
+			replace: "<sym>WHITE</sym>"
+		) +
+		replace@(
+			match: "RED"
+			replace: "<sym>RED</sym>"
+		) +
+		replace@(
+			match: "BLUE"
+			replace: "<sym>BLUE</sym>"
+		) +
+		replace@(
+			match: "YELLOW"
+			replace: "<sym>YELLOW</sym>"
+		) +
+		replace@(
+			match: "GREEN"
+			replace: "<sym>GREEN</sym>"
+		) +
+		replace@(
+			match: "BLACK"
+			replace: "<sym>BLACK</sym>"
+		) +
+		replace@(
+			match: "PURPLE"
+			replace: "<sym>PURPLE</sym>"
+		)
+	
+	text_filter :=
+		# step 1 : remove all automatic tags
+		remove_tag@(tag: "<sym-auto>") +
+		remove_tag@(tag: "<i-auto>")   +
+		remove_tag@(tag: "<b-auto>")   +
+		remove_tag@(tag: "<error-spelling") +
+		remove_tag@(tag: "<nospellcheck>") +
+		# step 2 : reminder text for keywords
+		expand_keywords@(
+			condition: {
+				correct_case or (mode != "pseudo" and not used_placeholders)
+			}
+			default_expand: {
+				chosen(choice:if correct_case then mode else "lower case", set.automatic_reminder_text)
+			},
+			combine: {
+				keyword  := "<nospellcheck>{keyword}</nospellcheck>"
+				reminder := process_english_hints(reminder)
+				if mode == "pseudo" then "<i-auto>{keyword}</i-auto>"
+				else keyword + if expand then "<atom-reminder-{mode}> ({reminder})</atom-reminder-{mode}>"
+			}) +
+		# step 2b : move action keywords' reminder text to the end of the line
+		replace@(
+			match: "(<atom-reminder-action>(?:(?!<kw-).)*</atom-reminder-action></kw[^>]*>)(((?!<atom-reminder| ?<kw-)[^\n(])+)",
+			replace: "\\2\\1"
+			) +
+		# step 2c : remove duplicate reminder text
+		replace@(
+			match: "(<atom-reminder-[^>]*>[^)]+[)]</atom-reminder-[^>]*>)([^\n]+)\\1"
+			replace: "\\2\\1"
+			) +
+		# step 3a : expand shortcut word CARDNAME
+		replace@(
+			match: "CARDNAME",
+			in_context: "(^|[[:space:]]|\\()<match>", # TODO: Allow any punctuation before
+			replace: "<atom-cardname></atom-cardname>"
+			) +
+		# step 3b : expand shortcut word LEGENDNAME
+		replace@(
+			match: "LEGENDNAME",
+			in_context: "(^|[[:space:]]|\\()<match>", # TODO: Allow any punctuation before
+			replace: "<atom-legname></atom-legname>"
+			) +
+		# step 3c : fill in atom fields
+		tag_contents@(
+			tag: "<atom-cardname>",
+			contents: { "<nospellcheck>" + (if card.name=="" then "CARDNAME" else card.name) + "</nospellcheck>" }
+			) +
+		tag_contents@(
+			tag: "<atom-legname>",
+			contents: { "<nospellcheck>" + (if card.name=="" then "LEGENDNAME" else legend_filter(card.name)) + "</nospellcheck>" }
+			) +
+		# step 7 : italicize text in parenthesis
+		#replace@(
+		#	match: "[(]([^)\n]|[(][^)\n]*[)])*[)]?",
+		#	in_context: "(^|[[:space:]])<match>|<atom-keyword><match></",
+		#	replace: "<i-auto>&</i-auto>") +
+		# step 8 : automatic capitalization, but not after "("
+		replace@(
+			match: "([ ]*: |—| — )" # preceded by this
+				+ "([[:lower:]])" # match this
+				+ "(?![)])",      # not followed by this
+			replace: { _1 + to_upper(_2) }
+			) + 
+		auto_replace

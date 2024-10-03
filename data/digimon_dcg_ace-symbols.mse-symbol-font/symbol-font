@@ -1,0 +1,497 @@
+mse version: 0.3.9
+short name:  DCG Symbols
+full name: Digimon Card Game Symbols
+position hint: 1
+installer group: Digimon_DCG_ACE/Symbol Fonts/Text
+
+image font size: 22
+horizontal space: 0
+vertical space: 0
+
+version: 2023-06-09.01
+depends on:
+	package: Digimon_DCG_ACE.mse-game
+	version: 2023-06-09.01
+	
+symbol:
+	code: SORPTION
+	image: Absorb_NoNum.png
+
+symbol:
+	code: SORP(-[0-9]+)
+	regex: yes
+	image: AbsorbEvo.png
+	draw text: 1
+	text margin left: 6
+	text margin right: 0
+	text margin top: 0
+	text margin bottom: 0
+	text alignment: center middle overflow-shrink
+	text font:
+		name: Roboto Medium
+		size: 1
+		weight: bold
+		color: rgb(255,255,255)
+		max stretch: 0.57
+
+symbol:
+	code: ACE
+	image: ACE.png
+	image font size: 30
+
+symbol:
+	code: AFAT
+	image: AfterAttack.png
+
+symbol:
+	code: ALLIANCE
+	image: Alliance.png
+	
+symbol:
+	code: PURGE
+	image: Armor_Purge.png
+
+symbol:
+	code: WAT
+	image: Attacking.png
+	
+symbol:
+	code: BARRIER
+	image: Barrier.png
+
+symbol:
+	code: STARTTB
+	image: BeginTurn_Both.png
+
+symbol:
+	code: STARTTO
+	image: BeginTurn_Opp.png
+
+symbol:
+	code: STARTTP
+	image: BeginTurn_Plyr.png
+
+symbol:
+	code: BLAST
+	image: Blast_Digivolve.png
+
+symbol:
+	code: BLZ
+	image: Blitz.png
+	
+symbol:
+	code: BLOCK
+	image: Blocker.png
+	
+symbol:
+	code: BREED
+	image: Breeding.png
+	
+symbol:
+	code: COUNTER
+	image: Counter.png
+	
+symbol:
+	code: DECBLK
+	image: Decoy_Black.png
+	image font size: 100
+	
+symbol:
+	code: DECBLU
+	image: Decoy_Blue.png
+	image font size: 100
+
+symbol:
+	code: DECGRN
+	image: Decoy_Green.png
+	image font size: 100
+
+symbol:
+	code: DECPUR
+	image: Decoy_Purple.png
+	image font size: 100
+
+symbol:
+	code: DECRED
+	image: Decoy_Red.png
+	image font size: 100
+
+symbol:
+	code: DECWHI
+	image: Decoy_White.png
+	image font size: 100
+	
+symbol:
+	code: DECYEL
+	image: Decoy_Yellow.png
+	image font size: 100
+	
+symbol:
+	code: DELAY
+	image: Delay.png
+	
+symbol:
+	code: ONDEL
+	image: Destroyed.png
+	
+symbol:
+	code: DGB([0-9])
+	regex: yes
+	image: Digiburst.png
+	draw text: 1
+	text margin left: 5
+	text margin right: 0
+	text margin top: 0
+	text margin bottom: 0
+	text alignment: center middle overflow-shrink
+	text font:
+		name: Roboto Medium
+		size: 4
+		weight: bold
+		color: rgb(255,255,255)
+		max stretch: 0.57
+
+symbol:
+	code: DGB
+	image: Digiburst_NoNum.png
+
+symbol:
+	code: DNAEVO
+	image: DNA_Digivolve.png
+
+symbol:
+	code: DIGIEVO
+	image: Digivolve.png
+	
+symbol:
+	code: XROS([0-9])
+	regex: yes
+	image: Digixros.png
+	draw text: 1
+	text margin left: 4
+	text margin right: 0
+	text margin top: .05
+	text margin bottom: .07
+	text alignment: center middle overflow-shrink
+	text font:
+		name: Roboto Medium
+		size: 4
+		weight: bold
+		color: rgb(255,255,255)
+		max stretch: 0.57
+
+symbol:
+	code: DR([0-9]+)
+	image: Draw.png
+	regex: yes
+	text margin left: 2.5
+	text margin right: 0
+	text margin top: 0
+	text margin bottom: 0
+	text alignment: center middle overflow-shrink
+	draw text: 1
+	text font:
+		name: Roboto Medium
+		size: 4
+		weight: bold
+		color: rgb(255,255,255)
+		max stretch: 0.57
+
+symbol:
+	code: DR
+	image: Draw_NoNum.png
+	
+symbol:
+	code: ENDTB
+	image: EndTurn_Both.png
+	
+symbol:
+	code: ENDTO
+	image: EndTurn_Opp.png
+
+symbol:
+	code: ENDTP
+	image: EndTurn_Plyr.png
+	
+symbol:
+	code: ONPLAY
+	image: Entry.png
+
+symbol:
+	code: EVADE
+	image: evade.png
+
+symbol:
+	code: EVOL
+	image: Evolution.png
+	
+symbol:
+	code: HAND
+	image: Hand.png
+	
+symbol:
+	code: INDOMITABLE
+	image: Indomitable.png
+	
+symbol:
+	code: JAM
+	image: Jamming.png
+
+symbol:
+	code: MAIN
+	image: Main.png
+
+symbol:
+	code: MATERIAL([0-9]+)
+	image: Material_Save.png
+	regex: yes
+	text margin left: 6.5
+	text margin right: 0
+	text margin top: 0
+	text margin bottom: 0
+	text alignment: center middle overflow-shrink
+	draw text: 1
+	text font:
+		name: Roboto Medium
+		size: 5
+		weight: bold
+		color: rgb(255,255,255)
+		max stretch: 0.57
+
+symbol:
+	code: MIND
+	image: Mind_Link.png
+
+symbol:
+	code: ONCE
+	image: Per_Once.png
+
+symbol:
+	code: TWICE
+	image: Per_Twice.png
+
+symbol:
+	code: THRICE
+	image: Per_Thrice.png
+	
+symbol:
+	code: PRCE
+	image: Pierce.png
+	
+symbol:
+	code: RAID
+	image: Raid.png
+	
+symbol:
+	code: REBT
+	image: Reboot.png
+	
+symbol:
+	code: RECD([0-9])
+	regex: yes
+	image: RecoveryDeck.png
+	draw text: 1
+	text margin left: 3.05
+	text margin right: 1.45
+	text margin top: .05
+	text margin bottom: .05
+	text alignment: center middle overflow-shrink
+	text font:
+		name: Roboto Medium
+		size: 4
+		weight: bold
+		color: rgb(255,255,255)
+		max stretch: 0.57
+		
+symbol:
+	code: RETA
+	image: Revenge.png
+	
+symbol:
+	code: DEDIGI([0-9])
+	regex: yes
+	image: Revert.png
+	draw text: 1
+	text margin left: 5.75
+	text margin right: 0
+	text margin top: 0
+	text margin bottom: 0
+	text alignment: center middle overflow-shrink
+	text font:
+		name: Roboto Medium
+		size: 4
+		weight: bold
+		color: rgb(255,255,255)
+		max stretch: 0.57
+
+symbol:
+	code: DEDIGI
+	image: Revert_NoNum.png
+	
+symbol:
+	code: RSH
+	image: Rush.png
+	
+symbol:
+	code: SAVE
+	image: Save.png
+	
+symbol:
+	code: SECR
+	image: Security.png
+	
+symbol:
+	code: SEC([+-—][0-9])
+	regex: yes
+	image: SecurityAtk.png
+	draw text: 1
+	text margin left: 7
+	text margin right: 0
+	text margin top: 0
+	text margin bottom: 0
+	text alignment: center middle overflow-shrink
+	text font:
+		name: Roboto Medium
+		size: 4
+		weight: bold
+		color: rgb(255,255,255)
+		max stretch: 0.57
+
+symbol:
+	code: SEC
+	image: SecurityAtk_NoNum.png
+
+symbol:
+	code: STARTMP
+	image: Start_Main.png
+	
+symbol:
+	code: TRASH
+	image: Trash.png
+
+symbol:
+	code: TRNB
+	image: Turn_Both.png
+
+symbol:
+	code: TRNO
+	image: Turn_Opp.png
+
+symbol:
+	code: TRNP
+	image: Turn_Plyr.png
+	
+symbol:
+	code: RED
+	image: red.png
+	image font size: 70
+	
+symbol:
+	code: BLUE
+	image: blue.png
+	image font size: 70
+
+symbol:
+	code: YELLOW
+	image: yellow.png
+	image font size: 70
+	
+symbol:
+	code: GREEN
+	image: green.png
+	image font size: 70
+	
+symbol:
+	code: BLACK
+	image: black.png
+	image font size: 70
+	
+symbol:
+	code: PURPLE
+	image: purple.png
+	image font size: 70
+
+symbol:
+	code: WHITE
+	image: white.png
+	image font size: 70
+	
+insert symbol menu:
+	item:
+		name: Colors
+		item: RED
+		item: BLUE
+		item: YELLOW
+		item: GREEN
+		item: BLACK
+		item: PURPLE
+		item: WHITE
+	item:
+		name: Conditions
+		item: WAT
+		item: AFAT
+		item: STARTTB
+		item: STARTTO
+		item: STARTTP
+		item: STARTMP
+		item: ONDEL
+		item: ONPLAY
+		item: EVOL
+		item: MAIN
+		item: SECR
+		item: TRNB
+		item: TRNO
+		item: TRNP
+		item: ENDTP
+		item: ENDTO
+		item: ENDTB
+		item: COUNTER		
+	item:
+		name: Keywords
+		item: BLOCK
+		item: JAM
+		item: PRCE
+		item: RETA
+		item: REBT
+		item: RSH
+		item: BLZ
+		item: RAID
+		item: EVADE
+		item: DR1
+		item: DR
+		item: SEC+1
+		item: SEC-1
+		item: SEC
+		item: RECD1
+		item: DEDIGI1
+		item: DEDIGI
+		item: SORPTION
+		item: SORP-1
+		item: DGB1
+		item: DGB
+		item: DECRED
+		item: DECBLU
+		item: DECYEL
+		item: DECGRN
+		item: DECBLK
+		item: DECPUR
+		item: DECWHI
+		item: DELAY
+		item: PURGE
+		item: ALLIANCE
+		item: BARRIER
+		item: BLAST
+		item: MATERIAL1
+		item: MIND
+		item: SAVE
+	item: ONCE
+	item: TWICE
+	item: THRICE
+	item: BREED
+	item: HAND
+	item: TRASH
+	item: DIGIEVO
+	item: DNAEVO
+	item: XROS1
+	item: ACE
+

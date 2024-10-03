@@ -1,0 +1,87 @@
+﻿
+############################################################## Card pack items
+pack type:
+	name: Common
+	filter: card.rarity == "Common"
+pack type:
+	name: Uncommon
+	filter: card.rarity == "Uncommon"
+pack type:
+	name: Rare
+	filter: card.rarity == "Rare"
+pack type:
+	name: SuperRare
+	filter: card.rarity == "Super Rare"
+pack type:
+	name: SecretRare
+	filter: card.rarity == "Secret Rare"
+pack type:
+	name: NotCommon
+	filter: card.rarity != "Common"
+pack type:
+	name: AnyRare
+	filter: card.rarity != "Common" and card.rarity != "Uncommon"
+pack type:
+	name: card
+	filter: card.card_number != ""
+
+############################################################## Card packs
+pack type:
+	name: English Pack
+	item:
+		name: AnyRare
+		amount: 1
+	item:
+		name: Rare
+		amount: 1
+	item:
+		name: Common
+		amount: 7
+	item:
+		name: Uncommon
+		amount: 3
+pack type:
+	name: Japanese Pack
+	item:
+		name: Common
+		amount: 4
+	item:
+		name: Uncommon
+		amount: 1
+	item:
+		name: AnyRare
+		amount: 1
+pack type:
+	name: Japanese Box
+	item:
+		name: Common
+		amount: 96
+	item:
+		name: Uncommon
+		amount: 24
+	item:
+		name: Rare
+		amount: 20
+	item:
+		name: SuperRare
+		amount: 3
+	item:
+		name: SecretRare
+		amount: 1
+pack type:
+	name: English Box
+	item:
+		name: Common
+		amount: 100
+	item:
+		name: Uncommon
+		amount: 25
+	item:
+		name: Rare
+		amount: 20
+	item:
+		name: SuperRare
+		amount: 7
+	item:
+		name: SecretRare
+		amount: 2

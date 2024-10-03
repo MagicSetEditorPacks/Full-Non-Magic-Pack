@@ -1,0 +1,22 @@
+mse version: 0.3.9
+full name: Digimon Card Game post BT14
+short name: Digimon DCG ACE
+installer group: Digimon_DCG_ACE/game
+icon: logo.png
+position hint: 4
+
+version: 2023-06-09.01
+### Digimon DCG post ACE by Weyro
+
+############################################################## The script
+
+init script: include file: script
+
+############################################################## Load Lists
+
+include file: card_fields
+include file: set_fields
+include file: packs
+include file: keywords
+
+############################################################## Other stuff

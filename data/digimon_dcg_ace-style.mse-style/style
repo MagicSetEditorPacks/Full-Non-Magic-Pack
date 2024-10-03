@@ -1,0 +1,2806 @@
+mse version: 0.3.9
+game: Digimon_DCG_ACE
+short name: Digimon
+full name: Digimon Card Game post BT14
+icon: icon.png
+position hint: 0
+installer group: Digimon_DCG_ACE/style
+
+version: 2023-06-09.01
+depends on:
+	package: Digimon_DCG_ACE.mse-game
+	version: 2023-06-09.01
+depends on:
+	package: Digimon_DCG_ACE-symbols.mse-symbol-font
+	version: 2023-06-09.01
+
+card width: 430
+card height: 601
+card dpi: 150
+card background: rgb(0,0,0)
+
+init script:
+	digitoken := {
+		card.type == "Digimon" or card.type=="Token"
+	}
+	
+	append_dark_background := {
+		if false then filename + "_dark.png"
+		else filename + ".png"
+	}
+	
+	popout_art := {
+		count_chosen(styling.popout) >= 1
+	}
+	
+	pop_out :={
+		if is_mega() then "White Space"
+		else if (card.rarity == "Secret Rare" or card.rarity == "Parallel Rare") then "White Space"
+		else "Normal"
+	}
+	
+	use_black_text := {
+		card.colour == "Yellow" or card.colour == "White"
+	}
+	
+	use_black_text_2 := {
+		card.colour2 == "Yellow" or card.colour2 == "White"
+	}
+	
+	text_opposite_outline := {
+		use_black_text() xor use_black_text_2()
+	}
+	
+	text_outline := {
+		card.type != "Option" or (card.type == "Option" and chosen(choice: "Border", styling.popout))
+	}
+	
+	text_colour := {
+		if use_black_text() and use_black_text_2() then rgb(0,0,0)
+		else rgb(255,255,255)
+	}
+	
+	text_colour_inverse := {
+		if use_black_text() then rgb(255,255,255)
+		else rgb(0,0,0)
+	}
+	
+	text_colour_shadow := {
+		if text_opposite_outline() then rgb(0,0,0)
+		else rgb(255,255,255)
+	}
+	
+	change_level_colour := {
+		if card.colour == "Black" then rgb(0,0,0)
+		else rgb(255,255,255)
+	}
+	
+	evotext_colour := {
+		if (evocolour == "Yellow" and evocolour2 == "Yellow") or (evocolour == "White" and evocolour2 == "White") then rgb(0,0,0) else rgb(255,255,255)
+	}
+	
+	evoshadow_colour := {
+		if evocolour == "Yellow" or evocolour2 == "Yellow" or evocolour == "White" or evocolour2 == "White" then rgb(0,0,0)
+		else rgb(255,255,255)
+	}
+	
+	show_evolution_details := {
+		has_evo_effect() or card.type == "Digi-Egg"
+	}
+	
+	effectbox_bottom := {
+		if card.type == "Tamer" or card.type == "Option" then 435
+		else if chosen(choice: "DigiXros", styling.popout) and has_evo_effect() then 436
+		else if chosen(choice: "DigiXros", styling.popout) and (digitoken() or card.type == "ISO") then 508
+		else if has_evo_effect() then 456
+		else if digitoken() or card.type == "ISO" then 528
+		else 439
+	}
+	
+	digievobox_bottom := {
+		if has_evo_effect() then 341
+		else if digitoken() or card.type == "ISO" then 413
+		else 324
+	}
+	
+	digievobox_width := { 
+		if styling.special_digievo_width == "" then 350
+		else styling.special_digievo_width
+	}
+	
+	dnabox_colour := { 
+		if styling.dna_colour == "Card Colour" then card.colour
+		else styling.dna_colour
+	}
+	
+	dnabox_colour2 := { 
+		if styling.dna_colour_2 == "Card Colour" then card.colour2
+		else styling.dna_colour_2
+	}
+	
+	dnabox_width := { 
+		if styling.dna_width == "" then 350
+		else styling.dna_width
+	}
+	
+	digixrosbox_bottom := {
+		if has_evo_effect() then 457
+		else if digitoken() or card.type == "ISO" then 529
+		else 440
+	}
+	
+	digixrosbox_width := { 
+		if styling.digixros_width == "" then 350
+		else styling.digixros_width
+	}
+	
+	digitype_total_width := {
+		if card_style.digimon_type.content_width < 51 then digitype_width()
+		else (card_style.digimon_type.content_width + digitype_width()) - 51
+	}
+	
+	property_total_width := {
+		if card_style.digimon_property.content_width < 51 then property_width()
+		else (card_style.digimon_property.content_width + property_width()) - 51
+	}
+	
+	image_mask := {
+		if popout_art() then "mask.png"
+		else if card.type == "Digi-Egg" then "mask_digitama.png"
+		else if card.type == "Tamer" or card.type == "Option" then "mask_tamer.png"
+		else if has_evo_effect() then "mask_digimon_evo.png"
+		else "mask_digimon.png"
+	}
+	
+	bottom_opacity := {
+		if styling.parallel_rare then 0.8
+		else 1.0
+	}
+	
+	type_bottom_height := {
+		if card.type=="Tamer" or card.type =="Option" then 44
+		else 53
+	}
+	
+	type_bottom_properties_height := {
+		if card.type == "Tamer" or card.type == "Option" then 13
+		else 13
+	}
+	
+	type_bottom_bottom := {
+		if card.type == "Digi-Egg" then 601 - 103
+		else if card.type == "Tamer" or card.type == "Option" then 489
+		else if (card.type == "Digimon" or card.type == "ISO") and has_evo_effect() then 514
+		else 586
+	}
+	
+	evolution_effect_height := {
+		if card.type == "Digi-Egg" then 103
+		else if card.type == "Tamer" or card.type=="Option" then 106
+		else if has_evo_effect() then 87
+		else 99
+	}
+	
+	#Size Constants
+	##Digimon Properties
+	digitype_width := { 15 }
+	property_width := { 15 }
+	#digitype_width := { 33 }
+	#property_width := { 50 }
+	
+	##Outline Locations
+	###Upper Type Values
+		upper_type_top := { 15 }
+		upper_type_left := { 183 }
+		upper_type_width := { 60 }
+		upper_type_height := { 12 }
+		upper_type_outline := { 1 }
+		upper_type_colour := { rgb(0,0,0) }
+		upper_type_colour_outline := { rgb(255,255,255) }
+	
+	##Big DP Styles
+		big_dp_top := { 12 }
+		big_dp_right := { 364 }
+		big_dp_width := { if digitoken() or card.type == "ISO" then 50 else 0 }
+		big_dp_height := { if digitoken() or card.type == "ISO" then 45 else 0 }
+		big_dp_outline := { 1 }
+		
+	##Overflow Cost Styles
+		overflow_cost_bottom := { 527 }
+		overflow_cost_left := { 148 }
+		overflow_cost_width := { if is_ace() then 8 else 0 }
+		overflow_cost_height := { if is_ace() then 11 else 0 }
+		overflow_cost_outline := { 1 }
+		
+	##Overflow Text Styles
+		overflow_text_bottom := { 547 }
+		overflow_text_left := { 289 }
+		overflow_text_width := { if is_ace() then 14 else 0 }
+		overflow_text_height := { if is_ace() then 14 else 0 }
+		overflow_text_outline := { 1 }
+	
+	##Small DP Styles
+		small_dp_top := { 22 }
+		small_dp_right := { 405 }
+		small_dp_width := { 61 }
+		small_dp_height := { 33 }
+		small_dp_outline := { 1 }
+	
+	##DP Text Styles
+		dp_text_top := { 12 }
+		dp_text_right := { 404 }
+		dp_text_width := { 61 }
+		dp_text_height := { 12 }
+		dp_text_outline := { 1 }
+	
+	##Big and Small DP have same Colour
+	dp_colour := { rgb(0,0,0) }
+	dp_colour_outline := { rgb(255,255,255) }
+	
+	##Illustrator Styles
+		illustrator_top := { 85 }
+		illustrator_right := { 409 }
+		illustrator_width := { 102 }
+		illustrator_height := { 11 }
+		illustrator_outline := { 1 }
+		illustrator_colour := { rgb(0,0,0) }
+		illustrator_colour_outline := { rgb(255,255,255) }
+		illustrator_font := { "Roboto Lt" }
+	    illustrator_size := { 8 }
+	##Copyright Styles
+		copyright_top := { 200 }
+		copyright_right := { 409 }
+		copyright_width := { 102 }
+		copyright_height := { 11 }
+		copyright_outline := { 1 }
+		copyright_colour := { rgb(0,0,0) }
+		copyright_colour_outline := { rgb(255,255,255) }
+	
+	##Card Name Styles
+		name_bottom := {
+			if card.type == "Digi-Egg" then 483
+			else if (card.type == "Tamer" or card.type == "Option") and card.digimon_type != "" then 480
+			else if card.type == "Tamer" or card.type == "Option" then 483
+			else if has_evo_effect() then 500
+			else 572
+		}
+		name_left := { if not_digimon() then 90 else 108 }
+		name_height := { 33 }
+		name_width := { if not_digimon() then 250 else 225 }
+		name_font := { "Roboto" }
+		name_font_size := { 20 }
+		name_colour := { text_colour() }
+		name_colour_outline := { text_colour_shadow() }
+		
+	##Type Styles
+	type_bottom := {
+			if card.type == "Tamer" or card.type == "Option" then name_bottom() - 1
+			else name_bottom()
+		}
+	
+	##Effects Styles
+		effects_left := { 30 }
+		effects_width := { 371 }
+		effects_height := { if chosen(choice: "DigiXros", styling.popout) then 90 else 110 }
+		effects_outline := { 1 }
+		effects_weight := { "bold" }
+		effects_colour := { if chosen(choice: "Black Text", styling.popout) or (card.type == "Option" and not chosen(choice: "Border", styling.popout)) then rgb(0,0,0) else rgb(255,255,255) }		
+		effects_colour_outline := { if chosen(choice: "Black Text", styling.popout) then rgb(255,255,255) else rgb(0,0,0) }
+		effects_font := { "Roboto Condensed Rg" }
+	
+	##Extra Effects Styles
+		extra_left := { 91 }
+		extra_bottom := { if card.type == "Digi-Egg" then 578 else if has_evo_effect() then 601 else 575 }
+		extra_width := { 314 }
+		extra_height := { if is_ace() then 50 else if card.type == "Digi-Egg" then 68 else if has_evo_effect() and (card.type == "Tamer" or card.type == "Option") then 93 else if has_evo_effect() then 75 else if card.type == "Digimon" or card.type == "ISO" then 0 else 68 }
+		extra_effects_colour := { text_colour() }
+		extra_colour_outline := { text_colour_shadow() }
+
+styling field:
+	type: multiple choice
+	name: popout
+	description: Check the items that should be behind the image.
+	choice: White Space
+	choice: Border
+	choice: Textbox
+	choice: Special Digievo Width
+	choice: No Evolution Cost
+	choice: Black Text
+	choice: DigiXros
+	choice: DNA
+
+styling field:
+	type: boolean
+	name: behind background
+	description: If White Space is behind the image, should it be behind the background as well? Does nothing if White Space is in front of Image.
+	initial: no
+
+styling field:
+	type: boolean
+	name: parallel rare
+	description: Level becomes Golden, and Security Icons become Golden.
+	initial: no
+
+styling field:
+	type: boolean
+	name: edit background
+	description: Allows you to edit the background when you double click instead.
+	initial: no
+	
+styling field:
+	type: text
+	name: special digievo width
+	description: Width of Special digivolution box
+	
+styling field:
+	type: text
+	name: digixros width
+	description: Width of the DigiXros box
+	
+styling field:
+	type: text
+	name: dna width
+	description: Width of the DNA box
+	
+styling field:
+	type: choice
+	name: dna colour
+	description: The first colour for DNA.
+	choice: Card Colour
+	choice: Red
+	choice: Blue
+	choice: Yellow
+	choice: Green
+	choice: Black
+	choice: Purple
+	choice: White
+	choice: All
+	
+styling field:
+	type: choice
+	name: dna colour 2
+	description: The second colour for DNA.
+	choice: Card Colour
+	choice: Red
+	choice: Blue
+	choice: Yellow
+	choice: Green
+	choice: Black
+	choice: Purple
+	choice: White
+	choice: All
+
+card style:
+	background:
+		top: 0
+		left: 0
+		height: 601
+		width: 430
+		z index: -4
+		mask: { if styling.behind_background then "mask.png" else image_mask() }
+	
+	image:
+		top: 0
+		left: 0
+		height: { if styling.edit_background then 0 else 601 }
+		width: { if styling.edit_background then 0 else 430 }
+		z index: 0
+		mask: { image_mask() }
+	
+	evolution icon:
+		left: { if is_ace() then 40 else 36 }
+		top: { if is_ace() then 555 else if card.type == "Digi-Egg" then 521 else if card.type == "Tamer" or card.type == "Option" then 518 else 537 }
+		width: { if is_ace() then 37 else if show_evolution_details() then 49 else 0 }
+		height: { if is_ace() then 37 else if show_evolution_details() then 49 else 0 }
+		visible: { show_evolution_details() }
+		z index: 5
+	
+	name:
+		bottom: { name_bottom() }
+		left:	{ name_left() }
+		height: { name_height() }
+		width:	{ name_width() }
+		z index: 5
+		alignment: center middle overflow-shrink
+		font:
+			name: { name_font() }
+			size: { name_font_size() }
+			weight: bold
+			color: { name_colour() }
+			shadow color: { name_colour_outline() }
+			shadow blur: 1
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 1
+			size: 5
+			alignment: middle center
+	
+	type:
+		top: { upper_type_top() }
+		left: { upper_type_left() }
+		width: { upper_type_width() }
+		height: { upper_type_height() }
+		z index: 6
+		render style: hidden
+	
+	level:
+		bottom: { name_bottom() + 8 }
+		left: 65
+		width: 25
+		height: 40
+		visible: { card.type == "Digimon" or card.type == "Token" or card.type == "Digi-Egg" or card.type == "ISO" }
+		z index: 5
+		alignment: left bottom overflow-shrink 
+		font:
+			name: Kenyan Coffee Rg
+			size: 23
+			color: { change_level_colour() }
+			shadow color: { change_level_colour() }
+			shadow blur: 1
+	
+	DP:
+		right: { big_dp_right() }
+		top: { big_dp_top() }
+		width: { big_dp_width() }
+		height: { big_dp_height() }
+		z index: 5
+		alignment: middle right overflow-shrink
+		font:
+			name: Ayar Kasone
+			size: 39
+			weight: bold
+			color: { dp_colour() }
+			shadow color: { dp_colour_outline() }
+			shadow blur: 4
+	
+	colour:
+		top: 0
+		left: 0
+		width: 215
+		height: 100
+		z index: 2
+		render style: hidden
+	
+	colour2:
+		top: 0
+		left: 215
+		width: 215
+		height: 100
+		z index: 2
+		render style: hidden
+	
+	cost:
+		top: 30
+		left: 35
+		width: { if card.type == "Digi-Egg" then 0 else 36 }
+		height: { if card.type == "Digi-Egg" then 0 else 44 }
+		z index: 5
+		alignment: center middle overflow-shrink
+		font:
+			name: Ayar Kasone
+			weight: bold
+			size: 31
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow blur: 8
+	
+	evocolour:
+		left: 30.5
+		top: 110
+		width: { if card.type == "Digimon" and not chosen(choice: "No Evolution Cost", styling.popout) then 84 else 0 }
+		height: { if card.type == "Digimon" and not chosen(choice: "No Evolution Cost", styling.popout) then 42 else 0 }
+		z index: 4
+		render style: image
+		choice images:
+			Red:	evo_red.png
+			Blue:	evo_blue.png
+			Yellow:	evo_yellow.png
+			Green:	evo_green.png
+			Black:	evo_black.png
+			Purple:	evo_purple.png
+			White:	evo_white.png
+			All:	evo_rainbow.png
+	
+	evolevel:
+		left: 38.5
+		top: 116
+		width: { if card.type == "Digimon" and not chosen(choice: "No Evolution Cost", styling.popout) then 27 else 0 }
+		height: { if card.type == "Digimon" and not chosen(choice: "No Evolution Cost", styling.popout) then 10 else 0 }
+		z index: 5
+		alignment: center middle overflow-shrink
+		font:
+			name: Ayar Kasone
+			weight: bold
+			size: 9
+			color: { evotext_colour(evocolour: card.evocolour, evocolour2: card.evocolour2) }
+			shadow color: { evoshadow_colour(evocolour: card.evocolour, evocolour2: card.evocolour2) }
+			shadow blur: 2
+	
+	evocost:
+		left: 36
+		top: 128
+		width: { if card.type == "Digimon" and not chosen(choice: "No Evolution Cost", styling.popout) then 30 else 0 }
+		height: { if card.type == "Digimon" and not chosen(choice: "No Evolution Cost", styling.popout) then 22 else 0 }
+		z index: 5
+		alignment: center middle overflow-shrink
+		font:
+			name: Ayar Kasone
+			weight: bold
+			size: 20
+			color: { evotext_colour(evocolour: card.evocolour, evocolour2: card.evocolour2) }
+			shadow color: { evoshadow_colour(evocolour: card.evocolour, evocolour2: card.evocolour2) }
+			shadow blur: 0.5
+	
+	evocolour2:
+		left: 30.5
+		top: 110
+		width: { if card.type == "Digimon" and not chosen(choice: "No Evolution Cost", styling.popout) then 42 else 0 }
+		height: { if card.type == "Digimon" and not chosen(choice: "No Evolution Cost", styling.popout) then 42 else 0 }
+		z index: 4
+		render style: image
+		choice images:
+			Red:	evo2_red.png
+			Blue:	evo2_blue.png
+			Yellow:	evo2_yellow.png
+			Green:	evo2_green.png
+			Black:	evo2_black.png
+			Purple:	evo2_purple.png
+			White:	evo2_white.png
+			All:	evo2_rainbow.png
+	
+	evolution effect:
+		left: 25
+		bottom: 601
+		width: 380
+		height: { evolution_effect_height() }
+		z index: 3
+		render style: image
+		choice images:
+			None:
+				script:
+					if card.type == "Digi-Egg" then masked_blend(light: "bottom_" + to_lower(card.colour) + "_digitama.png", dark: "bottom_" + to_lower(card.colour2) + "_digitama.png", mask: "mask_split_digitama.png")
+					else if card.type == "Tamer" or card.type=="Option" then masked_blend(light: "bottom_"+ to_lower(card.colour) + "_security.png", dark: "bottom_" + to_lower(card.colour2) + "_security.png", mask: "mask_split_security.png")
+			Evolution:
+				script:
+					if card.type == "Digi-Egg" then masked_blend(light: "bottom_" + to_lower(card.colour) + "_digitama.png", dark: "bottom_" + to_lower(card.colour2) + "_digitama.png", mask: "mask_split_digitama.png")
+					else if card.type == "Tamer" or card.type == "Option" then masked_blend(light: "bottom_"+ to_lower(card.colour) + "_evo_tamer.png", dark: "bottom_"+ to_lower(card.colour2) + "_evo_tamer.png", mask: "mask_split_security.png")
+					else masked_blend(light: "bottom_"+ to_lower(card.colour) + "_evo.png", dark: "bottom_"+ to_lower(card.colour2) + "_evo.png", mask: "mask_split_inherit.png")
+			ACE:
+				script:
+					if card.type == "Digi-Egg" then masked_blend(light: "bottom_" + to_lower(card.colour) + "_digitama.png", dark: "bottom_" + to_lower(card.colour2) + "_digitama.png", mask: "mask_split_digitama.png")
+					else if card.type == "Tamer" or card.type == "Option" then masked_blend(light: "bottom_"+ to_lower(card.colour) + "_evo_tamer.png", dark: "bottom_"+ to_lower(card.colour2) + "_evo_tamer.png", mask: "mask_split_security.png")
+					masked_blend(light: "bottom_"+ to_lower(card.colour) + "_evo_ace.png", dark: "bottom_"+ to_lower(card.colour2) + "_evo_ace.png", mask: "mask_split_inherit.png")
+	
+	extra effect:
+		left: { extra_left() }
+		bottom: { extra_bottom() }
+		width: { extra_width() }
+		height: { extra_height() }
+		z index: 5
+		alignment: top left overflow-shrink
+		padding left: 2
+		padding right: 2
+		padding top: 2
+		padding bottom: 2
+		font:
+			name: { effects_font() }
+			size: 9
+			scale down to: 5
+			color: { extra_effects_colour() }
+			weight: { effects_weight() }
+			shadow color: { extra_colour_outline() }
+			shadow blur: 1
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 12
+			alignment: middle center
+	
+	overflow cost:
+		left: { overflow_cost_left() }
+		bottom: { overflow_cost_bottom() }
+		width: { overflow_cost_width() }
+		height: { overflow_cost_height() }
+		z index: 5
+		alignment: center middle overflow-shrink
+		font:
+			name: Roboto Condensed Rg
+			size: 9
+			scale down to: 5
+			color: rgb(0,0,0)
+			weight: normal
+	
+	effects:
+		left: { effects_left() }
+		bottom: { effectbox_bottom() }
+		width: { effects_width() }
+		height: { effects_height() }
+		z index: 5
+		alignment: top left overflow-shrink
+		font:
+			name: { effects_font() }
+			size: 9
+			scale down to: 5
+			color: { effects_colour() }
+			weight: { effects_weight() }
+			shadow color: { if card.type == "Option" then "transparent" else effects_colour_outline() }
+			shadow blur: 0
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 12
+			alignment: middle center
+			
+	special digievo:
+		left: 33
+		bottom: { digievobox_bottom() - 3 }
+		width: { digievobox_width() - 5 }
+		height: 15
+		visible: { card.type == "Digimon" }
+		z index: 5
+		alignment: middle left overflow-shrink
+		font:
+			name: { effects_font() }
+			size: 11
+			scale down to: 5
+			color: rgb(255,255,255)
+			weight: { effects_weight() }
+			style: { "italic" }
+			shadow color: rgb(0,0,0)
+			shadow blur: 1
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 12
+			alignment: middle center
+			
+	digixros:
+		left: 33
+		bottom: { digixrosbox_bottom() - 3 }
+		width: { if chosen(choice: "DigiXros", styling.popout) then digixrosbox_width() - 5 }
+		height: 15
+		visible: { card.type == "Digimon" or card.type == "ISO" and chosen(choice: "DigiXros", styling.popout)}
+		z index: 5
+		alignment: middle left overflow-shrink
+		font:
+			name: { effects_font() }
+			size: 11
+			scale down to: 5
+			color: rgb(255,255,255)
+			weight: { effects_weight() }
+			style: { "italic" }
+			shadow color: rgb(0,0,0)
+			shadow blur: 1
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 12
+			alignment: middle center
+	
+	illustrator:
+		right: { illustrator_right() }
+		top: { illustrator_top() }
+		width: { illustrator_width() }
+		height: { illustrator_height() }
+		z index: 5
+		alignment: middle right
+		angle: 90
+		font:
+			name: { illustrator_font() }
+			size: { illustrator_size() }
+			color: { illustrator_colour() }
+			shadow color: { illustrator_colour_outline() }
+			shadow blur: 1
+	
+	rarity:
+		right: 372
+		bottom: { name_bottom() - 3 - { if card.type == "Option" or card.type == "Tamer" then 5 else 0 }() }
+		width: { if card.rarity == "Secret Rare" then 15 else 10 }
+		height: 10
+		z index: 6
+		render style: image
+		choice images:
+			Common: { if use_black_text_2() then "rarity_common_black.png" else "rarity_common.png" }
+			Uncommon: { if use_black_text_2() then "rarity_uncommon_black.png" else "rarity_uncommon.png" }
+			Rare: { if use_black_text_2() then "rarity_rare_black.png" else "rarity_rare.png" }
+			Super Rare: { if use_black_text_2() then "rarity_super_black.png" else "rarity_super.png" }
+			Secret Rare: { if use_black_text_2() then "rarity_secret_black.png" else "rarity_secret.png" }
+			Promo: { if use_black_text_2() then "rarity_promo_black.png" else "rarity_promo.png" }
+	
+	card number:
+		right: 395
+		bottom: { name_bottom() - 17 - { if card.type == "Option" or card.type == "Tamer" then 5 else 0 }() }
+		width: 55
+		height: 12
+		z index: 6
+		alignment: right middle overflow-shrink
+		font:
+			name: Roboto Bold Condensed
+			size: 8
+			weight: bold
+			color: { if use_black_text_2() then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: { if use_black_text_2() then rgb(0,0,0) else rgb(255,255,255) }
+			shadow blur: 1
+		
+	card block:
+		right: 395
+		bottom: { name_bottom() - 2 - { if card.type == "Option" or card.type == "Tamer" then 5 else 0 }() }
+		width: 20
+		height: 12
+		z index: 7
+		alignment: center middle overflow-shrink
+		font:
+			name: Roboto Bold Condensed
+			size: 8
+			weight: bold
+			color: rgb(0,0,0)
+	
+	digimon type:
+		top: { type_bottom() }
+		right: 394
+		width: 51
+		height: 11
+		z index: 5
+		alignment: { if card_style.digimon_type.content_width < 51 then "top center" else "top right" }
+		font:
+			name: Roboto Lt
+			size: 7
+			weight: bold
+			color: { if card.colour=="Black" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: { if card.colour=="Black" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow blur: 1
+	
+	digimon property:
+		top: { name_bottom() }
+		right: { 343 - digitype_total_width() }
+		width: { if digitoken() or card.type == "ISO" then 51 }
+		height: 11
+		visible: { digitoken() or card.type == "ISO" }
+		z index: 5
+		alignment: { if card_style.digimon_property.content_width < 51 then "top center" else "top right" }
+		font:
+			name: Roboto Lt
+			size: 7
+			weight: bold
+			color: { if card.colour=="Black" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: { if card.colour=="Black" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow blur: 1
+	
+	digimon form:
+		top: { name_bottom() }
+		right: { if card.type=="Digi-Egg" then 343 - digitype_total_width() else 292 - digitype_total_width() - property_total_width() }
+		width: { if digitoken() or card.type=="Digi-Egg" then 32 }
+		height: 11
+		visible: { card.type=="Digimon" or card.type=="Token" or card.type=="Digi-Egg" }
+		z index: 5
+		alignment: { if card_style.digimon_form.content_width < 32 then "top center" else "top right" }
+		font:
+			name: Roboto Lt
+			size: 7
+			weight: bold
+			color: { if card.colour=="Black" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: { if card.colour=="Black" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow blur: 1
+	
+##Extra Card Fields
+###Extra Text Fields
+extra card field:
+	type: text
+	name: level text
+	default: "Lv."
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: form text
+	#default: "Level: "
+	#default: ""
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: property text
+	#default: " | Attribute: "
+	default: " | "
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: digitype text
+	#default: " | Type: "
+	default: " | "
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: upper type
+	default: { to_upper(card.type) }()
+	editable: false
+	show statistics: false
+
+#Static Text
+extra card field:
+	type: text
+	name: overflow text
+	default: card.overflow_cost
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: small dp
+	default: "000"
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: copyright
+	default: to_upper(set.creator)
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: dp text
+	default: "DP"
+	editable: false
+	show statistics: false
+
+###Image Fields
+
+extra card field:
+	type: choice
+	name: border middle
+	default: card.colour
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: choice
+	name: border bottom
+	default: card.colour
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: choice
+	name: border middle behind
+	default: card.colour
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: choice
+	name: border bottom behind
+	default: card.colour
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: image
+	name: image duplicate
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: choice
+	name: white space front
+	default: card.type
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: choice
+	name: white space behind
+	default: card.type
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: choice
+	name: white space behind background
+	default: card.type
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: choice
+	name: cost type
+	default: card.type
+	editable: false
+	show statistics: false
+	
+extra card field:
+	type: choice
+	name: evolution cost
+	default: card.type
+	editable: false
+	show statistics: false
+	
+extra card field:
+	type: choice
+	name: cost evo color
+	default: card.colour
+	show statistics: false
+	editable: false
+	
+extra card field:
+	type: choice
+	name: cost evo color2
+	default: card.colour2
+	show statistics: false
+	editable: false
+	
+extra card field:
+	type: choice
+	name: cost color
+	default: card.colour
+	show statistics: false
+	editable: false
+	
+extra card field:
+	type: choice
+	name: cost color2
+	default: card.colour2
+	show statistics: false
+	editable: false
+	
+extra card field:
+	type: choice
+	name: block bg
+	default: card.colour2
+	show statistics: false
+	editable: false
+
+extra card field:
+	type: choice
+	name: colour front
+	default: card.colour
+	show statistics: false
+	editable: false
+
+extra card field:
+	type: choice
+	name: colour behind
+	default: card.colour
+	show statistics: false
+	editable: false
+
+extra card field:
+	type: choice
+	name: type bottom
+	default: card.colour
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: choice
+	name: properties box
+	default: card.colour
+	editable: false
+	show statistics: false
+	
+extra card field:
+	type: choice
+	name: effect textbox
+	editable: false
+	show statistics: false
+	default: card.colour
+	
+extra card field:
+	type: choice
+	name: DNA digievo box
+	editable: false
+	show statistics: false
+	default: card.colour
+
+extra card field:
+	type: choice
+	name: effect textbox behind
+	editable: false
+	show statistics: false
+	default: card.colour
+
+extra card field:
+	type: choice
+	name: special digievo box
+	editable: false
+	show statistics: false
+	default: card.colour
+	
+extra card field:
+	type: choice
+	name: digixros box
+	editable: false
+	show statistics: false
+	default: card.colour
+
+extra card field:
+	type: choice
+	name: illustrator icon
+	editable: false
+	show statistics: false
+	choice: default
+
+###Outline Extra Fields
+####Upper Types
+extra card field:
+	type: text
+	name: type outline 1
+	default: { to_upper(card.type) }()
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: type outline 2
+	default: { to_upper(card.type) }()
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: type outline 3
+	default: { to_upper(card.type) }()
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: type outline 4
+	default: { to_upper(card.type) }()
+	editable: false
+	show statistics: false
+
+####Big DP
+extra card field:
+	type: text
+	name: big dp outline 1
+	default: card.DP
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: big dp outline 2
+	default: card.DP
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: big dp outline 3
+	default: card.DP
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: big dp outline 4
+	default: card.DP
+	editable: false
+	show statistics: false
+	
+####Overflow cost
+extra card field:
+	type: text
+	name: overflow cost outline 1
+	default: card.overflow_cost
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: overflow cost outline 2
+	default: card.overflow_cost
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: overflow cost outline 3
+	default: card.overflow_cost
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: overflow cost outline 4
+	default: card.overflow_cost
+	editable: false
+	show statistics: false
+	
+####Overflow text
+extra card field:
+	type: text
+	name: overflow text outline 1
+	default: card.overflow_cost
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: overflow text outline 2
+	default: card.overflow_cost
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: overflow text outline 3
+	default: card.overflow_cost
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: overflow text outline 4
+	default: card.overflow_cost
+	editable: false
+	show statistics: false
+
+####Small DP
+extra card field:
+	type: text
+	name: small dp outline 1
+	default: "000"
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: small dp outline 2
+	default: "000"
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: small dp outline 3
+	default: "000"
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: small dp outline 4
+	default: "000"
+	editable: false
+	show statistics: false
+
+####DP Text Outlines
+extra card field:
+	type: text
+	name: dp text outline 1
+	default: "DP"
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: dp text outline 2
+	default: "DP"
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: dp text outline 3
+	default: "DP"
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: dp text outline 4
+	default: "DP"
+	editable: false
+	show statistics: false
+
+##Illustrator Outlines
+extra card field:
+	type: text
+	name: illustrator outline 1
+	default: card.illustrator
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: illustrator outline 2
+	default: card.illustrator
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: illustrator outline 3
+	default: card.illustrator
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: illustrator outline 4
+	default: card.illustrator
+	editable: false
+	show statistics: false
+
+##Name Outlines
+extra card field:
+	type: text
+	name: name outline 1
+	multi line: false
+	default: card.name
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: name outline 2
+	multi line: false
+	default: card.name
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: name outline 3
+	multi line: false
+	default: card.name
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: name outline 4
+	multi line: false
+	default: card.name
+	editable: false
+	show statistics: false
+
+##Effect Outlines
+extra card field:
+	type: text
+	name: effects outline 1
+	multi line: true
+	default: card.effects
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: effects outline 2
+	multi line: true
+	default: card.effects
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: effects outline 3
+	multi line: true
+	default: card.effects
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: effects outline 4
+	multi line: true
+	default: card.effects
+	editable: false
+	show statistics: false
+
+
+##Extra Effect Outlines
+extra card field:
+	type: text
+	name: extra effects outline 1
+	multi line: true
+	default: card.extra_effect
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: extra effects outline 2
+	multi line: true
+	default: card.extra_effect
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: extra effects outline 3
+	multi line: true
+	default: card.extra_effect
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: extra effects outline 4
+	multi line: true
+	default: card.extra_effect
+	editable: false
+	show statistics: false
+
+##Copyright Outlines
+extra card field:
+	type: text
+	name: copyright outline 1
+	default: to_upper(set.creator)
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: copyright outline 2
+	default: to_upper(set.creator)
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: copyright outline 3
+	default: to_upper(set.creator)
+	editable: false
+	show statistics: false
+
+extra card field:
+	type: text
+	name: copyright outline 4
+	default: to_upper(set.creator)
+	editable: false
+	show statistics: false
+
+##Extra Styles
+extra card style:
+	###Extra Text Styles
+	####*Some Extra Text Styles are grouped with their Outlines
+	level text:
+		bottom: { name_bottom() + 8 }
+		left: 37
+		width: 22
+		height: 38
+		visible: { card.type == "Digimon" or card.type == "Token" or card.type == "Digi-Egg" or card.type == "ISO" }
+		z index: 5
+		alignment: left bottom overflow-shrink 
+		font:
+			name: Kenyan Coffee Rg
+			size: 23
+			color: { change_level_colour() }
+			shadow color: { change_level_colour() }
+			shadow blur: 1
+	
+	digitype text:
+		top: { name_bottom() }
+		right: { 343 - digitype_total_width() + digitype_width() }
+		width: { digitype_width() }
+		height: 11
+		visible: { digitoken() or card.type=="Digi-Egg" or card.type == "ISO" }
+		z index: 5
+		alignment: top center
+		font:
+			name: Roboto Lt
+			size: 7
+			color: { if card.colour=="Black" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: { if card.colour=="Black" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow blur: 1
+	
+	property text:
+		top: { name_bottom() }
+		right: { 292 - digitype_total_width() - property_total_width() + property_width() }
+		width: { property_width() }
+		height: 11
+		visible: { digitoken() }
+		z index: 5
+		alignment: top center
+		font:
+			name: Roboto Lt
+			size: 7
+			color: { if card.colour=="Black" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow color: { if card.colour=="Black" then rgb(0,0,0) else rgb(255,255,255) }
+			shadow blur: 1
+	
+	###Extra Image Styles	
+	effect textbox:
+		left: 28
+		bottom: { effectbox_bottom() }
+		width: 374
+		height: 117
+		z index: 3
+		visible: { chosen(choice: "Textbox", styling.popout) }
+		render style: image
+		choice images:
+			Red: { masked_blend(light: "effectbox_red.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+			Blue: { masked_blend(light: "effectbox_blue.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+			Yellow: { masked_blend(light: "effectbox_yellow.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+			Green: { masked_blend(light: "effectbox_green.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+			Black: { masked_blend(light: "effectbox_black.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+			Purple: { masked_blend(light: "effectbox_purple.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+			White: { masked_blend(light: "effectbox_white.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+	
+	DNA digievo box:
+		left: 28
+		bottom: { digievobox_bottom() }
+		width: { dnabox_width() }
+		height: 20
+		z index: 3
+		visible: { card.type == "Digimon" and card.special_digievo != "" and chosen(choice: "DNA", styling.popout) }
+		render style: image
+		image:
+			script: 
+					masked_blend(light: "dna_box_" + to_lower(dnabox_colour()) + ".png", dark: "dna_box_" + to_lower(dnabox_colour2()) + ".png", mask: "mask_dna_box.png")
+	
+	special digievo box:
+		left: 28
+		bottom: { digievobox_bottom() }
+		width: { digievobox_width() }
+		height: 20
+		z index: 3
+		visible: { card.type == "Digimon" and card.special_digievo != "" and not chosen(choice: "DNA", styling.popout) }
+		render style: image
+		image: evo_box.png
+		
+	digixros box:
+		left: 28
+		bottom: { digixrosbox_bottom() }
+		width: { digixrosbox_width() }
+		height: 20
+		z index: 3
+		visible: { card.type == "Digimon" and chosen(choice: "DigiXros", styling.popout) }
+		render style: image
+		image: digixros_box.png
+	
+	overflow text:
+		left: { overflow_text_left() }
+		bottom: { overflow_text_bottom() }
+		width: { overflow_text_width() }
+		height: { overflow_text_height() }
+		z index: 5
+		alignment: center middle overflow-shrink
+		font:
+			name: Roboto Condensed Rg
+			size: 10
+			scale down to: 5
+			color: rgb(255,255,255)
+			style: italic
+	
+	effect textbox behind:
+		left: 28
+		bottom: { effectbox_bottom() }
+		width: 374
+		height: 117
+		z index: -1
+		visible: { chosen(choice: "Textbox", styling.popout) }
+		render style: image
+		choice images:
+			Red: { masked_blend(light: "effectbox_red.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+			Blue: { masked_blend(light: "effectbox_blue.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+			Yellow: { masked_blend(light: "effectbox_yellow.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+			Green: { masked_blend(light: "effectbox_green.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+			Black: { masked_blend(light: "effectbox_black.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+			Purple: { masked_blend(light: "effectbox_purple.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+			White: { masked_blend(light: "effectbox_white.png", dark: "effectbox_" + to_lower(card.colour2) + ".png", mask: "mask_split_effectbox.png") }
+	
+	border middle:
+		left: 24
+		bottom: { if (card.type == "Digimon" or card.type == "ISO") and not has_evo_effect() then 521 else 451 }
+		width: 380
+		height: 73
+		z index: 2
+		visible: { (digitoken() or card.type == "ISO") and not chosen(choice: "Border", styling.popout) }
+		render style: image
+		choice images:
+			Red: { masked_blend(light: "line_red.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+			Blue: { masked_blend(light: "line_blue.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+			Yellow: { masked_blend(light: "line_yellow.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+			Green: { masked_blend(light: "line_green.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+			Black: { masked_blend(light: "line_black.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+			Purple: { masked_blend(light: "line_purple.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+			White: { masked_blend(light: "line_white.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+	
+	border bottom:
+		left: 24
+		top: { if (card.type == "Digimon" or card.type == "ISO") and not has_evo_effect() then 521 else 451 }
+		width: 381
+		height: 10
+		z index: 2
+		visible: { (digitoken() or card.type == "ISO") and not chosen(choice: "Border", styling.popout) }
+		render style: image
+		choice images:
+			Red: { masked_blend(light: "border_red.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+			Blue: { masked_blend(light: "border_blue.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+			Yellow: { masked_blend(light: "border_yellow.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+			Green: { masked_blend(light: "border_green.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+			Black: { masked_blend(light: "border_black.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+			Purple: { masked_blend(light: "border_purple.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+			White: { masked_blend(light: "border_white.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+	
+	border middle behind:
+		left: 24
+		bottom: { if (card.type == "Digimon" or card.type == "ISO") and not has_evo_effect() then 521 else 451 }
+		width: 380
+		height: 73
+		z index: -2
+		visible: { (digitoken() or card.type == "ISO") and chosen(choice: "Border", styling.popout) }
+		render style: image
+		choice images:
+			Red: { masked_blend(light: "line_red.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+			Blue: { masked_blend(light: "line_blue.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+			Yellow: { masked_blend(light: "line_yellow.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+			Green: { masked_blend(light: "line_green.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+			Black: { masked_blend(light: "line_black.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+			Purple: { masked_blend(light: "line_purple.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+			White: { masked_blend(light: "line_white.png", dark: "line_" + to_lower(card.colour2) + ".png", mask: "mask_split_middle.png") }
+	
+	border bottom behind:
+		left: 24
+		top: { if has_evo_effect() then 451 else 521 }
+		width: 380
+		height: 10
+		z index: -2
+		visible: { (digitoken() or card.type == "ISO") and chosen(choice: "Border", styling.popout) }
+		render style: image
+		choice images:
+			Red: { masked_blend(light: "border_red.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+			Blue: { masked_blend(light: "border_blue.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+			Yellow: { masked_blend(light: "border_yellow.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+			Green: { masked_blend(light: "border_green.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+			Black: { masked_blend(light: "border_black.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+			Purple: { masked_blend(light: "border_purple.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+			White: { masked_blend(light: "border_white.png", dark: "border_" + to_lower(card.colour2) + ".png", mask: "mask_split_border.png") }
+	
+	type bottom:
+		left: 25
+		bottom: { type_bottom_bottom() }
+		width: 380
+		height: { type_bottom_height() }
+		z index: 3
+		render style: image
+		choice images:
+			Red:
+				script:
+					if card.type=="Tamer" or card.type =="Option" then masked_blend(light: "bottom_red_tamer.png", dark: "bottom_" + to_lower(card.colour2) + "_tamer.png", mask: "mask_split_tamer.png")
+					else set_alpha(masked_blend(light: "bottom_red.png", dark: "bottom_" + to_lower(card.colour2) + ".png", mask: "mask_split_bottom.png"), alpha: bottom_opacity())
+			Blue:
+				script:
+					if card.type=="Tamer" or card.type =="Option" then masked_blend(light: "bottom_blue_tamer.png", dark: "bottom_" + to_lower(card.colour2) + "_tamer.png", mask: "mask_split_tamer.png")
+					else set_alpha(masked_blend(light: "bottom_blue.png", dark: "bottom_" + to_lower(card.colour2) + ".png", mask: "mask_split_bottom.png"), alpha: bottom_opacity())
+			Yellow:
+				script:
+					if card.type=="Tamer" or card.type =="Option" then masked_blend(light: "bottom_yellow_tamer.png", dark: "bottom_" + to_lower(card.colour2) + "_tamer.png", mask: "mask_split_tamer.png")
+					else set_alpha(masked_blend(light: "bottom_yellow.png", dark: "bottom_" + to_lower(card.colour2) + ".png", mask: "mask_split_bottom.png"), alpha: bottom_opacity())
+			Green:
+				script:
+					if card.type=="Tamer" or card.type =="Option" then masked_blend(light: "bottom_green_tamer.png", dark: "bottom_" + to_lower(card.colour2) + "_tamer.png", mask: "mask_split_tamer.png")
+					else set_alpha(masked_blend(light: "bottom_green.png", dark: "bottom_" + to_lower(card.colour2) + ".png", mask: "mask_split_bottom.png"), alpha: bottom_opacity())
+			Black:
+				script:
+					if card.type=="Tamer" or card.type =="Option" then masked_blend(light: "bottom_black_tamer.png", dark: "bottom_" + to_lower(card.colour2) + "_tamer.png", mask: "mask_split_tamer.png")
+					else set_alpha(masked_blend(light: "bottom_black.png", dark: "bottom_" + to_lower(card.colour2) + ".png", mask: "mask_split_bottom.png"), alpha: bottom_opacity())
+			Purple:
+				script:
+					if card.type=="Tamer" or card.type =="Option" then masked_blend(light: "bottom_purple_tamer.png", dark: "bottom_" + to_lower(card.colour2) + "_tamer.png", mask: "mask_split_tamer.png")
+					else set_alpha(masked_blend(light: "bottom_purple.png", dark: "bottom_" + to_lower(card.colour2) + ".png", mask: "mask_split_bottom.png"), alpha: bottom_opacity())
+			White:
+				script:
+					if card.type=="Tamer" or card.type =="Option" then masked_blend(light: "bottom_white_tamer.png", dark: "bottom_" + to_lower(card.colour2) + "_tamer.png", mask: "mask_split_tamer.png")
+					else set_alpha(masked_blend(light: "bottom_white.png", dark: "bottom_" + to_lower(card.colour2) + ".png", mask: "mask_split_bottom.png"), alpha: bottom_opacity())
+	
+	properties box:
+		left: 25
+		bottom: { if card.type == "Tamer" or card.type == "Option" then type_bottom_bottom() + 4 else type_bottom_bottom() }
+		width: 380
+		height: { type_bottom_properties_height() }
+		z index: 3
+		render style: image
+		visible: { card.digimon_type != "" }
+		choice images:
+			Red: bottom_digimon_properties_black.png
+			Blue: bottom_digimon_properties_black.png
+			Yellow: bottom_digimon_properties_black.png
+			Green: bottom_digimon_properties_black.png
+			Black: bottom_digimon_properties_white.png
+			Purple: bottom_digimon_properties_black.png
+			White: bottom_digimon_properties_black.png
+			
+	
+	image duplicate:
+		top: 0
+		left: 0
+		height: 601
+		width: 430
+		z index: 0
+		visible: { styling.edit_background }
+		mask: { image_mask() }
+		default: { card.image }
+	
+	white space front:
+		top: 0
+		left: 0
+		width: 430
+		height: 601
+		render style: image
+		z index: 1
+		visible: { not chosen(choice: "White Space", styling.popout) }
+		mask: mask.png
+		choice images:
+			Digimon:
+				script:
+					if has_evo_effect() then append_dark_background(filename: "background_digimon_evo")
+					else append_dark_background(filename: "background_digimon")
+			ISO:
+				script:
+					if has_evo_effect() then append_dark_background(filename: "background_digimon_evo")
+					else append_dark_background(filename: "background_digimon")
+			Token: { append_dark_background(filename: "background_digimon") }
+			Digi-Egg: { append_dark_background(filename: "background_digitama") }
+			Tamer: { append_dark_background(filename: "background_tamer") }
+			Option: background_option.png
+	
+	white space behind:
+		top: 0
+		left: 0
+		width: 430
+		height: 601
+		render style: image
+		z index: -3
+		visible: { chosen(choice: "White Space", styling.popout) and not styling.behind_background }
+		mask: mask.png
+		choice images:
+			Digimon:
+				script:
+					if has_evo_effect() then append_dark_background(filename: "background_digimon_evo")
+					else append_dark_background(filename: "background_digimon")
+			ISO:
+				script:
+					if has_evo_effect() then append_dark_background(filename: "background_digimon_evo")
+					else append_dark_background(filename: "background_digimon")
+			Token: { append_dark_background(filename: "background_digimon") }
+			Digi-Egg: { append_dark_background(filename: "background_digitama") }
+			Tamer: { append_dark_background(filename: "background_tamer") }
+			Option: background_option.png
+	
+	white space behind background:
+		top: 0
+		left: 0
+		width: 430
+		height: 601
+		render style: image
+		z index: -5
+		visible: { chosen(choice: "White Space", styling.popout) and styling.behind_background }
+		mask: mask.png
+		choice images:
+			Digimon:
+				script:
+					if has_evo_effect() then append_dark_background(filename: "background_digimon_evo")
+					else append_dark_background(filename: "background_digimon")
+			ISO:
+				script:
+					if has_evo_effect() then append_dark_background(filename: "background_digimon_evo")
+					else append_dark_background(filename: "background_digimon")
+			Token: { append_dark_background(filename: "background_digimon") }
+			Digi-Egg: { append_dark_background(filename: "background_digitama") }
+			Tamer: { append_dark_background(filename: "background_tamer") }
+			Option: background_option.png
+	
+	cost type:
+		top: 10
+		left: 13
+		height: 71
+		width: 71
+		render style: image
+		z index: 3
+		choice images:
+			Digi-Egg: cost_digitama.png
+			Option: cost_option.png
+			Digimon: cost.png
+			ISO: cost.png
+			Token: cost.png
+			Tamer: cost.png
+			
+	evolution cost:
+		left: 15.5
+		top: 95
+		width: 65
+		height: 65
+		render style: image
+		z index: 5
+		visible: { card.type == "Digimon" and not chosen(choice: "No Evolution Cost", styling.popout) }
+		image: evolution.png
+		
+	cost evo color:
+		top: 95
+		left: 15.5
+		height: 65
+		width: 65
+		render style: image
+		z index: 6
+		visible: { card.type == "Digimon" and not chosen(choice: "No Evolution Cost", styling.popout) }
+		image:
+			script: 
+					"cost_evo_" + to_lower(card.evocolour) + ".png"
+	
+	cost evo color2:
+		top: 95
+		left: 15.5
+		height: 65
+		width: 65
+		render style: image
+		z index: 6
+		visible: { card.type == "Digimon" and not chosen(choice: "No Evolution Cost", styling.popout) }
+		image:
+			script: 
+					"cost_evo_" + to_lower(card.evocolour2) + ".png"
+	
+	cost color:
+		top: 10
+		left: 13
+		height: 71
+		width: 71
+		render style: image
+		z index: 4
+		image:
+			script: 
+					"cost_color_" + to_lower(card.colour) + ".png"
+	
+	cost color2:
+		top: 10
+		left: 13
+		height: 71
+		width: 71
+		render style: image
+		z index: 4
+		image:
+			script: 
+					"cost_color_" + to_lower(card.colour2) + ".png"
+	
+	colour front:
+		top: 10
+		left: 13
+		width: 391
+		height: 570
+		z index: 2
+		render style: image
+		visible: { not chosen(choice: "Border", styling.popout) }
+		choice images:
+			Red:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then masked_blend(light: "red_digimon.png", dark: to_lower(card.colour2) + "_digimon.png", mask: "mask_split_full.png")
+					else if card.type == "Digi-Egg" then masked_blend(light: "red_digitama.png", dark: to_lower(card.colour2) + "_digitama.png", mask: "mask_split_full.png")
+					else if card.type == "Tamer" then masked_blend(light: "red_tamer.png", dark: to_lower(card.colour2) + "_tamer.png", mask: "mask_split_full.png")
+					else "option.png"
+			Blue:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then masked_blend(light: "blue_digimon.png", dark: to_lower(card.colour2) + "_digimon.png", mask: "mask_split_full.png")
+					else if card.type == "Digi-Egg" then masked_blend(light: "blue_digitama.png", dark: to_lower(card.colour2) + "_digitama.png", mask: "mask_split_full.png")
+					else if card.type == "Tamer" then masked_blend(light: "blue_tamer.png", dark: to_lower(card.colour2) + "_tamer.png", mask: "mask_split_full.png")
+					else "option.png"
+			Yellow:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then masked_blend(light: "yellow_digimon.png", dark: to_lower(card.colour2) + "_digimon.png", mask: "mask_split_full.png")
+					else if card.type == "Digi-Egg" then masked_blend(light: "yellow_digitama.png", dark: to_lower(card.colour2) + "_digitama.png", mask: "mask_split_full.png")
+					else if card.type == "Tamer" then masked_blend(light: "yellow_tamer.png", dark: to_lower(card.colour2) + "_tamer.png", mask: "mask_split_full.png")
+					else "option.png"
+			Green:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then masked_blend(light: "green_digimon.png", dark: to_lower(card.colour2) + "_digimon.png", mask: "mask_split_full.png")
+					else if card.type == "Digi-Egg" then masked_blend(light: "green_digitama.png", dark: to_lower(card.colour2) + "_digitama.png", mask: "mask_split_full.png")
+					else if card.type == "Tamer" then masked_blend(light: "green_tamer.png", dark: to_lower(card.colour2) + "_tamer.png", mask: "mask_split_full.png")
+					else "option.png"
+			Black:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then masked_blend(light: "black_digimon.png", dark: to_lower(card.colour2) + "_digimon.png", mask: "mask_split_full.png")
+					else if card.type == "Digi-Egg" then masked_blend(light: "black_digitama.png", dark: to_lower(card.colour2) + "_digitama.png", mask: "mask_split_full.png")
+					else if card.type == "Tamer" then masked_blend(light: "black_tamer.png", dark: to_lower(card.colour2) + "_tamer.png", mask: "mask_split_full.png")
+					else "option.png"
+			Purple:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then masked_blend(light: "purple_digimon.png", dark: to_lower(card.colour2) + "_digimon.png", mask: "mask_split_full.png")
+					else if card.type == "Digi-Egg" then masked_blend(light: "purple_digitama.png", dark: to_lower(card.colour2) + "_digitama.png", mask: "mask_split_full.png")
+					else if card.type == "Tamer" then masked_blend(light: "purple_tamer.png", dark: to_lower(card.colour2) + "_tamer.png", mask: "mask_split_full.png")
+					else "option.png"
+			White:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then masked_blend(light: "white_digimon.png", dark: to_lower(card.colour2) + "_digimon.png", mask: "mask_split_full.png")
+					else if card.type == "Digi-Egg" then masked_blend(light: "white_digitama.png", dark: to_lower(card.colour2) + "_digitama.png", mask: "mask_split_full.png")
+					else if card.type == "Tamer" then masked_blend(light: "white_tamer.png", dark: to_lower(card.colour2) + "_tamer.png", mask: "mask_split_full.png")
+					else "option.png"
+	
+	colour behind:
+		top: 10
+		left: 13
+		width: 391
+		height: 570
+		z index: -2
+		render style: image
+		visible: { chosen(choice: "Border", styling.popout) }
+		choice images:
+			Red:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then "red_digimon.png"
+					else if card.type == "Digi-Egg" then "red_digitama.png"
+					else if card.type == "Tamer" then "red_tamer.png"
+					else "option.png"
+			Blue:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then "blue_digimon.png"
+					else if card.type == "Digi-Egg" then "blue_digitama.png"
+					else if card.type == "Tamer" then "blue_tamer.png"
+					else "option.png"
+			Yellow:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then "yellow_digimon.png"
+					else if card.type == "Digi-Egg" then "yellow_digitama.png"
+					else if card.type == "Tamer" then "yellow_tamer.png"
+					else "option.png"
+			Green:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then "green_digimon.png"
+					else if card.type == "Digi-Egg" then "green_digitama.png"
+					else if card.type == "Tamer" then "green_tamer.png"
+					else "option.png"
+			Black:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then "black_digimon.png"
+					else if card.type == "Digi-Egg" then "black_digitama.png"
+					else if card.type == "Tamer" then "black_tamer.png"
+					else "option.png"
+			Purple:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then "purple_digimon.png"
+					else if card.type == "Digi-Egg" then "purple_digitama.png"
+					else if card.type == "Tamer" then "purple_tamer.png"
+					else "option.png"
+			White:
+				script:
+					if card.type == "Digimon" or card.type == "ISO" then "white_digimon.png"
+					else if card.type == "Digi-Egg" then "white_digitama.png"
+					else if card.type == "Tamer" then "white_tamer.png"
+					else "option.png"
+	
+	illustrator icon:
+		top: 62
+		right: 421
+		width: 11
+		height: 19
+		render style: image
+		z index: 4
+		choice images:
+			default: Illustrator Icon.png
+	
+	block bg:
+		right: 395
+		bottom: { name_bottom() - 2 - { if card.type == "Option" or card.type == "Tamer" then 5 else 0 }() }
+		width: 20
+		height: 12
+		z index: 6
+		render style: image
+		image:
+			script: 
+					if card.colour2 == "White" then "blocco_black.png"
+					else "blocco.png"
+	
+	#Outline Card Styles
+	##Upper Type Styles
+	upper type:
+		top: { upper_type_top() }
+		left: { upper_type_left() }
+		width: { upper_type_width() }
+		height: { upper_type_height() }
+		alignment: center bottom overflow-shrink
+		z index: 5
+		font:
+			name: Roboto
+			size: 9
+			color: { upper_type_colour() }
+	
+	type outline 1:
+		top: { upper_type_top() }
+		left: { upper_type_left() }
+		width: { upper_type_width() }
+		height: { upper_type_height() }
+		alignment: center bottom overflow-shrink
+		z index: 4
+		font:
+			name: Roboto
+			size: 9
+			color: { upper_type_colour_outline() }
+			shadow color: { upper_type_colour_outline() }
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 1
+	
+	type outline 2:
+		top: { upper_type_top() }
+		left: { upper_type_left() }
+		width: { upper_type_width() }
+		height: { upper_type_height() }
+		alignment: center bottom overflow-shrink
+		z index: 4
+		font:
+			name: Roboto
+			size: 9
+			color: { upper_type_colour_outline() }
+			shadow color: { upper_type_colour_outline() }
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 1
+	
+	type outline 3:
+		top: { upper_type_top() }
+		left: { upper_type_left() }
+		width: { upper_type_width() }
+		height: { upper_type_height() }
+		z index: 4
+		alignment: center bottom overflow-shrink
+		font:
+			name: Roboto
+			size: 9
+			color: { upper_type_colour_outline() }
+			shadow color: { upper_type_colour_outline() }
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 1
+	
+	type outline 4:
+		top: { upper_type_top() }
+		left: { upper_type_left() }
+		width: { upper_type_width() }
+		height: { upper_type_height() }
+		z index: 4
+		alignment: center bottom overflow-shrink
+		font:
+			name: Roboto
+			size: 9
+			color: { upper_type_colour_outline() }
+			shadow color: { upper_type_colour_outline() }
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 1
+	
+	##Big DP Styles
+	big dp outline 1:
+		right: { big_dp_right() - big_dp_outline() }
+		top: { big_dp_top() - big_dp_outline() }
+		width: { big_dp_width() }
+		height: { big_dp_height() }
+		z index: 4
+		alignment: middle right overflow-shrink
+		font:
+			name: Ayar Kasone
+			size: 39
+			color: { dp_colour_outline() }
+			shadow color: { dp_colour_outline() }
+			shadow displacement x: 0
+			shadow displacement y: 0
+			shadow blur: 0
+	
+	big dp outline 2:
+		right: { big_dp_right() + big_dp_outline() }
+		top: { big_dp_top() - big_dp_outline() }
+		width: { big_dp_width() }
+		height: { big_dp_height() }
+		z index: 4
+		alignment: middle right overflow-shrink
+		font:
+			name: Ayar Kasone
+			size: 39
+			color: { dp_colour_outline() }
+			shadow color: { dp_colour_outline() }
+			shadow displacement x: 0
+			shadow displacement y: 0
+			shadow blur: 0
+	
+	big dp outline 3:
+		right: { big_dp_right() - big_dp_outline() }
+		top: { big_dp_top() + big_dp_outline() }
+		width: { big_dp_width() }
+		height: { big_dp_height() }
+		z index: 4
+		alignment: middle right overflow-shrink
+		font:
+			name: Ayar Kasone
+			size: 39
+			color: { dp_colour_outline() }
+			shadow color: { dp_colour_outline() }
+			shadow displacement x: 0
+			shadow displacement y: 0
+			shadow blur: 0
+	
+	big dp outline 4:
+		right: { big_dp_right() + big_dp_outline() }
+		top: { big_dp_top() + big_dp_outline() }
+		width: { big_dp_width() }
+		height: { big_dp_height() }
+		z index: 4
+		alignment: middle right overflow-shrink
+		font:
+			name: Ayar Kasone
+			size: 39
+			color: { dp_colour_outline() }
+			shadow color: { dp_colour_outline() }
+			shadow displacement x: 0
+			shadow displacement y: 0
+			shadow blur: 0
+	
+	##Overflow Cost Styles
+	overflow cost outline 1:
+		left: { overflow_cost_left() }
+		bottom: { overflow_cost_bottom() }
+		width: { overflow_cost_width() }
+		height: { overflow_cost_height() }
+		z index: 4
+		alignment: center middle overflow-shrink
+		font:
+			name: Roboto Condensed Rg
+			size: 8
+			scale down to: 5
+			weight: normal
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	
+	overflow cost outline 2:
+		left: { overflow_cost_left() }
+		bottom: { overflow_cost_bottom() }
+		width: { overflow_cost_width() }
+		height: { overflow_cost_height() }
+		z index: 4
+		alignment: center middle overflow-shrink
+		font:
+			name: Roboto Condensed Rg
+			size: 8
+			scale down to: 5
+			weight: normal
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	
+	overflow cost outline 3:
+		left: { overflow_cost_left() }
+		bottom: { overflow_cost_bottom() }
+		width: { overflow_cost_width() }
+		height: { overflow_cost_height() }
+		z index: 4
+		alignment: center middle overflow-shrink
+		font:
+			name: Roboto Condensed Rg
+			size: 8
+			scale down to: 5
+			weight: normal
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	
+	overflow cost outline 4:
+		left: { overflow_cost_left() }
+		bottom: { overflow_cost_bottom() }
+		width: { overflow_cost_width() }
+		height: { overflow_cost_height() }
+		z index: 4
+		alignment: center middle overflow-shrink
+		font:
+			name: Roboto Condensed Rg
+			size: 8
+			scale down to: 5
+			weight: normal
+			color: rgb(255,255,255)
+			shadow color: rgb(255,255,255)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+			
+	##Overflow Text Styles
+	overflow text outline 1:
+		left: { overflow_text_left() }
+		bottom: { overflow_text_bottom() }
+		width: { overflow_text_width() }
+		height: { overflow_text_height() }
+		z index: 4
+		alignment: center middle overflow-shrink
+		font:
+			name: Roboto Condensed Rg
+			size: 10
+			scale down to: 5
+			style: italic
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	
+	overflow text outline 2:
+		left: { overflow_text_left() }
+		bottom: { overflow_text_bottom() }
+		width: { overflow_text_width() }
+		height: { overflow_text_height() }
+		z index: 4
+		alignment: center middle overflow-shrink
+		font:
+			name: Roboto Condensed Rg
+			size: 10
+			scale down to: 5
+			style: italic
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	
+	overflow text outline 3:
+		left: { overflow_text_left() }
+		bottom: { overflow_text_bottom() }
+		width: { overflow_text_width() }
+		height: { overflow_text_height() }
+		z index: 4
+		alignment: center middle overflow-shrink
+		font:
+			name: Roboto Condensed Rg
+			size: 10
+			scale down to: 5
+			style: italic
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	
+	overflow text outline 4:
+		left: { overflow_text_left() }
+		bottom: { overflow_text_bottom() }
+		width: { overflow_text_width() }
+		height: { overflow_text_height() }
+		z index: 4
+		alignment: center middle overflow-shrink
+		font:
+			name: Roboto Condensed Rg
+			size: 10
+			scale down to: 5
+			style: italic
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	
+	##Small DP Styles
+	small dp:
+		right: { small_dp_right() }
+		top: { small_dp_top() }
+		width: { small_dp_width() }
+		height: { small_dp_height() }
+		visible: { digitoken() or card.type == "ISO" }
+		z index: 5
+		alignment: top right
+		font:
+			name: Ayar Kasone
+			size: 20
+			color: { dp_colour() }
+			shadow color: { dp_colour_outline() }
+			shadow blur: 0
+	
+	small dp outline 1:
+		right: { small_dp_right() - small_dp_outline() }
+		top: { small_dp_top() - small_dp_outline() }
+		width: { small_dp_width() }
+		height: { small_dp_height() }
+		visible: { digitoken() or card.type == "ISO" }
+		z index: 4
+		alignment: top right
+		font:
+			name: Ayar Kasone
+			size: 20
+			color: rgb(255,255,255)
+			color: { dp_colour_outline() }
+			shadow color: { dp_colour_outline() }
+			shadow displacement x: 0
+			shadow displacement y: 0
+			shadow blur: 0
+	
+	small dp outline 2:
+		right: { small_dp_right() + small_dp_outline() }
+		top: { small_dp_top() - small_dp_outline() }
+		width: { small_dp_width() }
+		height: { small_dp_height() }
+		visible: { digitoken() or card.type == "ISO" }
+		z index: 4
+		alignment: top right
+		font:
+			name: Ayar Kasone
+			size: 20
+			color: { dp_colour_outline() }
+			shadow color: { dp_colour_outline() }
+			shadow displacement x: 0
+			shadow displacement y: 0
+			shadow blur: 0
+	
+	small dp outline 3:
+		right: { small_dp_right() - small_dp_outline() }
+		top: { small_dp_top() + small_dp_outline() }
+		width: { small_dp_width() }
+		height: { small_dp_height() }
+		visible: { digitoken() or card.type == "ISO" }
+		z index: 4
+		alignment: top right
+		font:
+			name: Ayar Kasone
+			size: 20
+			color: { dp_colour_outline() }
+			shadow color: { dp_colour_outline() }
+			shadow displacement x: 0
+			shadow displacement y: 0
+			shadow blur: 0
+	
+	small dp outline 4:
+		right: { small_dp_right() + small_dp_outline() }
+		top: { small_dp_top() + small_dp_outline() }
+		width: { small_dp_width() }
+		height: { small_dp_height() }
+		visible: { digitoken() or card.type == "ISO" }
+		z index: 4
+		alignment: top right
+		font:
+			name: Ayar Kasone
+			size: 20
+			color: { dp_colour_outline() }
+			shadow color: { dp_colour_outline() }
+			shadow displacement x: 0
+			shadow displacement y: 0
+			shadow blur: 0
+	
+	##DP Text Styles
+	dp text:
+		right: { dp_text_right() }
+		top: { dp_text_top() }
+		width: { dp_text_width() }
+		height: { dp_text_height() }
+		visible: { digitoken() or card.type == "ISO" }
+		z index: 5
+		alignment: top right
+		font:
+			name: Roboto Condensed Rg
+			size: 10
+			color: { dp_colour() }
+			shadow color: { dp_colour_outline() }
+			shadow blur: 0
+	
+	dp text outline 1:
+		right: { dp_text_right() - dp_text_outline() }
+		top: { dp_text_top() - dp_text_outline() }
+		width: { dp_text_width() }
+		height: { dp_text_height() }
+		visible: { digitoken() or card.type == "ISO" }
+		z index: 4
+		alignment: top right
+		font:
+			name: Roboto Condensed Rg
+			size: 10
+			color: { dp_colour_outline() }
+			shadow displacement x: 0
+			shadow displacement y: 0
+			shadow blur: 0
+	
+	dp text outline 2:
+		right: { dp_text_right() + dp_text_outline() }
+		top: { dp_text_top() - dp_text_outline() }
+		width: { dp_text_width() }
+		height: { dp_text_height() }
+		visible: { digitoken() or card.type == "ISO" }
+		z index: 4
+		alignment: top right
+		font:
+			name: Roboto Condensed Rg
+			size: 10
+			color: { dp_colour_outline() }
+			shadow color: { dp_colour_outline() }
+			shadow displacement x: 0
+			shadow displacement y: 0
+			shadow blur: 0
+	
+	dp text outline 3:
+		right: { dp_text_right() - dp_text_outline() }
+		top: { dp_text_top() + dp_text_outline() }
+		width: { dp_text_width() }
+		height: { dp_text_height() }
+		visible: { digitoken() or card.type == "ISO" }
+		z index: 4
+		alignment: top right
+		font:
+			name: Roboto Condensed Rg
+			size: 10
+			color: { dp_colour_outline() }
+			shadow color: { dp_colour_outline() }
+			shadow displacement x: 0
+			shadow displacement y: 0
+			shadow blur: 0
+	
+	dp text outline 4:
+		right: { dp_text_right() + dp_text_outline() }
+		top: { dp_text_top() + dp_text_outline() }
+		width: { dp_text_width() }
+		height: { dp_text_height() }
+		visible: { digitoken() or card.type == "ISO" }
+		z index: 4
+		alignment: top right
+		font:
+			name: Roboto Condensed Rg
+			size: 10
+			color: { dp_colour_outline() }
+			shadow color: { dp_colour_outline() }
+			shadow displacement x: 0
+			shadow displacement y: 0
+			shadow blur: 0
+	
+	##Illustrator Styles
+	illustrator outline 1:
+		right: { illustrator_right() - illustrator_outline() }
+		top: { illustrator_top()  - illustrator_outline() }
+		width: { illustrator_width() }
+		height: { illustrator_height() }
+		z index: 4
+		alignment: middle right
+		angle: 90
+		font:
+			name: { illustrator_font() }
+			size: { illustrator_size() }
+			color: { illustrator_colour_outline() }
+			shadow color: { illustrator_colour_outline() }
+			shadow blur: 1
+			shadow displacement x: -1
+			shadow displacement y: -1
+	
+	illustrator outline 2:
+		right: { illustrator_right() + illustrator_outline() }
+		top: { illustrator_top()  - illustrator_outline() }
+		width: { illustrator_width() }
+		height: { illustrator_height() }
+		z index: 4
+		alignment: middle right
+		angle: 90
+		font:
+			name: { illustrator_font() }
+			size: { illustrator_size() }
+			color: { illustrator_colour_outline() }
+			shadow color: { illustrator_colour_outline() }
+			shadow blur: 1
+			shadow displacement x: 1
+			shadow displacement y: -1
+	
+	illustrator outline 3:
+		right: { illustrator_right() - illustrator_outline() }
+		top: { illustrator_top()  + illustrator_outline() }
+		width: { illustrator_width() }
+		height: { illustrator_height() }
+		z index: 4
+		alignment: middle right
+		angle: 90
+		font:
+			name: { illustrator_font() }
+			size: { illustrator_size() }
+			color: { illustrator_colour_outline() }
+			shadow color: { illustrator_colour_outline() }
+			shadow blur: 1
+			shadow displacement x: -1
+			shadow displacement y: 1
+	
+	illustrator outline 4:
+		right: { illustrator_right() + illustrator_outline() }
+		top: { illustrator_top()  + illustrator_outline() }
+		width: { illustrator_width() }
+		height: { illustrator_height() }
+		z index: 4
+		alignment: middle right
+		angle: 90
+		font:
+			name: { illustrator_font() }
+			size: { illustrator_size() }
+			color: { illustrator_colour_outline() }
+			shadow color: { illustrator_colour_outline() }
+			shadow blur: 1
+			shadow displacement x: 1
+			shadow displacement y: 1
+	
+	##Name Outline Styles
+	name outline 1:
+		bottom: { name_bottom() }
+		left:	{ name_left() }
+		height: { name_height() }
+		width:	{ name_width() }
+		z index: 4
+		alignment: { if not_digimon() then "center middle overflow-shrink" else "center middle overflow-shrink" }
+		visible: { text_opposite_outline() }
+		font:
+			name: { name_font() }
+			size: { name_font_size() }
+			weight: bold
+			color: { name_colour_outline() }
+			shadow color: { name_colour_outline() }
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 0
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 5
+			alignment: middle center
+	
+	name outline 2:
+		bottom: { name_bottom() }
+		left:	{ name_left() }
+		height: { name_height() }
+		width:	{ name_width() }
+		z index: 4
+		alignment: { if not_digimon() then "center middle overflow-shrink" else "center middle overflow-shrink" }
+		visible: { text_opposite_outline() }
+		font:
+			name: { name_font() }
+			size: { name_font_size() }
+			weight: bold
+			color: { name_colour_outline() }
+			shadow color: { name_colour_outline() }
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 0
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 5
+			alignment: middle center
+	
+	name outline 3:
+		bottom: { name_bottom() }
+		left:	{ name_left() }
+		height: { name_height() }
+		width:	{ name_width() }
+		z index: 4
+		alignment: { if not_digimon() then "center middle overflow-shrink" else "center middle overflow-shrink" }
+		visible: { text_opposite_outline() }
+		font:
+			name: { name_font() }
+			size: { name_font_size() }
+			weight: bold
+			color: { name_colour_outline() }
+			shadow color: { name_colour_outline() }
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 0
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 5
+			alignment: middle center
+	
+	name outline 4:
+		bottom: { name_bottom() }
+		left:	{ name_left() }
+		height: { name_height() }
+		width:	{ name_width() }
+		z index: 4
+		alignment: { if not_digimon() then "center middle overflow-shrink" else "center middle overflow-shrink" }
+		visible: { text_opposite_outline() }
+		font:
+			name: { name_font() }
+			size: { name_font_size() }
+			weight: bold
+			color: { name_colour_outline() }
+			shadow color: { name_colour_outline() }
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 0
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 5
+			alignment: middle center
+	
+	##Effect Outline Styles
+	effects outline 1:
+		left: { effects_left() }
+		bottom: { effectbox_bottom() }
+		width: { effects_width() }
+		height: { effects_height() }
+		z index: 4
+		alignment: top left overflow-shrink
+		visible: { text_outline() }
+		font:
+			name: { effects_font() }
+			size: 9
+			scale down to: 5
+			color: { effects_colour_outline() }
+			shadow color: { effects_colour_outline() }
+			weight: { effects_weight() }
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 1
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 12
+			alignment: middle center
+	
+	effects outline 2:
+		left: { effects_left() }
+		bottom: { effectbox_bottom() }
+		width: { effects_width() }
+		height: { effects_height() }
+		z index: 4
+		alignment: top left overflow-shrink
+		visible: { text_outline() }
+		font:
+			name: { effects_font() }
+			size: 9
+			scale down to: 5
+			color: { effects_colour_outline() }
+			shadow color: { effects_colour_outline() }
+			weight: { effects_weight() }
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 1
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 12
+			alignment: middle center
+	
+	effects outline 3:
+		left: { effects_left() }
+		bottom: { effectbox_bottom() }
+		width: { effects_width() }
+		height: { effects_height() }
+		z index: 4
+		alignment: top left overflow-shrink
+		visible: { text_outline() }
+		font:
+			name: { effects_font() }
+			size: 9
+			scale down to: 5
+			color: { effects_colour_outline() }
+			shadow color: { effects_colour_outline() }
+			weight: { effects_weight() }
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 1
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 12
+			alignment: middle center
+	
+	effects outline 4:
+		left: { effects_left() }
+		bottom: { effectbox_bottom() }
+		width: { effects_width() }
+		height: { effects_height() }
+		z index: 4
+		alignment: top left overflow-shrink
+		visible: { text_outline() }
+		font:
+			name: { effects_font() }
+			size: 9
+			scale down to: 5
+			color: { effects_colour_outline() }
+			shadow color: { effects_colour_outline() }
+			weight: { effects_weight() }
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 1
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 12
+			alignment: middle center
+	
+	##Extra Effect Outline Styles
+	extra effects outline 1:
+		left: { extra_left() }
+		bottom: { extra_bottom() }
+		width: { extra_width() }
+		height: { extra_height() }
+		z index: 4
+		alignment: top left overflow-shrink
+		padding left: 2
+		padding right: 2
+		padding top: 2
+		padding bottom: 2
+		visible: { text_opposite_outline() }
+		font:
+			name: { effects_font() }
+			size: 9
+			scale down to: 5
+			color: { extra_colour_outline() }
+			shadow color: { extra_colour_outline() }
+			weight: { effects_weight() }
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 0
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 12
+			alignment: middle center
+	
+	extra effects outline 2:
+		left: { extra_left() }
+		bottom: { extra_bottom() }
+		width: { extra_width() }
+		height: { extra_height() }
+		z index: 4
+		alignment: top left overflow-shrink
+		padding left: 2
+		padding right: 2
+		padding top: 2
+		padding bottom: 2
+		visible: { text_opposite_outline() }
+		font:
+			name: { effects_font() }
+			size: 9
+			scale down to: 5
+			color: { extra_colour_outline() }
+			shadow color: { extra_colour_outline() }
+			weight: { effects_weight() }
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 0
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 12
+			alignment: middle center
+	
+	extra effects outline 3:
+		left: { extra_left() }
+		bottom: { extra_bottom() }
+		width: { extra_width() }
+		height: { extra_height() }
+		z index: 4
+		alignment: top left overflow-shrink
+		padding left: 2
+		padding right: 2
+		padding top: 2
+		padding bottom: 2
+		visible: { text_opposite_outline() }
+		font:
+			name: { effects_font() }
+			size: 9
+			scale down to: 5
+			color: { extra_colour_outline() }
+			shadow color: { extra_colour_outline() }
+			weight: { effects_weight() }
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 0
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 12
+			alignment: middle center
+	
+	extra effects outline 4:
+		left: { extra_left() }
+		bottom: { extra_bottom() }
+		width: { extra_width() }
+		height: { extra_height() }
+		z index: 4
+		alignment: top left overflow-shrink
+		padding left: 2
+		padding right: 2
+		padding top: 2
+		padding bottom: 2
+		visible: { text_opposite_outline() }
+		font:
+			name: { effects_font() }
+			size: 9
+			scale down to: 5
+			color: { extra_colour_outline() }
+			shadow color: { extra_colour_outline() }
+			weight: { effects_weight() }
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 0
+		symbol font:
+			name: digimon_dcg_ace-symbols
+			scale down to: 5
+			size: 12
+			alignment: middle center
+	
+	##Copyright Outline Styles
+	copyright:
+		right: { copyright_right() }
+		top: { copyright_top() }
+		width: { copyright_width() }
+		height: { copyright_height() }
+		z index: 5
+		alignment: middle right
+		angle: 90
+		font:
+			name: illustrator_font()
+			size: 8
+			color: { copyright_colour() }
+			shadow color: { copyright_colour_outline() }
+			shadow blur: 1
+	
+	copyright outline 1:
+		right: { copyright_right() - copyright_outline()  }
+		top: { copyright_top() - copyright_outline() }
+		width: { copyright_width() }
+		height: { copyright_height() }
+		z index: 4
+		alignment: middle right
+		angle: 90
+		font:
+			name: illustrator_font()
+			size: 8
+			color: { copyright_colour_outline() }
+			shadow color: { copyright_colour_outline() }
+			shadow displacement x: -1
+			shadow displacement y: -1
+			shadow blur: 2
+	
+	copyright outline 2:
+		right: { copyright_right() + copyright_outline()  }
+		top: { copyright_top() - copyright_outline() }
+		width: { copyright_width() }
+		height: { copyright_height() }
+		z index: 4
+		alignment: middle right
+		angle: 90
+		font:
+			name: illustrator_font()
+			size: 8
+			color: { copyright_colour_outline() }
+			shadow color: { copyright_colour_outline() }
+			shadow displacement x: 1
+			shadow displacement y: -1
+			shadow blur: 2
+	
+	copyright outline 3:
+		right: { copyright_right() - copyright_outline() }
+		top: { copyright_top() + copyright_outline() }
+		width: { copyright_width() }
+		height: { copyright_height() }
+		z index: 4
+		alignment: middle right
+		angle: 90
+		font:
+			name: illustrator_font()
+			size: 8
+			color: { copyright_colour_outline() }
+			shadow color: { copyright_colour_outline() }
+			shadow displacement x: -1
+			shadow displacement y: 1
+			shadow blur: 2
+	
+	copyright outline 4:
+		right: { copyright_right() + copyright_outline() }
+		top: { copyright_top() + copyright_outline() }
+		width: { copyright_width() }
+		height: { copyright_height() }
+		z index: 4
+		alignment: middle right
+		angle: 90
+		font:
+			name: illustrator_font()
+			size: 8
+			color: { copyright_colour_outline() }
+			shadow color: { copyright_colour_outline() }
+			shadow displacement x: 1
+			shadow displacement y: 1
+			shadow blur: 2
+	
+	
+	

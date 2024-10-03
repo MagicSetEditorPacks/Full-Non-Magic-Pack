@@ -1,0 +1,263 @@
+#################### Card Fields ####################
+############################# Image
+card field:
+	type: image
+	name: image
+	description: The card image.
+	show statistics: false
+
+card field:
+	type: image
+	name: background
+	description: The card background.
+	show statistics: false
+
+card field:
+	type: image
+	name: evolution icon
+	show statistics: false
+
+############################# Card Fields
+card field:
+	type: choice
+	name: type
+	choice: Digimon
+	choice: Digi-Egg
+	choice: Tamer
+	choice: Option
+#	choice: ISO
+	description: The card's type. (Digimon/Digi-Egg/Tamer/Option/ISO)
+	sort script: type_sort() + card.type
+	card list visible: true
+	card list column: 5
+	card list width: 70
+	
+card field:
+	type: choice
+	name: colour
+	choice: Red
+	choice: Blue
+	choice: Yellow
+	choice: Green
+	choice: Black
+	choice: Purple
+	choice: White
+	description: The card's colour.
+	card list visible: true
+	card list column: 6
+	card list width: 70
+	sort script: colour_sort() + card.colour
+	choice colors cardlist:
+		Red				:	rgb(230,0,46)
+		Blue			:	rgb(42,147,209)
+		Yellow			:	rgb(246,224,27)
+		Green			:	rgb(0,156,108)
+		Black			:	rgb(34,23,21)
+		Purple			:	rgb(90,87,163)
+		White			:	rgb(140,140,140)
+
+card field:
+	type: choice
+	name: colour2
+	choice: Red
+	choice: Blue
+	choice: Yellow
+	choice: Green
+	choice: Black
+	choice: Purple
+	choice: White
+	description: The card's secondary colour.
+	default: card.colour
+	card list visible: true
+	card list column: 6
+	card list width: 70
+
+card field:
+	type: text
+	name: name
+	identifying: true
+	description: The card's name.
+	card list visible: true
+	card list column: 0
+	card list width: 110
+
+card field:
+	type: text
+	name: cost
+	description: The required cost to play the card.
+	default: { if card.type != "Digi-Egg" then 0 else ""}()
+	card list visible: true
+	card list column: 1
+	card list width: 40
+	
+card field:
+	type: text
+	name: DP
+	description: The Digimon's attack power.
+	card list visible: true
+	card list column: 8
+	card list width: 40
+
+card field:
+	type: choice
+	name: evocolour
+	description: The colour required of the Digimon who can evolve into this Digimon.
+	choice: Red
+	choice: Blue
+	choice: Yellow
+	choice: Green
+	choice: Black
+	choice: Purple
+	choice: White
+	choice: All
+	default: card.colour
+	sort script: evocolour_sort() + card.evocolour
+
+card field:
+	type: text
+	name: evolevel
+	description: The level required of the Digimon who can evolve into this Digimon.
+	default: { if card.type=="Digimon" then "Lv." + get_level_below() else "" }()
+	card list visible: true
+	card list column: 2
+	card list name: Evolution Level
+
+card field:
+	type: text
+	name: evocost
+	description: The cost required of the Digimon who can evolve into this Digimon.
+	default: { if card.type =="Digimon" then "0" else "" }()
+	card list visible: true
+	card list column: 3
+	card list name: Evolution Cost
+
+card field: 
+	type: choice
+	name: evocolour2
+	description: The colour required of the second Digimon who can evolve into this Digimon.
+	choice: Red
+	choice: Blue
+	choice: Yellow
+	choice: Green
+	choice: Black
+	choice: Purple
+	choice: White
+	choice: All
+	default: card.colour2
+	sort script: evocolour2_sort() + card.evocolour2
+	card list visible: true
+	card list column: 4
+	card list name: Evolution Colour
+
+card field:
+	type: text
+	name: effects
+	multi line: true
+	description: Special abilities and effects of the card.
+	script: text_filter(input: value, card_name: card.name)
+	show statistics: false
+	
+card field:
+	type: text
+	name: special digievo
+	description: Special Digivolution requirements of the card.
+	script: text_filter(input: value, card_name: card.name)
+	show statistics: false
+	
+card field:
+	type: text
+	name: digixros
+	description: DigiXros requirements.
+	script: text_filter(input: value, card_name: card.name)
+	show statistics: false
+	
+card field:
+	type: text
+	name: overflow cost
+	description: Overflow cost for Ace.
+	show statistics: false
+
+card field:
+	type: text
+	name: level
+	description: The Digimon's Level.
+	card list visible: true
+	card list column: 7
+	card list width: 40
+	default: { if card.type == "Digi-Egg" then "2" else if card.type == "Digimon" then "3" else if card.type == "ISO" then "-" else "" }()
+
+card field:
+	type: text
+	name: card number
+	identifying: true
+	description: The number this card appears in its set.
+	default: { set.set_identifer + "-" + get_set_number() }()
+	card list visible: true
+	card list width: 90
+	card list column: 12
+	
+card field:
+	type: text
+	name: card block
+	description: The number of the block.
+	default: { set.set_block }()
+
+card field:
+	type: text
+	name: extra effect
+	multi line: true
+	description: Effects that are inherited after Digivolution or activate when a Tamer/Option is turned over in Security Pile.
+	show statistics: false
+	script: text_filter(input: value, card_name: card.name)
+	default: "-"
+
+card field:
+	type: choice
+	name: rarity
+	choice: Common
+	choice: Uncommon
+	choice: Rare
+	choice: Super Rare
+	choice: Secret Rare
+	choice: Promo
+	description: The card's rarity.
+	sort script: rarity_sort() + card.rarity
+	card list visible: true
+	card list column: 13
+	card list width: 80
+
+card field:
+	type: text
+	name: digimon form
+	description: The Digimon's Level: In-Training/Rookie/Champion/Ultimate/Mega
+	card list visible: true
+	card list column: 9
+
+card field:
+	type: text
+	name: digimon property
+	description: The Digimon's Attribute: Vaccine/Data/Virus/Unknown/Variable
+	card list visible: true
+	card list column: 10
+
+card field:
+	type: text
+	name: digimon type
+	description: The Digimon's Type (e.g. Dragon/Bird Man)
+	card list visible: true
+	card list column: 11
+
+card field:
+	type: choice
+	name: evolution effect
+	show statistics: false
+	description: Whether the Digimon or Tamer has an Inheritable Effect.
+	choice: None
+	choice: Evolution
+	choice: ACE
+	default: get_evolution()
+
+card field:
+	type: text
+	name: illustrator
+	description: The illustrator of the card's image.

@@ -1,0 +1,310 @@
+
+############################################################## We have keywords
+
+has keywords: true
+
+############################################################## Keyword mode
+
+keyword mode:
+	name: official
+	description: Official Keywords
+keyword mode:
+	name: fanmade
+	description: Fanmade keywords
+keyword mode:
+	is default: true
+	name: custom
+	description: Custom keywords unique to a set
+
+############################################################## Keyword parameter types
+
+keyword parameter type:
+	name: number
+	match: [XYZ0-9]+
+	refer script:
+		name: normal
+		description: (1,2,3)
+		script: \{{input}\}
+	refer script:
+		name: as words
+		description: (one, two, three)
+		script: \{english_number({input})\}
+	refer script:
+		name: as words, use "a" for 1
+		description: (a, two, three)
+		script: \{english_number_a({input})\}
+	refer script:
+		name: as words, use "" for 1
+		description: (, two, three)
+		script: \{english_number_multiple({input})\}
+	refer script:
+		name: as ordinal words
+		description: (first, second, third)
+		script: \{english_number_ordinal({input})\}
+
+keyword parameter type:
+	name: name
+	match: [^(.:;\n—]+
+	refer script:
+		name: normal
+		description: No changes made.
+		script: \{{input}\}
+	refer script:
+		name: singular
+		description: Removes plurality from words.
+		script: \{english_singular({input})\}
+	refer script:
+		name: separate words with "and/or"
+		description: Changes spaces to " and/or ". "Elf Warrior" becomes "Elf and/or Warrior".
+		script: \{separate_words(spacer: " and/or ", {input})\}
+	refer script:
+		name: separate words with "or"
+		description: Changes spaces to " or ". "Elf Warrior" becomes "Elf or Warrior".
+		script: \{separate_words(spacer: " or ", {input})\}
+
+############################# All Digimon keywords
+keyword:
+	keyword: Blocker
+	match: BLOCK
+	mode: official
+	reminder: When an opponent's Digimon attacks, you may suspend this Digimon to force the opponent to attack it instead.
+
+keyword:
+	keyword: Jamming
+	match: JAM
+	mode: official
+	reminder: This Digimon can't be deleted in battles against Security Digimon.
+
+keyword:
+	keyword: Pierce
+	match: PRCE
+	mode: official
+	reminder: When this Digimon attacks and deletes an opponent's Digimon and survives the battle, it performs any security checks it normally would.
+
+keyword:
+	keyword: Draw 1
+	match: DR1
+	mode: official
+	reminder: Draw 1 card from your deck
+
+keyword:
+	keyword: Draw 2
+	match: DR2
+	mode: official
+	reminder: Draw 2 cards from your deck
+
+keyword:
+	keyword: Draw 3
+	match: DR3
+	mode: official
+	reminder: Draw 3 cards from your deck
+
+keyword:
+	keyword: Draw 4
+	match: DR4
+	mode: official
+	reminder: Draw 4 cards from your deck
+
+keyword:
+	keyword: Security Attack + 1
+	match: SEC+1
+	mode: official
+	reminder: This Digimon checks 1 additional security card
+
+keyword:
+	keyword: Security Attack + 2
+	match: SEC+2
+	mode: official
+	reminder: This Digimon checks 1 additional security cards
+
+keyword:
+	keyword: Security Attack + 3
+	match: SEC+3
+	mode: official
+	reminder: This Digimon checks 1 additional security cards
+
+keyword:
+	keyword: Security Attack - 1
+	match: SEC-1
+	mode: official
+	reminder: This Digimon checks 1 fewer security card
+
+keyword:
+	keyword: Security Attack - 2
+	match: SEC-2
+	mode: official
+	reminder: This Digimon checks 2 fewer security cards
+
+keyword:
+	keyword: Security Attack - 3
+	match: SEC-3
+	mode: official
+	reminder: This Digimon checks 3 fewer security cards
+
+keyword:
+	keyword: Recover 1 Deck
+	match: RECD1
+	mode: official
+	reminder: Place the top card of your deck on top of your security stack
+
+keyword:
+	keyword: Recover 2 Deck
+	match: RECD2
+	mode: official
+	reminder: Place the top 2 cards of your deck on top of your security stack
+
+keyword:
+	keyword: Recover 3 Deck
+	match: RECD3
+	mode: official
+	reminder: Place the top 3 cards of your deck on top of your security stack
+
+keyword:
+	keyword: Recover 4 Deck
+	match: RECD4
+	mode: official
+	reminder: Place the top 4 cards of your deck on top of your security stack
+
+keyword:
+	keyword: Recover 5 Deck
+	match: RECD5
+	mode: official
+	reminder: Place the top 5 cards of your deck on top of your security stack
+
+keyword:
+	keyword: Retaliation
+	match: REVN
+	mode: official
+	reminder: When this Digimon is deleted after losing a battle, delete the Digimon it was battling
+
+keyword:
+	keyword: Revert 1
+	match: REVT1
+	mode: official
+	reminder: Trash a card from the top of one of your opponent's Digimon. If it has no digivolution cards, or becomes a level 3 Digimon, you can't trash any more cards
+
+keyword:
+	keyword: Revert 2
+	match: REVT2
+	mode: official
+	reminder: Trash up to 2 cards from the top of one of your opponent's Digimon. If it has no digivolution cards, or becomes a level 3 Digimon, you can't trash any more cards
+
+keyword:
+	keyword: Revert 3
+	match: REVT3
+	mode: official
+	reminder: Trash up to 3 cards from the top of one of your opponent's Digimon. If it has no digivolution cards, or becomes a level 3 Digimon, you can't trash any more cards
+
+keyword:
+	keyword: Revert 4
+	match: REVT4
+	mode: official
+	reminder: Trash up to 4 cards from the top of one of your opponent's Digimon. If it has no digivolution cards, or becomes a level 3 Digimon, you can't trash any more cards
+
+keyword:
+	keyword: Reboot
+	match: REBT
+	mode: official
+	reminder: Turn this Digimon Active during the opponent's Active Phase.
+
+keyword:
+	keyword: Digisorption 1
+	match: ABE-1
+	mode: official
+	reminder: When you play this card from your hand to evolve your Digimon, you may Rest 1 of your Digimon; if you do, reduce the Evolution Cost to be paid by 1.
+
+keyword:
+	keyword: Digisorption 2
+	match: ABE-2
+	mode: official
+	reminder: When you play this card from your hand to evolve your Digimon, you may Rest 1 of your Digimon; if you do, reduce the Evolution Cost to be paid by 2.
+
+keyword:
+	keyword: Digisorption 3
+	match: ABE-3
+	mode: official
+	reminder: When you play this card from your hand to evolve your Digimon, you may Rest 1 of your Digimon; if you do, reduce the Evolution Cost to be paid by 3.
+
+keyword:
+	keyword: Digisorption 4
+	match: ABE-4
+	mode: official
+	reminder: When you play this card from your hand to evolve your Digimon, you may Rest 1 of your Digimon; if you do, reduce the Evolution Cost to be paid by 4.
+
+keyword:
+	keyword: Digisorption 5
+	match: ABE-5
+	mode: official
+	reminder: When you play this card from your hand to evolve your Digimon, you may Rest 1 of your Digimon; if you do, reduce the Evolution Cost to be paid by 5.
+
+keyword:
+	keyword: Digisorption 6
+	match: ABE-6
+	mode: official
+	reminder: When you play this card from your hand to evolve your Digimon, you may Rest 1 of your Digimon; if you do, reduce the Evolution Cost to be paid by 6.
+
+keyword:
+	keyword: Digisorption 7
+	match: ABE-7
+	mode: official
+	reminder: When you play this card from your hand to evolve your Digimon, you may Rest 1 of your Digimon; if you do, reduce the Evolution Cost to be paid by 7.
+
+keyword:
+	keyword: Digi-Burst 1
+	match: DGB1
+	mode: official
+	reminder: Choose 1 of this Digimon's digivolution cards and discard it. If you do, activate the following effect:
+
+keyword:
+	keyword: Digi-Burst 2
+	match: DGB2
+	mode: official
+	reminder: Choose 2 of this Digimon's digivolution cards and discard them. If you do, activate the following effect:
+
+keyword:
+	keyword: Digi-Burst 3
+	match: DGB3
+	mode: official
+	reminder: Choose 3 of this Digimon's digivolution cards and discard them. If you do, activate the following effect:
+
+keyword:
+	keyword: Digi-Burst 4
+	match: DGB4
+	mode: official
+	reminder: Choose 4 of this Digimon's digivolution cards and discard them. If you do, activate the following effect:
+
+keyword:
+	keyword: Digi-Burst 5
+	match: DGB5
+	mode: official
+	reminder: Choose 5 of this Digimon's digivolution cards and discard them. If you do, activate the following effect:
+
+keyword:
+	keyword: Digi-Burst 6
+	match: DGB6
+	mode: official
+	reminder: Choose 6 of this Digimon's digivolution cards and discard them. If you do, activate the following effect:
+
+keyword:
+	keyword: Rush
+	match: RSH
+	mode: official
+	reminder: This Digimon can attack the turn it was played.
+	
+keyword:
+	keyword: Blitz
+	match: BLZ
+	mode: official
+	reminder: If your opponent has 1 or more memory, you can attack with this Digimon.
+
+keyword:
+	keyword: Raid
+	match: RAID
+	mode: official
+	reminder: When this Digimon attacks, you may switch the target of attack to 1 of your opponent's unsuspended Digimon with the highest DP.
+	
+keyword:
+	keyword: Evade
+	match: EVADE
+	mode: official
+	reminder: If this Digimon would be deleted, you may suspend it to prevent that deletion.

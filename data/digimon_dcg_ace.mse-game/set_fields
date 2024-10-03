@@ -1,0 +1,59 @@
+############################################################## Set fields
+
+set field:
+	type: info
+	name: Set Information
+
+set field:
+	type: text
+	name: title
+	identifying: true
+	description: The Set's Name
+
+set field:
+	type: text
+	name: set identifer
+	description: The Set's Identifer (e.g. BT01) will also appear at the beginning of the card identifier (e.g. XXXX-001)
+	
+set field:
+	type: text
+	name: set block
+	description: The Set's Block (e.g. 01)
+
+set field:
+	type: text
+	name: description
+	multi line: true
+
+set field:
+	type: text
+	name: creator
+	description: The creator of this set.
+
+set field:
+	type: info
+	name: Card Editing Fields
+
+set field:
+	type: boolean
+	name: auto increment
+	description: Do you want to automatically generate the set number?
+
+set field:
+	type: boolean
+	name: auto convert to symbols
+	description: Do you want to automatically replace specific words with symbols?
+
+set field:
+	type: multiple choice
+	name: automatic reminder text
+	choice: official
+	choice: custom
+	choice: fanmade
+	initial: official, custom, fanmade
+	# Convert from older mse versions
+	script:
+		if value == "yes" then "official, custom, fanmade"
+		else if value == "no" then ""
+		else value
+	description: For which kinds of keywords should reminder text be added by default? Note: you can enable/disable reminder text by right clicking the keyword.
