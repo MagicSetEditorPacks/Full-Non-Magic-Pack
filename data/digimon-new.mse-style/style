@@ -20,6 +20,8 @@ card dpi: 150
 #Fonts: For locating free versions of the necessary fonts, credit goes to Blackikun. Thanks for finding them! :D - AF
 #Images: All by Art_Freak. (Images used are all mockups based on online images. Will scan higher quality images when I have time. -AF)
 #Foil scripts: Pichoro and Shiv2503
+init script:
+	name_top := { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 317 else 347 ) else 347 }
 ############################################################## Extra scripts
 ############################################################## Extra style
 styling field:
@@ -82,7 +84,7 @@ card style:
 	############################# Name line
 	name:
 		left: 35
-		top : { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 317 else 347 ) else 347 }
+		top : { name_top() }
 		width: { if card.card_type!="digimon" and card.color!="" then 270 else 298 }
 		height: 30
 		alignment: middle right shrink-overflow
@@ -92,12 +94,9 @@ card style:
 			name: SF Atarian System Extended
 			size: { if card.card_type!="digimon" and card.color!="" then 18 else 20 }
 			color: rgb(242,191,46)
-			shadow color: rgb(0,0,0)
-			shadow displacement x: 3
-			shadow displacement y: 3
 	name 2:
-		left: 35
-		top : { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 317 else 347 ) else 347 }
+		left: 32.5
+		top : { name_top() - 2.5 }
 		width: { if card.card_type!="digimon" and card.color!="" then 270 else 298 }
 		height: 30
 		alignment: middle right shrink-overflow
@@ -106,13 +105,13 @@ card style:
 		font:
 			name: SF Atarian System Extended
 			size: { if card.card_type!="digimon" and card.color!="" then 18 else 20 }
-			color: rgb(242,191,46)
+			color: rgb(0,0,0)
 			shadow color: rgb(0,0,0)
-			shadow displacement x: -3
-			shadow displacement y: -3
+			shadow displacement x: 0
+			shadow displacement y: 5
 	name 3:
 		left: 35
-		top : { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 317 else 347 ) else 347 }
+		top : { name_top() - 2.5 }
 		width: { if card.card_type!="digimon" and card.color!="" then 270 else 298 }
 		height: 30
 		alignment: middle right shrink-overflow
@@ -121,13 +120,13 @@ card style:
 		font:
 			name: SF Atarian System Extended
 			size: { if card.card_type!="digimon" and card.color!="" then 18 else 20 }
-			color: rgb(242,191,46)
+			color: rgb(0,0,0)
 			shadow color: rgb(0,0,0)
-			shadow displacement x: 3
-			shadow displacement y: -3
+			shadow displacement x: 0
+			shadow displacement y: 5
 	name 4:
-		left: 35
-		top : { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 317 else 347 ) else 347 }
+		left: 37.5
+		top : { name_top() - 2.5 }
 		width: { if card.card_type!="digimon" and card.color!="" then 270 else 298 }
 		height: 30
 		alignment: middle right shrink-overflow
@@ -136,10 +135,10 @@ card style:
 		font:
 			name: SF Atarian System Extended
 			size: { if card.card_type!="digimon" and card.color!="" then 18 else 20 }
-			color: rgb(242,191,46)
+			color: rgb(0,0,0)
 			shadow color: rgb(0,0,0)
-			shadow displacement x: -3
-			shadow displacement y: 3
+			shadow displacement x: 0
+			shadow displacement y: 5
 	color:
 		left: { if card.card_type!="digimon" then 310 else 35 }
 		top : { if card.card_type!="digimon" then 350 else 347 }
@@ -153,60 +152,57 @@ card style:
 			name: SF Atarian System Extended
 			size: 20
 			color: rgb(242,191,46)
-			shadow color: rgb(0,0,0)
-			shadow displacement x: 3
-			shadow displacement y: 3
 		visible: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then "true" else "false" ) else "true" }
 	color 2:
-		left: { if card.card_type!="digimon" then 310 else 35 }
-		top : { if card.card_type!="digimon" then 350 else 347 }
+		left: { (if card.card_type!="digimon" then 310 else 35)-2.5 }
+		top : { (if card.card_type!="digimon" then 350 else 347)-2.5 }
 		width: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 298 else 0 ) else 250 }
 		height: 23
 		angle: { if card.card_type!="digimon" then 90 else 0 }
 		alignment: { if card.card_type!="digimon" then "middle left shrink-overflow" else "middle right shrink-overflow" }
 		padding bottom: 0
-		z index: 3
+		z index: 2
 		font:
 			name: SF Atarian System Extended
 			size: 20
-			color: rgb(242,191,46)
+			color: rgb(0,0,0)
 			shadow color: rgb(0,0,0)
-			shadow displacement x: -3
-			shadow displacement y: -3
+			shadow displacement x: 0
+			shadow displacement y: 5
 		visible: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then "true" else "false" ) else "true" }
 	color 3:
 		left: { if card.card_type!="digimon" then 310 else 35 }
-		top : { if card.card_type!="digimon" then 350 else 347 }
+		top : { (if card.card_type!="digimon" then 350 else 347)-2.5 }
 		width: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 298 else 0 ) else 250 }
 		height: 23
 		angle: { if card.card_type!="digimon" then 90 else 0 }
 		alignment: { if card.card_type!="digimon" then "middle left shrink-overflow" else "middle right shrink-overflow" }
 		padding bottom: 0
-		z index: 3
+		z index: 2
 		font:
 			name: SF Atarian System Extended
 			size: 20
-			color: rgb(242,191,46)
+			color: rgb(0,0,0)
 			shadow color: rgb(0,0,0)
-			shadow displacement x: 3
-			shadow displacement y: -3
+			shadow displacement x: 0
+			shadow displacement y: 5
 		visible: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then "true" else "false" ) else "true" }
 	color 4:
-		left: { if card.card_type!="digimon" then 310 else 35 }
-		top : { if card.card_type!="digimon" then 350 else 347 }
+		left: { (if card.card_type!="digimon" then 310 else 35)+2.5 }
+		top : { (if card.card_type!="digimon" then 350 else 347)-2.5 }
 		width: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 298 else 0 ) else 250 }
 		height: 23
 		angle: { if card.card_type!="digimon" then 90 else 0 }
 		alignment: { if card.card_type!="digimon" then "middle left shrink-overflow" else "middle right shrink-overflow" }
 		padding bottom: 0
-		z index: 3
+		z index: 2
 		font:
 			name: SF Atarian System Extended
 			size: 20
-			color: rgb(242,191,46)
+			color: rgb(0,0,0)
 			shadow color: rgb(0,0,0)
-			shadow displacement x: -3
-			shadow displacement y: 3
+			shadow displacement x: 0
+			shadow displacement y: 5
 		visible: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then "true" else "false" ) else "true" }
 
 	############################# Digital Info
@@ -566,6 +562,18 @@ extra card field:
 	choice: foil
 	save value: false
 	editable: false
+extra card field:
+	type: text
+	name: name 5
+	script: card.name
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: color 5
+	script: card.color
+	save value: false
+	editable: false
 extra card style:
 	foil layer:
 		left: 0
@@ -575,3 +583,35 @@ extra card style:
 		z index: 5
 		render style: image
 		image: {if styling.overlay == "" then nil else set_combine(input: styling.overlay + "/overlay.png", combine: styling.overlay_combine_type)}
+	name 5:
+		left: 32.5
+		top : { name_top() }
+		width: { if card.card_type!="digimon" and card.color!="" then 270 else 298 }
+		height: 30
+		alignment: middle right shrink-overflow
+		padding bottom: 0
+		z index: 2
+		font:
+			name: SF Atarian System Extended
+			size: { if card.card_type!="digimon" and card.color!="" then 18 else 20 }
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 5
+			shadow displacement y: 0
+	color 5:
+		left: { (if card.card_type!="digimon" then 310 else 35)-2.5 }
+		top : { (if card.card_type!="digimon" then 350 else 347) }
+		width: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then 298 else 0 ) else 250 }
+		height: 23
+		angle: { if card.card_type!="digimon" then 90 else 0 }
+		alignment: { if card.card_type!="digimon" then "middle left shrink-overflow" else "middle right shrink-overflow" }
+		padding bottom: 0
+		z index: 2
+		font:
+			name: SF Atarian System Extended
+			size: 20
+			color: rgb(0,0,0)
+			shadow color: rgb(0,0,0)
+			shadow displacement x: 5
+			shadow displacement y: 0
+		visible: { if card.card_type=="digimon" then ( if styling.digimon_second_name_line=="yes" then "true" else "false" ) else "true" }

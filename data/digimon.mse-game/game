@@ -105,7 +105,8 @@ init script:
 	bar_type := {
 		if card.battle_type=="data" then "data" else
 		if card.battle_type=="vaccine" then "vaccine" else
-		"virus"
+		if card.battle_type=="virus" then "virus" else
+		""
 	}
 	
 	symbol_filter := {
@@ -409,7 +410,7 @@ card field:
 	type: text
 	name: digimon battle type
 	editable: false
-	script: default_battle_type(value)
+	default: default_battle_type(value)
 card field:
 	type: text
 	name: complex type
