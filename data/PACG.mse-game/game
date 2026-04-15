@@ -1,7 +1,7 @@
 mse version: 	2.0.0
 short name: 	PACG
 full name: 		Pathfinder Adventure Card Game
-icon: 			PFACG-Logo_180.jpg
+icon: 			pfacg-logo_180.jpg
 position hint:	00
 version: 		2015-07-14
 installer_group: PACG/Game Files
